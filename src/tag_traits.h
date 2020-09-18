@@ -7,6 +7,11 @@ template <typename T> T tag_combine(T const &lhs, T const &rhs);
 template <typename T> std::string tag_sprint(T const &tag);
 template <typename T> T tag_alloc(unsigned int offset);
 
+template<typename TagT>
+inline bool tag_is_empty(const TagT &tag) {
+  return tag == tag_traits<TagT>::cleared_val;
+}
+
 /********************************************************
  uint8_t tags
  ********************************************************/
@@ -16,6 +21,8 @@ template <> struct tag_traits<unsigned char> {
   typedef uint8_t type;
   static const uint8_t cleared_val = 0;
 };
+
+
 
 template <> uint8_t tag_combine(uint8_t const &lhs, uint8_t const &rhs);
 template <> std::string tag_sprint(uint8_t const &tag);
@@ -41,6 +48,11 @@ template <> lb_type tag_alloc<lb_type>(unsigned int offset);
 
 std::vector<tag_seg> tag_get(lb_type);
 
+template<>
+inline bool tag_is_empty(const lb_type &tag) {
+  return (tag&BDD_LB_MASK) == tag_traits<lb_type>::cleared_val;
+}
+
 /********************************************************
 others
 ********************************************************/
@@ -49,8 +61,5 @@ others
 #endif
 typedef LIBDFT_TAG_TYPE tag_t;
 
-inline bool tag_is_empty(tag_t const &tag) {
-  return tag == tag_traits<tag_t>::cleared_val;
-}
 
 #endif /* LIBDFT_TAG_TRAITS_H */
