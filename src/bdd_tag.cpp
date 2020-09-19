@@ -206,12 +206,15 @@ std::string BDDTag::to_string(lb_type lb) {
 
   lb = lb & LB_MASK;
   std::string ss = "";
-  ss += "{";
+  ss += "{ ";
   std::vector<tag_seg> tags = find(lb);
   char buf[100];
   for (std::vector<tag_seg>::iterator it = tags.begin(); it != tags.end();
        ++it) {
-    sprintf(buf, "(%d, %d) ", it->begin, it->end);
+	if(it->end==it->begin+1)
+	  sprintf(buf, "%d ", it->begin);
+	else
+	  sprintf(buf, "[%d, %d) ", it->begin, it->end);
     std::string s(buf);
     ss += s;
   }
