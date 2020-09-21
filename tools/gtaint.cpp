@@ -217,6 +217,62 @@ static void instrument_trace(TRACE trace, void *v) {
 	}
 }
 
+static unsigned int last_tainted = 0;
+extern tag_dir_t tag_dir;
+static void on_gtaint_reset() {
+	printf("__ taint reset\n");
+	fflush(stdout); // @suppress("Ambiguous problem")
+
+	last_tainted = 0;
+	for (tag_table_t *table : tag_dir.table) {
+		if (table != nullptr) {
+			for (tag_page_t *page : table->page) {
+				if (page != nullptr) {
+					std::fill(page->tag, page->tag + PAGE_SIZE,
+							tag_traits<tag_t>::cleared_val);
+				}
+			}
+		}
+	}
+}
+
+static void on_gtaint_setb(void *p) {
+	tag_t t = tag_alloc<tag_t>(last_tainted);
+	printf("__ set taint at %p to %d\n", p, last_tainted);
+	fflush(stdout); // @suppress("Ambiguous problem")
+	tagmap_setb((ADDRINT) p, t);
+	++last_tainted;
+}
+
+// @formatter:off
+static void on_application_start(void *v) {
+	RTN rtn;
+	for (IMG img = APP_ImgHead(); IMG_Valid(img); img = IMG_Next(img)) {
+		rtn = RTN_FindByName(img, "__gtaint_reset");
+		if (RTN_Valid(rtn)) {
+			printf("Found __gtaint_reset\n");
+			RTN_Open(rtn);
+			RTN_InsertCall(rtn, IPOINT_BEFORE,
+					(AFUNPTR) on_gtaint_reset,
+					IARG_END);
+			RTN_Close(rtn);
+		}
+
+		rtn = RTN_FindByName(img, "__gtaint_setb");
+		if (RTN_Valid(rtn)) {
+			printf("Found __gtaint_setb\n");
+			RTN_Open(rtn);
+			RTN_InsertCall(rtn, IPOINT_BEFORE,
+					(AFUNPTR) on_gtaint_setb,
+                    IARG_FUNCARG_ENTRYPOINT_VALUE, 0,
+					IARG_END);
+			RTN_Close(rtn);
+		}
+
+	}
+}
+// @formatter:on
+
 int main(int argc, char *argv[]) {
 	PIN_InitSymbols();
 
@@ -230,6 +286,7 @@ int main(int argc, char *argv[]) {
 		return -1;
 	}
 
+	PIN_AddApplicationStartFunction(on_application_start, 0);
 	TRACE_AddInstrumentFunction(instrument_trace, 0);
 
 	filter.Activate();
