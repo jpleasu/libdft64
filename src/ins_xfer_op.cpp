@@ -469,7 +469,7 @@ void ins_stosd(INS ins) {
   if (INS_RepPrefix(ins)) {
     ins_stos_ins(ins, (AFUNPTR)r2m_xfer_opln);
   } else {
-    R2M_CALL(r2m_xfer_opw, REG_EAX);
+    R2M_CALL(r2m_xfer_opl, REG_EAX);
   }
 }
 
@@ -477,7 +477,7 @@ void ins_stosq(INS ins) {
   if (INS_RepPrefix(ins)) {
     ins_stos_ins(ins, (AFUNPTR)r2m_xfer_opqn);
   } else {
-    R2M_CALL(r2m_xfer_opw, REG_RAX);
+    R2M_CALL(r2m_xfer_opq, REG_RAX);
   }
 }
 
