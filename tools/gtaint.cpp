@@ -1,6 +1,13 @@
 /**
  */
 
+#include <list>
+#include <iostream>
+#include <cstdio>
+#include <iostream>
+#include <iterator>
+#include <string>
+
 #include "pin.H"
 #include "instlib.H"
 
@@ -8,12 +15,17 @@
 #include "debug.h"
 #include "libdft_api.h"
 #include "syscall_hook.h"
-
-#include <iostream>
-#include <cstdio>
 #include "ins_helper.h"
 
 INSTLIB::FILTER filter;
+
+KNOB<bool> KnobDumpStubs(KNOB_MODE_WRITEONCE, "pintool", "dump_stubs", "",
+		"dump stubs to control gtaint from the target");
+
+std::list<std::string> image_filters;
+
+KNOB<std::string> KnobFilterImages(KNOB_MODE_APPEND, "pintool", "filter_img",
+		"", "Images to instrument (images containing these substrings)");
 
 // handle partial registers
 inline size_t REG_OFFSET(REG reg) {
@@ -210,6 +222,29 @@ static void instrument_trace(TRACE trace, void *v) {
 	if (!filter.SelectTrace(trace))
 		return;
 
+	if (KnobFilterImages.NumberOfValues() > 0) {
+		RTN rtn = TRACE_Rtn(trace);
+		if (!RTN_Valid(rtn))
+			return;
+		SEC sec = RTN_Sec(rtn);
+		if (!SEC_Valid(sec))
+			return;
+		IMG img = SEC_Img(sec);
+		if (!IMG_Valid(img))
+			return;
+		bool ok = false;
+		std::string img_name = IMG_Name(img);
+		for (unsigned int i = 0; i < KnobFilterImages.NumberOfValues(); ++i) {
+			if (img_name.find(KnobFilterImages.Value(i)) != std::string::npos) {
+				ok = true;
+				break;
+			}
+		}
+		if (!ok) {
+			return;
+		}
+	}
+
 	for (BBL bbl = TRACE_BblHead(trace); BBL_Valid(bbl); bbl = BBL_Next(bbl)) {
 		for (INS ins = BBL_InsHead(bbl); INS_Valid(ins); ins = INS_Next(ins)) {
 			instrument_instruction(ins, 0);
@@ -237,11 +272,20 @@ static void on_gtaint_reset() {
 }
 
 static void on_gtaint_setb(void *p) {
-	tag_t t = tag_alloc<tag_t>(last_tainted);
+	tagmap_setb((ADDRINT) p, tag_alloc<tag_t>(last_tainted));
 	printf("__ set taint at %p to %d\n", p, last_tainted);
 	fflush(stdout); // @suppress("Ambiguous problem")
-	tagmap_setb((ADDRINT) p, t);
 	++last_tainted;
+}
+
+static void on_gtaint_setn(void *p, unsigned int n) {
+	for (unsigned int i = 0; i < n; ++i) {
+		tagmap_setb((ADDRINT) p + i, tag_alloc<tag_t>(last_tainted + i));
+	}
+	printf("__ set taint of %d bytes at %p to %d-%d\n", n, p, last_tainted,
+			last_tainted + n - 1);
+	fflush(stdout); // @suppress("Ambiguous problem")
+	last_tainted += n;
 }
 
 // @formatter:off
@@ -269,17 +313,50 @@ static void on_application_start(void *v) {
 			RTN_Close(rtn);
 		}
 
+		rtn = RTN_FindByName(img, "__gtaint_setn");
+		if (RTN_Valid(rtn)) {
+			printf("Found __gtaint_setb\n");
+			RTN_Open(rtn);
+			RTN_InsertCall(rtn, IPOINT_BEFORE,
+					(AFUNPTR) on_gtaint_setn,
+                    IARG_FUNCARG_ENTRYPOINT_VALUE, 0,
+                    IARG_FUNCARG_ENTRYPOINT_VALUE, 1,
+					IARG_END);
+			RTN_Close(rtn);
+		}
+
 	}
 }
 // @formatter:on
 
 int main(int argc, char *argv[]) {
-	PIN_InitSymbols();
-
 	if (unlikely(PIN_Init(argc, argv))) {
-		std::cerr << KNOB_BASE::StringKnobSummary() << std::endl;
+		std::cout << KNOB_BASE::StringKnobSummary() << std::endl;
 		return -1;
 	}
+
+	if (KnobDumpStubs.Value()) {
+		std::cout
+				<< R"EOT(
+extern "C" {
+// reset tagmap
+void *__attribute__((optimize("O0"))) __gtaint_reset() {
+    return nullptr; // clear rax
+}
+
+// set a new tag at the given address
+void __attribute__((optimize("O0"))) __gtaint_setb(const void *addr) {
+}
+
+// set n new tags starting at the given address
+void __attribute__((optimize("O0"))) __gtaint_setn(const void *addr, unsigned int n) {
+}
+}
+)EOT";
+		return 0;
+	}
+
+	PIN_InitSymbols();
 
 	if (unlikely(libdft_init() != 0)) {
 		std::cerr << "error in libdft_init." << std::endl;
