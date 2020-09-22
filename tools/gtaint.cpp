@@ -288,6 +288,21 @@ static void on_gtaint_setn(void *p, unsigned int n) {
 	last_tainted += n;
 }
 
+static void on_gtaint_assert(void *addr, unsigned int memsz, char *assertion,
+		int *result) {
+	printf("__ assert %d bytes at %p tainted as %s\n", memsz, addr, assertion);
+	fflush(stdout); // @suppress("Ambiguous problem")
+	tag_t t = tagmap_getn((ADDRINT) addr, memsz);
+
+	std::string actual = tag_sprint(t);
+	if (actual.compare(assertion) == 0) {
+		*result = 1;
+	} else {
+		printf("__   failed!  actual: \"%s\"\n", actual.c_str());
+		*result = 0;
+	}
+}
+
 // @formatter:off
 static void on_application_start(void *v) {
 	RTN rtn;
@@ -324,6 +339,20 @@ static void on_application_start(void *v) {
 					IARG_END);
 			RTN_Close(rtn);
 		}
+		rtn = RTN_FindByName(img, "__gtaint_assert");
+		if (RTN_Valid(rtn)) {
+			printf("Found __gtaint_assert\n");
+			RTN_Open(rtn);
+			RTN_InsertCall(rtn, IPOINT_BEFORE,
+					(AFUNPTR) on_gtaint_assert,
+                    IARG_FUNCARG_ENTRYPOINT_VALUE, 0,
+                    IARG_FUNCARG_ENTRYPOINT_VALUE, 1,
+                    IARG_FUNCARG_ENTRYPOINT_VALUE, 2,
+                    IARG_FUNCARG_ENTRYPOINT_VALUE, 3,
+					IARG_END);
+			RTN_Close(rtn);
+		}
+
 
 	}
 }

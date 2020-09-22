@@ -39,7 +39,7 @@ TOOL_ROOTS := track nullpin libdft gtaint# libdft-dta
 SA_TOOL_ROOTS :=
 
 # This defines all the applications that will be run during the tests.
-APP_ROOTS := mini_test gtaint_test
+APP_ROOTS := mini_test gtaint_test gtaint_testcases
 
 # This defines any additional object files that need to be compiled.
 OBJECT_ROOTS := 
@@ -100,4 +100,18 @@ test_mini: $(OBJDIR)/track$(PINTOOL_SUFFIX) ${OBJDIR}/mini_test$(EXE_SUFFIX)
 
 test_gtaint: $(OBJDIR)/gtaint$(PINTOOL_SUFFIX) ${OBJDIR}/gtaint_test$(EXE_SUFFIX)
 	$(PIN) -t $< -filter_no_shared_libs -- $(OBJDIR)gtaint_test$(EXE_SUFFIX)  ${INPUT_FILE}
+
+
+
+GTAINT_TESTCASE_DIR:=$(OBJDIR)../gtaint_testcases
+$(GTAINT_TESTCASE_DIR)/testcases.a: $(wildcard $(GTAINT_TESTCASE_DIR)/*.cpp) $(wildcard $(GTAINT_TESTCASE_DIR)/*.o)
+	make -C $(GTAINT_TESTCASE_DIR)
+
+$(OBJDIR)gtaint_testcases$(EXE_SUFFIX): gtaint_testcases.cpp $(GTAINT_TESTCASE_DIR)/testcases.a
+	$(APP_CXX) $(APP_CXXFLAGS_NOOPT) $(SSE2) $(COMP_EXE)$@ $^ $(APP_LDFLAGS_NOOPT) $(APP_LIBS) \
+        -Wl,--whole-archive $(GTAINT_TESTCASE_DIR)/testcases.a -Wl,--no-whole-archive \
+        $(CXX_LPATHS) $(CXX_LIBS)
+
+testcases_gtaint: $(OBJDIR)/gtaint$(PINTOOL_SUFFIX) ${OBJDIR}/gtaint_testcases$(EXE_SUFFIX)
+	$(PIN) -t $< -filter_no_shared_libs -- $(OBJDIR)gtaint_testcases$(EXE_SUFFIX)  ${INPUT_FILE}
 
