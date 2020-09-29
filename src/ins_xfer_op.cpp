@@ -50,6 +50,10 @@ void PIN_FAST_ANALYSIS_CALL r2r_xfer_opl(THREADID tid, uint32_t dst,
   for (size_t i = 0; i < 4; i++) {
     RTAG[dst][i] = RTAG[src][i];
   }
+  // assume zero extension to full register
+  for (size_t i = 4; i < 8; i++) {
+    RTAG[dst][i] = tag_traits<tag_t>::cleared_val;
+  }
 }
 
 void PIN_FAST_ANALYSIS_CALL r2r_xfer_opq(THREADID tid, uint32_t dst,

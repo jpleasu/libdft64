@@ -299,6 +299,7 @@ static void on_gtaint_assert(void *addr, unsigned int memsz, char *assertion,
 		*result = 1;
 	} else {
 		printf("__   failed!  actual: \"%s\"\n", actual.c_str());
+		fflush(stdout); // @suppress("Ambiguous problem")
 		*result = 0;
 	}
 }

@@ -102,9 +102,8 @@ test_gtaint: $(OBJDIR)/gtaint$(PINTOOL_SUFFIX) ${OBJDIR}/gtaint_test$(EXE_SUFFIX
 	$(PIN) -t $< -filter_no_shared_libs -- $(OBJDIR)gtaint_test$(EXE_SUFFIX)  ${INPUT_FILE}
 
 
-
 GTAINT_TESTCASE_DIR:=$(OBJDIR)../gtaint_testcases
-$(GTAINT_TESTCASE_DIR)/testcases.a: $(wildcard $(GTAINT_TESTCASE_DIR)/*.cpp) $(wildcard $(GTAINT_TESTCASE_DIR)/*.o)
+$(GTAINT_TESTCASE_DIR)/testcases.a: $(wildcard $(GTAINT_TESTCASE_DIR)/*.cpp)
 	make -C $(GTAINT_TESTCASE_DIR)
 
 $(OBJDIR)gtaint_testcases$(EXE_SUFFIX): gtaint_testcases.cpp $(GTAINT_TESTCASE_DIR)/testcases.a

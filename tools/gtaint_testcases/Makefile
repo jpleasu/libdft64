@@ -3,8 +3,7 @@ SOURCES:=$(shell find -iname '*.cpp')
 LIBS=$(SOURCES:%.cpp=%.o)
 
 CXX?=g++
-CXXFLAGS ?= -O0 -masm=intel
-
+CXXFLAGS ?= -O0 -masm=intel 
 
 all: testcases.a
 

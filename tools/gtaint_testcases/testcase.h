@@ -1,5 +1,7 @@
 #ifndef INLINED_TEST_H
 #define INLINED_TEST_H
+#include <cstdint>
+#include <cstdio>
 
 void add_testcase(int (*)());
 

@@ -133,6 +133,24 @@ void ins_cmp_op(INS ins) {
   }
 }
 
+static void PIN_FAST_ANALYSIS_CALL r_clrq_zext(THREADID tid, uint32_t reg) {
+  for (size_t i = 4; i < 8; i++) {
+    RTAG[reg][i] = tag_traits<tag_t>::cleared_val;
+  }
+}
+
+void ins_uni(INS ins) {
+  if(INS_OperandCount(ins)<1)
+	  return;
+  if (INS_OperandIsReg(ins, OP_0) && INS_OperandWritten(ins, OP_0)) {
+    REG reg_dst = INS_OperandReg(ins, OP_0);
+	if(REG_is_gr32(reg_dst)) {
+	  R_CALL(r_clrq_zext, reg_dst);
+	}
+  }
+}
+
+
 VOID dasm(char *s) { LOGD("[ins] %s\n", s); }
 
 /*
@@ -194,12 +212,14 @@ void ins_inspect(INS ins) {
     break;
   case XED_ICLASS_DIV:
   case XED_ICLASS_IDIV:
+    ins_unary_div_op(ins);
+    break;
   case XED_ICLASS_MUL:
-    ins_unitary_op(ins);
+    ins_unary_mul_op(ins);
     break;
   case XED_ICLASS_IMUL:
     if (INS_OperandIsImplicit(ins, OP_1)) {
-      ins_unitary_op(ins);
+      ins_unary_mul_op(ins);
     } else {
       ins_binary_op(ins);
       // if ternary // TODO
@@ -209,6 +229,7 @@ void ins_inspect(INS ins) {
   case XED_ICLASS_MULPD:
   case XED_ICLASS_DIVSD:
     ins_binary_op(ins);
+    break;
 
   // **** xfer ****
   case XED_ICLASS_BSF:
@@ -489,6 +510,7 @@ void ins_inspect(INS ins) {
   case XED_ICLASS_JB:
   case XED_ICLASS_JNB:
   case XED_ICLASS_JBE:
+  case XED_ICLASS_JO:
   case XED_ICLASS_JNBE:
   case XED_ICLASS_JL:
   case XED_ICLASS_JNL:
@@ -505,6 +527,7 @@ void ins_inspect(INS ins) {
   case XED_ICLASS_LEAVE:
   case XED_ICLASS_SYSCALL:
   case XED_ICLASS_TEST:
+    break;
   case XED_ICLASS_RCL:
   case XED_ICLASS_RCR:
   case XED_ICLASS_ROL:
@@ -524,6 +547,7 @@ void ins_inspect(INS ins) {
   case XED_ICLASS_INC_LOCK:
   case XED_ICLASS_XSAVEC:
   case XED_ICLASS_XRSTOR:
+	  ins_uni(ins);
     break;
 
   default:

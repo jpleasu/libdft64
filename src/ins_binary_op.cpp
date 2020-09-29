@@ -44,12 +44,21 @@ static void PIN_FAST_ANALYSIS_CALL r2r_binary_opw(THREADID tid, uint32_t dst,
     dst_tags[i] = tag_combine(dst_tags[i], src_tags[i]);
 }
 
+static void PIN_FAST_ANALYSIS_CALL r_clrq_zext(THREADID tid, uint32_t reg) {
+  for (size_t i = 4; i < 8; i++) {
+    RTAG[reg][i] = tag_traits<tag_t>::cleared_val;
+  }
+}
+
 static void PIN_FAST_ANALYSIS_CALL r2r_binary_opl(THREADID tid, uint32_t dst,
                                                   uint32_t src) {
   tag_t *src_tags = RTAG[src];
   tag_t *dst_tags = RTAG[dst];
   for (size_t i = 0; i < 4; i++)
     dst_tags[i] = tag_combine(dst_tags[i], src_tags[i]);
+  // assume zero extension to full register
+  for (size_t i = 4; i < 8; i++)
+    dst_tags[i] = tag_traits<tag_t>::cleared_val;
 }
 
 static void PIN_FAST_ANALYSIS_CALL r2r_binary_opq(THREADID tid, uint32_t dst,
@@ -182,9 +191,14 @@ static void PIN_FAST_ANALYSIS_CALL r2m_binary_opy(THREADID tid, ADDRINT dst,
 }
 
 void ins_binary_op(INS ins) {
-  if (INS_OperandIsImmediate(ins, OP_1))
-    return;
   REG reg_dst, reg_src;
+  if (INS_OperandIsImmediate(ins, OP_1)) {
+    reg_dst = INS_OperandReg(ins, OP_0);
+    if(REG_is_gr32(reg_dst)) {
+      R_CALL(r_clrq_zext, reg_dst);
+    }
+    return;
+  }
   if (INS_MemoryOperandCount(ins) == 0) {
     reg_dst = INS_OperandReg(ins, OP_0);
     reg_src = INS_OperandReg(ins, OP_1);
