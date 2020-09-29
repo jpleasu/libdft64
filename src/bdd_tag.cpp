@@ -7,6 +7,7 @@
 #include <iostream>
 #include <sstream>
 #include <stack>
+#include <string>
 
 #define VEC_CAP (1 << 16)
 #define LB_WIDTH BDD_LB_WIDTH
@@ -202,22 +203,24 @@ const std::vector<tag_seg> BDDTag::find(lb_type lb) {
   return tag_list;
 };
 
-std::string BDDTag::to_string(lb_type lb) {
+static bool compare_tag_seg(const tag_seg &a, const tag_seg &b) {
+	return a.begin < b.begin || (a.begin == b.begin && a.end < b.end);
+}
 
+std::string BDDTag::to_string(lb_type lb) {
   lb = lb & LB_MASK;
-  std::string ss = "";
-  ss += "{ ";
+  std::stringstream ss;
+  ss << "{ ";
   std::vector<tag_seg> tags = find(lb);
-  char buf[100];
-  for (std::vector<tag_seg>::iterator it = tags.begin(); it != tags.end();
-       ++it) {
+  std::sort(tags.begin(), tags.end(), compare_tag_seg);
+  for (std::vector<tag_seg>::iterator it = tags.begin(); it != tags.end(); ++it) {
 	if(it->end==it->begin+1)
-	  sprintf(buf, "%d ", it->begin);
-	else
-	  sprintf(buf, "[%d, %d) ", it->begin, it->end);
-    std::string s(buf);
-    ss += s;
+      ss << it->begin;
+	else {
+      ss << '[' << it->begin <<  ", " << it->end << ')';
+	}
+	ss << ' ';
   }
-  ss += "}";
-  return ss;
+  ss << "}";
+  return ss.str();
 }
