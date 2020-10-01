@@ -4622,354 +4622,6 @@ static int testcase159() {
 	rcx_out = 0x0;
 	rdx_out = 0x0;
 
-	printf("%s:     cmpxchg al,al\n", __func__ );
-	fflush(stdout);
-	__gtaint_reset();
-	__gtaint_setn(&rax_in, sizeof(rax_in));
-	__gtaint_setn(&rcx_in, sizeof(rcx_in));
-	__gtaint_setn(&rdx_in, sizeof(rdx_in));
-	asm volatile (
-			"cmpxchg al,al;\n"
-			:"=a"(rax_out), "=c"(rcx_out), "=d"(rdx_out)
-			:"a"(rax_in), "c"(rcx_in), "d"(rdx_in)
-	);
-	int passed0, passed1, passed2;
-	__gtaint_assert(&rax_out, sizeof(rax_out), "{ 0 1 2 3 4 5 6 7 }", &passed0);
-	__gtaint_assert(&rcx_out, sizeof(rcx_out), "{ 8 9 10 11 12 13 14 15 }", &passed1);
-	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
-	return passed0 && passed1 && passed2;
-}
-static int testcase160() {
-	volatile uint64_t rax_in, rcx_in, rdx_in;
-	volatile uint64_t rax_out, rcx_out, rdx_out;
-
-	rax_in = 0x1;
-	rcx_in = 0x1;
-	rdx_in = 0x0;
-
-	rax_out = 0x0;
-	rcx_out = 0x0;
-	rdx_out = 0x0;
-
-	printf("%s:     cmpxchg al,cl\n", __func__ );
-	fflush(stdout);
-	__gtaint_reset();
-	__gtaint_setn(&rax_in, sizeof(rax_in));
-	__gtaint_setn(&rcx_in, sizeof(rcx_in));
-	__gtaint_setn(&rdx_in, sizeof(rdx_in));
-	asm volatile (
-			"cmpxchg al,cl;\n"
-			:"=a"(rax_out), "=c"(rcx_out), "=d"(rdx_out)
-			:"a"(rax_in), "c"(rcx_in), "d"(rdx_in)
-	);
-	int passed0, passed1, passed2;
-	__gtaint_assert(&rax_out, sizeof(rax_out), "{ 0 1 2 3 4 5 6 7 8 }", &passed0);
-	__gtaint_assert(&rcx_out, sizeof(rcx_out), "{ 8 9 10 11 12 13 14 15 }", &passed1);
-	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
-	return passed0 && passed1 && passed2;
-}
-static int testcase161() {
-	volatile uint64_t rax_in, rcx_in, rdx_in;
-	volatile uint64_t rax_out, rcx_out, rdx_out;
-
-	rax_in = 0x1;
-	rcx_in = 0x1;
-	rdx_in = 0x0;
-
-	rax_out = 0x0;
-	rcx_out = 0x0;
-	rdx_out = 0x0;
-
-	printf("%s:     cmpxchg ax,ax\n", __func__ );
-	fflush(stdout);
-	__gtaint_reset();
-	__gtaint_setn(&rax_in, sizeof(rax_in));
-	__gtaint_setn(&rcx_in, sizeof(rcx_in));
-	__gtaint_setn(&rdx_in, sizeof(rdx_in));
-	asm volatile (
-			"cmpxchg ax,ax;\n"
-			:"=a"(rax_out), "=c"(rcx_out), "=d"(rdx_out)
-			:"a"(rax_in), "c"(rcx_in), "d"(rdx_in)
-	);
-	int passed0, passed1, passed2;
-	__gtaint_assert(&rax_out, sizeof(rax_out), "{ 0 1 2 3 4 5 6 7 }", &passed0);
-	__gtaint_assert(&rcx_out, sizeof(rcx_out), "{ 8 9 10 11 12 13 14 15 }", &passed1);
-	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
-	return passed0 && passed1 && passed2;
-}
-static int testcase162() {
-	volatile uint64_t rax_in, rcx_in, rdx_in;
-	volatile uint64_t rax_out, rcx_out, rdx_out;
-
-	rax_in = 0x1;
-	rcx_in = 0x1;
-	rdx_in = 0x0;
-
-	rax_out = 0x0;
-	rcx_out = 0x0;
-	rdx_out = 0x0;
-
-	printf("%s:     cmpxchg ax,cx\n", __func__ );
-	fflush(stdout);
-	__gtaint_reset();
-	__gtaint_setn(&rax_in, sizeof(rax_in));
-	__gtaint_setn(&rcx_in, sizeof(rcx_in));
-	__gtaint_setn(&rdx_in, sizeof(rdx_in));
-	asm volatile (
-			"cmpxchg ax,cx;\n"
-			:"=a"(rax_out), "=c"(rcx_out), "=d"(rdx_out)
-			:"a"(rax_in), "c"(rcx_in), "d"(rdx_in)
-	);
-	int passed0, passed1, passed2;
-	__gtaint_assert(&rax_out, sizeof(rax_out), "{ 0 1 2 3 4 5 6 7 8 9 }", &passed0);
-	__gtaint_assert(&rcx_out, sizeof(rcx_out), "{ 8 9 10 11 12 13 14 15 }", &passed1);
-	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
-	return passed0 && passed1 && passed2;
-}
-static int testcase163() {
-	volatile uint64_t rax_in, rcx_in, rdx_in;
-	volatile uint64_t rax_out, rcx_out, rdx_out;
-
-	rax_in = 0x1;
-	rcx_in = 0x1;
-	rdx_in = 0x0;
-
-	rax_out = 0x0;
-	rcx_out = 0x0;
-	rdx_out = 0x0;
-
-	printf("%s:     cmpxchg cl,al\n", __func__ );
-	fflush(stdout);
-	__gtaint_reset();
-	__gtaint_setn(&rax_in, sizeof(rax_in));
-	__gtaint_setn(&rcx_in, sizeof(rcx_in));
-	__gtaint_setn(&rdx_in, sizeof(rdx_in));
-	asm volatile (
-			"cmpxchg cl,al;\n"
-			:"=a"(rax_out), "=c"(rcx_out), "=d"(rdx_out)
-			:"a"(rax_in), "c"(rcx_in), "d"(rdx_in)
-	);
-	int passed0, passed1, passed2;
-	__gtaint_assert(&rax_out, sizeof(rax_out), "{ 0 1 2 3 4 5 6 7 8 }", &passed0);
-	__gtaint_assert(&rcx_out, sizeof(rcx_out), "{ 0 8 9 10 11 12 13 14 15 }", &passed1);
-	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
-	return passed0 && passed1 && passed2;
-}
-static int testcase164() {
-	volatile uint64_t rax_in, rcx_in, rdx_in;
-	volatile uint64_t rax_out, rcx_out, rdx_out;
-
-	rax_in = 0x1;
-	rcx_in = 0x1;
-	rdx_in = 0x0;
-
-	rax_out = 0x0;
-	rcx_out = 0x0;
-	rdx_out = 0x0;
-
-	printf("%s:     cmpxchg cx,ax\n", __func__ );
-	fflush(stdout);
-	__gtaint_reset();
-	__gtaint_setn(&rax_in, sizeof(rax_in));
-	__gtaint_setn(&rcx_in, sizeof(rcx_in));
-	__gtaint_setn(&rdx_in, sizeof(rdx_in));
-	asm volatile (
-			"cmpxchg cx,ax;\n"
-			:"=a"(rax_out), "=c"(rcx_out), "=d"(rdx_out)
-			:"a"(rax_in), "c"(rcx_in), "d"(rdx_in)
-	);
-	int passed0, passed1, passed2;
-	__gtaint_assert(&rax_out, sizeof(rax_out), "{ 0 1 2 3 4 5 6 7 8 9 }", &passed0);
-	__gtaint_assert(&rcx_out, sizeof(rcx_out), "{ 0 1 8 9 10 11 12 13 14 15 }", &passed1);
-	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
-	return passed0 && passed1 && passed2;
-}
-static int testcase165() {
-	volatile uint64_t rax_in, rcx_in, rdx_in;
-	volatile uint64_t rax_out, rcx_out, rdx_out;
-
-	rax_in = 0x1;
-	rcx_in = 0x1;
-	rdx_in = 0x0;
-
-	rax_out = 0x0;
-	rcx_out = 0x0;
-	rdx_out = 0x0;
-
-	printf("%s:     cmpxchg eax,eax\n", __func__ );
-	fflush(stdout);
-	__gtaint_reset();
-	__gtaint_setn(&rax_in, sizeof(rax_in));
-	__gtaint_setn(&rcx_in, sizeof(rcx_in));
-	__gtaint_setn(&rdx_in, sizeof(rdx_in));
-	asm volatile (
-			"cmpxchg eax,eax;\n"
-			:"=a"(rax_out), "=c"(rcx_out), "=d"(rdx_out)
-			:"a"(rax_in), "c"(rcx_in), "d"(rdx_in)
-	);
-	int passed0, passed1, passed2;
-	__gtaint_assert(&rax_out, sizeof(rax_out), "{ 0 1 2 3 4 5 6 7 }", &passed0);
-	__gtaint_assert(&rcx_out, sizeof(rcx_out), "{ 8 9 10 11 12 13 14 15 }", &passed1);
-	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
-	return passed0 && passed1 && passed2;
-}
-static int testcase166() {
-	volatile uint64_t rax_in, rcx_in, rdx_in;
-	volatile uint64_t rax_out, rcx_out, rdx_out;
-
-	rax_in = 0x1;
-	rcx_in = 0x1;
-	rdx_in = 0x0;
-
-	rax_out = 0x0;
-	rcx_out = 0x0;
-	rdx_out = 0x0;
-
-	printf("%s:     cmpxchg eax,ecx\n", __func__ );
-	fflush(stdout);
-	__gtaint_reset();
-	__gtaint_setn(&rax_in, sizeof(rax_in));
-	__gtaint_setn(&rcx_in, sizeof(rcx_in));
-	__gtaint_setn(&rdx_in, sizeof(rdx_in));
-	asm volatile (
-			"cmpxchg eax,ecx;\n"
-			:"=a"(rax_out), "=c"(rcx_out), "=d"(rdx_out)
-			:"a"(rax_in), "c"(rcx_in), "d"(rdx_in)
-	);
-	int passed0, passed1, passed2;
-	__gtaint_assert(&rax_out, sizeof(rax_out), "{ 0 1 2 3 4 5 6 7 8 9 10 11 }", &passed0);
-	__gtaint_assert(&rcx_out, sizeof(rcx_out), "{ 8 9 10 11 12 13 14 15 }", &passed1);
-	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
-	return passed0 && passed1 && passed2;
-}
-static int testcase167() {
-	volatile uint64_t rax_in, rcx_in, rdx_in;
-	volatile uint64_t rax_out, rcx_out, rdx_out;
-
-	rax_in = 0x1;
-	rcx_in = 0x1;
-	rdx_in = 0x0;
-
-	rax_out = 0x0;
-	rcx_out = 0x0;
-	rdx_out = 0x0;
-
-	printf("%s:     cmpxchg ecx,eax\n", __func__ );
-	fflush(stdout);
-	__gtaint_reset();
-	__gtaint_setn(&rax_in, sizeof(rax_in));
-	__gtaint_setn(&rcx_in, sizeof(rcx_in));
-	__gtaint_setn(&rdx_in, sizeof(rdx_in));
-	asm volatile (
-			"cmpxchg ecx,eax;\n"
-			:"=a"(rax_out), "=c"(rcx_out), "=d"(rdx_out)
-			:"a"(rax_in), "c"(rcx_in), "d"(rdx_in)
-	);
-	int passed0, passed1, passed2;
-	__gtaint_assert(&rax_out, sizeof(rax_out), "{ 0 1 2 3 4 5 6 7 8 9 10 11 }", &passed0);
-	__gtaint_assert(&rcx_out, sizeof(rcx_out), "{ 0 1 2 3 8 9 10 11 12 13 14 15 }", &passed1);
-	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
-	return passed0 && passed1 && passed2;
-}
-static int testcase168() {
-	volatile uint64_t rax_in, rcx_in, rdx_in;
-	volatile uint64_t rax_out, rcx_out, rdx_out;
-
-	rax_in = 0x1;
-	rcx_in = 0x1;
-	rdx_in = 0x0;
-
-	rax_out = 0x0;
-	rcx_out = 0x0;
-	rdx_out = 0x0;
-
-	printf("%s:     cmpxchg rax,rax\n", __func__ );
-	fflush(stdout);
-	__gtaint_reset();
-	__gtaint_setn(&rax_in, sizeof(rax_in));
-	__gtaint_setn(&rcx_in, sizeof(rcx_in));
-	__gtaint_setn(&rdx_in, sizeof(rdx_in));
-	asm volatile (
-			"cmpxchg rax,rax;\n"
-			:"=a"(rax_out), "=c"(rcx_out), "=d"(rdx_out)
-			:"a"(rax_in), "c"(rcx_in), "d"(rdx_in)
-	);
-	int passed0, passed1, passed2;
-	__gtaint_assert(&rax_out, sizeof(rax_out), "{ 0 1 2 3 4 5 6 7 }", &passed0);
-	__gtaint_assert(&rcx_out, sizeof(rcx_out), "{ 8 9 10 11 12 13 14 15 }", &passed1);
-	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
-	return passed0 && passed1 && passed2;
-}
-static int testcase169() {
-	volatile uint64_t rax_in, rcx_in, rdx_in;
-	volatile uint64_t rax_out, rcx_out, rdx_out;
-
-	rax_in = 0x1;
-	rcx_in = 0x1;
-	rdx_in = 0x0;
-
-	rax_out = 0x0;
-	rcx_out = 0x0;
-	rdx_out = 0x0;
-
-	printf("%s:     cmpxchg rax,rcx\n", __func__ );
-	fflush(stdout);
-	__gtaint_reset();
-	__gtaint_setn(&rax_in, sizeof(rax_in));
-	__gtaint_setn(&rcx_in, sizeof(rcx_in));
-	__gtaint_setn(&rdx_in, sizeof(rdx_in));
-	asm volatile (
-			"cmpxchg rax,rcx;\n"
-			:"=a"(rax_out), "=c"(rcx_out), "=d"(rdx_out)
-			:"a"(rax_in), "c"(rcx_in), "d"(rdx_in)
-	);
-	int passed0, passed1, passed2;
-	__gtaint_assert(&rax_out, sizeof(rax_out), "{ 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 }", &passed0);
-	__gtaint_assert(&rcx_out, sizeof(rcx_out), "{ 8 9 10 11 12 13 14 15 }", &passed1);
-	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
-	return passed0 && passed1 && passed2;
-}
-static int testcase170() {
-	volatile uint64_t rax_in, rcx_in, rdx_in;
-	volatile uint64_t rax_out, rcx_out, rdx_out;
-
-	rax_in = 0x1;
-	rcx_in = 0x1;
-	rdx_in = 0x0;
-
-	rax_out = 0x0;
-	rcx_out = 0x0;
-	rdx_out = 0x0;
-
-	printf("%s:     cmpxchg rcx,rax\n", __func__ );
-	fflush(stdout);
-	__gtaint_reset();
-	__gtaint_setn(&rax_in, sizeof(rax_in));
-	__gtaint_setn(&rcx_in, sizeof(rcx_in));
-	__gtaint_setn(&rdx_in, sizeof(rdx_in));
-	asm volatile (
-			"cmpxchg rcx,rax;\n"
-			:"=a"(rax_out), "=c"(rcx_out), "=d"(rdx_out)
-			:"a"(rax_in), "c"(rcx_in), "d"(rdx_in)
-	);
-	int passed0, passed1, passed2;
-	__gtaint_assert(&rax_out, sizeof(rax_out), "{ 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 }", &passed0);
-	__gtaint_assert(&rcx_out, sizeof(rcx_out), "{ 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 }", &passed1);
-	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
-	return passed0 && passed1 && passed2;
-}
-static int testcase171() {
-	volatile uint64_t rax_in, rcx_in, rdx_in;
-	volatile uint64_t rax_out, rcx_out, rdx_out;
-
-	rax_in = 0x1;
-	rcx_in = 0x1;
-	rdx_in = 0x0;
-
-	rax_out = 0x0;
-	rcx_out = 0x0;
-	rdx_out = 0x0;
-
 	printf("%s:     dec    al\n", __func__ );
 	fflush(stdout);
 	__gtaint_reset();
@@ -4987,7 +4639,7 @@ static int testcase171() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase172() {
+static int testcase160() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -5016,7 +4668,7 @@ static int testcase172() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase173() {
+static int testcase161() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -5045,7 +4697,7 @@ static int testcase173() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase174() {
+static int testcase162() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -5074,7 +4726,7 @@ static int testcase174() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase175() {
+static int testcase163() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -5103,7 +4755,7 @@ static int testcase175() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase176() {
+static int testcase164() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -5132,7 +4784,7 @@ static int testcase176() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 0 1 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase177() {
+static int testcase165() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -5161,7 +4813,7 @@ static int testcase177() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase178() {
+static int testcase166() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -5190,7 +4842,7 @@ static int testcase178() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 0 1 8 9 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase179() {
+static int testcase167() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -5214,12 +4866,12 @@ static int testcase179() {
 			:"a"(rax_in), "c"(rcx_in), "d"(rdx_in)
 	);
 	int passed0, passed1, passed2;
-	__gtaint_assert(&rax_out, sizeof(rax_out), "{ 0 1 2 3 4 5 6 7 16 17 18 19 }", &passed0);
+	__gtaint_assert(&rax_out, sizeof(rax_out), "{ 0 1 2 3 16 17 18 19 }", &passed0);
 	__gtaint_assert(&rcx_out, sizeof(rcx_out), "{ 8 9 10 11 12 13 14 15 }", &passed1);
-	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 0 1 2 3 16 17 18 19 20 21 22 23 }", &passed2);
+	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 0 1 2 3 16 17 18 19 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase180() {
+static int testcase168() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -5243,12 +4895,12 @@ static int testcase180() {
 			:"a"(rax_in), "c"(rcx_in), "d"(rdx_in)
 	);
 	int passed0, passed1, passed2;
-	__gtaint_assert(&rax_out, sizeof(rax_out), "{ 0 1 2 3 4 5 6 7 8 9 10 11 16 17 18 19 }", &passed0);
+	__gtaint_assert(&rax_out, sizeof(rax_out), "{ 0 1 2 3 8 9 10 11 16 17 18 19 }", &passed0);
 	__gtaint_assert(&rcx_out, sizeof(rcx_out), "{ 8 9 10 11 12 13 14 15 }", &passed1);
-	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 0 1 2 3 8 9 10 11 16 17 18 19 20 21 22 23 }", &passed2);
+	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 0 1 2 3 8 9 10 11 16 17 18 19 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase181() {
+static int testcase169() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -5277,7 +4929,7 @@ static int testcase181() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 0 1 2 3 4 5 6 7 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase182() {
+static int testcase170() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -5306,7 +4958,7 @@ static int testcase182() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase183() {
+static int testcase171() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -5335,7 +4987,7 @@ static int testcase183() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase184() {
+static int testcase172() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -5364,7 +5016,7 @@ static int testcase184() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase185() {
+static int testcase173() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -5393,7 +5045,7 @@ static int testcase185() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase186() {
+static int testcase174() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -5422,7 +5074,7 @@ static int testcase186() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 0 1 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase187() {
+static int testcase175() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -5451,7 +5103,7 @@ static int testcase187() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase188() {
+static int testcase176() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -5480,7 +5132,7 @@ static int testcase188() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 0 1 8 9 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase189() {
+static int testcase177() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -5504,12 +5156,12 @@ static int testcase189() {
 			:"a"(rax_in), "c"(rcx_in), "d"(rdx_in)
 	);
 	int passed0, passed1, passed2;
-	__gtaint_assert(&rax_out, sizeof(rax_out), "{ 0 1 2 3 4 5 6 7 16 17 18 19 }", &passed0);
+	__gtaint_assert(&rax_out, sizeof(rax_out), "{ 0 1 2 3 16 17 18 19 }", &passed0);
 	__gtaint_assert(&rcx_out, sizeof(rcx_out), "{ 8 9 10 11 12 13 14 15 }", &passed1);
-	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 0 1 2 3 16 17 18 19 20 21 22 23 }", &passed2);
+	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 0 1 2 3 16 17 18 19 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase190() {
+static int testcase178() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -5533,12 +5185,12 @@ static int testcase190() {
 			:"a"(rax_in), "c"(rcx_in), "d"(rdx_in)
 	);
 	int passed0, passed1, passed2;
-	__gtaint_assert(&rax_out, sizeof(rax_out), "{ 0 1 2 3 4 5 6 7 8 9 10 11 16 17 18 19 }", &passed0);
+	__gtaint_assert(&rax_out, sizeof(rax_out), "{ 0 1 2 3 8 9 10 11 16 17 18 19 }", &passed0);
 	__gtaint_assert(&rcx_out, sizeof(rcx_out), "{ 8 9 10 11 12 13 14 15 }", &passed1);
-	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 0 1 2 3 8 9 10 11 16 17 18 19 20 21 22 23 }", &passed2);
+	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 0 1 2 3 8 9 10 11 16 17 18 19 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase191() {
+static int testcase179() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -5567,7 +5219,7 @@ static int testcase191() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 0 1 2 3 4 5 6 7 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase192() {
+static int testcase180() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -5596,7 +5248,7 @@ static int testcase192() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase193() {
+static int testcase181() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -5625,7 +5277,7 @@ static int testcase193() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase194() {
+static int testcase182() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -5654,7 +5306,7 @@ static int testcase194() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 0 1 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase195() {
+static int testcase183() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -5683,7 +5335,7 @@ static int testcase195() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase196() {
+static int testcase184() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -5712,7 +5364,7 @@ static int testcase196() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase197() {
+static int testcase185() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -5741,7 +5393,7 @@ static int testcase197() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase198() {
+static int testcase186() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -5770,7 +5422,7 @@ static int testcase198() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase199() {
+static int testcase187() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -5799,7 +5451,7 @@ static int testcase199() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase200() {
+static int testcase188() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -5828,7 +5480,7 @@ static int testcase200() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase201() {
+static int testcase189() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -5857,7 +5509,7 @@ static int testcase201() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase202() {
+static int testcase190() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -5886,7 +5538,7 @@ static int testcase202() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 0 1 8 9 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase203() {
+static int testcase191() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -5915,7 +5567,7 @@ static int testcase203() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase204() {
+static int testcase192() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -5944,7 +5596,7 @@ static int testcase204() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase205() {
+static int testcase193() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -5973,7 +5625,7 @@ static int testcase205() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase206() {
+static int testcase194() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -6002,7 +5654,7 @@ static int testcase206() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase207() {
+static int testcase195() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -6031,7 +5683,7 @@ static int testcase207() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase208() {
+static int testcase196() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -6060,7 +5712,7 @@ static int testcase208() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase209() {
+static int testcase197() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -6089,7 +5741,7 @@ static int testcase209() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 0 1 2 3 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase210() {
+static int testcase198() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -6118,7 +5770,7 @@ static int testcase210() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase211() {
+static int testcase199() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -6147,7 +5799,7 @@ static int testcase211() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase212() {
+static int testcase200() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -6176,7 +5828,7 @@ static int testcase212() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase213() {
+static int testcase201() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -6205,7 +5857,7 @@ static int testcase213() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase214() {
+static int testcase202() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -6234,7 +5886,7 @@ static int testcase214() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase215() {
+static int testcase203() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -6263,7 +5915,7 @@ static int testcase215() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase216() {
+static int testcase204() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -6292,7 +5944,7 @@ static int testcase216() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 0 1 2 3 8 9 10 11 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase217() {
+static int testcase205() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -6321,7 +5973,7 @@ static int testcase217() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase218() {
+static int testcase206() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -6350,7 +6002,7 @@ static int testcase218() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase219() {
+static int testcase207() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -6379,7 +6031,7 @@ static int testcase219() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase220() {
+static int testcase208() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -6408,7 +6060,7 @@ static int testcase220() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase221() {
+static int testcase209() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -6437,7 +6089,7 @@ static int testcase221() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase222() {
+static int testcase210() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -6466,7 +6118,7 @@ static int testcase222() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase223() {
+static int testcase211() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -6495,7 +6147,7 @@ static int testcase223() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 0 1 2 3 4 5 6 7 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase224() {
+static int testcase212() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -6524,7 +6176,7 @@ static int testcase224() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase225() {
+static int testcase213() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -6553,7 +6205,7 @@ static int testcase225() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase226() {
+static int testcase214() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -6582,7 +6234,7 @@ static int testcase226() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase227() {
+static int testcase215() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -6611,7 +6263,7 @@ static int testcase227() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase228() {
+static int testcase216() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -6640,7 +6292,7 @@ static int testcase228() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase229() {
+static int testcase217() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -6669,7 +6321,7 @@ static int testcase229() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase230() {
+static int testcase218() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -6698,7 +6350,7 @@ static int testcase230() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase231() {
+static int testcase219() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -6727,7 +6379,7 @@ static int testcase231() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase232() {
+static int testcase220() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -6756,7 +6408,7 @@ static int testcase232() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase233() {
+static int testcase221() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -6785,7 +6437,7 @@ static int testcase233() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase234() {
+static int testcase222() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -6814,7 +6466,7 @@ static int testcase234() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase235() {
+static int testcase223() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -6843,7 +6495,7 @@ static int testcase235() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase236() {
+static int testcase224() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -6872,7 +6524,7 @@ static int testcase236() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase237() {
+static int testcase225() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -6901,7 +6553,7 @@ static int testcase237() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase238() {
+static int testcase226() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -6930,7 +6582,7 @@ static int testcase238() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase239() {
+static int testcase227() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -6959,7 +6611,7 @@ static int testcase239() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase240() {
+static int testcase228() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -6988,7 +6640,7 @@ static int testcase240() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase241() {
+static int testcase229() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -7017,7 +6669,7 @@ static int testcase241() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase242() {
+static int testcase230() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -7046,7 +6698,7 @@ static int testcase242() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase243() {
+static int testcase231() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -7075,7 +6727,7 @@ static int testcase243() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase244() {
+static int testcase232() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -7104,7 +6756,7 @@ static int testcase244() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase245() {
+static int testcase233() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -7133,7 +6785,7 @@ static int testcase245() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase246() {
+static int testcase234() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -7162,7 +6814,7 @@ static int testcase246() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase247() {
+static int testcase235() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -7191,7 +6843,7 @@ static int testcase247() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase248() {
+static int testcase236() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -7220,7 +6872,7 @@ static int testcase248() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase249() {
+static int testcase237() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -7249,7 +6901,7 @@ static int testcase249() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase250() {
+static int testcase238() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -7278,7 +6930,7 @@ static int testcase250() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase251() {
+static int testcase239() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -7307,7 +6959,7 @@ static int testcase251() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase252() {
+static int testcase240() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -7336,7 +6988,7 @@ static int testcase252() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase253() {
+static int testcase241() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -7365,7 +7017,7 @@ static int testcase253() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase254() {
+static int testcase242() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -7394,7 +7046,7 @@ static int testcase254() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase255() {
+static int testcase243() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -7423,7 +7075,7 @@ static int testcase255() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase256() {
+static int testcase244() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -7452,7 +7104,7 @@ static int testcase256() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase257() {
+static int testcase245() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -7481,7 +7133,7 @@ static int testcase257() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase258() {
+static int testcase246() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -7510,7 +7162,7 @@ static int testcase258() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase259() {
+static int testcase247() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -7539,7 +7191,7 @@ static int testcase259() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase260() {
+static int testcase248() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -7568,7 +7220,7 @@ static int testcase260() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase261() {
+static int testcase249() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -7597,7 +7249,7 @@ static int testcase261() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase262() {
+static int testcase250() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -7626,7 +7278,7 @@ static int testcase262() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase263() {
+static int testcase251() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -7655,7 +7307,7 @@ static int testcase263() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase264() {
+static int testcase252() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -7684,7 +7336,7 @@ static int testcase264() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase265() {
+static int testcase253() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -7713,7 +7365,7 @@ static int testcase265() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase266() {
+static int testcase254() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -7742,7 +7394,7 @@ static int testcase266() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase267() {
+static int testcase255() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -7771,7 +7423,7 @@ static int testcase267() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase268() {
+static int testcase256() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -7800,7 +7452,7 @@ static int testcase268() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase269() {
+static int testcase257() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -7829,7 +7481,7 @@ static int testcase269() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase270() {
+static int testcase258() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -7858,7 +7510,7 @@ static int testcase270() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase271() {
+static int testcase259() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -7887,7 +7539,7 @@ static int testcase271() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase272() {
+static int testcase260() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -7916,7 +7568,7 @@ static int testcase272() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase273() {
+static int testcase261() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -7945,7 +7597,7 @@ static int testcase273() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase274() {
+static int testcase262() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -7974,7 +7626,7 @@ static int testcase274() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase275() {
+static int testcase263() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -8003,7 +7655,7 @@ static int testcase275() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase276() {
+static int testcase264() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -8032,7 +7684,7 @@ static int testcase276() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 0 1 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase277() {
+static int testcase265() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -8061,7 +7713,7 @@ static int testcase277() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase278() {
+static int testcase266() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -8090,7 +7742,7 @@ static int testcase278() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 0 1 8 9 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase279() {
+static int testcase267() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -8119,7 +7771,7 @@ static int testcase279() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 0 1 2 3 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase280() {
+static int testcase268() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -8148,7 +7800,7 @@ static int testcase280() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 0 1 2 3 8 9 10 11 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase281() {
+static int testcase269() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -8177,7 +7829,7 @@ static int testcase281() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 0 1 2 3 4 5 6 7 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase282() {
+static int testcase270() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -8206,7 +7858,7 @@ static int testcase282() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase283() {
+static int testcase271() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -8235,7 +7887,7 @@ static int testcase283() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase284() {
+static int testcase272() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -8264,7 +7916,7 @@ static int testcase284() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase285() {
+static int testcase273() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -8293,7 +7945,7 @@ static int testcase285() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase286() {
+static int testcase274() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -8322,7 +7974,7 @@ static int testcase286() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase287() {
+static int testcase275() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -8351,7 +8003,7 @@ static int testcase287() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase288() {
+static int testcase276() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -8380,7 +8032,7 @@ static int testcase288() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase289() {
+static int testcase277() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -8409,7 +8061,7 @@ static int testcase289() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase290() {
+static int testcase278() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -8438,7 +8090,7 @@ static int testcase290() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase291() {
+static int testcase279() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -8467,7 +8119,7 @@ static int testcase291() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase292() {
+static int testcase280() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -8496,7 +8148,7 @@ static int testcase292() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase293() {
+static int testcase281() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -8525,7 +8177,7 @@ static int testcase293() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase294() {
+static int testcase282() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -8554,7 +8206,7 @@ static int testcase294() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase295() {
+static int testcase283() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -8583,7 +8235,7 @@ static int testcase295() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase296() {
+static int testcase284() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -8612,7 +8264,7 @@ static int testcase296() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase297() {
+static int testcase285() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -8641,7 +8293,7 @@ static int testcase297() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase298() {
+static int testcase286() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -8670,7 +8322,7 @@ static int testcase298() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase299() {
+static int testcase287() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -8699,7 +8351,7 @@ static int testcase299() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase300() {
+static int testcase288() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -8728,7 +8380,7 @@ static int testcase300() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase301() {
+static int testcase289() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -8757,7 +8409,7 @@ static int testcase301() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase302() {
+static int testcase290() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -8786,7 +8438,7 @@ static int testcase302() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase303() {
+static int testcase291() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -8815,7 +8467,7 @@ static int testcase303() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase304() {
+static int testcase292() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -8844,7 +8496,7 @@ static int testcase304() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase305() {
+static int testcase293() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -8873,7 +8525,7 @@ static int testcase305() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase306() {
+static int testcase294() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -8902,7 +8554,7 @@ static int testcase306() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase307() {
+static int testcase295() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -8931,7 +8583,7 @@ static int testcase307() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase308() {
+static int testcase296() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -8960,7 +8612,7 @@ static int testcase308() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase309() {
+static int testcase297() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -8989,7 +8641,7 @@ static int testcase309() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase310() {
+static int testcase298() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -9018,7 +8670,7 @@ static int testcase310() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase311() {
+static int testcase299() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -9047,7 +8699,7 @@ static int testcase311() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase312() {
+static int testcase300() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -9076,7 +8728,7 @@ static int testcase312() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase313() {
+static int testcase301() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -9105,7 +8757,7 @@ static int testcase313() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase314() {
+static int testcase302() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -9134,7 +8786,7 @@ static int testcase314() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase315() {
+static int testcase303() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -9163,7 +8815,7 @@ static int testcase315() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase316() {
+static int testcase304() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -9192,7 +8844,7 @@ static int testcase316() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase317() {
+static int testcase305() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -9221,7 +8873,7 @@ static int testcase317() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase318() {
+static int testcase306() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -9250,7 +8902,7 @@ static int testcase318() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase319() {
+static int testcase307() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -9279,7 +8931,7 @@ static int testcase319() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase320() {
+static int testcase308() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -9308,7 +8960,7 @@ static int testcase320() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase321() {
+static int testcase309() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -9337,7 +8989,7 @@ static int testcase321() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase322() {
+static int testcase310() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -9366,7 +9018,7 @@ static int testcase322() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase323() {
+static int testcase311() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -9395,7 +9047,7 @@ static int testcase323() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase324() {
+static int testcase312() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -9424,7 +9076,7 @@ static int testcase324() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase325() {
+static int testcase313() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -9453,7 +9105,7 @@ static int testcase325() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase326() {
+static int testcase314() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -9482,7 +9134,7 @@ static int testcase326() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase327() {
+static int testcase315() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -9511,7 +9163,7 @@ static int testcase327() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase328() {
+static int testcase316() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -9540,7 +9192,7 @@ static int testcase328() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase329() {
+static int testcase317() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -9569,7 +9221,7 @@ static int testcase329() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase330() {
+static int testcase318() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -9598,7 +9250,7 @@ static int testcase330() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase331() {
+static int testcase319() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -9627,7 +9279,7 @@ static int testcase331() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase332() {
+static int testcase320() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -9656,7 +9308,7 @@ static int testcase332() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase333() {
+static int testcase321() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -9685,7 +9337,7 @@ static int testcase333() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase334() {
+static int testcase322() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -9714,7 +9366,7 @@ static int testcase334() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase335() {
+static int testcase323() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -9743,7 +9395,7 @@ static int testcase335() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase336() {
+static int testcase324() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -9772,7 +9424,7 @@ static int testcase336() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase337() {
+static int testcase325() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -9801,7 +9453,7 @@ static int testcase337() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase338() {
+static int testcase326() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -9830,7 +9482,7 @@ static int testcase338() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase339() {
+static int testcase327() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -9859,7 +9511,7 @@ static int testcase339() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase340() {
+static int testcase328() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -9888,7 +9540,7 @@ static int testcase340() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase341() {
+static int testcase329() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -9917,7 +9569,7 @@ static int testcase341() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase342() {
+static int testcase330() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -9946,7 +9598,7 @@ static int testcase342() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase343() {
+static int testcase331() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -9975,7 +9627,7 @@ static int testcase343() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase344() {
+static int testcase332() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -10004,7 +9656,7 @@ static int testcase344() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase345() {
+static int testcase333() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -10033,7 +9685,7 @@ static int testcase345() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase346() {
+static int testcase334() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -10062,7 +9714,7 @@ static int testcase346() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase347() {
+static int testcase335() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -10091,7 +9743,7 @@ static int testcase347() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase348() {
+static int testcase336() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -10120,7 +9772,7 @@ static int testcase348() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase349() {
+static int testcase337() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -10149,7 +9801,7 @@ static int testcase349() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase350() {
+static int testcase338() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -10178,7 +9830,7 @@ static int testcase350() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase351() {
+static int testcase339() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -10207,7 +9859,7 @@ static int testcase351() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase352() {
+static int testcase340() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -10236,7 +9888,7 @@ static int testcase352() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase353() {
+static int testcase341() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -10265,7 +9917,7 @@ static int testcase353() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase354() {
+static int testcase342() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -10294,7 +9946,7 @@ static int testcase354() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase355() {
+static int testcase343() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -10323,7 +9975,7 @@ static int testcase355() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase356() {
+static int testcase344() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -10352,7 +10004,7 @@ static int testcase356() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase357() {
+static int testcase345() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -10381,7 +10033,7 @@ static int testcase357() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase358() {
+static int testcase346() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -10410,7 +10062,7 @@ static int testcase358() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase359() {
+static int testcase347() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -10439,7 +10091,7 @@ static int testcase359() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase360() {
+static int testcase348() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -10468,7 +10120,7 @@ static int testcase360() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase361() {
+static int testcase349() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -10497,7 +10149,7 @@ static int testcase361() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase362() {
+static int testcase350() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -10526,7 +10178,7 @@ static int testcase362() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase363() {
+static int testcase351() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -10555,7 +10207,7 @@ static int testcase363() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase364() {
+static int testcase352() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -10584,7 +10236,7 @@ static int testcase364() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase365() {
+static int testcase353() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -10613,7 +10265,7 @@ static int testcase365() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase366() {
+static int testcase354() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -10642,7 +10294,7 @@ static int testcase366() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase367() {
+static int testcase355() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -10671,7 +10323,7 @@ static int testcase367() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase368() {
+static int testcase356() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -10700,7 +10352,7 @@ static int testcase368() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase369() {
+static int testcase357() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -10729,7 +10381,7 @@ static int testcase369() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase370() {
+static int testcase358() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -10758,7 +10410,7 @@ static int testcase370() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase371() {
+static int testcase359() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -10787,7 +10439,7 @@ static int testcase371() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase372() {
+static int testcase360() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -10816,7 +10468,7 @@ static int testcase372() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase373() {
+static int testcase361() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -10845,7 +10497,7 @@ static int testcase373() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase374() {
+static int testcase362() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -10874,7 +10526,7 @@ static int testcase374() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase375() {
+static int testcase363() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -10903,7 +10555,7 @@ static int testcase375() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase376() {
+static int testcase364() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -10932,7 +10584,7 @@ static int testcase376() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase377() {
+static int testcase365() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -10961,65 +10613,7 @@ static int testcase377() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase378() {
-	volatile uint64_t rax_in, rcx_in, rdx_in;
-	volatile uint64_t rax_out, rcx_out, rdx_out;
-
-	rax_in = 0x1;
-	rcx_in = 0x1;
-	rdx_in = 0x0;
-
-	rax_out = 0x0;
-	rcx_out = 0x0;
-	rdx_out = 0x0;
-
-	printf("%s:     rex.W cmpxchg al,al\n", __func__ );
-	fflush(stdout);
-	__gtaint_reset();
-	__gtaint_setn(&rax_in, sizeof(rax_in));
-	__gtaint_setn(&rcx_in, sizeof(rcx_in));
-	__gtaint_setn(&rdx_in, sizeof(rdx_in));
-	asm volatile (
-			"rex.W cmpxchg al,al;\n"
-			:"=a"(rax_out), "=c"(rcx_out), "=d"(rdx_out)
-			:"a"(rax_in), "c"(rcx_in), "d"(rdx_in)
-	);
-	int passed0, passed1, passed2;
-	__gtaint_assert(&rax_out, sizeof(rax_out), "{ 0 1 2 3 4 5 6 7 }", &passed0);
-	__gtaint_assert(&rcx_out, sizeof(rcx_out), "{ 8 9 10 11 12 13 14 15 }", &passed1);
-	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
-	return passed0 && passed1 && passed2;
-}
-static int testcase379() {
-	volatile uint64_t rax_in, rcx_in, rdx_in;
-	volatile uint64_t rax_out, rcx_out, rdx_out;
-
-	rax_in = 0x1;
-	rcx_in = 0x1;
-	rdx_in = 0x0;
-
-	rax_out = 0x0;
-	rcx_out = 0x0;
-	rdx_out = 0x0;
-
-	printf("%s:     rex.W cmpxchg al,cl\n", __func__ );
-	fflush(stdout);
-	__gtaint_reset();
-	__gtaint_setn(&rax_in, sizeof(rax_in));
-	__gtaint_setn(&rcx_in, sizeof(rcx_in));
-	__gtaint_setn(&rdx_in, sizeof(rdx_in));
-	asm volatile (
-			"rex.W cmpxchg al,cl;\n"
-			:"=a"(rax_out), "=c"(rcx_out), "=d"(rdx_out)
-			:"a"(rax_in), "c"(rcx_in), "d"(rdx_in)
-	);
-	int passed0, passed1, passed2;
-	__gtaint_assert(&rax_out, sizeof(rax_out), "{ 0 1 2 3 4 5 6 7 8 }", &passed0);
-	__gtaint_assert(&rcx_out, sizeof(rcx_out), "{ 8 9 10 11 12 13 14 15 }", &passed1);
-	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
-	return passed0 && passed1 && passed2;
-}
-static int testcase380() {
+static int testcase366() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -11048,7 +10642,7 @@ static int testcase380() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase381() {
+static int testcase367() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -11077,7 +10671,7 @@ static int testcase381() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase382() {
+static int testcase368() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -11106,7 +10700,7 @@ static int testcase382() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase383() {
+static int testcase369() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -11135,7 +10729,7 @@ static int testcase383() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase384() {
+static int testcase370() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -11164,7 +10758,7 @@ static int testcase384() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase385() {
+static int testcase371() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -11193,7 +10787,7 @@ static int testcase385() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase386() {
+static int testcase372() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -11222,7 +10816,7 @@ static int testcase386() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase387() {
+static int testcase373() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -11251,7 +10845,7 @@ static int testcase387() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase388() {
+static int testcase374() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -11280,7 +10874,7 @@ static int testcase388() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase389() {
+static int testcase375() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -11309,7 +10903,7 @@ static int testcase389() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase390() {
+static int testcase376() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -11338,7 +10932,7 @@ static int testcase390() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase391() {
+static int testcase377() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -11367,7 +10961,7 @@ static int testcase391() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase392() {
+static int testcase378() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -11396,7 +10990,7 @@ static int testcase392() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase393() {
+static int testcase379() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -11425,7 +11019,7 @@ static int testcase393() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase394() {
+static int testcase380() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -11454,7 +11048,7 @@ static int testcase394() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase395() {
+static int testcase381() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -11483,7 +11077,7 @@ static int testcase395() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase396() {
+static int testcase382() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -11512,7 +11106,7 @@ static int testcase396() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase397() {
+static int testcase383() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -11541,7 +11135,7 @@ static int testcase397() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase398() {
+static int testcase384() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -11570,7 +11164,7 @@ static int testcase398() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase399() {
+static int testcase385() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -11599,7 +11193,7 @@ static int testcase399() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase400() {
+static int testcase386() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -11628,7 +11222,7 @@ static int testcase400() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase401() {
+static int testcase387() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -11657,7 +11251,7 @@ static int testcase401() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase402() {
+static int testcase388() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -11686,7 +11280,7 @@ static int testcase402() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase403() {
+static int testcase389() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -11715,7 +11309,7 @@ static int testcase403() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase404() {
+static int testcase390() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -11744,7 +11338,7 @@ static int testcase404() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase405() {
+static int testcase391() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -11773,7 +11367,7 @@ static int testcase405() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase406() {
+static int testcase392() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -11802,7 +11396,7 @@ static int testcase406() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase407() {
+static int testcase393() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -11831,7 +11425,7 @@ static int testcase407() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase408() {
+static int testcase394() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -11860,7 +11454,7 @@ static int testcase408() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase409() {
+static int testcase395() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -11889,7 +11483,7 @@ static int testcase409() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase410() {
+static int testcase396() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -11918,7 +11512,7 @@ static int testcase410() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase411() {
+static int testcase397() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -11947,7 +11541,7 @@ static int testcase411() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase412() {
+static int testcase398() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -11976,7 +11570,7 @@ static int testcase412() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase413() {
+static int testcase399() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -12005,7 +11599,7 @@ static int testcase413() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase414() {
+static int testcase400() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -12034,7 +11628,7 @@ static int testcase414() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase415() {
+static int testcase401() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -12063,7 +11657,7 @@ static int testcase415() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase416() {
+static int testcase402() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -12092,7 +11686,7 @@ static int testcase416() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase417() {
+static int testcase403() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -12121,7 +11715,7 @@ static int testcase417() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase418() {
+static int testcase404() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -12150,7 +11744,7 @@ static int testcase418() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase419() {
+static int testcase405() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -12179,7 +11773,7 @@ static int testcase419() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase420() {
+static int testcase406() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -12208,7 +11802,7 @@ static int testcase420() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase421() {
+static int testcase407() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -12237,7 +11831,7 @@ static int testcase421() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase422() {
+static int testcase408() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -12266,7 +11860,7 @@ static int testcase422() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase423() {
+static int testcase409() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -12295,7 +11889,7 @@ static int testcase423() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase424() {
+static int testcase410() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -12324,7 +11918,7 @@ static int testcase424() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase425() {
+static int testcase411() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -12353,7 +11947,7 @@ static int testcase425() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase426() {
+static int testcase412() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -12382,7 +11976,7 @@ static int testcase426() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase427() {
+static int testcase413() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -12411,7 +12005,7 @@ static int testcase427() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase428() {
+static int testcase414() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -12440,7 +12034,7 @@ static int testcase428() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase429() {
+static int testcase415() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -12469,7 +12063,7 @@ static int testcase429() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase430() {
+static int testcase416() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -12498,7 +12092,7 @@ static int testcase430() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase431() {
+static int testcase417() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -12527,7 +12121,7 @@ static int testcase431() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase432() {
+static int testcase418() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -12556,7 +12150,7 @@ static int testcase432() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase433() {
+static int testcase419() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -12585,7 +12179,7 @@ static int testcase433() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase434() {
+static int testcase420() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -12614,7 +12208,7 @@ static int testcase434() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase435() {
+static int testcase421() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -12643,7 +12237,7 @@ static int testcase435() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase436() {
+static int testcase422() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -12672,7 +12266,7 @@ static int testcase436() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase437() {
+static int testcase423() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -12701,7 +12295,7 @@ static int testcase437() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase438() {
+static int testcase424() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -12730,7 +12324,7 @@ static int testcase438() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase439() {
+static int testcase425() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -12759,7 +12353,7 @@ static int testcase439() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase440() {
+static int testcase426() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -12788,7 +12382,7 @@ static int testcase440() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase441() {
+static int testcase427() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -12817,7 +12411,7 @@ static int testcase441() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase442() {
+static int testcase428() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -12846,7 +12440,7 @@ static int testcase442() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase443() {
+static int testcase429() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -12875,7 +12469,7 @@ static int testcase443() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase444() {
+static int testcase430() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -12904,7 +12498,7 @@ static int testcase444() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase445() {
+static int testcase431() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -12933,7 +12527,7 @@ static int testcase445() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase446() {
+static int testcase432() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -12962,7 +12556,7 @@ static int testcase446() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase447() {
+static int testcase433() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -12991,7 +12585,7 @@ static int testcase447() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase448() {
+static int testcase434() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -13020,7 +12614,7 @@ static int testcase448() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase449() {
+static int testcase435() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -13049,7 +12643,7 @@ static int testcase449() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase450() {
+static int testcase436() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -13078,7 +12672,7 @@ static int testcase450() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase451() {
+static int testcase437() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -13107,7 +12701,7 @@ static int testcase451() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase452() {
+static int testcase438() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -13136,7 +12730,7 @@ static int testcase452() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase453() {
+static int testcase439() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -13165,7 +12759,7 @@ static int testcase453() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase454() {
+static int testcase440() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -13194,7 +12788,7 @@ static int testcase454() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase455() {
+static int testcase441() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -13223,7 +12817,7 @@ static int testcase455() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase456() {
+static int testcase442() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -13252,7 +12846,7 @@ static int testcase456() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase457() {
+static int testcase443() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -13281,7 +12875,7 @@ static int testcase457() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase458() {
+static int testcase444() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -13310,7 +12904,7 @@ static int testcase458() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase459() {
+static int testcase445() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -13339,7 +12933,7 @@ static int testcase459() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase460() {
+static int testcase446() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -13368,7 +12962,7 @@ static int testcase460() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase461() {
+static int testcase447() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -13397,7 +12991,7 @@ static int testcase461() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase462() {
+static int testcase448() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -13426,7 +13020,7 @@ static int testcase462() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase463() {
+static int testcase449() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -13455,7 +13049,7 @@ static int testcase463() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase464() {
+static int testcase450() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -13484,7 +13078,7 @@ static int testcase464() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase465() {
+static int testcase451() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -13513,7 +13107,7 @@ static int testcase465() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase466() {
+static int testcase452() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -13542,7 +13136,7 @@ static int testcase466() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase467() {
+static int testcase453() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -13571,7 +13165,7 @@ static int testcase467() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase468() {
+static int testcase454() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -13600,7 +13194,7 @@ static int testcase468() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase469() {
+static int testcase455() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -13629,7 +13223,7 @@ static int testcase469() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase470() {
+static int testcase456() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -13658,7 +13252,7 @@ static int testcase470() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase471() {
+static int testcase457() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -13687,7 +13281,7 @@ static int testcase471() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase472() {
+static int testcase458() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -13716,7 +13310,7 @@ static int testcase472() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase473() {
+static int testcase459() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -13745,7 +13339,7 @@ static int testcase473() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase474() {
+static int testcase460() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -13774,7 +13368,7 @@ static int testcase474() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase475() {
+static int testcase461() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -13803,7 +13397,7 @@ static int testcase475() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase476() {
+static int testcase462() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -13832,7 +13426,7 @@ static int testcase476() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase477() {
+static int testcase463() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -13861,7 +13455,7 @@ static int testcase477() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase478() {
+static int testcase464() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -13890,7 +13484,7 @@ static int testcase478() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase479() {
+static int testcase465() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -13919,7 +13513,7 @@ static int testcase479() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase480() {
+static int testcase466() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -13948,7 +13542,7 @@ static int testcase480() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase481() {
+static int testcase467() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -13977,7 +13571,7 @@ static int testcase481() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase482() {
+static int testcase468() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -14006,7 +13600,7 @@ static int testcase482() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase483() {
+static int testcase469() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -14035,7 +13629,7 @@ static int testcase483() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase484() {
+static int testcase470() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -14064,7 +13658,7 @@ static int testcase484() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase485() {
+static int testcase471() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -14093,7 +13687,7 @@ static int testcase485() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase486() {
+static int testcase472() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -14122,7 +13716,7 @@ static int testcase486() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase487() {
+static int testcase473() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -14151,7 +13745,7 @@ static int testcase487() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase488() {
+static int testcase474() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -14180,7 +13774,7 @@ static int testcase488() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase489() {
+static int testcase475() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -14209,7 +13803,7 @@ static int testcase489() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase490() {
+static int testcase476() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -14238,7 +13832,7 @@ static int testcase490() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase491() {
+static int testcase477() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -14267,7 +13861,7 @@ static int testcase491() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase492() {
+static int testcase478() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -14296,7 +13890,7 @@ static int testcase492() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase493() {
+static int testcase479() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -14325,7 +13919,7 @@ static int testcase493() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase494() {
+static int testcase480() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -14354,7 +13948,7 @@ static int testcase494() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase495() {
+static int testcase481() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -14383,7 +13977,7 @@ static int testcase495() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase496() {
+static int testcase482() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -14412,7 +14006,7 @@ static int testcase496() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase497() {
+static int testcase483() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -14436,12 +14030,12 @@ static int testcase497() {
 			:"a"(rax_in), "c"(rcx_in), "d"(rdx_in)
 	);
 	int passed0, passed1, passed2;
-	__gtaint_assert(&rax_out, sizeof(rax_out), "{ 0 1 2 3 }", &passed0);
-	__gtaint_assert(&rcx_out, sizeof(rcx_out), "{ 8 9 10 11 12 13 14 15 }", &passed1);
+	__gtaint_assert(&rax_out, sizeof(rax_out), "{ 0 1 2 3 4 5 6 7 }", &passed0);
+	__gtaint_assert(&rcx_out, sizeof(rcx_out), "{ 8 9 10 11 }", &passed1);
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase498() {
+static int testcase484() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -14470,7 +14064,7 @@ static int testcase498() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase499() {
+static int testcase485() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -14499,7 +14093,7 @@ static int testcase499() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase500() {
+static int testcase486() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -14528,7 +14122,7 @@ static int testcase500() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase501() {
+static int testcase487() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -14557,7 +14151,7 @@ static int testcase501() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase502() {
+static int testcase488() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -14586,7 +14180,7 @@ static int testcase502() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase503() {
+static int testcase489() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -14615,7 +14209,7 @@ static int testcase503() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase504() {
+static int testcase490() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -14644,7 +14238,7 @@ static int testcase504() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase505() {
+static int testcase491() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -14673,7 +14267,7 @@ static int testcase505() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase506() {
+static int testcase492() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -14702,7 +14296,7 @@ static int testcase506() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase507() {
+static int testcase493() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -14731,7 +14325,7 @@ static int testcase507() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase508() {
+static int testcase494() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -14760,7 +14354,7 @@ static int testcase508() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase509() {
+static int testcase495() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -14789,7 +14383,7 @@ static int testcase509() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase510() {
+static int testcase496() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -14818,7 +14412,7 @@ static int testcase510() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase511() {
+static int testcase497() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -14847,7 +14441,7 @@ static int testcase511() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase512() {
+static int testcase498() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -14876,7 +14470,7 @@ static int testcase512() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase513() {
+static int testcase499() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -14905,7 +14499,7 @@ static int testcase513() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase514() {
+static int testcase500() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -14934,7 +14528,7 @@ static int testcase514() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase515() {
+static int testcase501() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -14963,7 +14557,7 @@ static int testcase515() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase516() {
+static int testcase502() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -14992,7 +14586,7 @@ static int testcase516() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase517() {
+static int testcase503() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -15021,7 +14615,7 @@ static int testcase517() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase518() {
+static int testcase504() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -15050,7 +14644,7 @@ static int testcase518() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase519() {
+static int testcase505() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -15079,7 +14673,7 @@ static int testcase519() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase520() {
+static int testcase506() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -15108,7 +14702,7 @@ static int testcase520() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase521() {
+static int testcase507() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -15137,7 +14731,7 @@ static int testcase521() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase522() {
+static int testcase508() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -15166,7 +14760,7 @@ static int testcase522() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase523() {
+static int testcase509() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -15195,7 +14789,7 @@ static int testcase523() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase524() {
+static int testcase510() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -15224,7 +14818,7 @@ static int testcase524() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase525() {
+static int testcase511() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -15253,7 +14847,7 @@ static int testcase525() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase526() {
+static int testcase512() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -15282,7 +14876,7 @@ static int testcase526() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase527() {
+static int testcase513() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -15311,7 +14905,7 @@ static int testcase527() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase528() {
+static int testcase514() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -15340,7 +14934,7 @@ static int testcase528() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase529() {
+static int testcase515() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -15369,7 +14963,7 @@ static int testcase529() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase530() {
+static int testcase516() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -15398,7 +14992,7 @@ static int testcase530() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase531() {
+static int testcase517() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -15427,7 +15021,7 @@ static int testcase531() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase532() {
+static int testcase518() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -15456,7 +15050,7 @@ static int testcase532() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase533() {
+static int testcase519() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -15485,7 +15079,7 @@ static int testcase533() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase534() {
+static int testcase520() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -15514,7 +15108,7 @@ static int testcase534() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase535() {
+static int testcase521() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -15543,7 +15137,7 @@ static int testcase535() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase536() {
+static int testcase522() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -15572,7 +15166,7 @@ static int testcase536() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase537() {
+static int testcase523() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -15601,7 +15195,7 @@ static int testcase537() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase538() {
+static int testcase524() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -15630,7 +15224,7 @@ static int testcase538() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase539() {
+static int testcase525() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -15659,7 +15253,7 @@ static int testcase539() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase540() {
+static int testcase526() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -15688,7 +15282,7 @@ static int testcase540() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase541() {
+static int testcase527() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -15717,7 +15311,7 @@ static int testcase541() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase542() {
+static int testcase528() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -15746,7 +15340,7 @@ static int testcase542() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase543() {
+static int testcase529() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -15775,7 +15369,7 @@ static int testcase543() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase544() {
+static int testcase530() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -15804,7 +15398,7 @@ static int testcase544() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase545() {
+static int testcase531() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -15833,7 +15427,7 @@ static int testcase545() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase546() {
+static int testcase532() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -15862,7 +15456,7 @@ static int testcase546() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase547() {
+static int testcase533() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -15891,7 +15485,7 @@ static int testcase547() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase548() {
+static int testcase534() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -15920,7 +15514,7 @@ static int testcase548() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase549() {
+static int testcase535() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -15949,7 +15543,7 @@ static int testcase549() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase550() {
+static int testcase536() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -15978,7 +15572,7 @@ static int testcase550() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase551() {
+static int testcase537() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -16007,7 +15601,7 @@ static int testcase551() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase552() {
+static int testcase538() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -16036,7 +15630,7 @@ static int testcase552() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase553() {
+static int testcase539() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -16065,7 +15659,7 @@ static int testcase553() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase554() {
+static int testcase540() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -16094,7 +15688,7 @@ static int testcase554() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase555() {
+static int testcase541() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -16123,7 +15717,7 @@ static int testcase555() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase556() {
+static int testcase542() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -16152,7 +15746,7 @@ static int testcase556() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase557() {
+static int testcase543() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -16181,7 +15775,7 @@ static int testcase557() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase558() {
+static int testcase544() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -16210,7 +15804,7 @@ static int testcase558() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase559() {
+static int testcase545() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -16239,7 +15833,7 @@ static int testcase559() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase560() {
+static int testcase546() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -16268,7 +15862,7 @@ static int testcase560() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase561() {
+static int testcase547() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -16297,7 +15891,7 @@ static int testcase561() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase562() {
+static int testcase548() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -16326,7 +15920,7 @@ static int testcase562() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase563() {
+static int testcase549() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -16355,7 +15949,7 @@ static int testcase563() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase564() {
+static int testcase550() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -16384,7 +15978,7 @@ static int testcase564() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase565() {
+static int testcase551() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -16413,7 +16007,7 @@ static int testcase565() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase566() {
+static int testcase552() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -16442,7 +16036,7 @@ static int testcase566() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase567() {
+static int testcase553() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -16471,7 +16065,7 @@ static int testcase567() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase568() {
+static int testcase554() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -16500,7 +16094,7 @@ static int testcase568() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase569() {
+static int testcase555() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -16529,7 +16123,7 @@ static int testcase569() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase570() {
+static int testcase556() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -16558,7 +16152,7 @@ static int testcase570() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase571() {
+static int testcase557() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -16587,7 +16181,7 @@ static int testcase571() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase572() {
+static int testcase558() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -16616,7 +16210,7 @@ static int testcase572() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase573() {
+static int testcase559() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -16645,7 +16239,7 @@ static int testcase573() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase574() {
+static int testcase560() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -16674,7 +16268,7 @@ static int testcase574() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase575() {
+static int testcase561() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -16703,7 +16297,7 @@ static int testcase575() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase576() {
+static int testcase562() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -16732,7 +16326,7 @@ static int testcase576() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase577() {
+static int testcase563() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -16761,7 +16355,7 @@ static int testcase577() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase578() {
+static int testcase564() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -16790,7 +16384,7 @@ static int testcase578() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase579() {
+static int testcase565() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -16819,7 +16413,7 @@ static int testcase579() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase580() {
+static int testcase566() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -16848,7 +16442,7 @@ static int testcase580() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase581() {
+static int testcase567() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -16877,7 +16471,7 @@ static int testcase581() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase582() {
+static int testcase568() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -16906,7 +16500,7 @@ static int testcase582() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase583() {
+static int testcase569() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -16935,7 +16529,7 @@ static int testcase583() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase584() {
+static int testcase570() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -16964,7 +16558,7 @@ static int testcase584() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase585() {
+static int testcase571() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -16993,7 +16587,7 @@ static int testcase585() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase586() {
+static int testcase572() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -17022,7 +16616,7 @@ static int testcase586() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase587() {
+static int testcase573() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -17051,7 +16645,7 @@ static int testcase587() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase588() {
+static int testcase574() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -17080,7 +16674,7 @@ static int testcase588() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase589() {
+static int testcase575() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -17109,7 +16703,7 @@ static int testcase589() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase590() {
+static int testcase576() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -17138,7 +16732,7 @@ static int testcase590() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase591() {
+static int testcase577() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -17167,7 +16761,7 @@ static int testcase591() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase592() {
+static int testcase578() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -17196,7 +16790,7 @@ static int testcase592() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase593() {
+static int testcase579() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -17225,7 +16819,7 @@ static int testcase593() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase594() {
+static int testcase580() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -17254,7 +16848,7 @@ static int testcase594() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase595() {
+static int testcase581() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -17283,7 +16877,7 @@ static int testcase595() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase596() {
+static int testcase582() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -17312,7 +16906,7 @@ static int testcase596() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase597() {
+static int testcase583() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -17341,7 +16935,7 @@ static int testcase597() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase598() {
+static int testcase584() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -17370,7 +16964,7 @@ static int testcase598() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase599() {
+static int testcase585() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -17399,7 +16993,7 @@ static int testcase599() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase600() {
+static int testcase586() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -17428,7 +17022,7 @@ static int testcase600() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase601() {
+static int testcase587() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -17457,7 +17051,7 @@ static int testcase601() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase602() {
+static int testcase588() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -17486,7 +17080,7 @@ static int testcase602() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase603() {
+static int testcase589() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -17515,7 +17109,7 @@ static int testcase603() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase604() {
+static int testcase590() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -17544,7 +17138,7 @@ static int testcase604() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase605() {
+static int testcase591() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -17573,7 +17167,7 @@ static int testcase605() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase606() {
+static int testcase592() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -17602,7 +17196,7 @@ static int testcase606() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase607() {
+static int testcase593() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -17631,7 +17225,7 @@ static int testcase607() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase608() {
+static int testcase594() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -17660,7 +17254,7 @@ static int testcase608() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase609() {
+static int testcase595() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -17689,7 +17283,7 @@ static int testcase609() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase610() {
+static int testcase596() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -17718,7 +17312,7 @@ static int testcase610() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase611() {
+static int testcase597() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -17747,7 +17341,7 @@ static int testcase611() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase612() {
+static int testcase598() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -17776,7 +17370,7 @@ static int testcase612() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase613() {
+static int testcase599() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -17805,7 +17399,7 @@ static int testcase613() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase614() {
+static int testcase600() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -17834,7 +17428,7 @@ static int testcase614() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase615() {
+static int testcase601() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -17863,7 +17457,7 @@ static int testcase615() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase616() {
+static int testcase602() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -17892,7 +17486,7 @@ static int testcase616() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase617() {
+static int testcase603() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -17921,7 +17515,7 @@ static int testcase617() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase618() {
+static int testcase604() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -17950,7 +17544,7 @@ static int testcase618() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase619() {
+static int testcase605() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -17979,7 +17573,7 @@ static int testcase619() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase620() {
+static int testcase606() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -18008,7 +17602,7 @@ static int testcase620() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase621() {
+static int testcase607() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -18037,7 +17631,7 @@ static int testcase621() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase622() {
+static int testcase608() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -18066,7 +17660,7 @@ static int testcase622() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase623() {
+static int testcase609() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -18095,7 +17689,7 @@ static int testcase623() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase624() {
+static int testcase610() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -18124,7 +17718,7 @@ static int testcase624() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase625() {
+static int testcase611() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -18153,7 +17747,7 @@ static int testcase625() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase626() {
+static int testcase612() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -18182,7 +17776,7 @@ static int testcase626() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase627() {
+static int testcase613() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -18211,7 +17805,7 @@ static int testcase627() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase628() {
+static int testcase614() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -18240,7 +17834,7 @@ static int testcase628() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase629() {
+static int testcase615() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -18269,7 +17863,7 @@ static int testcase629() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase630() {
+static int testcase616() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -18298,7 +17892,7 @@ static int testcase630() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase631() {
+static int testcase617() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -18327,7 +17921,7 @@ static int testcase631() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase632() {
+static int testcase618() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -18356,7 +17950,7 @@ static int testcase632() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase633() {
+static int testcase619() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -18385,7 +17979,7 @@ static int testcase633() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase634() {
+static int testcase620() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -18414,7 +18008,7 @@ static int testcase634() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase635() {
+static int testcase621() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -18443,7 +18037,7 @@ static int testcase635() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase636() {
+static int testcase622() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -18472,7 +18066,7 @@ static int testcase636() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase637() {
+static int testcase623() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -18501,7 +18095,7 @@ static int testcase637() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase638() {
+static int testcase624() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -18530,7 +18124,7 @@ static int testcase638() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase639() {
+static int testcase625() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -18559,7 +18153,7 @@ static int testcase639() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase640() {
+static int testcase626() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -18588,7 +18182,7 @@ static int testcase640() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase641() {
+static int testcase627() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -18617,7 +18211,7 @@ static int testcase641() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase642() {
+static int testcase628() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -18646,7 +18240,7 @@ static int testcase642() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase643() {
+static int testcase629() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -18675,7 +18269,7 @@ static int testcase643() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase644() {
+static int testcase630() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -18704,7 +18298,7 @@ static int testcase644() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase645() {
+static int testcase631() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -18733,7 +18327,7 @@ static int testcase645() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase646() {
+static int testcase632() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -18762,7 +18356,7 @@ static int testcase646() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase647() {
+static int testcase633() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -18791,7 +18385,7 @@ static int testcase647() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase648() {
+static int testcase634() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -18820,7 +18414,7 @@ static int testcase648() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase649() {
+static int testcase635() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -18849,7 +18443,7 @@ static int testcase649() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase650() {
+static int testcase636() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -18878,7 +18472,7 @@ static int testcase650() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase651() {
+static int testcase637() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -18907,7 +18501,7 @@ static int testcase651() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase652() {
+static int testcase638() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -18936,7 +18530,7 @@ static int testcase652() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase653() {
+static int testcase639() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -18965,7 +18559,7 @@ static int testcase653() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase654() {
+static int testcase640() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -18994,7 +18588,7 @@ static int testcase654() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase655() {
+static int testcase641() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -19023,7 +18617,7 @@ static int testcase655() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase656() {
+static int testcase642() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -19052,7 +18646,7 @@ static int testcase656() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase657() {
+static int testcase643() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -19081,7 +18675,7 @@ static int testcase657() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase658() {
+static int testcase644() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -19110,7 +18704,7 @@ static int testcase658() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase659() {
+static int testcase645() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -19139,7 +18733,7 @@ static int testcase659() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase660() {
+static int testcase646() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -19168,7 +18762,7 @@ static int testcase660() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase661() {
+static int testcase647() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -19197,7 +18791,7 @@ static int testcase661() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase662() {
+static int testcase648() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -19226,7 +18820,7 @@ static int testcase662() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase663() {
+static int testcase649() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -19255,7 +18849,7 @@ static int testcase663() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase664() {
+static int testcase650() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -19284,7 +18878,7 @@ static int testcase664() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase665() {
+static int testcase651() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -19313,7 +18907,7 @@ static int testcase665() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase666() {
+static int testcase652() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -19342,7 +18936,7 @@ static int testcase666() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase667() {
+static int testcase653() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -19371,7 +18965,7 @@ static int testcase667() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase668() {
+static int testcase654() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -19400,7 +18994,7 @@ static int testcase668() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase669() {
+static int testcase655() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -19429,7 +19023,7 @@ static int testcase669() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase670() {
+static int testcase656() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -19458,7 +19052,7 @@ static int testcase670() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase671() {
+static int testcase657() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -19487,7 +19081,7 @@ static int testcase671() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase672() {
+static int testcase658() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -19516,7 +19110,7 @@ static int testcase672() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase673() {
+static int testcase659() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -19545,7 +19139,7 @@ static int testcase673() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase674() {
+static int testcase660() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -19574,7 +19168,7 @@ static int testcase674() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase675() {
+static int testcase661() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -19603,7 +19197,7 @@ static int testcase675() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase676() {
+static int testcase662() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -19632,7 +19226,7 @@ static int testcase676() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase677() {
+static int testcase663() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -19661,7 +19255,7 @@ static int testcase677() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase678() {
+static int testcase664() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -19690,7 +19284,7 @@ static int testcase678() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase679() {
+static int testcase665() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -19719,7 +19313,7 @@ static int testcase679() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase680() {
+static int testcase666() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -19748,7 +19342,7 @@ static int testcase680() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase681() {
+static int testcase667() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -19777,7 +19371,7 @@ static int testcase681() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase682() {
+static int testcase668() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -19806,7 +19400,7 @@ static int testcase682() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase683() {
+static int testcase669() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -19835,7 +19429,7 @@ static int testcase683() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase684() {
+static int testcase670() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -19864,7 +19458,7 @@ static int testcase684() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase685() {
+static int testcase671() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -19893,7 +19487,7 @@ static int testcase685() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase686() {
+static int testcase672() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -19922,65 +19516,7 @@ static int testcase686() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase687() {
-	volatile uint64_t rax_in, rcx_in, rdx_in;
-	volatile uint64_t rax_out, rcx_out, rdx_out;
-
-	rax_in = 0x1;
-	rcx_in = 0x1;
-	rdx_in = 0x0;
-
-	rax_out = 0x0;
-	rcx_out = 0x0;
-	rdx_out = 0x0;
-
-	printf("%s:     verr   ax\n", __func__ );
-	fflush(stdout);
-	__gtaint_reset();
-	__gtaint_setn(&rax_in, sizeof(rax_in));
-	__gtaint_setn(&rcx_in, sizeof(rcx_in));
-	__gtaint_setn(&rdx_in, sizeof(rdx_in));
-	asm volatile (
-			"verr   ax;\n"
-			:"=a"(rax_out), "=c"(rcx_out), "=d"(rdx_out)
-			:"a"(rax_in), "c"(rcx_in), "d"(rdx_in)
-	);
-	int passed0, passed1, passed2;
-	__gtaint_assert(&rax_out, sizeof(rax_out), "{ 0 1 2 3 4 5 6 7 }", &passed0);
-	__gtaint_assert(&rcx_out, sizeof(rcx_out), "{ 8 9 10 11 12 13 14 15 }", &passed1);
-	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
-	return passed0 && passed1 && passed2;
-}
-static int testcase688() {
-	volatile uint64_t rax_in, rcx_in, rdx_in;
-	volatile uint64_t rax_out, rcx_out, rdx_out;
-
-	rax_in = 0x1;
-	rcx_in = 0x1;
-	rdx_in = 0x0;
-
-	rax_out = 0x0;
-	rcx_out = 0x0;
-	rdx_out = 0x0;
-
-	printf("%s:     verw   ax\n", __func__ );
-	fflush(stdout);
-	__gtaint_reset();
-	__gtaint_setn(&rax_in, sizeof(rax_in));
-	__gtaint_setn(&rcx_in, sizeof(rcx_in));
-	__gtaint_setn(&rdx_in, sizeof(rdx_in));
-	asm volatile (
-			"verw   ax;\n"
-			:"=a"(rax_out), "=c"(rcx_out), "=d"(rdx_out)
-			:"a"(rax_in), "c"(rcx_in), "d"(rdx_in)
-	);
-	int passed0, passed1, passed2;
-	__gtaint_assert(&rax_out, sizeof(rax_out), "{ 0 1 2 3 4 5 6 7 }", &passed0);
-	__gtaint_assert(&rcx_out, sizeof(rcx_out), "{ 8 9 10 11 12 13 14 15 }", &passed1);
-	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
-	return passed0 && passed1 && passed2;
-}
-static int testcase689() {
+static int testcase673() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -20009,7 +19545,7 @@ static int testcase689() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase690() {
+static int testcase674() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -20038,7 +19574,7 @@ static int testcase690() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase691() {
+static int testcase675() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -20067,7 +19603,7 @@ static int testcase691() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase692() {
+static int testcase676() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -20096,7 +19632,7 @@ static int testcase692() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase693() {
+static int testcase677() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -20125,7 +19661,7 @@ static int testcase693() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase694() {
+static int testcase678() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -20154,7 +19690,7 @@ static int testcase694() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase695() {
+static int testcase679() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -20183,7 +19719,7 @@ static int testcase695() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase696() {
+static int testcase680() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -20212,7 +19748,7 @@ static int testcase696() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase697() {
+static int testcase681() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -20241,7 +19777,7 @@ static int testcase697() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase698() {
+static int testcase682() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -20270,7 +19806,7 @@ static int testcase698() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase699() {
+static int testcase683() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -20299,7 +19835,7 @@ static int testcase699() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase700() {
+static int testcase684() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -20328,7 +19864,7 @@ static int testcase700() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase701() {
+static int testcase685() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -20357,7 +19893,7 @@ static int testcase701() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase702() {
+static int testcase686() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -20386,7 +19922,7 @@ static int testcase702() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase703() {
+static int testcase687() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -20415,7 +19951,7 @@ static int testcase703() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase704() {
+static int testcase688() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -20444,7 +19980,7 @@ static int testcase704() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase705() {
+static int testcase689() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -20473,7 +20009,7 @@ static int testcase705() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase706() {
+static int testcase690() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -20502,7 +20038,7 @@ static int testcase706() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase707() {
+static int testcase691() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -20531,7 +20067,7 @@ static int testcase707() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase708() {
+static int testcase692() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -20560,7 +20096,7 @@ static int testcase708() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase709() {
+static int testcase693() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -20589,7 +20125,7 @@ static int testcase709() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase710() {
+static int testcase694() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -20618,7 +20154,7 @@ static int testcase710() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase711() {
+static int testcase695() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -20642,12 +20178,12 @@ static int testcase711() {
 			:"a"(rax_in), "c"(rcx_in), "d"(rdx_in)
 	);
 	int passed0, passed1, passed2;
-	__gtaint_assert(&rax_out, sizeof(rax_out), "{ 0 1 2 3 4 5 6 7 8 }", &passed0);
-	__gtaint_assert(&rcx_out, sizeof(rcx_out), "{ 8 9 10 11 12 13 14 15 }", &passed1);
+	__gtaint_assert(&rax_out, sizeof(rax_out), "{ 0 1 2 3 4 5 6 7 }", &passed0);
+	__gtaint_assert(&rcx_out, sizeof(rcx_out), "{ 0 8 9 10 11 12 13 14 15 }", &passed1);
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase712() {
+static int testcase696() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -20676,7 +20212,7 @@ static int testcase712() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase713() {
+static int testcase697() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -20705,7 +20241,7 @@ static int testcase713() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase714() {
+static int testcase698() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -20734,7 +20270,7 @@ static int testcase714() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase715() {
+static int testcase699() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -20763,7 +20299,7 @@ static int testcase715() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase716() {
+static int testcase700() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -20792,7 +20328,7 @@ static int testcase716() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase717() {
+static int testcase701() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -20821,7 +20357,7 @@ static int testcase717() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase718() {
+static int testcase702() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -20850,7 +20386,7 @@ static int testcase718() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase719() {
+static int testcase703() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -20879,7 +20415,7 @@ static int testcase719() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase720() {
+static int testcase704() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -20908,7 +20444,7 @@ static int testcase720() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase721() {
+static int testcase705() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -20937,7 +20473,7 @@ static int testcase721() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase722() {
+static int testcase706() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -20966,7 +20502,7 @@ static int testcase722() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase723() {
+static int testcase707() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -20995,7 +20531,7 @@ static int testcase723() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase724() {
+static int testcase708() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -21024,7 +20560,7 @@ static int testcase724() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase725() {
+static int testcase709() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -21053,7 +20589,7 @@ static int testcase725() {
 	__gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
 	return passed0 && passed1 && passed2;
 }
-static int testcase726() {
+static int testcase710() {
 	volatile uint64_t rax_in, rcx_in, rdx_in;
 	volatile uint64_t rax_out, rcx_out, rdx_out;
 
@@ -21794,20 +21330,4 @@ static void __attribute__((noinline, constructor)) init() {
 	add_testcase(testcase708);
 	add_testcase(testcase709);
 	add_testcase(testcase710);
-	add_testcase(testcase711);
-	add_testcase(testcase712);
-	add_testcase(testcase713);
-	add_testcase(testcase714);
-	add_testcase(testcase715);
-	add_testcase(testcase716);
-	add_testcase(testcase717);
-	add_testcase(testcase718);
-	add_testcase(testcase719);
-	add_testcase(testcase720);
-	add_testcase(testcase721);
-	add_testcase(testcase722);
-	add_testcase(testcase723);
-	add_testcase(testcase724);
-	add_testcase(testcase725);
-	add_testcase(testcase726);
 }

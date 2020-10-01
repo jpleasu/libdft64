@@ -4,7 +4,7 @@
 #include "ins_binary_op.h"
 #include "ins_clear_op.h"
 #include "ins_movsx_op.h"
-#include "ins_unitary_op.h"
+#include "ins_unary_op.h"
 #include "ins_xchg_op.h"
 #include "ins_xfer_op.h"
 
@@ -182,15 +182,19 @@ void ins_inspect(INS ins) {
   */
 
   switch (ins_indx) {
-  // **** bianry ****
+  // **** binary ****
+  case XED_ICLASS_AND:
+    ins_binary_bytemask_op(ins, 0x00);
+    break;
+  case XED_ICLASS_OR:
+    ins_binary_bytemask_op(ins, 0xff);
+    break;
   case XED_ICLASS_ADC:
   case XED_ICLASS_ADD:
   case XED_ICLASS_ADD_LOCK:
   case XED_ICLASS_ADDPD:
   case XED_ICLASS_ADDSD:
   case XED_ICLASS_ADDSS:
-  case XED_ICLASS_AND:
-  case XED_ICLASS_OR:
   case XED_ICLASS_POR:
     ins_binary_op(ins);
     break;
@@ -454,6 +458,9 @@ void ins_inspect(INS ins) {
   case XED_ICLASS_PCMPEQB:
     ins_binary_op(ins);
     break;
+  case XED_ICLASS_BSWAP:
+    ins_unary_bswap_op(ins);
+    break;
     // TODO
   case XED_ICLASS_XGETBV:
   case XED_ICLASS_PMOVMSKB:
@@ -467,7 +474,6 @@ void ins_inspect(INS ins) {
   case XED_ICLASS_VPCMPEQB:
   case XED_ICLASS_VPBROADCASTB:
   case XED_ICLASS_VZEROUPPER:
-  case XED_ICLASS_BSWAP:
   case XED_ICLASS_UNPCKLPD:
   case XED_ICLASS_PSHUFB:
   case XED_ICLASS_VPTEST:

@@ -361,4 +361,16 @@ inline size_t REG_INDX(REG reg) {
                  IARG_THREAD_ID, IARG_UINT32, REG_INDX(dst), IARG_UINT32,      \
                  REG_INDX(src1), IARG_UINT32, REG_INDX(src2), IARG_END)
 
+namespace {
+    template <size_t sz>
+    inline void maybe_zext(tag_t *dst) {
+    }
+
+    template <>
+    inline void maybe_zext<4>(tag_t *dst) {
+        for (size_t i = 4; i < 8; i++)
+            dst[i] = tag_traits<tag_t>::cleared_val;
+    }
+} // namespace
+
 #endif

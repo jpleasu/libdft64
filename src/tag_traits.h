@@ -12,6 +12,13 @@ inline bool tag_is_empty(const TagT &tag) {
   return tag == tag_traits<TagT>::cleared_val;
 }
 
+template<typename T, typename  ...TagT>
+T tag_combine(T const &t, TagT ...rest) {
+  return tag_combine(t,tag_combine(rest...));
+}
+
+
+
 /********************************************************
  uint8_t tags
  ********************************************************/
