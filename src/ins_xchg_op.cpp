@@ -12,6 +12,7 @@ namespace {
             dst[i] = src[i];
     }
 
+    // the save/resttore copy must restore zext clobbering high dword
     template <>
     inline void copy<4>(tag_t *dst, tag_t *src) {
         for (size_t i = 0; i < 8; i++)
@@ -19,6 +20,9 @@ namespace {
     }
 } // namespace
 
+// cmpxchg d,s
+//   if a=d then d<-s
+//   else a<-d
 template <size_t sz>
 static ADDRINT PIN_FAST_ANALYSIS_CALL __attribute__((optimize("unroll-loops")))
 _cmpxchg_r2r_op_fast(THREADID tid, ADDRINT a_val, uint32_t dst, ADDRINT dst_val) {
@@ -29,7 +33,7 @@ _cmpxchg_r2r_op_fast(THREADID tid, ADDRINT a_val, uint32_t dst, ADDRINT dst_val)
     /* store the accumulator in case we branch */
     copy<sz>(save_tags, a_tags);
 
-    /* .. but assume if doesn't */
+    /* .. but assume a != dst */
     for (size_t i = 0; i < sz; i++) {
         a_tags[i] = dst_tags[i];
     }
@@ -379,35 +383,43 @@ static void PIN_FAST_ANALYSIS_CALL _xadd_r2m_opq(THREADID tid, ADDRINT dst, uint
     }
 }
 
+static constexpr REG areg(UINT32 sz) {
+    switch (sz) {
+    case 8:
+        return REG_RAX;
+    case 4:
+        return REG_EAX;
+    case 2:
+        return REG_AX;
+    case 1:
+        return REG_AL;
+    default:
+        return REG_INVALID_;
+    }
+}
+
 void ins_cmpxchg_op(INS ins) {
     REG reg_dst, reg_src;
     if (INS_MemoryOperandCount(ins) == 0) {
         reg_dst = INS_OperandReg(ins, OP_0);
         reg_src = INS_OperandReg(ins, OP_1);
-        if (REG_is_gr64(reg_dst)) {
-            INS_InsertIfCall(ins, IPOINT_BEFORE, (AFUNPTR)_cmpxchg_r2r_op_fast<8>, IARG_FAST_ANALYSIS_CALL,
-                             IARG_THREAD_ID, IARG_REG_VALUE, REG_RAX, IARG_UINT32, REG_INDX(reg_dst), IARG_REG_VALUE,
-                             reg_dst, IARG_END);
-            INS_InsertThenCall(ins, IPOINT_BEFORE, (AFUNPTR)_cmpxchg_r2r_op_slow<8>, IARG_FAST_ANALYSIS_CALL,
-                               IARG_THREAD_ID, IARG_UINT32, REG_INDX(reg_dst), IARG_UINT32, REG_INDX(reg_src),
-                               IARG_END);
-        } else if (REG_is_gr32(reg_dst)) {
-            INS_InsertIfCall(ins, IPOINT_BEFORE, (AFUNPTR)_cmpxchg_r2r_op_fast<4>, IARG_FAST_ANALYSIS_CALL,
-                             IARG_THREAD_ID, IARG_REG_VALUE, REG_EAX, IARG_UINT32, REG_INDX(reg_dst), IARG_REG_VALUE,
-                             reg_dst, IARG_END);
-            INS_InsertThenCall(ins, IPOINT_BEFORE, (AFUNPTR)_cmpxchg_r2r_op_slow<4>, IARG_FAST_ANALYSIS_CALL,
-                               IARG_THREAD_ID, IARG_UINT32, REG_INDX(reg_dst), IARG_UINT32, REG_INDX(reg_src),
-                               IARG_END);
-        } else if (REG_is_gr16(reg_dst)) {
-            INS_InsertIfCall(ins, IPOINT_BEFORE, (AFUNPTR)_cmpxchg_r2r_op_fast<2>, IARG_FAST_ANALYSIS_CALL,
-                             IARG_THREAD_ID, IARG_REG_VALUE, REG_AX, IARG_UINT32, REG_INDX(reg_dst), IARG_REG_VALUE,
-                             reg_dst, IARG_END);
-            INS_InsertThenCall(ins, IPOINT_BEFORE, (AFUNPTR)_cmpxchg_r2r_op_slow<2>, IARG_FAST_ANALYSIS_CALL,
-                               IARG_THREAD_ID, IARG_UINT32, REG_INDX(reg_dst), IARG_UINT32, REG_INDX(reg_src),
-                               IARG_END);
-        } else {
-            xed_iclass_enum_t ins_indx = (xed_iclass_enum_t)INS_Opcode(ins);
-            LOG(std::string(__func__) + ": unhandled opcode (opcode=" + decstr(ins_indx) + ")\n");
+        switch (REG_Size(reg_dst)) {
+#define CASE(SZ)                                                                                                       \
+    case SZ:                                                                                                           \
+        INS_InsertIfCall(ins, IPOINT_BEFORE, (AFUNPTR)_cmpxchg_r2r_op_fast<SZ>, IARG_FAST_ANALYSIS_CALL,               \
+                         IARG_THREAD_ID, IARG_REG_VALUE, areg(SZ), IARG_UINT32, REG_INDX(reg_dst), IARG_REG_VALUE,     \
+                         reg_dst, IARG_END);                                                                           \
+        INS_InsertThenCall(ins, IPOINT_BEFORE, (AFUNPTR)_cmpxchg_r2r_op_slow<SZ>, IARG_FAST_ANALYSIS_CALL,             \
+                           IARG_THREAD_ID, IARG_UINT32, REG_INDX(reg_dst), IARG_UINT32, REG_INDX(reg_src), IARG_END);  \
+        break;
+            CASE(8);
+            CASE(4);
+            CASE(2);
+            CASE(1);
+#undef CASE
+        default:
+            uninstrumented(ins);
+            break;
         }
     } else {
         reg_src = INS_OperandReg(ins, OP_1);
@@ -427,8 +439,7 @@ void ins_cmpxchg_op(INS ins) {
             INS_InsertThenCall(ins, IPOINT_BEFORE, (AFUNPTR)_cmpxchg_r2m_opw_slow, IARG_FAST_ANALYSIS_CALL,
                                IARG_THREAD_ID, IARG_MEMORYWRITE_EA, IARG_UINT32, REG_INDX(reg_src), IARG_END);
         } else {
-            xed_iclass_enum_t ins_indx = (xed_iclass_enum_t)INS_Opcode(ins);
-            LOG(std::string(__func__) + ": unhandled opcode (opcode=" + decstr(ins_indx) + ")\n");
+            uninstrumented(ins);
         }
     }
 }

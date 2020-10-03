@@ -493,3 +493,12 @@ int ins_clr_post(syscall_desc_t *desc) {
   /* return with success */
   return 0;
 }
+
+void uninstrumented(INS ins) {
+  // https://intelxed.github.io/ref-manual/xed-extension-enum_8h.html#ae7b9f64cdf123c5fda22bd10d5db9916
+  // INT32 num_op = INS_OperandCount(ins);
+  // INT32 ins_ext = INS_Extension(ins);
+  // if (ins_ext != 0 && ins_ext != 10)
+  LOGD("[uninstrumented] opcode=%d, %p: %s\n", INS_Opcode(ins), (void *)INS_Address(ins),
+       INS_Disassemble(ins).c_str());
+}

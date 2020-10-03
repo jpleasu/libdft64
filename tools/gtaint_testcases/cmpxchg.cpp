@@ -1,446 +1,353 @@
 #include "testcase.h"
 
-static int cmpxchg1() {
-    volatile uint64_t rax_in, rcx_in, rdx_in;
-    volatile uint64_t rax_out, rcx_out, rdx_out;
+// cmpxchg d,s
+//   if a=d then d<-s
+//   else a<-d
 
-    rax_in = 0x1;
-    rcx_in = 0x1;
-    rdx_in = 0x0;
+static int testcase0() {
+    int passed = 1;
 
-    rax_out = 0x0;
-    rcx_out = 0x0;
-    rdx_out = 0x0;
-
-    printf("%s:     cmpxchg ax,ax\n", __func__);
+    printf("%s     cmpxchg al,al\n", __func__);
     fflush(stdout);
+
     __gtaint_reset();
-    __gtaint_setn(&rax_in, sizeof(rax_in));
-    __gtaint_setn(&rcx_in, sizeof(rcx_in));
-    __gtaint_setn(&rdx_in, sizeof(rdx_in));
-    asm volatile("cmpxchg ax,ax;\n"
-                 : "=a"(rax_out), "=c"(rcx_out), "=d"(rdx_out)
-                 : "a"(rax_in), "c"(rcx_in), "d"(rdx_in));
-    int passed0, passed1, passed2;
-    __gtaint_assert(&rax_out, sizeof(rax_out), "{ 0 1 2 3 4 5 6 7 }", &passed0);
-    __gtaint_assert(&rcx_out, sizeof(rcx_out), "{ 8 9 10 11 12 13 14 15 }", &passed1);
-    __gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
-    return passed0 && passed1 && passed2;
-}
-static int cmpxchg2() {
-    volatile uint64_t rax_in, rcx_in, rdx_in;
-    volatile uint64_t rax_out, rcx_out, rdx_out;
+    uint8_t inAL = 1;
+    uint8_t outAL = 1;
+    __gtaint_setn(&inAL, 1);
+    asm volatile("mov AL,%1;\n"
+                 "cmpxchg al,al;\n" // <--
+                 "mov %0,AL;\n"
+                 : "=m"(outAL)
+                 : "m"(inAL)
+                 : "al");
 
-    rax_in = 0x1;
-    rcx_in = 0x1;
-    rdx_in = 0x0;
-
-    rax_out = 0x0;
-    rcx_out = 0x0;
-    rdx_out = 0x0;
-
-    printf("%s:     cmpxchg ax,cx\n", __func__);
-    fflush(stdout);
-    __gtaint_reset();
-    __gtaint_setn(&rax_in, sizeof(rax_in));
-    __gtaint_setn(&rcx_in, sizeof(rcx_in));
-    __gtaint_setn(&rdx_in, sizeof(rdx_in));
-    asm volatile("cmpxchg ax,cx;\n"
-                 : "=a"(rax_out), "=c"(rcx_out), "=d"(rdx_out)
-                 : "a"(rax_in), "c"(rcx_in), "d"(rdx_in));
-    int passed0, passed1, passed2;
-    __gtaint_assert(&rax_out, sizeof(rax_out), "{ 2 3 4 5 6 7 8 9 }", &passed0);
-    __gtaint_assert(&rcx_out, sizeof(rcx_out), "{ 8 9 10 11 12 13 14 15 }", &passed1);
-    __gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
-    return passed0 && passed1 && passed2;
+    ASSERT_TAGGED((char *)&outAL + 0, { 0 });
+    return passed;
 }
 
-static int cmpxchg3() {
-    volatile uint64_t rax_in, rcx_in, rdx_in;
-    volatile uint64_t rax_out, rcx_out, rdx_out;
+static int testcase1() {
+    int passed = 1;
 
-    rax_in = 0x1;
-    rcx_in = 0x1;
-    rdx_in = 0x0;
-
-    rax_out = 0x0;
-    rcx_out = 0x0;
-    rdx_out = 0x0;
-
-    printf("%s:     cmpxchg cx,ax\n", __func__);
+    printf("%s     cmpxchg al,cl\n", __func__);
     fflush(stdout);
+
     __gtaint_reset();
-    __gtaint_setn(&rax_in, sizeof(rax_in));
-    __gtaint_setn(&rcx_in, sizeof(rcx_in));
-    __gtaint_setn(&rdx_in, sizeof(rdx_in));
-    asm volatile("cmpxchg cx,ax;\n"
-                 : "=a"(rax_out), "=c"(rcx_out), "=d"(rdx_out)
-                 : "a"(rax_in), "c"(rcx_in), "d"(rdx_in));
-    int passed0, passed1, passed2;
-    __gtaint_assert(&rax_out, sizeof(rax_out), "{ 0 1 2 3 4 5 6 7 }", &passed0);
-    __gtaint_assert(&rcx_out, sizeof(rcx_out), "{ 0 1 10 11 12 13 14 15 }", &passed1);
-    __gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
-    return passed0 && passed1 && passed2;
+    uint8_t inAL = 1;
+    uint8_t inCL = 1;
+    uint8_t outAL = 1;
+    __gtaint_setn(&inAL, 1);
+    __gtaint_setn(&inCL, 1);
+    asm volatile("mov AL,%1;\n"
+                 "mov CL,%2;\n"
+                 "cmpxchg al,cl;\n" // <--
+                 "mov %0,AL;\n"
+                 : "=m"(outAL)
+                 : "m"(inAL), "m"(inCL)
+                 : "al", "cl");
+
+    ASSERT_TAGGED((char *)&outAL + 0, { 1 });
+    return passed;
 }
 
-static int cmpxchg4() {
-    volatile uint64_t rax_in, rcx_in, rdx_in;
-    volatile uint64_t rax_out, rcx_out, rdx_out;
+static int testcase2() {
+    int passed = 1;
 
-    rax_in = 0x1;
-    rcx_in = 0x2;
-    rdx_in = 0x3;
-
-    rax_out = 0x0;
-    rcx_out = 0x0;
-    rdx_out = 0x0;
-
-    printf("%s:     cmpxchg cx,dx\n", __func__);
+    printf("%s     cmpxchg ax,ax\n", __func__);
     fflush(stdout);
+
     __gtaint_reset();
-    __gtaint_setn(&rax_in, sizeof(rax_in));
-    __gtaint_setn(&rcx_in, sizeof(rcx_in));
-    __gtaint_setn(&rdx_in, sizeof(rdx_in));
-    asm volatile("cmpxchg cx,dx;\n"
-                 : "=a"(rax_out), "=c"(rcx_out), "=d"(rdx_out)
-                 : "a"(rax_in), "c"(rcx_in), "d"(rdx_in));
-    int passed0, passed1, passed2;
-    __gtaint_assert(&rax_out, sizeof(rax_out), "{ 2 3 4 5 6 7 8 9 }", &passed0);
-    __gtaint_assert(&rcx_out, sizeof(rcx_out), "{ 8 9 10 11 12 13 14 15 }", &passed1);
-    __gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
-    return passed0 && passed1 && passed2;
+    uint16_t inAX = 1;
+    uint16_t outAX = 1;
+    __gtaint_setn(&inAX, 2);
+    asm volatile("mov AX,%1;\n"
+                 "cmpxchg ax,ax;\n" // <--
+                 "mov %0,AX;\n"
+                 : "=m"(outAX)
+                 : "m"(inAX)
+                 : "ax");
+
+    ASSERT_TAGGED((char *)&outAX + 0, { 0 });
+    ASSERT_TAGGED((char *)&outAX + 1, { 1 });
+    return passed;
 }
 
-static int cmpxchg5() {
-    volatile uint64_t rax_in, rcx_in, rdx_in;
-    volatile uint64_t rax_out, rcx_out, rdx_out;
+static int testcase3() {
+    int passed = 1;
 
-    rax_in = 0x1;
-    rcx_in = 0x2;
-    rdx_in = 0x3;
-
-    rax_out = 0x0;
-    rcx_out = 0x0;
-    rdx_out = 0x0;
-
-    printf("%s:     cmpxchg dx,cx\n", __func__);
+    printf("%s     cmpxchg ax,cx\n", __func__);
     fflush(stdout);
+
     __gtaint_reset();
-    __gtaint_setn(&rax_in, sizeof(rax_in));
-    __gtaint_setn(&rcx_in, sizeof(rcx_in));
-    __gtaint_setn(&rdx_in, sizeof(rdx_in));
-    asm volatile("cmpxchg dx,cx;\n"
-                 : "=a"(rax_out), "=c"(rcx_out), "=d"(rdx_out)
-                 : "a"(rax_in), "c"(rcx_in), "d"(rdx_in));
-    int passed0, passed1, passed2;
-    __gtaint_assert(&rax_out, sizeof(rax_out), "{ 2 3 4 5 6 7 16 17 }", &passed0);
-    __gtaint_assert(&rcx_out, sizeof(rcx_out), "{ 8 9 10 11 12 13 14 15 }", &passed1);
-    __gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
-    return passed0 && passed1 && passed2;
+    uint16_t inAX = 1;
+    uint16_t inCX = 1;
+    uint16_t outAX = 1;
+    __gtaint_setn(&inAX, 2);
+    __gtaint_setn(&inCX, 2);
+    asm volatile("mov AX,%1;\n"
+                 "mov CX,%2;\n"
+                 "cmpxchg ax,cx;\n" // <--
+                 "mov %0,AX;\n"
+                 : "=m"(outAX)
+                 : "m"(inAX), "m"(inCX)
+                 : "ax", "cx");
+
+    ASSERT_TAGGED((char *)&outAX + 0, { 2 });
+    ASSERT_TAGGED((char *)&outAX + 1, { 3 });
+    return passed;
 }
 
+static int testcase4() {
+    int passed = 1;
 
-
-static int cmpxchg6() {
-    volatile uint64_t rax_in, rcx_in, rdx_in;
-    volatile uint64_t rax_out, rcx_out, rdx_out;
-
-    rax_in = 0x1;
-    rcx_in = 0x1;
-    rdx_in = 0x0;
-
-    rax_out = 0x0;
-    rcx_out = 0x0;
-    rdx_out = 0x0;
-
-    printf("%s:     cmpxchg eax,eax\n", __func__);
+    printf("%s     cmpxchg cl,al\n", __func__);
     fflush(stdout);
+
     __gtaint_reset();
-    __gtaint_setn(&rax_in, sizeof(rax_in));
-    __gtaint_setn(&rcx_in, sizeof(rcx_in));
-    __gtaint_setn(&rdx_in, sizeof(rdx_in));
-    asm volatile("cmpxchg eax,eax;\n"
-                 : "=a"(rax_out), "=c"(rcx_out), "=d"(rdx_out)
-                 : "a"(rax_in), "c"(rcx_in), "d"(rdx_in));
-    int passed0, passed1, passed2;
-    __gtaint_assert(&rax_out, sizeof(rax_out), "{ 0 1 2 3 }", &passed0);
-    __gtaint_assert(&rcx_out, sizeof(rcx_out), "{ 8 9 10 11 12 13 14 15 }", &passed1);
-    __gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
-    return passed0 && passed1 && passed2;
-}
-static int cmpxchg7() {
-    volatile uint64_t rax_in, rcx_in, rdx_in;
-    volatile uint64_t rax_out, rcx_out, rdx_out;
+    uint8_t inAL = 1;
+    uint8_t inCL = 2;
+    uint8_t outAL = 1;
+    uint8_t outCL = 1;
+    __gtaint_setn(&inAL, 1);
+    __gtaint_setn(&inCL, 1);
+    asm volatile("mov AL,%2;\n"
+                 "mov CL,%3;\n"
+                 "cmpxchg cl,al;\n" // <--
+                 "mov %0,AL;\n"
+                 "mov %1,CL;\n"
+                 : "=m"(outAL), "=m"(outCL)
+                 : "m"(inAL), "m"(inCL)
+                 : "al", "cl");
 
-    rax_in = 0x1;
-    rcx_in = 0x1;
-    rdx_in = 0x0;
-
-    rax_out = 0x0;
-    rcx_out = 0x0;
-    rdx_out = 0x0;
-
-    printf("%s:     cmpxchg eax,ecx\n", __func__);
-    fflush(stdout);
-    __gtaint_reset();
-    __gtaint_setn(&rax_in, sizeof(rax_in));
-    __gtaint_setn(&rcx_in, sizeof(rcx_in));
-    __gtaint_setn(&rdx_in, sizeof(rdx_in));
-    asm volatile("cmpxchg eax,ecx;\n"
-                 : "=a"(rax_out), "=c"(rcx_out), "=d"(rdx_out)
-                 : "a"(rax_in), "c"(rcx_in), "d"(rdx_in));
-    int passed0, passed1, passed2;
-    __gtaint_assert(&rax_out, sizeof(rax_out), "{ 8 9 10 11 }", &passed0);
-    __gtaint_assert(&rcx_out, sizeof(rcx_out), "{ 8 9 10 11 12 13 14 15 }", &passed1);
-    __gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
-    return passed0 && passed1 && passed2;
+    ASSERT_TAGGED((char *)&outAL + 0, { 1 });
+    ASSERT_TAGGED((char *)&outCL + 0, { 1 });
+    return passed;
 }
 
-static int cmpxchg8() {
-    volatile uint64_t rax_in, rcx_in, rdx_in;
-    volatile uint64_t rax_out, rcx_out, rdx_out;
+static int testcase5() {
+    int passed = 1;
 
-    rax_in = 0x1;
-    rcx_in = 0x1;
-    rdx_in = 0x0;
-
-    rax_out = 0x0;
-    rcx_out = 0x0;
-    rdx_out = 0x0;
-
-    printf("%s:     cmpxchg ecx,eax\n", __func__);
+    printf("%s     cmpxchg cx,ax\n", __func__);
     fflush(stdout);
+
     __gtaint_reset();
-    __gtaint_setn(&rax_in, sizeof(rax_in));
-    __gtaint_setn(&rcx_in, sizeof(rcx_in));
-    __gtaint_setn(&rdx_in, sizeof(rdx_in));
-    asm volatile("cmpxchg ecx,eax;\n"
-                 : "=a"(rax_out), "=c"(rcx_out), "=d"(rdx_out)
-                 : "a"(rax_in), "c"(rcx_in), "d"(rdx_in));
-    int passed0, passed1, passed2;
-    __gtaint_assert(&rax_out, sizeof(rax_out), "{ 0 1 2 3 4 5 6 7 }", &passed0);
-    __gtaint_assert(&rcx_out, sizeof(rcx_out), "{ 0 1 2 3 }", &passed1);
-    __gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
-    return passed0 && passed1 && passed2;
+    uint16_t inAX = 1;
+    uint16_t inCX = 2;
+    uint16_t outAX = 1;
+    uint16_t outCX = 1;
+    __gtaint_setn(&inAX, 2);
+    __gtaint_setn(&inCX, 2);
+    asm volatile("mov AX,%2;\n"
+                 "mov CX,%3;\n"
+                 "cmpxchg cx,ax;\n" // <--
+                 "mov %0,AX;\n"
+                 "mov %1,CX;\n"
+                 : "=m"(outAX), "=m"(outCX)
+                 : "m"(inAX), "m"(inCX)
+                 : "ax", "cx");
+
+    ASSERT_TAGGED((char *)&outAX + 0, { 2 });
+    ASSERT_TAGGED((char *)&outAX + 1, { 3 });
+    ASSERT_TAGGED((char *)&outCX + 0, { 2 });
+    ASSERT_TAGGED((char *)&outCX + 1, { 3 });
+    return passed;
 }
 
-static int cmpxchg9() {
-    volatile uint64_t rax_in, rcx_in, rdx_in;
-    volatile uint64_t rax_out, rcx_out, rdx_out;
+static int testcase6() {
+    int passed = 1;
 
-    rax_in = 0x1;
-    rcx_in = 0x2;
-    rdx_in = 0x3;
-
-    rax_out = 0x0;
-    rcx_out = 0x0;
-    rdx_out = 0x0;
-
-    printf("%s:     cmpxchg ecx,edx\n", __func__);
+    printf("%s     cmpxchg eax,eax\n", __func__);
     fflush(stdout);
+
     __gtaint_reset();
-    __gtaint_setn(&rax_in, sizeof(rax_in));
-    __gtaint_setn(&rcx_in, sizeof(rcx_in));
-    __gtaint_setn(&rdx_in, sizeof(rdx_in));
-    asm volatile("cmpxchg ecx,edx;\n"
-                 : "=a"(rax_out), "=c"(rcx_out), "=d"(rdx_out)
-                 : "a"(rax_in), "c"(rcx_in), "d"(rdx_in));
-    int passed0, passed1, passed2;
-    __gtaint_assert(&rax_out, sizeof(rax_out), "{ 8 9 10 11 }", &passed0);
-    __gtaint_assert(&rcx_out, sizeof(rcx_out), "{ 8 9 10 11 12 13 14 15 }", &passed1);
-    __gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
-    return passed0 && passed1 && passed2;
+    uint32_t inEAX = 1;
+    uint32_t outEAX = 1;
+    __gtaint_setn(&inEAX, 4);
+    asm volatile("mov EAX,%1;\n"
+                 "cmpxchg eax,eax;\n" // <--
+                 "mov %0,EAX;\n"
+                 : "=m"(outEAX)
+                 : "m"(inEAX)
+                 : "eax");
+
+    ASSERT_TAGGED((char *)&outEAX + 0, { 0 });
+    ASSERT_TAGGED((char *)&outEAX + 1, { 1 });
+    ASSERT_TAGGED((char *)&outEAX + 2, { 2 });
+    ASSERT_TAGGED((char *)&outEAX + 3, { 3 });
+    return passed;
 }
 
-static int cmpxchg10() {
-    volatile uint64_t rax_in, rcx_in, rdx_in;
-    volatile uint64_t rax_out, rcx_out, rdx_out;
+static int testcase7() {
+    int passed = 1;
 
-    rax_in = 0x1;
-    rcx_in = 0x2;
-    rdx_in = 0x3;
-
-    rax_out = 0x0;
-    rcx_out = 0x0;
-    rdx_out = 0x0;
-
-    printf("%s:     cmpxchg edx,ecx\n", __func__);
+    printf("%s     cmpxchg eax,ecx\n", __func__);
     fflush(stdout);
+
     __gtaint_reset();
-    __gtaint_setn(&rax_in, sizeof(rax_in));
-    __gtaint_setn(&rcx_in, sizeof(rcx_in));
-    __gtaint_setn(&rdx_in, sizeof(rdx_in));
-    asm volatile("cmpxchg edx,ecx;\n"
-                 : "=a"(rax_out), "=c"(rcx_out), "=d"(rdx_out)
-                 : "a"(rax_in), "c"(rcx_in), "d"(rdx_in));
-    int passed0, passed1, passed2;
-    __gtaint_assert(&rax_out, sizeof(rax_out), "{ 16 17 18 19 }", &passed0);
-    __gtaint_assert(&rcx_out, sizeof(rcx_out), "{ 8 9 10 11 12 13 14 15 }", &passed1);
-    __gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
-    return passed0 && passed1 && passed2;
+    uint32_t inEAX = 1;
+    uint32_t inECX = 1;
+    uint32_t outEAX = 1;
+    __gtaint_setn(&inEAX, 4);
+    __gtaint_setn(&inECX, 4);
+    asm volatile("mov EAX,%1;\n"
+                 "mov ECX,%2;\n"
+                 "cmpxchg eax,ecx;\n" // <--
+                 "mov %0,EAX;\n"
+                 : "=m"(outEAX)
+                 : "m"(inEAX), "m"(inECX)
+                 : "eax", "ecx");
+
+    ASSERT_TAGGED((char *)&outEAX + 0, { 4 });
+    ASSERT_TAGGED((char *)&outEAX + 1, { 5 });
+    ASSERT_TAGGED((char *)&outEAX + 2, { 6 });
+    ASSERT_TAGGED((char *)&outEAX + 3, { 7 });
+    return passed;
 }
 
+static int testcase8() {
+    int passed = 1;
 
-
-static int cmpxchg11() {
-    volatile uint64_t rax_in, rcx_in, rdx_in;
-    volatile uint64_t rax_out, rcx_out, rdx_out;
-
-    rax_in = 0x1;
-    rcx_in = 0x1;
-    rdx_in = 0x0;
-
-    rax_out = 0x0;
-    rcx_out = 0x0;
-    rdx_out = 0x0;
-
-    printf("%s:     cmpxchg rax,rax\n", __func__);
+    printf("%s     cmpxchg ecx,eax\n", __func__);
     fflush(stdout);
+
     __gtaint_reset();
-    __gtaint_setn(&rax_in, sizeof(rax_in));
-    __gtaint_setn(&rcx_in, sizeof(rcx_in));
-    __gtaint_setn(&rdx_in, sizeof(rdx_in));
-    asm volatile("cmpxchg rax,rax;\n"
-                 : "=a"(rax_out), "=c"(rcx_out), "=d"(rdx_out)
-                 : "a"(rax_in), "c"(rcx_in), "d"(rdx_in));
-    int passed0, passed1, passed2;
-    __gtaint_assert(&rax_out, sizeof(rax_out), "{ 0 1 2 3 4 5 6 7 }", &passed0);
-    __gtaint_assert(&rcx_out, sizeof(rcx_out), "{ 8 9 10 11 12 13 14 15 }", &passed1);
-    __gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
-    return passed0 && passed1 && passed2;
-}
-static int cmpxchg12() {
-    volatile uint64_t rax_in, rcx_in, rdx_in;
-    volatile uint64_t rax_out, rcx_out, rdx_out;
+    uint32_t inEAX = 1;
+    uint32_t inECX = 2;
+    uint32_t outEAX = 1;
+    uint32_t outECX = 1;
+    __gtaint_setn(&inEAX, 4);
+    __gtaint_setn(&inECX, 4);
+    asm volatile("mov EAX,%2;\n"
+                 "mov ECX,%3;\n"
+                 "cmpxchg ecx,eax;\n" // <--
+                 "mov %0,EAX;\n"
+                 "mov %1,ECX;\n"
+                 : "=m"(outEAX), "=m"(outECX)
+                 : "m"(inEAX), "m"(inECX)
+                 : "eax", "ecx");
 
-    rax_in = 0x1;
-    rcx_in = 0x1;
-    rdx_in = 0x0;
-
-    rax_out = 0x0;
-    rcx_out = 0x0;
-    rdx_out = 0x0;
-
-    printf("%s:     cmpxchg rax,rcx\n", __func__);
-    fflush(stdout);
-    __gtaint_reset();
-    __gtaint_setn(&rax_in, sizeof(rax_in));
-    __gtaint_setn(&rcx_in, sizeof(rcx_in));
-    __gtaint_setn(&rdx_in, sizeof(rdx_in));
-    asm volatile("cmpxchg rax,rcx;\n"
-                 : "=a"(rax_out), "=c"(rcx_out), "=d"(rdx_out)
-                 : "a"(rax_in), "c"(rcx_in), "d"(rdx_in));
-    int passed0, passed1, passed2;
-    __gtaint_assert(&rax_out, sizeof(rax_out), "{ 8 9 10 11 12 13 14 15 }", &passed0);
-    __gtaint_assert(&rcx_out, sizeof(rcx_out), "{ 8 9 10 11 12 13 14 15 }", &passed1);
-    __gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
-    return passed0 && passed1 && passed2;
+    ASSERT_TAGGED((char *)&outEAX + 0, { 4 });
+    ASSERT_TAGGED((char *)&outEAX + 1, { 5 });
+    ASSERT_TAGGED((char *)&outEAX + 2, { 6 });
+    ASSERT_TAGGED((char *)&outEAX + 3, { 7 });
+    ASSERT_TAGGED((char *)&outECX + 0, { 4 });
+    ASSERT_TAGGED((char *)&outECX + 1, { 5 });
+    ASSERT_TAGGED((char *)&outECX + 2, { 6 });
+    ASSERT_TAGGED((char *)&outECX + 3, { 7 });
+    return passed;
 }
 
-static int cmpxchg13() {
-    volatile uint64_t rax_in, rcx_in, rdx_in;
-    volatile uint64_t rax_out, rcx_out, rdx_out;
+static int testcase9() {
+    int passed = 1;
 
-    rax_in = 0x1;
-    rcx_in = 0x1;
-    rdx_in = 0x0;
-
-    rax_out = 0x0;
-    rcx_out = 0x0;
-    rdx_out = 0x0;
-
-    printf("%s:     cmpxchg rcx,rax\n", __func__);
+    printf("%s     cmpxchg rax,rax\n", __func__);
     fflush(stdout);
+
     __gtaint_reset();
-    __gtaint_setn(&rax_in, sizeof(rax_in));
-    __gtaint_setn(&rcx_in, sizeof(rcx_in));
-    __gtaint_setn(&rdx_in, sizeof(rdx_in));
-    asm volatile("cmpxchg rcx,rax;\n"
-                 : "=a"(rax_out), "=c"(rcx_out), "=d"(rdx_out)
-                 : "a"(rax_in), "c"(rcx_in), "d"(rdx_in));
-    int passed0, passed1, passed2;
-    __gtaint_assert(&rax_out, sizeof(rax_out), "{ 0 1 2 3 4 5 6 7 }", &passed0);
-    __gtaint_assert(&rcx_out, sizeof(rcx_out), "{ 0 1 2 3 4 5 6 7 }", &passed1);
-    __gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
-    return passed0 && passed1 && passed2;
+    uint64_t inRAX = 1;
+    uint64_t outRAX = 1;
+    __gtaint_setn(&inRAX, 8);
+    asm volatile("mov RAX,%1;\n"
+                 "cmpxchg rax,rax;\n" // <--
+                 "mov %0,RAX;\n"
+                 : "=m"(outRAX)
+                 : "m"(inRAX)
+                 : "rax");
+
+    ASSERT_TAGGED((char *)&outRAX + 0, { 0 });
+    ASSERT_TAGGED((char *)&outRAX + 1, { 1 });
+    ASSERT_TAGGED((char *)&outRAX + 2, { 2 });
+    ASSERT_TAGGED((char *)&outRAX + 3, { 3 });
+    ASSERT_TAGGED((char *)&outRAX + 4, { 4 });
+    ASSERT_TAGGED((char *)&outRAX + 5, { 5 });
+    ASSERT_TAGGED((char *)&outRAX + 6, { 6 });
+    ASSERT_TAGGED((char *)&outRAX + 7, { 7 });
+    return passed;
 }
 
-static int cmpxchg14() {
-    volatile uint64_t rax_in, rcx_in, rdx_in;
-    volatile uint64_t rax_out, rcx_out, rdx_out;
+static int testcase10() {
+    int passed = 1;
 
-    rax_in = 0x1;
-    rcx_in = 0x2;
-    rdx_in = 0x3;
-
-    rax_out = 0x0;
-    rcx_out = 0x0;
-    rdx_out = 0x0;
-
-    printf("%s:     cmpxchg rcx,rdx\n", __func__);
+    printf("%s     cmpxchg rax,rcx\n", __func__);
     fflush(stdout);
+
     __gtaint_reset();
-    __gtaint_setn(&rax_in, sizeof(rax_in));
-    __gtaint_setn(&rcx_in, sizeof(rcx_in));
-    __gtaint_setn(&rdx_in, sizeof(rdx_in));
-    asm volatile("cmpxchg rcx,rdx;\n"
-                 : "=a"(rax_out), "=c"(rcx_out), "=d"(rdx_out)
-                 : "a"(rax_in), "c"(rcx_in), "d"(rdx_in));
-    int passed0, passed1, passed2;
-    __gtaint_assert(&rax_out, sizeof(rax_out), "{ 8 9 10 11 12 13 14 15 }", &passed0);
-    __gtaint_assert(&rcx_out, sizeof(rcx_out), "{ 8 9 10 11 12 13 14 15 }", &passed1);
-    __gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
-    return passed0 && passed1 && passed2;
+    uint64_t inRAX = 1;
+    uint64_t inRCX = 1;
+    uint64_t outRAX = 1;
+    __gtaint_setn(&inRAX, 8);
+    __gtaint_setn(&inRCX, 8);
+    asm volatile("mov RAX,%1;\n"
+                 "mov RCX,%2;\n"
+                 "cmpxchg rax,rcx;\n" // <--
+                 "mov %0,RAX;\n"
+                 : "=m"(outRAX)
+                 : "m"(inRAX), "m"(inRCX)
+                 : "rax", "rcx");
+
+    ASSERT_TAGGED((char *)&outRAX + 0, { 8 });
+    ASSERT_TAGGED((char *)&outRAX + 1, { 9 });
+    ASSERT_TAGGED((char *)&outRAX + 2, { 10 });
+    ASSERT_TAGGED((char *)&outRAX + 3, { 11 });
+    ASSERT_TAGGED((char *)&outRAX + 4, { 12 });
+    ASSERT_TAGGED((char *)&outRAX + 5, { 13 });
+    ASSERT_TAGGED((char *)&outRAX + 6, { 14 });
+    ASSERT_TAGGED((char *)&outRAX + 7, { 15 });
+    return passed;
 }
 
-static int cmpxchg15() {
-    volatile uint64_t rax_in, rcx_in, rdx_in;
-    volatile uint64_t rax_out, rcx_out, rdx_out;
+static int testcase11() {
+    int passed = 1;
 
-    rax_in = 0x1;
-    rcx_in = 0x2;
-    rdx_in = 0x3;
-
-    rax_out = 0x0;
-    rcx_out = 0x0;
-    rdx_out = 0x0;
-
-    printf("%s:     cmpxchg rdx,rcx\n", __func__);
+    printf("%s     cmpxchg rcx,rax\n", __func__);
     fflush(stdout);
+
     __gtaint_reset();
-    __gtaint_setn(&rax_in, sizeof(rax_in));
-    __gtaint_setn(&rcx_in, sizeof(rcx_in));
-    __gtaint_setn(&rdx_in, sizeof(rdx_in));
-    asm volatile("cmpxchg rdx,rcx;\n"
-                 : "=a"(rax_out), "=c"(rcx_out), "=d"(rdx_out)
-                 : "a"(rax_in), "c"(rcx_in), "d"(rdx_in));
-    int passed0, passed1, passed2;
-    __gtaint_assert(&rax_out, sizeof(rax_out), "{ 16 17 18 19 20 21 22 23 }", &passed0);
-    __gtaint_assert(&rcx_out, sizeof(rcx_out), "{ 8 9 10 11 12 13 14 15 }", &passed1);
-    __gtaint_assert(&rdx_out, sizeof(rdx_out), "{ 16 17 18 19 20 21 22 23 }", &passed2);
-    return passed0 && passed1 && passed2;
+    uint64_t inRAX = 1;
+    uint64_t inRCX = 2;
+    uint64_t outRAX = 1;
+    uint64_t outRCX = 1;
+    __gtaint_setn(&inRAX, 8);
+    __gtaint_setn(&inRCX, 8);
+    asm volatile("mov RAX,%2;\n"
+                 "mov RCX,%3;\n"
+                 "cmpxchg rcx,rax;\n" // <--
+                 "mov %0,RAX;\n"
+                 "mov %1,RCX;\n"
+                 : "=m"(outRAX), "=m"(outRCX)
+                 : "m"(inRAX), "m"(inRCX)
+                 : "rax", "rcx");
+
+    ASSERT_TAGGED((char *)&outRAX + 0, { 8 });
+    ASSERT_TAGGED((char *)&outRAX + 1, { 9 });
+    ASSERT_TAGGED((char *)&outRAX + 2, { 10 });
+    ASSERT_TAGGED((char *)&outRAX + 3, { 11 });
+    ASSERT_TAGGED((char *)&outRAX + 4, { 12 });
+    ASSERT_TAGGED((char *)&outRAX + 5, { 13 });
+    ASSERT_TAGGED((char *)&outRAX + 6, { 14 });
+    ASSERT_TAGGED((char *)&outRAX + 7, { 15 });
+
+    ASSERT_TAGGED((char *)&outRCX + 0, { 8 });
+    ASSERT_TAGGED((char *)&outRCX + 1, { 9 });
+    ASSERT_TAGGED((char *)&outRCX + 2, { 10 });
+    ASSERT_TAGGED((char *)&outRCX + 3, { 11 });
+    ASSERT_TAGGED((char *)&outRCX + 4, { 12 });
+    ASSERT_TAGGED((char *)&outRCX + 5, { 13 });
+    ASSERT_TAGGED((char *)&outRCX + 6, { 14 });
+    ASSERT_TAGGED((char *)&outRCX + 7, { 15 });
+    return passed;
 }
-
-
-
-
 
 static void __attribute__((noinline, constructor)) init() {
-    add_testcase(cmpxchg1);
-    add_testcase(cmpxchg2);
-    add_testcase(cmpxchg3);
-    add_testcase(cmpxchg4);
-    add_testcase(cmpxchg5);
-
-    add_testcase(cmpxchg6);
-    add_testcase(cmpxchg7);
-    add_testcase(cmpxchg8);
-    add_testcase(cmpxchg9);
-    add_testcase(cmpxchg10);
-
-    add_testcase(cmpxchg11);
-    add_testcase(cmpxchg12);
-    add_testcase(cmpxchg13);
-    add_testcase(cmpxchg14);
-    add_testcase(cmpxchg15);
+    add_testcase(testcase0);
+    add_testcase(testcase1);
+    add_testcase(testcase2);
+    add_testcase(testcase3);
+    add_testcase(testcase4);
+    add_testcase(testcase5);
+    add_testcase(testcase6);
+    add_testcase(testcase7);
+    add_testcase(testcase8);
+    add_testcase(testcase9);
+    add_testcase(testcase10);
+    add_testcase(testcase11);
 }

@@ -112,5 +112,9 @@ $(OBJDIR)gtaint_testcases$(EXE_SUFFIX): gtaint_testcases.cpp $(GTAINT_TESTCASE_D
         $(CXX_LPATHS) $(CXX_LIBS)
 
 testcases_gtaint: $(OBJDIR)/gtaint$(PINTOOL_SUFFIX) ${OBJDIR}/gtaint_testcases$(EXE_SUFFIX)
-	$(PIN) -t $< -filter_no_shared_libs -- $(OBJDIR)gtaint_testcases$(EXE_SUFFIX)  ${INPUT_FILE}
+	setarch x86_64 -R $(PIN) -t $< -filter_no_shared_libs -- $(OBJDIR)gtaint_testcases$(EXE_SUFFIX)  ${INPUT_FILE}
+
+clean_testcases: clean
+	make -C gtaint_testcases clean
+
 

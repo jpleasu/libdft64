@@ -7,6 +7,7 @@
 #include "ins_unary_op.h"
 #include "ins_xchg_op.h"
 #include "ins_xfer_op.h"
+#include "ins_punpck_op.h"
 
 /* threads context */
 extern thread_ctx_t *threads_ctx;
@@ -151,7 +152,7 @@ void ins_uni(INS ins) {
 }
 
 
-VOID dasm(char *s) { LOGD("[ins] %s\n", s); }
+void dasm(char *s) { LOGD("[ins] %s\n", s); }
 
 /*
  * instruction inspection (instrumentation function)
@@ -461,52 +462,41 @@ void ins_inspect(INS ins) {
   case XED_ICLASS_BSWAP:
     ins_unary_bswap_op(ins);
     break;
-    // TODO
-  case XED_ICLASS_XGETBV:
-  case XED_ICLASS_PMOVMSKB:
-  case XED_ICLASS_VPMOVMSKB:
-  case XED_ICLASS_PUNPCKLBW:
-  case XED_ICLASS_PUNPCKLWD:
-  case XED_ICLASS_PSHUFD:
-  case XED_ICLASS_PMINUB:
-  case XED_ICLASS_PSLLDQ:
-  case XED_ICLASS_PSRLDQ:
-  case XED_ICLASS_VPCMPEQB:
-  case XED_ICLASS_VPBROADCASTB:
-  case XED_ICLASS_VZEROUPPER:
-  case XED_ICLASS_UNPCKLPD:
-  case XED_ICLASS_PSHUFB:
-  case XED_ICLASS_VPTEST:
-    // TODO: ternary
-  case XED_ICLASS_VMULSD:
-  case XED_ICLASS_VDIVSD:
-  case XED_ICLASS_VPOR:
-  case XED_ICLASS_VPXOR:
-  case XED_ICLASS_VPSUBB:
-  case XED_ICLASS_VPSUBW:
-  case XED_ICLASS_VPSUBD:
-  case XED_ICLASS_VPXORD:
-  case XED_ICLASS_VPXORQ:
-  case XED_ICLASS_VPAND:
-  case XED_ICLASS_VPANDN:
-  case XED_ICLASS_VPSLLDQ:
-  case XED_ICLASS_VPCMPGTB:
-  case XED_ICLASS_VPALIGNR:
-  case XED_ICLASS_VPCMPISTRI:
-
-    break;
   case XED_ICLASS_CMP:
     // ins_cmp_op(ins);
     break;
-  case XED_ICLASS_CMPSB:
-  case XED_ICLASS_CMPSW:
-  case XED_ICLASS_CMPSD:
-  case XED_ICLASS_CMPSQ:
-  case XED_ICLASS_CMPSS: // FIXME, 3arg
-  case XED_ICLASS_UCOMISS:
-  case XED_ICLASS_UCOMISD:
-  case XED_ICLASS_VPMINUB:
-  case XED_ICLASS_PCMPISTRI:
+  case XED_ICLASS_RCL:
+  case XED_ICLASS_RCR:
+  case XED_ICLASS_ROL:
+  case XED_ICLASS_ROR:
+  case XED_ICLASS_SHL:
+  case XED_ICLASS_SAR:
+  case XED_ICLASS_SHR:
+  case XED_ICLASS_SHLD:
+  case XED_ICLASS_SHRD:
+  case XED_ICLASS_NEG:
+  case XED_ICLASS_NOT:
+  case XED_ICLASS_NOP:
+  case XED_ICLASS_BT:
+  case XED_ICLASS_DEC:
+  case XED_ICLASS_DEC_LOCK:
+  case XED_ICLASS_INC:
+  case XED_ICLASS_INC_LOCK:
+  case XED_ICLASS_XSAVEC:
+  case XED_ICLASS_XRSTOR:
+	  ins_uni(ins);
+    break;
+  case XED_ICLASS_PUNPCKLBW:
+    ins_punpckl_op<1>(ins);
+    break;
+  case XED_ICLASS_PUNPCKLWD:
+    ins_punpckl_op<2>(ins);
+    break;
+  case XED_ICLASS_PUNPCKLDQ:
+    ins_punpckl_op<4>(ins);
+    break;
+  case XED_ICLASS_PUNPCKLQDQ:
+    ins_punpckl_op<8>(ins);
     break;
 
   // Ignore
@@ -534,35 +524,55 @@ void ins_inspect(INS ins) {
   case XED_ICLASS_SYSCALL:
   case XED_ICLASS_TEST:
     break;
-  case XED_ICLASS_RCL:
-  case XED_ICLASS_RCR:
-  case XED_ICLASS_ROL:
-  case XED_ICLASS_ROR:
-  case XED_ICLASS_SHL:
-  case XED_ICLASS_SAR:
-  case XED_ICLASS_SHR:
-  case XED_ICLASS_SHLD:
-  case XED_ICLASS_SHRD:
-  case XED_ICLASS_NEG:
-  case XED_ICLASS_NOT:
-  case XED_ICLASS_NOP:
-  case XED_ICLASS_BT:
-  case XED_ICLASS_DEC:
-  case XED_ICLASS_DEC_LOCK:
-  case XED_ICLASS_INC:
-  case XED_ICLASS_INC_LOCK:
-  case XED_ICLASS_XSAVEC:
-  case XED_ICLASS_XRSTOR:
-	  ins_uni(ins);
-    break;
+
+  // TODO
+  case XED_ICLASS_XGETBV:
+  case XED_ICLASS_PMOVMSKB:
+  case XED_ICLASS_VPMOVMSKB:
+  case XED_ICLASS_PSHUFD:
+  case XED_ICLASS_PMINUB:
+  case XED_ICLASS_PSLLDQ:
+  case XED_ICLASS_PSRLDQ:
+  case XED_ICLASS_VPCMPEQB:
+  case XED_ICLASS_VPBROADCASTB:
+  case XED_ICLASS_VZEROUPPER:
+  case XED_ICLASS_UNPCKLPD:
+  case XED_ICLASS_PSHUFB:
+  case XED_ICLASS_VPTEST:
+  // TODO: ternary
+  case XED_ICLASS_VMULSD:
+  case XED_ICLASS_VDIVSD:
+  case XED_ICLASS_VPOR:
+  case XED_ICLASS_VPXOR:
+  case XED_ICLASS_VPSUBB:
+  case XED_ICLASS_VPSUBW:
+  case XED_ICLASS_VPSUBD:
+  case XED_ICLASS_VPXORD:
+  case XED_ICLASS_VPXORQ:
+  case XED_ICLASS_VPAND:
+  case XED_ICLASS_VPANDN:
+  case XED_ICLASS_VPSLLDQ:
+  case XED_ICLASS_VPCMPGTB:
+  case XED_ICLASS_VPALIGNR:
+  case XED_ICLASS_VPCMPISTRI:
+  case XED_ICLASS_ANDN:
+    //break;
+  case XED_ICLASS_CMPSB:
+  case XED_ICLASS_CMPSW:
+  case XED_ICLASS_CMPSD:
+  case XED_ICLASS_CMPSQ:
+  case XED_ICLASS_CMPSS: // FIXME, 3arg
+  case XED_ICLASS_UCOMISS:
+  case XED_ICLASS_UCOMISD:
+  case XED_ICLASS_VPMINUB:
+  case XED_ICLASS_PCMPISTRI:
+    //break;
+
 
   default:
-    // https://intelxed.github.io/ref-manual/xed-extension-enum_8h.html#ae7b9f64cdf123c5fda22bd10d5db9916
-    // INT32 num_op = INS_OperandCount(ins);
-    // INT32 ins_ext = INS_Extension(ins);
-    // if (ins_ext != 0 && ins_ext != 10)
-    LOGD("[uninstrumented] opcode=%d, %s\n", ins_indx,
-         INS_Disassemble(ins).c_str());
+    uninstrumented(ins);
     break;
   }
 }
+
+
