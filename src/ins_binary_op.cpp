@@ -15,55 +15,20 @@ namespace {
         RTAG[reg][ind] = tag_traits<tag_t>::cleared_val;
     }
 
-    template <int dst_ind, int src_ind>
-    void PIN_FAST_ANALYSIS_CALL r2r_binary_opb(THREADID tid, uint32_t dst, uint32_t src) {
-        tag_t dst_tag = RTAG[dst][dst_ind];
-        tag_t src_tag = RTAG[src][src_ind];
-
-        RTAG[dst][dst_ind] = tag_combine(dst_tag, src_tag);
-    }
-
-    template <int dst_ind>
-    void PIN_FAST_ANALYSIS_CALL m2r_binary_opb(THREADID tid, uint32_t dst, ADDRINT src) {
-        tag_t src_tag = MTAG(src);
-        tag_t dst_tag = RTAG[dst][dst_ind];
-
-        RTAG[dst][dst_ind] = tag_combine(src_tag, dst_tag);
-    }
-    template <int src_ind>
-    void PIN_FAST_ANALYSIS_CALL r2m_binary_opb(THREADID tid, ADDRINT dst, uint32_t src) {
-        tag_t src_tag = RTAG[src][src_ind];
-        tag_t dst_tag = MTAG(dst);
-
-        tag_t res_tag = tag_combine(dst_tag, src_tag);
-        tagmap_setb(dst, res_tag);
-    }
-
-    template <size_t sz>
+    // mix all input bytes int every output byte
+    template <char scode, char dcode, size_t sz>
     void PIN_FAST_ANALYSIS_CALL __attribute__((optimize("unroll-loops")))
-    r2r_binary_op(THREADID tid, uint32_t dst, uint32_t src) {
-        tag_t *src_tags = RTAG[src];
-        tag_t *dst_tags = RTAG[dst];
-        for (size_t i = 0; i < sz; i++)
-            dst_tags[i] = tag_combine(dst_tags[i], src_tags[i]);
-        maybe_zext<sz>(dst_tags);
-    }
+    binary_op(THREADID tid, typename Tagset<dcode>::arg_type dst, typename Tagset<scode>::arg_type src) {
+        Tagset<scode> src_tags(tid, src);
+        Tagset<dcode> dst_tags(tid, dst);
 
-    template <size_t sz>
-    void PIN_FAST_ANALYSIS_CALL __attribute__((optimize("unroll-loops")))
-    m2r_binary_op(THREADID tid, uint32_t dst, ADDRINT src) {
-        tag_t *dst_tags = RTAG[dst];
+        tag_t t = tag_combine(dst_tags.get(0), src_tags.get(0));
+        for (size_t i = 1; i < sz; i++)
+            t = tag_combine(t, dst_tags.get(i), src_tags.get(i));
         for (size_t i = 0; i < sz; i++)
-            dst_tags[i] = tag_combine(dst_tags[i], MTAG(src + i));
-        maybe_zext<sz>(dst_tags);
-    }
+            dst_tags.set(i, t);
 
-    template <size_t sz>
-    void PIN_FAST_ANALYSIS_CALL __attribute__((optimize("unroll-loops")))
-    r2m_binary_op(THREADID tid, ADDRINT dst, uint32_t src) {
-        tag_t *src_tags = RTAG[src];
-        for (size_t i = 0; i < sz; i++)
-            tagmap_setb(dst + i, tag_combine(MTAG(dst + i), src_tags[i]));
+        dst_tags.template zext<sz>();
     }
 
 } // namespace
@@ -123,64 +88,65 @@ void ins_binary_op(INS ins) {
         reg_dst = INS_OperandReg(ins, OP_0);
         reg_src = INS_OperandReg(ins, OP_1);
         if (REG_is_gr64(reg_dst)) {
-            R2R_CALL(r2r_binary_op<8>, reg_dst, reg_src);
+            R2R_CALL((binary_op<'r', 'r', 8>), reg_dst, reg_src);
         } else if (REG_is_gr32(reg_dst)) {
-            R2R_CALL(r2r_binary_op<4>, reg_dst, reg_src);
+            R2R_CALL((binary_op<'r', 'r', 4>), reg_dst, reg_src);
         } else if (REG_is_gr16(reg_dst)) {
-            R2R_CALL(r2r_binary_op<2>, reg_dst, reg_src);
+            R2R_CALL((binary_op<'r', 'r', 2>), reg_dst, reg_src);
         } else if (REG_is_xmm(reg_dst)) {
-            R2R_CALL(r2r_binary_op<16>, reg_dst, reg_src);
+            R2R_CALL((binary_op<'r', 'r', 16>), reg_dst, reg_src);
         } else if (REG_is_ymm(reg_dst)) {
-            R2R_CALL(r2r_binary_op<32>, reg_dst, reg_src);
+            R2R_CALL((binary_op<'r', 'r', 32>), reg_dst, reg_src);
         } else if (REG_is_mm(reg_dst)) {
-            R2R_CALL(r2r_binary_op<8>, reg_dst, reg_src);
+            R2R_CALL((binary_op<'r', 'r', 8>), reg_dst, reg_src);
         } else {
-            if (REG_is_Lower8(reg_dst) && REG_is_Lower8(reg_src))
-                R2R_CALL((r2r_binary_opb<0, 0>), reg_dst, reg_src);
-            else if (REG_is_Upper8(reg_dst) && REG_is_Upper8(reg_src))
-                R2R_CALL((r2r_binary_opb<1, 1>), reg_dst, reg_src);
-            else if (REG_is_Lower8(reg_dst))
-                R2R_CALL((r2r_binary_opb<0, 1>), reg_dst, reg_src);
-            else
-                R2R_CALL((r2r_binary_opb<1, 0>), reg_dst, reg_src);
+            if (REG_is_Lower8(reg_dst) && REG_is_Lower8(reg_src)) {
+                R2R_CALL((binary_op<'r', 'r', 1>), reg_dst, reg_src);
+            } else if (REG_is_Upper8(reg_dst) && REG_is_Upper8(reg_src)) {
+                R2R_CALL((binary_op<'R', 'R', 1>), reg_dst, reg_src);
+            } else if (REG_is_Lower8(reg_dst)) {
+                R2R_CALL((binary_op<'R', 'r', 1>), reg_dst, reg_src);
+            } else {
+                R2R_CALL((binary_op<'r', 'R', 1>), reg_dst, reg_src);
+            }
         }
     } else if (INS_OperandIsMemory(ins, OP_1)) {
         reg_dst = INS_OperandReg(ins, OP_0);
         if (REG_is_gr64(reg_dst)) {
-            M2R_CALL((m2r_binary_op<8>), reg_dst);
+            M2R_CALL((binary_op<'m', 'r', 8>), reg_dst);
         } else if (REG_is_gr32(reg_dst)) {
-            M2R_CALL((m2r_binary_op<4>), reg_dst);
+            M2R_CALL((binary_op<'m', 'r', 4>), reg_dst);
         } else if (REG_is_gr16(reg_dst)) {
-            M2R_CALL((m2r_binary_op<2>), reg_dst);
+            M2R_CALL((binary_op<'m', 'r', 2>), reg_dst);
         } else if (REG_is_xmm(reg_dst)) {
-            M2R_CALL((m2r_binary_op<16>), reg_dst);
+            M2R_CALL((binary_op<'m', 'r', 16>), reg_dst);
         } else if (REG_is_ymm(reg_dst)) {
-            M2R_CALL((m2r_binary_op<32>), reg_dst);
+            M2R_CALL((binary_op<'m', 'r', 32>), reg_dst);
         } else if (REG_is_mm(reg_dst)) {
-            M2R_CALL((m2r_binary_op<8>), reg_dst);
+            M2R_CALL((binary_op<'m', 'r', 8>), reg_dst);
         } else if (REG_is_Upper8(reg_dst)) {
-            M2R_CALL((m2r_binary_opb<1>), reg_dst);
+            M2R_CALL((binary_op<'m', 'R', 1>), reg_dst);
         } else {
-            M2R_CALL((m2r_binary_opb<0>), reg_dst);
+            M2R_CALL((binary_op<'m', 'r', 1>), reg_dst);
         }
     } else {
         reg_src = INS_OperandReg(ins, OP_1);
         if (REG_is_gr64(reg_src)) {
-            R2M_CALL((r2m_binary_op<8>), reg_src);
+            R2M_CALL((binary_op<'r', 'm', 8>), reg_src);
         } else if (REG_is_gr32(reg_src)) {
-            R2M_CALL((r2m_binary_op<4>), reg_src);
+            R2M_CALL((binary_op<'r', 'm', 4>), reg_src);
         } else if (REG_is_gr16(reg_src)) {
-            R2M_CALL((r2m_binary_op<2>), reg_src);
+            R2M_CALL((binary_op<'r', 'm', 2>), reg_src);
         } else if (REG_is_xmm(reg_src)) {
-            R2M_CALL((r2m_binary_op<16>), reg_src);
+            R2M_CALL((binary_op<'r', 'm', 16>), reg_src);
         } else if (REG_is_ymm(reg_src)) {
-            R2M_CALL((r2m_binary_op<32>), reg_src);
+            R2M_CALL((binary_op<'r', 'm', 32>), reg_src);
         } else if (REG_is_mm(reg_src)) {
-            R2M_CALL((r2m_binary_op<8>), reg_src);
+            R2M_CALL((binary_op<'r', 'm', 8>), reg_src);
         } else if (REG_is_Upper8(reg_src)) {
-            R2M_CALL((r2m_binary_opb<1>), reg_src);
+            R2M_CALL((binary_op<'R', 'm', 1>), reg_src);
         } else {
-            R2M_CALL((r2m_binary_opb<0>), reg_src);
+            R2M_CALL((binary_op<'r', 'm', 1>), reg_src);
         }
     }
 }
