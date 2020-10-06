@@ -343,6 +343,7 @@ inline size_t REG_INDX(REG reg) {
     INS_InsertCall(ins, IPOINT_BEFORE, (AFUNPTR)fn, IARG_FAST_ANALYSIS_CALL, IARG_THREAD_ID, IARG_UINT32,              \
                    REG_INDX(dst), IARG_UINT32, REG_INDX(src1), IARG_UINT32, REG_INDX(src2), IARG_END)
 
+#define HOOK_DECL PIN_FAST_ANALYSIS_CALL __attribute__((optimize("unroll-loops")))
 namespace {
     template <size_t sz>
     inline void maybe_zext(tag_t *dst) {
@@ -410,6 +411,102 @@ namespace {
         }
         template <size_t sz>
         void zext() {
+        }
+    };
+
+    template <typename T>
+    struct instrumentation_base {
+        using instrumentation_t = T;
+
+        //// instrumentation - where instructions are parsed and hooks are inserted
+
+        // entry point for instrumentation
+        static void ins_op(INS ins) {
+            REG reg_dst, reg_src;
+            if (INS_OperandIsImmediate(ins, OP_1)) {
+                instrumentation_t::ins_binary_imm(ins);
+                return;
+            }
+            if (INS_MemoryOperandCount(ins) == 0) {
+                reg_dst = INS_OperandReg(ins, OP_0);
+                reg_src = INS_OperandReg(ins, OP_1);
+                if (REG_is_gr64(reg_dst)) {
+                    R2R_CALL((instrumentation_t::template binary<'r', 'r', 8>), reg_dst, reg_src);
+                } else if (REG_is_gr32(reg_dst)) {
+                    R2R_CALL((instrumentation_t::template binary<'r', 'r', 4>), reg_dst, reg_src);
+                } else if (REG_is_gr16(reg_dst)) {
+                    R2R_CALL((instrumentation_t::template binary<'r', 'r', 2>), reg_dst, reg_src);
+                } else if (REG_is_xmm(reg_dst)) {
+                    R2R_CALL((instrumentation_t::template binary<'r', 'r', 16>), reg_dst, reg_src);
+                } else if (REG_is_ymm(reg_dst)) {
+                    R2R_CALL((instrumentation_t::template binary<'r', 'r', 32>), reg_dst, reg_src);
+                } else if (REG_is_mm(reg_dst)) {
+                    R2R_CALL((instrumentation_t::template binary<'r', 'r', 8>), reg_dst, reg_src);
+                } else {
+                    if (REG_is_Lower8(reg_dst) && REG_is_Lower8(reg_src)) {
+                        R2R_CALL((instrumentation_t::template binary<'r', 'r', 1>), reg_dst, reg_src);
+                    } else if (REG_is_Upper8(reg_dst) && REG_is_Upper8(reg_src)) {
+                        R2R_CALL((instrumentation_t::template binary<'R', 'R', 1>), reg_dst, reg_src);
+                    } else if (REG_is_Lower8(reg_dst)) {
+                        R2R_CALL((instrumentation_t::template binary<'R', 'r', 1>), reg_dst, reg_src);
+                    } else {
+                        R2R_CALL((instrumentation_t::template binary<'r', 'R', 1>), reg_dst, reg_src);
+                    }
+                }
+            } else if (INS_OperandIsMemory(ins, OP_1)) {
+                reg_dst = INS_OperandReg(ins, OP_0);
+                if (REG_is_gr64(reg_dst)) {
+                    M2R_CALL((instrumentation_t::template binary<'m', 'r', 8>), reg_dst);
+                } else if (REG_is_gr32(reg_dst)) {
+                    M2R_CALL((instrumentation_t::template binary<'m', 'r', 4>), reg_dst);
+                } else if (REG_is_gr16(reg_dst)) {
+                    M2R_CALL((instrumentation_t::template binary<'m', 'r', 2>), reg_dst);
+                } else if (REG_is_xmm(reg_dst)) {
+                    M2R_CALL((instrumentation_t::template binary<'m', 'r', 16>), reg_dst);
+                } else if (REG_is_ymm(reg_dst)) {
+                    M2R_CALL((instrumentation_t::template binary<'m', 'r', 32>), reg_dst);
+                } else if (REG_is_mm(reg_dst)) {
+                    M2R_CALL((instrumentation_t::template binary<'m', 'r', 8>), reg_dst);
+                } else if (REG_is_Upper8(reg_dst)) {
+                    M2R_CALL((instrumentation_t::template binary<'m', 'R', 1>), reg_dst);
+                } else {
+                    M2R_CALL((instrumentation_t::template binary<'m', 'r', 1>), reg_dst);
+                }
+            } else {
+                reg_src = INS_OperandReg(ins, OP_1);
+                if (REG_is_gr64(reg_src)) {
+                    R2M_CALL((instrumentation_t::template binary<'r', 'm', 8>), reg_src);
+                } else if (REG_is_gr32(reg_src)) {
+                    R2M_CALL((instrumentation_t::template binary<'r', 'm', 4>), reg_src);
+                } else if (REG_is_gr16(reg_src)) {
+                    R2M_CALL((instrumentation_t::template binary<'r', 'm', 2>), reg_src);
+                } else if (REG_is_xmm(reg_src)) {
+                    R2M_CALL((instrumentation_t::template binary<'r', 'm', 16>), reg_src);
+                } else if (REG_is_ymm(reg_src)) {
+                    R2M_CALL((instrumentation_t::template binary<'r', 'm', 32>), reg_src);
+                } else if (REG_is_mm(reg_src)) {
+                    R2M_CALL((instrumentation_t::template binary<'r', 'm', 8>), reg_src);
+                } else if (REG_is_Upper8(reg_src)) {
+                    R2M_CALL((instrumentation_t::template binary<'R', 'm', 1>), reg_src);
+                } else {
+                    R2M_CALL((instrumentation_t::template binary<'r', 'm', 1>), reg_src);
+                }
+            }
+        }
+
+        // if OP_1 is immediate, we can deal with it during instrumentation
+        static void ins_binary_imm(INS ins) {
+        }
+
+        //// hook functions
+        template <char scode, char dcode, size_t sz>
+        static void HOOK_DECL unary(THREADID tid, typename Tagset<dcode>::arg_type dst,
+                                    typename Tagset<scode>::arg_type src) {
+        }
+
+        template <char scode, char dcode, size_t sz>
+        static void HOOK_DECL binary(THREADID tid, typename Tagset<dcode>::arg_type dst,
+                                     typename Tagset<scode>::arg_type src) {
         }
     };
 
