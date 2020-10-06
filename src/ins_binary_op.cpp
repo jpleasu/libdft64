@@ -22,6 +22,10 @@ namespace {
                 R_CALL(r_clrq_zext, reg_dst);
             }
         }
+        static void ins_ternary_imm(INS ins) {
+            // ignore the constant
+            instrumentation_t::ins_binary_op(ins);
+        }
 
         template <char scode, char dcode, size_t sz>
         static void HOOK_DECL binary(THREADID tid, typename Tagset<dcode>::arg_type dst,

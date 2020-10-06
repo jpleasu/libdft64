@@ -304,6 +304,9 @@ inline size_t REG_INDX(REG reg) {
     INS_InsertCall(ins, IPOINT_BEFORE, (AFUNPTR)fn, IARG_FAST_ANALYSIS_CALL, IARG_THREAD_ID, IARG_UINT32,              \
                    REG_INDX(dst), IARG_END)
 
+#define M_CALL(is_read, fn)                                                                                            \
+    INS_InsertCall(ins, IPOINT_BEFORE, (AFUNPTR)fn, IARG_FAST_ANALYSIS_CALL, IARG_THREAD_ID,                           \
+                   (is_read) ? IARG_MEMORYREAD_EA : IARG_MEMORYWRITE_EA, IARG_END)
 #define M_CALL_W(fn)                                                                                                   \
     INS_InsertCall(ins, IPOINT_BEFORE, (AFUNPTR)fn, IARG_FAST_ANALYSIS_CALL, IARG_THREAD_ID, IARG_MEMORYWRITE_EA,      \
                    IARG_END)
@@ -419,9 +422,72 @@ namespace {
         using instrumentation_t = T;
 
         //// instrumentation - where instructions are parsed and hooks are inserted
-
         // entry point for instrumentation
         static void ins_op(INS ins) {
+            UINT32 operand_cnt = INS_OperandCount(ins);
+            if (INS_OperandIsImplicit(ins, operand_cnt - 1))
+                --operand_cnt;
+
+            if (operand_cnt == 1) {
+                instrumentation_t::ins_unary_op(ins);
+            } else if (operand_cnt == 2) {
+                instrumentation_t::ins_binary_op(ins);
+            } else if (operand_cnt == 3) {
+                instrumentation_t::ins_ternary_op(ins);
+            }
+        }
+        static void ins_unary_op(INS ins) {
+            if (INS_OperandIsImmediate(ins, OP_0)) {
+                instrumentation_t::ins_unary_imm(ins);
+                return;
+            }
+            if (INS_OperandIsReg(ins, OP_0)) {
+                REG reg_dst = INS_OperandReg(ins, OP_0);
+                if (REG_is_gr64(reg_dst)) {
+                    R_CALL((instrumentation_t::template unary<'r', 8>), reg_dst);
+                } else if (REG_is_gr32(reg_dst)) {
+                    R_CALL((instrumentation_t::template unary<'r', 4>), reg_dst);
+                } else if (REG_is_gr16(reg_dst)) {
+                    R_CALL((instrumentation_t::template unary<'r', 2>), reg_dst);
+                } else if (REG_is_xmm(reg_dst)) {
+                    R_CALL((instrumentation_t::template unary<'r', 16>), reg_dst);
+                } else if (REG_is_ymm(reg_dst)) {
+                    R_CALL((instrumentation_t::template unary<'r', 32>), reg_dst);
+                } else if (REG_is_mm(reg_dst)) {
+                    R_CALL((instrumentation_t::template unary<'r', 8>), reg_dst);
+                } else {
+                    if (REG_is_Lower8(reg_dst)) {
+                        R_CALL((instrumentation_t::template unary<'r', 1>), reg_dst);
+                    } else {
+                        R_CALL((instrumentation_t::template unary<'R', 1>), reg_dst);
+                    }
+                }
+                return;
+            }
+
+            bool is_read = INS_MemoryOperandIsRead(ins, OP_0);
+            switch (INS_OperandWidth(ins, OP_0) / 8) {
+            case 1:
+                M_CALL(is_read, (instrumentation_t::template unary<'m', 1>));
+                break;
+            case 2:
+                M_CALL(is_read, (instrumentation_t::template unary<'m', 2>));
+                break;
+            case 4:
+                M_CALL(is_read, (instrumentation_t::template unary<'m', 4>));
+                break;
+            case 8:
+                M_CALL(is_read, (instrumentation_t::template unary<'m', 8>));
+                break;
+            case 16:
+                M_CALL(is_read, (instrumentation_t::template unary<'m', 16>));
+                break;
+            case 32:
+                M_CALL(is_read, (instrumentation_t::template unary<'m', 32>));
+                break;
+            }
+        }
+        static void ins_binary_op(INS ins) {
             REG reg_dst, reg_src;
             if (INS_OperandIsImmediate(ins, OP_1)) {
                 instrumentation_t::ins_binary_imm(ins);
@@ -493,20 +559,36 @@ namespace {
                 }
             }
         }
+        static void ins_ternary_op(INS ins) {
+            if (INS_OperandIsImmediate(ins, OP_2)) {
+                instrumentation_t::ins_ternary_imm(ins);
+                return;
+            }
+            uninstrumented(ins);
+        }
 
-        // if OP_1 is immediate, we can deal with it during instrumentation
+        // if OP is immediate, we can deal with it during instrumentation
+        static void ins_unary_imm(INS ins) {
+        }
+        // OP_1 is imm
         static void ins_binary_imm(INS ins) {
+        }
+        // OP_2 is imm
+        static void ins_ternary_imm(INS ins) {
         }
 
         //// hook functions
-        template <char scode, char dcode, size_t sz>
-        static void HOOK_DECL unary(THREADID tid, typename Tagset<dcode>::arg_type dst,
-                                    typename Tagset<scode>::arg_type src) {
+        template <char dcode, size_t sz>
+        static void HOOK_DECL unary(THREADID tid, typename Tagset<dcode>::arg_type dst) {
         }
 
         template <char scode, char dcode, size_t sz>
         static void HOOK_DECL binary(THREADID tid, typename Tagset<dcode>::arg_type dst,
                                      typename Tagset<scode>::arg_type src) {
+        }
+        template <char scode1, char scode2, char dcode, size_t sz>
+        static void HOOK_DECL ternary(THREADID tid, typename Tagset<dcode>::arg_type dst,
+                                      typename Tagset<scode1>::arg_type src2, typename Tagset<scode1>::arg_type src1) {
         }
     };
 
