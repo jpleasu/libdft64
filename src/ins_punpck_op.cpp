@@ -43,11 +43,11 @@ void ins_punpckl_op(INS ins) {
             R2R_CALL((r2r_punpckl_op<blocksize, 32>), reg_dst, reg_src);
             break;
         default:
-            uninstrumented(ins);
+            uninstrumented(ins, "punpckl regsize");
             break;
         }
     } else {
-        uninstrumented(ins);
+        uninstrumented(ins, "punpckl operand types");
     }
 }
 

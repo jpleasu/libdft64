@@ -89,6 +89,7 @@ int ins_set_post(ins_desc_t *, void (*)(INS));
 int ins_clr_post(ins_desc_t *);
 
 void uninstrumented(INS);
+void uninstrumented(INS, const char *msg);
 void dump_instruction(INS);
 
 #endif /* __LIBDFT_API_H__ */

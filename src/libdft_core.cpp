@@ -62,7 +62,7 @@ static void PIN_FAST_ANALYSIS_CALL r_clrq_zext(THREADID tid, uint32_t reg) {
     }
 }
 
-void ins_uni(INS ins) {
+void ins_zext_dst(INS ins) {
     if (INS_OperandCount(ins) < 1)
         return;
     if (INS_OperandIsReg(ins, OP_0) && INS_OperandWritten(ins, OP_0)) {
@@ -80,6 +80,45 @@ void ins_binary_mul_op(INS ins) {
 void ins_binary_div_op(INS ins) {
     ins_binary_op(ins);
 }
+
+// first register is base, second register is offset taken module size of base
+
+namespace {
+
+    // first operand is bit base, second is bit offset - instr modifies bit
+    struct bittest_instrumentation : public instrumentation_base<bittest_instrumentation> {
+        static void ins_binary_imm(INS ins) {
+            // only a bit is changed, noop on byte taint
+        }
+        template <char scode, char dcode, size_t sz>
+        static void HOOK_DECL binary(THREADID tid, typename Tagset<dcode>::arg_type dst,
+                                     typename Tagset<scode>::arg_type src) {
+            Tagset<scode> src_tags(tid, src);
+            Tagset<dcode> dst_tags(tid, dst);
+
+            // the bit offset is taken modulo the bit width of dst, so only its low byte matters.
+            tag_t t = dst_tags.get(0);
+
+            // we don't know which position of the dst will be modified, so taint propagates into every position
+            for (size_t i = 0; i < sz; i++)
+                dst_tags.set(i, tag_combine(t, dst_tags.get(i)));
+
+            dst_tags.template zext<sz>();
+        }
+
+        static void ins_unary_op(INS ins) {
+            uninstrumented(ins, "bittest unary");
+        }
+        static void ins_ternary_op(INS ins) {
+            uninstrumented(ins, "bittest ternary");
+        }
+    };
+} // namespace
+
+void ins_bittest_op(INS ins) {
+    bittest_instrumentation::ins_op(ins);
+}
+
 /*
  * instruction inspection (instrumentation function)
  *
@@ -373,14 +412,13 @@ void ins_inspect(INS ins) {
     case XED_ICLASS_NEG:
     case XED_ICLASS_NOT:
     case XED_ICLASS_NOP:
-    case XED_ICLASS_BT:
     case XED_ICLASS_DEC:
     case XED_ICLASS_DEC_LOCK:
     case XED_ICLASS_INC:
     case XED_ICLASS_INC_LOCK:
     case XED_ICLASS_XSAVEC:
     case XED_ICLASS_XRSTOR:
-        ins_uni(ins);
+        ins_zext_dst(ins);
         break;
 
     case XED_ICLASS_PUNPCKLBW:
@@ -394,6 +432,17 @@ void ins_inspect(INS ins) {
         break;
     case XED_ICLASS_PUNPCKLQDQ:
         ins_punpckl_op<8>(ins);
+        break;
+    case XED_ICLASS_BT:
+        // CF is only output and it's not tracked
+        break;
+    case XED_ICLASS_BTC: // complement
+    case XED_ICLASS_BTC_LOCK:
+    case XED_ICLASS_BTR: // reset
+    case XED_ICLASS_BTR_LOCK:
+    case XED_ICLASS_BTS: // set
+    case XED_ICLASS_BTS_LOCK:
+        ins_bittest_op(ins);
         break;
 
     // ****** clear op ******

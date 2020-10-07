@@ -418,7 +418,7 @@ void ins_cmpxchg_op(INS ins) {
             CASE(1);
 #undef CASE
         default:
-            uninstrumented(ins);
+            uninstrumented(ins, "cmpxchg op0 regsize");
             break;
         }
     } else {
@@ -439,7 +439,7 @@ void ins_cmpxchg_op(INS ins) {
             INS_InsertThenCall(ins, IPOINT_BEFORE, (AFUNPTR)_cmpxchg_r2m_opw_slow, IARG_FAST_ANALYSIS_CALL,
                                IARG_THREAD_ID, IARG_MEMORYWRITE_EA, IARG_UINT32, REG_INDX(reg_src), IARG_END);
         } else {
-            uninstrumented(ins);
+            uninstrumented(ins, "cmpxchg op1 regsize");
         }
     }
 }

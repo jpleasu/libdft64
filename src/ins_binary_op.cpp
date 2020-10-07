@@ -23,6 +23,10 @@ namespace {
         static void ins_ternary_imm(INS ins) {
             instrumentation_t::ins_binary_op(ins);
         }
+        static void ins_ternary_op(INS ins) {
+            uninstrumented(ins);
+        }
+
         template <char dcode, size_t sz>
         static void HOOK_DECL unary(THREADID tid, typename Tagset<dcode>::arg_type dst) {
             Tagset<dcode> dst_tags(tid, dst);
@@ -51,6 +55,11 @@ namespace {
 
     // byte levels correspond
     struct bytevec_instrumentation : public instrumentation_base<bytevec_instrumentation> {
+
+        static void ins_unary_op(INS ins) {
+            uninstrumented(ins);
+        }
+
         static void ins_ternary_imm(INS ins) {
             instrumentation_t::ins_binary_op(ins);
         }
@@ -87,6 +96,10 @@ namespace {
         static void ins_ternary_imm(INS ins) {
             instrumentation_t::ins_binary_op(ins);
         }
+        static void ins_ternary_op(INS ins) {
+            uninstrumented(ins, "bytecasc ternary");
+        }
+
         template <char dcode, size_t sz>
         static void HOOK_DECL unary(THREADID tid, typename Tagset<dcode>::arg_type dst) {
             Tagset<dcode> dst_tags(tid, dst);
