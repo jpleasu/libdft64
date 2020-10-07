@@ -1,4 +1,5 @@
-#include "ins_binary_op.h"
+#include "ins_generic_op.h"
+
 #include "ins_helper.h"
 
 /* threads context */
@@ -15,7 +16,7 @@ namespace {
     }
 
     // mix all input bytes int every output byte
-    struct generic_instrumentation : public instrumentation_base<generic_instrumentation> {
+    struct blender_instrumentation : public instrumentation_base<blender_instrumentation> {
         // ignore the constants
         static void ins_binary_imm(INS ins) {
             instrumentation_t::ins_unary_op(ins);
@@ -190,6 +191,6 @@ void ins_bytevec_op(INS ins, uint8_t maskval) {
     ins_bytevec_op(ins);
 }
 
-void ins_binary_op(INS ins) {
-    generic_instrumentation::ins_op(ins);
+void ins_blender_op(INS ins) {
+    blender_instrumentation::ins_op(ins);
 }

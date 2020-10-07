@@ -1,11 +1,12 @@
 #include "libdft_core.h"
+
+#include "ins_arithmetic_op.h"
 #include "ins_helper.h"
 
-#include "ins_binary_op.h"
 #include "ins_clear_op.h"
+#include "ins_generic_op.h"
 #include "ins_movsx_op.h"
 #include "ins_punpck_op.h"
-#include "ins_unary_op.h"
 #include "ins_xchg_op.h"
 #include "ins_xfer_op.h"
 
@@ -71,14 +72,6 @@ void ins_zext_dst(INS ins) {
             R_CALL(r_clrq_zext, reg_dst);
         }
     }
-}
-
-void ins_binary_mul_op(INS ins) {
-    ins_binary_op(ins);
-}
-
-void ins_binary_div_op(INS ins) {
-    ins_binary_op(ins);
 }
 
 // first register is base, second register is offset taken module size of base
@@ -153,6 +146,25 @@ namespace {
         }
     };
 
+    struct bswap_instrumentation : public instrumentation_base<bswap_instrumentation> {
+        static void ins_binary_op(INS ins) {
+            uninstrumented(ins, "bswap binary");
+        }
+        static void ins_ternary_op(INS ins) {
+            uninstrumented(ins, "bswap ternary");
+        }
+
+        template <char dcode, size_t sz>
+        static void HOOK_DECL unary(THREADID tid, typename Tagset<dcode>::arg_type dst) {
+            Tagset<dcode> dst_tags(tid, dst);
+            for (size_t i = 0; i < sz / 2; i++) {
+                size_t ni = sz - 1 - i;
+                dst_tags.swap(i, ni);
+            }
+            dst_tags.template zext<sz>();
+        }
+    };
+
 } // namespace
 
 /*
@@ -214,6 +226,10 @@ void ins_inspect(INS ins) {
     case XED_ICLASS_BLSI:
     case XED_ICLASS_BLSR:
     case XED_ICLASS_BLSMSK:
+    case XED_ICLASS_INC:
+    case XED_ICLASS_INC_LOCK:
+    case XED_ICLASS_DEC:
+    case XED_ICLASS_DEC_LOCK:
     case XED_ICLASS_ADC: // there is no tagging of CF, assume it can be anything.. always carry
         ins_bytecasc_op(ins);
         break;
@@ -238,25 +254,16 @@ void ins_inspect(INS ins) {
         break;
     case XED_ICLASS_DIV:
     case XED_ICLASS_IDIV:
-        ins_unary_div_op(ins);
+        ins_div_op(ins);
         break;
     case XED_ICLASS_MUL:
-        ins_unary_mul_op(ins);
-        break;
     case XED_ICLASS_IMUL:
-        if (INS_OperandIsImplicit(ins, OP_1)) {
-            ins_unary_mul_op(ins);
-        } else {
-            ins_binary_mul_op(ins);
-            // if ternary // TODO
-        }
+        ins_mul_op(ins);
         break;
     case XED_ICLASS_MULSD:
     case XED_ICLASS_MULPD:
-        ins_binary_mul_op(ins);
-        break;
     case XED_ICLASS_DIVSD:
-        ins_binary_div_op(ins);
+        ins_blender_op(ins);
         break;
 
     case XED_ICLASS_LEA:
@@ -402,10 +409,10 @@ void ins_inspect(INS ins) {
         break;
 
     case XED_ICLASS_PCMPEQB:
-        ins_binary_op(ins);
+        ins_blender_op(ins);
         break;
     case XED_ICLASS_BSWAP:
-        ins_bswap_op(ins);
+        bswap_instrumentation::ins_op(ins);
         break;
 
     // ****** other ******
@@ -461,10 +468,6 @@ void ins_inspect(INS ins) {
     case XED_ICLASS_NEG:
     case XED_ICLASS_NOT:
     case XED_ICLASS_NOP:
-    case XED_ICLASS_DEC:
-    case XED_ICLASS_DEC_LOCK:
-    case XED_ICLASS_INC:
-    case XED_ICLASS_INC_LOCK:
     case XED_ICLASS_XSAVEC:
     case XED_ICLASS_XRSTOR:
         ins_zext_dst(ins);

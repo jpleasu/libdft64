@@ -352,7 +352,7 @@ namespace {
 
     inline UINT32 INS_ExplicitOperandCount(INS ins) {
         UINT32 operand_cnt = INS_OperandCount(ins);
-        if (INS_OperandIsImplicit(ins, operand_cnt - 1))
+        while (operand_cnt > 0 && INS_OperandIsImplicit(ins, operand_cnt - 1))
             --operand_cnt;
         return operand_cnt;
     }
