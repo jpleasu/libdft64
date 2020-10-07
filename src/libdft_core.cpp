@@ -97,9 +97,9 @@ namespace {
             Tagset<dcode> dst_tags(tid, dst);
 
             // the bit offset is taken modulo the bit width of dst, so only its low byte matters.
-            tag_t t = dst_tags.get(0);
+            tag_t t = src_tags.get(0);
 
-            // we don't know which position of the dst will be modified, so taint propagates into every position
+            // we don't know which position of the dst will be modified, so taint every position
             for (size_t i = 0; i < sz; i++)
                 dst_tags.set(i, tag_combine(t, dst_tags.get(i)));
 
@@ -113,11 +113,47 @@ namespace {
             uninstrumented(ins, "bittest ternary");
         }
     };
-} // namespace
 
-void ins_bittest_op(INS ins) {
-    bittest_instrumentation::ins_op(ins);
-}
+    struct bextr_instrumentation : public instrumentation_base<bextr_instrumentation> {
+        static void ins_op(INS ins) {
+            UINT32 operand_cnt = INS_ExplicitOperandCount(ins);
+            if (operand_cnt == 3) {
+                UINT32 n;
+                for (n = 0; n < 3; ++n) {
+                    if (INS_OperandIsImmediate(ins, n))
+                        break;
+                }
+                if (n == 3)
+                    base_t::ins_ternary_op(ins);
+                else
+                    uninstrumented(ins, "bextr ternary imm");
+            } else {
+                uninstrumented(ins, "bextr non ternary");
+            }
+        }
+
+        static void ins_ternary_imm(INS ins) {
+            uninstrumented(ins, "bextr ternary imm");
+        }
+        template <char scode1, char scode2, char dcode, size_t sz>
+        static void HOOK_DECL ternary(THREADID tid, typename Tagset<dcode>::arg_type dst,
+                                      typename Tagset<scode1>::arg_type src1, typename Tagset<scode2>::arg_type src2) {
+            Tagset<scode1> src1_tags(tid, src1);
+            Tagset<scode2> src2_tags(tid, src2);
+            Tagset<dcode> dst_tags(tid, dst);
+            tag_t t = src1_tags.get(0);
+            for (size_t i = 1; i < sz; ++i)
+                t = tag_combine(t, src1_tags.get(i));
+            for (size_t i = 0; i < 2; ++i)
+                t = tag_combine(t, src2_tags.get(i));
+            for (size_t i = 0; i < sz; ++i)
+                dst_tags.set(i, t);
+
+            dst_tags.template zext<sz>();
+        }
+    };
+
+} // namespace
 
 /*
  * instruction inspection (instrumentation function)
@@ -165,6 +201,19 @@ void ins_inspect(INS ins) {
         break;
 
     // **** arithmetic ****
+    case XED_ICLASS_BEXTR:
+        bextr_instrumentation::ins_op(ins);
+        break;
+    case XED_ICLASS_BLCFILL:
+    case XED_ICLASS_BLCI:
+    case XED_ICLASS_BLCIC:
+    case XED_ICLASS_BLCMSK:
+    case XED_ICLASS_BLCS:
+    case XED_ICLASS_BLSFILL:
+    case XED_ICLASS_BLSIC:
+    case XED_ICLASS_BLSI:
+    case XED_ICLASS_BLSR:
+    case XED_ICLASS_BLSMSK:
     case XED_ICLASS_ADC: // there is no tagging of CF, assume it can be anything.. always carry
         ins_bytecasc_op(ins);
         break;
@@ -356,7 +405,7 @@ void ins_inspect(INS ins) {
         ins_binary_op(ins);
         break;
     case XED_ICLASS_BSWAP:
-        ins_unary_bswap_op(ins);
+        ins_bswap_op(ins);
         break;
 
     // ****** other ******
@@ -442,7 +491,7 @@ void ins_inspect(INS ins) {
     case XED_ICLASS_BTR_LOCK:
     case XED_ICLASS_BTS: // set
     case XED_ICLASS_BTS_LOCK:
-        ins_bittest_op(ins);
+        bittest_instrumentation::ins_op(ins);
         break;
 
     // ****** clear op ******
@@ -561,7 +610,7 @@ void ins_inspect(INS ins) {
         // break;
 
     default:
-        uninstrumented(ins);
+        uninstrumented(ins, "main switch");
         break;
     }
 }

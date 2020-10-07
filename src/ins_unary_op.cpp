@@ -2,22 +2,27 @@
 
 #include "ins_helper.h"
 
-/* threads context */
-extern thread_ctx_t *threads_ctx;
+namespace {
 
-template <size_t sz>
-static void PIN_FAST_ANALYSIS_CALL __attribute__((optimize("unroll-loops")))
-r_unary_bswap_op(THREADID tid, uint32_t dst) {
-    tag_t *dst_tag = RTAG[dst];
-    for (size_t i = 0; i < sz / 2; i++) {
-        size_t ni = sz - 1 - i;
-        dst_tag[i] ^= dst_tag[ni];
-        dst_tag[ni] ^= dst_tag[i];
-        dst_tag[i] ^= dst_tag[ni];
-    }
+    struct bswap_instrumentation : public instrumentation_base<bswap_instrumentation> {
+        static void ins_binary_op(INS ins) {
+            uninstrumented(ins, "bswap binary");
+        }
+        static void ins_ternary_op(INS ins) {
+            uninstrumented(ins, "bswap ternary");
+        }
 
-    maybe_zext<sz>(dst_tag);
-}
+        template <char dcode, size_t sz>
+        static void HOOK_DECL unary(THREADID tid, typename Tagset<dcode>::arg_type dst) {
+            Tagset<dcode> dst_tags(tid, dst);
+            for (size_t i = 0; i < sz / 2; i++) {
+                size_t ni = sz - 1 - i;
+                dst_tags.swap(i, ni);
+            }
+            dst_tags.template zext<sz>();
+        }
+    };
+} // namespace
 
 static void PIN_FAST_ANALYSIS_CALL r2r_unary_opb_u(THREADID tid, uint32_t src) {
     tag_t tmp_tag = RTAG[src][1];
@@ -186,12 +191,6 @@ void ins_unary_mul_op(INS ins) {
             R_CALL(r2r_unary_mul_opb_l, reg_src);
     }
 }
-void ins_unary_bswap_op(INS ins) {
-    REG r = INS_OperandReg(ins, OP_0);
-    UINT32 sz = REG_Size(r);
-    if (sz == 4) {
-        R_CALL(r_unary_bswap_op<4>, r);
-    } else if (sz == 8) {
-        R_CALL(r_unary_bswap_op<8>, r);
-    }
+void ins_bswap_op(INS ins) {
+    bswap_instrumentation::ins_op(ins);
 }

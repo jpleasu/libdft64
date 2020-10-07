@@ -480,12 +480,6 @@ int ins_clr_post(syscall_desc_t *desc) {
     return 0;
 }
 
-void uninstrumented(INS ins) {
-    uninstrumented(ins, "");
-    LOGD("[uninstrumented] opcode=%d, %p: %s\n", INS_Opcode(ins), (void *)INS_Address(ins),
-         INS_Disassemble(ins).c_str());
-}
-
 void uninstrumented(INS ins, const char *msg) {
     LOGD("[uninstrumented] %s opcode=%d, %p: %s\n", msg, INS_Opcode(ins), (void *)INS_Address(ins),
          INS_Disassemble(ins).c_str());

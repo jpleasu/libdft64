@@ -383,6 +383,11 @@ namespace {
         void set(int i, tag_t v) {
             tags[i] = v;
         }
+        void swap(int i, int j) {
+            tags[i] ^= tags[j];
+            tags[j] ^= tags[i];
+            tags[i] ^= tags[j];
+        }
         template <size_t sz>
         void zext() {
             maybe_zext<sz>(tags);
@@ -402,6 +407,12 @@ namespace {
         void set(int i, tag_t v) {
             tags[i + 1] = v;
         }
+        void swap(int i, int j) {
+            tags[i] ^= tags[j];
+            tags[j] ^= tags[i];
+            tags[i] ^= tags[j];
+        }
+
         template <size_t sz>
         void zext() {
             maybe_zext<sz>(tags);
@@ -421,6 +432,13 @@ namespace {
         void set(int i, tag_t v) {
             tagmap_setb(addr, v);
         }
+
+        void swap(int i, int j) {
+            tag_t tmp = get(i);
+            set(i, get(j));
+            set(j, tmp);
+        }
+
         template <size_t sz>
         void zext() {
         }

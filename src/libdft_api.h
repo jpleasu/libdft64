@@ -88,7 +88,6 @@ int ins_clr_pre(ins_desc_t *);
 int ins_set_post(ins_desc_t *, void (*)(INS));
 int ins_clr_post(ins_desc_t *);
 
-void uninstrumented(INS);
 void uninstrumented(INS, const char *msg);
 void dump_instruction(INS);
 

@@ -24,7 +24,7 @@ namespace {
             instrumentation_t::ins_binary_op(ins);
         }
         static void ins_ternary_op(INS ins) {
-            uninstrumented(ins);
+            uninstrumented(ins, "generic ternary");
         }
 
         template <char dcode, size_t sz>
@@ -57,7 +57,7 @@ namespace {
     struct bytevec_instrumentation : public instrumentation_base<bytevec_instrumentation> {
 
         static void ins_unary_op(INS ins) {
-            uninstrumented(ins);
+            uninstrumented(ins, "bytevec unary");
         }
 
         static void ins_ternary_imm(INS ins) {
