@@ -348,6 +348,14 @@ inline size_t REG_INDX(REG reg) {
 
 #define HOOK_DECL PIN_FAST_ANALYSIS_CALL __attribute__((optimize("unroll-loops")))
 namespace {
+
+    inline UINT32 INS_ExplicitOperandCount(INS ins) {
+        UINT32 operand_cnt = INS_OperandCount(ins);
+        if (INS_OperandIsImplicit(ins, operand_cnt - 1))
+            --operand_cnt;
+        return operand_cnt;
+    }
+
     template <size_t sz>
     inline void maybe_zext(tag_t *dst) {
     }
@@ -419,14 +427,13 @@ namespace {
 
     template <typename T>
     struct instrumentation_base {
+        using base_t = instrumentation_base<T>;
         using instrumentation_t = T;
 
         //// instrumentation - where instructions are parsed and hooks are inserted
         // entry point for instrumentation
         static void ins_op(INS ins) {
-            UINT32 operand_cnt = INS_OperandCount(ins);
-            if (INS_OperandIsImplicit(ins, operand_cnt - 1))
-                --operand_cnt;
+            UINT32 operand_cnt = INS_ExplicitOperandCount(ins);
 
             if (operand_cnt == 1) {
                 instrumentation_t::ins_unary_op(ins);
@@ -434,6 +441,8 @@ namespace {
                 instrumentation_t::ins_binary_op(ins);
             } else if (operand_cnt == 3) {
                 instrumentation_t::ins_ternary_op(ins);
+            } else {
+                uninstrumented(ins);
             }
         }
         static void ins_unary_op(INS ins) {
@@ -564,6 +573,44 @@ namespace {
                 instrumentation_t::ins_ternary_imm(ins);
                 return;
             }
+            if (INS_OperandIsReg(ins, OP_0)) {
+                REG reg_dst = INS_OperandReg(ins, OP_0);
+                if (INS_OperandIsReg(ins, OP_1)) {
+                    REG reg_src1 = INS_OperandReg(ins, OP_1);
+                    if (INS_OperandIsReg(ins, OP_2)) {
+                        REG reg_src2 = INS_OperandReg(ins, OP_2);
+                        switch (REG_Size(reg_dst)) {
+                        case 1:
+                            RR2R_CALL((instrumentation_t::template ternary<'r', 'r', 'r', 1>), reg_dst, reg_src1,
+                                      reg_src2);
+                            break;
+                        case 2:
+                            RR2R_CALL((instrumentation_t::template ternary<'r', 'r', 'r', 2>), reg_dst, reg_src1,
+                                      reg_src2);
+                            break;
+                        case 4:
+                            RR2R_CALL((instrumentation_t::template ternary<'r', 'r', 'r', 4>), reg_dst, reg_src1,
+                                      reg_src2);
+                            break;
+                        case 8:
+                            RR2R_CALL((instrumentation_t::template ternary<'r', 'r', 'r', 8>), reg_dst, reg_src1,
+                                      reg_src2);
+                            break;
+                        case 16:
+                            RR2R_CALL((instrumentation_t::template ternary<'r', 'r', 'r', 16>), reg_dst, reg_src1,
+                                      reg_src2);
+                            break;
+                        case 32:
+                            RR2R_CALL((instrumentation_t::template ternary<'r', 'r', 'r', 32>), reg_dst, reg_src1,
+                                      reg_src2);
+                            break;
+                        default:
+                            uninstrumented(ins);
+                        }
+                        return;
+                    }
+                }
+            }
             uninstrumented(ins);
         }
 
@@ -588,7 +635,7 @@ namespace {
         }
         template <char scode1, char scode2, char dcode, size_t sz>
         static void HOOK_DECL ternary(THREADID tid, typename Tagset<dcode>::arg_type dst,
-                                      typename Tagset<scode1>::arg_type src2, typename Tagset<scode1>::arg_type src1) {
+                                      typename Tagset<scode1>::arg_type src1, typename Tagset<scode2>::arg_type src2) {
         }
     };
 

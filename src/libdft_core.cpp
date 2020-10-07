@@ -28,85 +28,32 @@ static void HOOK_DECL sext_ad(THREADID tid) {
         dstrtag[i] = signbyte;
 }
 
-static void PIN_FAST_ANALYSIS_CALL m2r_restore_opw(THREADID tid, ADDRINT src) {
-    for (size_t i = 0; i < 8; i++) {
-        if (i == DFT_REG_RSP)
+template <size_t sz>
+static void HOOK_DECL m2r_restore_op(THREADID tid, ADDRINT src) {
+    size_t offset = src;
+    for (size_t ri = 0; ri < 8; ++ri) {
+        if (ri == DFT_REG_RSP)
             continue;
-        size_t offset = (i < DFT_REG_RSP) ? (i << 1) : ((i - 1) << 1);
-        tag_t src_tag[] = M16TAG(src + offset);
-        RTAG[DFT_REG_RDI + i][0] = src_tag[0];
-        RTAG[DFT_REG_RDI + i][1] = src_tag[1];
+        tag_t *dst_tags = RTAG[DFT_REG_RDI + ri];
+        for (size_t i = 0; i < sz; ++i)
+            dst_tags[i] = tagmap_getb(offset++);
     }
 }
-
-static void PIN_FAST_ANALYSIS_CALL m2r_restore_opl(THREADID tid, ADDRINT src) {
-    for (size_t i = 0; i < 8; i++) {
-        if (i == DFT_REG_RSP)
+template <size_t sz>
+static void HOOK_DECL r2m_save_op(THREADID tid, ADDRINT dst) {
+    size_t offset = dst;
+    for (size_t ri = 0; ri < 8; ++ri) {
+        if (ri == DFT_REG_RSP)
             continue;
-        size_t offset = (i < DFT_REG_RSP) ? (i << 2) : ((i - 1) << 2);
-        tag_t src_tag[] = M32TAG(src + offset);
-        RTAG[DFT_REG_RDI + i][0] = src_tag[0];
-        RTAG[DFT_REG_RDI + i][1] = src_tag[1];
-        RTAG[DFT_REG_RDI + i][2] = src_tag[2];
-        RTAG[DFT_REG_RDI + i][3] = src_tag[3];
-    }
-}
-
-static void PIN_FAST_ANALYSIS_CALL r2m_save_opw(THREADID tid, ADDRINT dst) {
-    for (int i = DFT_REG_RDI; i < DFT_REG_XMM0; i++) {
-        if (i == DFT_REG_RSP)
-            continue;
-        size_t offset = (i < DFT_REG_RSP) ? (i << 1) : ((i - 1) << 1);
-        tag_t src_tag[] = R16TAG(i);
-
-        tagmap_setb(dst + offset, src_tag[0]);
-        tagmap_setb(dst + offset + 1, src_tag[1]);
-    }
-}
-
-static void PIN_FAST_ANALYSIS_CALL r2m_save_opl(THREADID tid, ADDRINT dst) {
-    for (int i = DFT_REG_RDI; i < DFT_REG_XMM0; i++) {
-        if (i == DFT_REG_RSP)
-            continue;
-        size_t offset = (i < DFT_REG_RSP) ? (i << 2) : ((i - 1) << 2);
-        tag_t src_tag[] = R32TAG(i);
-
-        for (size_t j = 0; j < 4; j++)
-            tagmap_setb(dst + offset + j, src_tag[j]);
+        tag_t *src_tags = RTAG[DFT_REG_RDI + ri];
+        for (size_t i = 0; i < sz; ++i)
+            tagmap_setb(offset++, src_tags[i]);
     }
 }
 
 static bool reg_eq(INS ins) {
     return (!INS_OperandIsImmediate(ins, OP_1) && INS_MemoryOperandCount(ins) == 0 &&
             INS_OperandReg(ins, OP_0) == INS_OperandReg(ins, OP_1));
-}
-
-static void PIN_FAST_ANALYSIS_CALL r_cmp(THREADID tid, ADDRINT dst, uint64_t val) {
-    if (!tag_is_empty(RTAG[dst][0])) {
-        LOGD("r taint(%ld)!\n", val);
-    }
-}
-
-static void PIN_FAST_ANALYSIS_CALL m_cmp(THREADID tid, ADDRINT dst) {
-    if (!tag_is_empty(MTAG(dst))) {
-        LOGD("m taint!\n");
-    }
-}
-
-void ins_cmp_op(INS ins) {
-    if (INS_OperandIsReg(ins, OP_0)) {
-        REG reg_dst = INS_OperandReg(ins, OP_0);
-        INS_InsertCall(ins, IPOINT_BEFORE, AFUNPTR(r_cmp), IARG_FAST_ANALYSIS_CALL, IARG_THREAD_ID, IARG_UINT32,
-                       REG_INDX(reg_dst), IARG_REG_VALUE, reg_dst, IARG_END);
-        // R_CALL(r_cmp, reg_dst);
-    }
-    if (INS_OperandIsReg(ins, OP_1)) {
-        REG reg_src = INS_OperandReg(ins, OP_1);
-        R_CALL(r_cmp, reg_src);
-    }
-    if (INS_MemoryOperandCount(ins) > 0) {
-        M_CALL_R(m_cmp);
-    }
 }
 
 static void PIN_FAST_ANALYSIS_CALL r_clrq_zext(THREADID tid, uint32_t reg) {
@@ -124,27 +71,6 @@ void ins_uni(INS ins) {
             R_CALL(r_clrq_zext, reg_dst);
         }
     }
-}
-
-// XXX: ops to specialize
-void ins_binary_cascade_op(INS ins) {
-    ins_binary_op(ins);
-}
-
-void ins_binary_add_op(INS ins) {
-    ins_binary_op(ins);
-}
-
-void ins_binary_sub_op(INS ins) {
-    if (reg_eq(ins)) {
-        ins_clear_op(ins);
-    } else {
-        ins_binary_op(ins);
-    }
-}
-
-void ins_binary_xor_op(INS ins) {
-    ins_binary_op(ins);
 }
 
 void ins_binary_mul_op(INS ins) {
@@ -185,29 +111,30 @@ void ins_inspect(INS ins) {
     // **** logical ****
     case XED_ICLASS_AND:
     case XED_ICLASS_PAND:
-        ins_binary_bytemask_op(ins, 0x00);
+    case XED_ICLASS_ANDN:
+        ins_bytevec_op(ins, 0x00);
         break;
     case XED_ICLASS_OR:
     case XED_ICLASS_POR:
-        ins_binary_bytemask_op(ins, 0xff);
+        ins_bytevec_op(ins, 0xff);
         break;
     case XED_ICLASS_XOR:
     case XED_ICLASS_XORPS:
     case XED_ICLASS_XORPD:
     case XED_ICLASS_PXOR:
-        ins_binary_xor_op(ins);
+        ins_bytevec_op(ins);
         break;
 
     // **** arithmetic ****
-    case XED_ICLASS_ADC: // there is no tagging of CF, so don't tree 0 immediate specially
-        ins_binary_cascade_op(ins);
+    case XED_ICLASS_ADC: // there is no tagging of CF, assume it can be anything.. always carry
+        ins_bytecasc_op(ins);
         break;
     case XED_ICLASS_ADD:
     case XED_ICLASS_ADD_LOCK:
     case XED_ICLASS_ADDPD:
     case XED_ICLASS_ADDSD:
     case XED_ICLASS_ADDSS:
-        ins_binary_add_op(ins);
+        ins_bytecasc_op(ins, 0ul);
         break;
     case XED_ICLASS_SBB:
     case XED_ICLASS_SUB:
@@ -215,7 +142,11 @@ void ins_inspect(INS ins) {
     case XED_ICLASS_PSUBB:
     case XED_ICLASS_PSUBW:
     case XED_ICLASS_PSUBD:
-        ins_binary_sub_op(ins);
+        if (reg_eq(ins)) {
+            ins_clear_op(ins);
+        } else {
+            ins_bytecasc_op(ins);
+        }
         break;
     case XED_ICLASS_DIV:
     case XED_ICLASS_IDIV:
@@ -409,16 +340,16 @@ void ins_inspect(INS ins) {
         ins_push_op(ins);
         break;
     case XED_ICLASS_POPA:
-        M_CALL_R(m2r_restore_opw);
+        M_CALL_R(m2r_restore_op<2>);
         break;
     case XED_ICLASS_POPAD:
-        M_CALL_R(m2r_restore_opl);
+        M_CALL_R(m2r_restore_op<4>);
         break;
     case XED_ICLASS_PUSHA:
-        M_CALL_W(r2m_save_opw);
+        M_CALL_W(r2m_save_op<2>);
         break;
     case XED_ICLASS_PUSHAD:
-        M_CALL_W(r2m_save_opl);
+        M_CALL_W(r2m_save_op<4>);
         break;
     case XED_ICLASS_PUSHF:
         M_CLEAR_N(2);
@@ -568,7 +499,6 @@ void ins_inspect(INS ins) {
     case XED_ICLASS_VPCMPGTB:
     case XED_ICLASS_VPALIGNR:
     case XED_ICLASS_VPCMPISTRI:
-    case XED_ICLASS_ANDN:
         // break;
     case XED_ICLASS_CMPSB:
     case XED_ICLASS_CMPSW:

@@ -205,7 +205,7 @@ static int gtaint_equals(void *addr, size_t memsz, uint32_t *ordered_list, size_
         }
         ++seg;
     }
-    return 1;
+    return seg == s.end();
 }
 const char *gtaint_getb_str(volatile void *addr) {
     static char buffs[10][1024];

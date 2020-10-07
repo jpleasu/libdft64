@@ -3,9 +3,9 @@
 #include "pin.H"
 
 void ins_binary_op(INS ins);
-
-// ins_binary_op except when OP_1 is immediate.  Each byte
-// of immediate equal to maskval will clear corresponding position in dst
-void ins_binary_bytemask_op(INS ins, uint8_t maskval);
+void ins_bytecasc_op(INS ins);
+void ins_bytecasc_op(INS ins, UINT64 nopval);
+void ins_bytevec_op(INS ins);
+void ins_bytevec_op(INS ins, uint8_t maskval);
 
 #endif
