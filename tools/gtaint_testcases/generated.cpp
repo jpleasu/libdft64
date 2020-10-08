@@ -1930,21 +1930,25 @@ static int testcase75() {
 
     __gtaint_reset();
     uint32_t inEAX = 1;
-    uint32_t outEAX = 1;
+    uint64_t outRAX = 1;
     __gtaint_setn(&inEAX, 4);
     asm volatile (
         "mov EAX,%1;\n"
         "andn   eax,eax,eax;\n" // <--
-        "mov %0,EAX;\n"
-        :"=m"(outEAX)
+        "mov %0,RAX;\n"
+        :"=m"(outRAX)
         :"m"(inEAX)
-        :"eax"
+        :"rax"
     );
 
-    ASSERT_TAGGED((char *)&outEAX + 0, {0});
-    ASSERT_TAGGED((char *)&outEAX + 1, {1});
-    ASSERT_TAGGED((char *)&outEAX + 2, {2});
-    ASSERT_TAGGED((char *)&outEAX + 3, {3});
+    ASSERT_TAGGED((char *)&outRAX + 0, {0});
+    ASSERT_TAGGED((char *)&outRAX + 1, {1});
+    ASSERT_TAGGED((char *)&outRAX + 2, {2});
+    ASSERT_TAGGED((char *)&outRAX + 3, {3});
+    ASSERT_TAGGED((char *)&outRAX + 4, { });
+    ASSERT_TAGGED((char *)&outRAX + 5, { });
+    ASSERT_TAGGED((char *)&outRAX + 6, { });
+    ASSERT_TAGGED((char *)&outRAX + 7, { });
     return passed;
 }
 
@@ -1956,23 +1960,27 @@ static int testcase76() {
     __gtaint_reset();
     uint32_t inEAX = 1;
     uint32_t inECX = 1;
-    uint32_t outEAX = 1;
+    uint64_t outRAX = 1;
     __gtaint_setn(&inEAX, 4);
     __gtaint_setn(&inECX, 4);
     asm volatile (
         "mov EAX,%1;\n"
         "mov ECX,%2;\n"
         "andn   eax,eax,ecx;\n" // <--
-        "mov %0,EAX;\n"
-        :"=m"(outEAX)
+        "mov %0,RAX;\n"
+        :"=m"(outRAX)
         :"m"(inEAX),"m"(inECX)
-        :"eax","ecx"
+        :"rax","ecx"
     );
 
-    ASSERT_TAGGED((char *)&outEAX + 0, {0,4});
-    ASSERT_TAGGED((char *)&outEAX + 1, {1,5});
-    ASSERT_TAGGED((char *)&outEAX + 2, {2,6});
-    ASSERT_TAGGED((char *)&outEAX + 3, {3,7});
+    ASSERT_TAGGED((char *)&outRAX + 0, {0,4});
+    ASSERT_TAGGED((char *)&outRAX + 1, {1,5});
+    ASSERT_TAGGED((char *)&outRAX + 2, {2,6});
+    ASSERT_TAGGED((char *)&outRAX + 3, {3,7});
+    ASSERT_TAGGED((char *)&outRAX + 4, { });
+    ASSERT_TAGGED((char *)&outRAX + 5, { });
+    ASSERT_TAGGED((char *)&outRAX + 6, { });
+    ASSERT_TAGGED((char *)&outRAX + 7, { });
     return passed;
 }
 
@@ -1983,21 +1991,25 @@ static int testcase77() {
 
     __gtaint_reset();
     uint32_t inECX = 1;
-    uint32_t outEAX = 1;
+    uint64_t outRAX = 1;
     __gtaint_setn(&inECX, 4);
     asm volatile (
         "mov ECX,%1;\n"
         "andn   eax,ecx,ecx;\n" // <--
-        "mov %0,EAX;\n"
-        :"=m"(outEAX)
+        "mov %0,RAX;\n"
+        :"=m"(outRAX)
         :"m"(inECX)
-        :"eax","ecx"
+        :"rax","ecx"
     );
 
-    ASSERT_TAGGED((char *)&outEAX + 0, {0});
-    ASSERT_TAGGED((char *)&outEAX + 1, {1});
-    ASSERT_TAGGED((char *)&outEAX + 2, {2});
-    ASSERT_TAGGED((char *)&outEAX + 3, {3});
+    ASSERT_TAGGED((char *)&outRAX + 0, {0});
+    ASSERT_TAGGED((char *)&outRAX + 1, {1});
+    ASSERT_TAGGED((char *)&outRAX + 2, {2});
+    ASSERT_TAGGED((char *)&outRAX + 3, {3});
+    ASSERT_TAGGED((char *)&outRAX + 4, { });
+    ASSERT_TAGGED((char *)&outRAX + 5, { });
+    ASSERT_TAGGED((char *)&outRAX + 6, { });
+    ASSERT_TAGGED((char *)&outRAX + 7, { });
     return passed;
 }
 
@@ -2009,23 +2021,27 @@ static int testcase78() {
     __gtaint_reset();
     uint32_t inECX = 1;
     uint32_t inEDX = 0;
-    uint32_t outEAX = 1;
+    uint64_t outRAX = 1;
     __gtaint_setn(&inECX, 4);
     __gtaint_setn(&inEDX, 4);
     asm volatile (
         "mov ECX,%1;\n"
         "mov EDX,%2;\n"
         "andn   eax,ecx,edx;\n" // <--
-        "mov %0,EAX;\n"
-        :"=m"(outEAX)
+        "mov %0,RAX;\n"
+        :"=m"(outRAX)
         :"m"(inECX),"m"(inEDX)
-        :"eax","ecx","edx"
+        :"rax","ecx","edx"
     );
 
-    ASSERT_TAGGED((char *)&outEAX + 0, {0,4});
-    ASSERT_TAGGED((char *)&outEAX + 1, {1,5});
-    ASSERT_TAGGED((char *)&outEAX + 2, {2,6});
-    ASSERT_TAGGED((char *)&outEAX + 3, {3,7});
+    ASSERT_TAGGED((char *)&outRAX + 0, {0,4});
+    ASSERT_TAGGED((char *)&outRAX + 1, {1,5});
+    ASSERT_TAGGED((char *)&outRAX + 2, {2,6});
+    ASSERT_TAGGED((char *)&outRAX + 3, {3,7});
+    ASSERT_TAGGED((char *)&outRAX + 4, { });
+    ASSERT_TAGGED((char *)&outRAX + 5, { });
+    ASSERT_TAGGED((char *)&outRAX + 6, { });
+    ASSERT_TAGGED((char *)&outRAX + 7, { });
     return passed;
 }
 
@@ -2158,21 +2174,25 @@ static int testcase83() {
 
     __gtaint_reset();
     uint32_t inEAX = 1;
-    uint32_t outEAX = 1;
+    uint64_t outRAX = 1;
     __gtaint_setn(&inEAX, 4);
     asm volatile (
         "mov EAX,%1;\n"
         "bextr  eax,eax,eax;\n" // <--
-        "mov %0,EAX;\n"
-        :"=m"(outEAX)
+        "mov %0,RAX;\n"
+        :"=m"(outRAX)
         :"m"(inEAX)
-        :"eax"
+        :"rax"
     );
 
-    ASSERT_TAGGED((char *)&outEAX + 0, {0,1,2,3});
-    ASSERT_TAGGED((char *)&outEAX + 1, {0,1,2,3});
-    ASSERT_TAGGED((char *)&outEAX + 2, {0,1,2,3});
-    ASSERT_TAGGED((char *)&outEAX + 3, {0,1,2,3});
+    ASSERT_TAGGED((char *)&outRAX + 0, {0,1,2,3});
+    ASSERT_TAGGED((char *)&outRAX + 1, {0,1,2,3});
+    ASSERT_TAGGED((char *)&outRAX + 2, {0,1,2,3});
+    ASSERT_TAGGED((char *)&outRAX + 3, {0,1,2,3});
+    ASSERT_TAGGED((char *)&outRAX + 4, { });
+    ASSERT_TAGGED((char *)&outRAX + 5, { });
+    ASSERT_TAGGED((char *)&outRAX + 6, { });
+    ASSERT_TAGGED((char *)&outRAX + 7, { });
     return passed;
 }
 
@@ -2184,23 +2204,27 @@ static int testcase84() {
     __gtaint_reset();
     uint32_t inEAX = 1;
     uint16_t inCX = 1;
-    uint32_t outEAX = 1;
+    uint64_t outRAX = 1;
     __gtaint_setn(&inEAX, 4);
     __gtaint_setn(&inCX, 2);
     asm volatile (
         "mov EAX,%1;\n"
         "mov CX,%2;\n"
         "bextr  eax,eax,ecx;\n" // <--
-        "mov %0,EAX;\n"
-        :"=m"(outEAX)
+        "mov %0,RAX;\n"
+        :"=m"(outRAX)
         :"m"(inEAX),"m"(inCX)
-        :"eax","cx"
+        :"rax","cx"
     );
 
-    ASSERT_TAGGED((char *)&outEAX + 0, {0,1,2,3,4,5});
-    ASSERT_TAGGED((char *)&outEAX + 1, {0,1,2,3,4,5});
-    ASSERT_TAGGED((char *)&outEAX + 2, {0,1,2,3,4,5});
-    ASSERT_TAGGED((char *)&outEAX + 3, {0,1,2,3,4,5});
+    ASSERT_TAGGED((char *)&outRAX + 0, {0,1,2,3,4,5});
+    ASSERT_TAGGED((char *)&outRAX + 1, {0,1,2,3,4,5});
+    ASSERT_TAGGED((char *)&outRAX + 2, {0,1,2,3,4,5});
+    ASSERT_TAGGED((char *)&outRAX + 3, {0,1,2,3,4,5});
+    ASSERT_TAGGED((char *)&outRAX + 4, { });
+    ASSERT_TAGGED((char *)&outRAX + 5, { });
+    ASSERT_TAGGED((char *)&outRAX + 6, { });
+    ASSERT_TAGGED((char *)&outRAX + 7, { });
     return passed;
 }
 
@@ -2211,21 +2235,25 @@ static int testcase85() {
 
     __gtaint_reset();
     uint32_t inECX = 1;
-    uint32_t outEAX = 1;
+    uint64_t outRAX = 1;
     __gtaint_setn(&inECX, 4);
     asm volatile (
         "mov ECX,%1;\n"
         "bextr  eax,ecx,ecx;\n" // <--
-        "mov %0,EAX;\n"
-        :"=m"(outEAX)
+        "mov %0,RAX;\n"
+        :"=m"(outRAX)
         :"m"(inECX)
-        :"eax","ecx"
+        :"rax","ecx"
     );
 
-    ASSERT_TAGGED((char *)&outEAX + 0, {0,1,2,3});
-    ASSERT_TAGGED((char *)&outEAX + 1, {0,1,2,3});
-    ASSERT_TAGGED((char *)&outEAX + 2, {0,1,2,3});
-    ASSERT_TAGGED((char *)&outEAX + 3, {0,1,2,3});
+    ASSERT_TAGGED((char *)&outRAX + 0, {0,1,2,3});
+    ASSERT_TAGGED((char *)&outRAX + 1, {0,1,2,3});
+    ASSERT_TAGGED((char *)&outRAX + 2, {0,1,2,3});
+    ASSERT_TAGGED((char *)&outRAX + 3, {0,1,2,3});
+    ASSERT_TAGGED((char *)&outRAX + 4, { });
+    ASSERT_TAGGED((char *)&outRAX + 5, { });
+    ASSERT_TAGGED((char *)&outRAX + 6, { });
+    ASSERT_TAGGED((char *)&outRAX + 7, { });
     return passed;
 }
 
@@ -2237,23 +2265,27 @@ static int testcase86() {
     __gtaint_reset();
     uint32_t inECX = 1;
     uint16_t inDX = 0;
-    uint32_t outEAX = 1;
+    uint64_t outRAX = 1;
     __gtaint_setn(&inECX, 4);
     __gtaint_setn(&inDX, 2);
     asm volatile (
         "mov ECX,%1;\n"
         "mov DX,%2;\n"
         "bextr  eax,ecx,edx;\n" // <--
-        "mov %0,EAX;\n"
-        :"=m"(outEAX)
+        "mov %0,RAX;\n"
+        :"=m"(outRAX)
         :"m"(inECX),"m"(inDX)
-        :"eax","ecx","dx"
+        :"rax","ecx","dx"
     );
 
-    ASSERT_TAGGED((char *)&outEAX + 0, {0,1,2,3,4,5});
-    ASSERT_TAGGED((char *)&outEAX + 1, {0,1,2,3,4,5});
-    ASSERT_TAGGED((char *)&outEAX + 2, {0,1,2,3,4,5});
-    ASSERT_TAGGED((char *)&outEAX + 3, {0,1,2,3,4,5});
+    ASSERT_TAGGED((char *)&outRAX + 0, {0,1,2,3,4,5});
+    ASSERT_TAGGED((char *)&outRAX + 1, {0,1,2,3,4,5});
+    ASSERT_TAGGED((char *)&outRAX + 2, {0,1,2,3,4,5});
+    ASSERT_TAGGED((char *)&outRAX + 3, {0,1,2,3,4,5});
+    ASSERT_TAGGED((char *)&outRAX + 4, { });
+    ASSERT_TAGGED((char *)&outRAX + 5, { });
+    ASSERT_TAGGED((char *)&outRAX + 6, { });
+    ASSERT_TAGGED((char *)&outRAX + 7, { });
     return passed;
 }
 
@@ -2386,21 +2418,25 @@ static int testcase91() {
 
     __gtaint_reset();
     uint32_t inEAX = 1;
-    uint32_t outEAX = 1;
+    uint64_t outRAX = 1;
     __gtaint_setn(&inEAX, 4);
     asm volatile (
         "mov EAX,%1;\n"
         "blsi   eax,eax;\n" // <--
-        "mov %0,EAX;\n"
-        :"=m"(outEAX)
+        "mov %0,RAX;\n"
+        :"=m"(outRAX)
         :"m"(inEAX)
-        :"eax"
+        :"rax"
     );
 
-    ASSERT_TAGGED((char *)&outEAX + 0, {0});
-    ASSERT_TAGGED((char *)&outEAX + 1, {0,1});
-    ASSERT_TAGGED((char *)&outEAX + 2, {0,1,2});
-    ASSERT_TAGGED((char *)&outEAX + 3, {0,1,2,3});
+    ASSERT_TAGGED((char *)&outRAX + 0, {0});
+    ASSERT_TAGGED((char *)&outRAX + 1, {0,1});
+    ASSERT_TAGGED((char *)&outRAX + 2, {0,1,2});
+    ASSERT_TAGGED((char *)&outRAX + 3, {0,1,2,3});
+    ASSERT_TAGGED((char *)&outRAX + 4, { });
+    ASSERT_TAGGED((char *)&outRAX + 5, { });
+    ASSERT_TAGGED((char *)&outRAX + 6, { });
+    ASSERT_TAGGED((char *)&outRAX + 7, { });
     return passed;
 }
 
@@ -2411,21 +2447,25 @@ static int testcase92() {
 
     __gtaint_reset();
     uint32_t inECX = 1;
-    uint32_t outEAX = 1;
+    uint64_t outRAX = 1;
     __gtaint_setn(&inECX, 4);
     asm volatile (
         "mov ECX,%1;\n"
         "blsi   eax,ecx;\n" // <--
-        "mov %0,EAX;\n"
-        :"=m"(outEAX)
+        "mov %0,RAX;\n"
+        :"=m"(outRAX)
         :"m"(inECX)
-        :"eax","ecx"
+        :"rax","ecx"
     );
 
-    ASSERT_TAGGED((char *)&outEAX + 0, {0});
-    ASSERT_TAGGED((char *)&outEAX + 1, {0,1});
-    ASSERT_TAGGED((char *)&outEAX + 2, {0,1,2});
-    ASSERT_TAGGED((char *)&outEAX + 3, {0,1,2,3});
+    ASSERT_TAGGED((char *)&outRAX + 0, {0});
+    ASSERT_TAGGED((char *)&outRAX + 1, {0,1});
+    ASSERT_TAGGED((char *)&outRAX + 2, {0,1,2});
+    ASSERT_TAGGED((char *)&outRAX + 3, {0,1,2,3});
+    ASSERT_TAGGED((char *)&outRAX + 4, { });
+    ASSERT_TAGGED((char *)&outRAX + 5, { });
+    ASSERT_TAGGED((char *)&outRAX + 6, { });
+    ASSERT_TAGGED((char *)&outRAX + 7, { });
     return passed;
 }
 
@@ -2494,21 +2534,25 @@ static int testcase95() {
 
     __gtaint_reset();
     uint32_t inEAX = 1;
-    uint32_t outEAX = 1;
+    uint64_t outRAX = 1;
     __gtaint_setn(&inEAX, 4);
     asm volatile (
         "mov EAX,%1;\n"
         "blsmsk eax,eax;\n" // <--
-        "mov %0,EAX;\n"
-        :"=m"(outEAX)
+        "mov %0,RAX;\n"
+        :"=m"(outRAX)
         :"m"(inEAX)
-        :"eax"
+        :"rax"
     );
 
-    ASSERT_TAGGED((char *)&outEAX + 0, {0});
-    ASSERT_TAGGED((char *)&outEAX + 1, {0,1});
-    ASSERT_TAGGED((char *)&outEAX + 2, {0,1,2});
-    ASSERT_TAGGED((char *)&outEAX + 3, {0,1,2,3});
+    ASSERT_TAGGED((char *)&outRAX + 0, {0});
+    ASSERT_TAGGED((char *)&outRAX + 1, {0,1});
+    ASSERT_TAGGED((char *)&outRAX + 2, {0,1,2});
+    ASSERT_TAGGED((char *)&outRAX + 3, {0,1,2,3});
+    ASSERT_TAGGED((char *)&outRAX + 4, { });
+    ASSERT_TAGGED((char *)&outRAX + 5, { });
+    ASSERT_TAGGED((char *)&outRAX + 6, { });
+    ASSERT_TAGGED((char *)&outRAX + 7, { });
     return passed;
 }
 
@@ -2519,21 +2563,25 @@ static int testcase96() {
 
     __gtaint_reset();
     uint32_t inECX = 1;
-    uint32_t outEAX = 1;
+    uint64_t outRAX = 1;
     __gtaint_setn(&inECX, 4);
     asm volatile (
         "mov ECX,%1;\n"
         "blsmsk eax,ecx;\n" // <--
-        "mov %0,EAX;\n"
-        :"=m"(outEAX)
+        "mov %0,RAX;\n"
+        :"=m"(outRAX)
         :"m"(inECX)
-        :"eax","ecx"
+        :"rax","ecx"
     );
 
-    ASSERT_TAGGED((char *)&outEAX + 0, {0});
-    ASSERT_TAGGED((char *)&outEAX + 1, {0,1});
-    ASSERT_TAGGED((char *)&outEAX + 2, {0,1,2});
-    ASSERT_TAGGED((char *)&outEAX + 3, {0,1,2,3});
+    ASSERT_TAGGED((char *)&outRAX + 0, {0});
+    ASSERT_TAGGED((char *)&outRAX + 1, {0,1});
+    ASSERT_TAGGED((char *)&outRAX + 2, {0,1,2});
+    ASSERT_TAGGED((char *)&outRAX + 3, {0,1,2,3});
+    ASSERT_TAGGED((char *)&outRAX + 4, { });
+    ASSERT_TAGGED((char *)&outRAX + 5, { });
+    ASSERT_TAGGED((char *)&outRAX + 6, { });
+    ASSERT_TAGGED((char *)&outRAX + 7, { });
     return passed;
 }
 
@@ -2602,21 +2650,25 @@ static int testcase99() {
 
     __gtaint_reset();
     uint32_t inEAX = 1;
-    uint32_t outEAX = 1;
+    uint64_t outRAX = 1;
     __gtaint_setn(&inEAX, 4);
     asm volatile (
         "mov EAX,%1;\n"
         "blsr   eax,eax;\n" // <--
-        "mov %0,EAX;\n"
-        :"=m"(outEAX)
+        "mov %0,RAX;\n"
+        :"=m"(outRAX)
         :"m"(inEAX)
-        :"eax"
+        :"rax"
     );
 
-    ASSERT_TAGGED((char *)&outEAX + 0, {0});
-    ASSERT_TAGGED((char *)&outEAX + 1, {0,1});
-    ASSERT_TAGGED((char *)&outEAX + 2, {0,1,2});
-    ASSERT_TAGGED((char *)&outEAX + 3, {0,1,2,3});
+    ASSERT_TAGGED((char *)&outRAX + 0, {0});
+    ASSERT_TAGGED((char *)&outRAX + 1, {0,1});
+    ASSERT_TAGGED((char *)&outRAX + 2, {0,1,2});
+    ASSERT_TAGGED((char *)&outRAX + 3, {0,1,2,3});
+    ASSERT_TAGGED((char *)&outRAX + 4, { });
+    ASSERT_TAGGED((char *)&outRAX + 5, { });
+    ASSERT_TAGGED((char *)&outRAX + 6, { });
+    ASSERT_TAGGED((char *)&outRAX + 7, { });
     return passed;
 }
 
@@ -2627,21 +2679,25 @@ static int testcase100() {
 
     __gtaint_reset();
     uint32_t inECX = 1;
-    uint32_t outEAX = 1;
+    uint64_t outRAX = 1;
     __gtaint_setn(&inECX, 4);
     asm volatile (
         "mov ECX,%1;\n"
         "blsr   eax,ecx;\n" // <--
-        "mov %0,EAX;\n"
-        :"=m"(outEAX)
+        "mov %0,RAX;\n"
+        :"=m"(outRAX)
         :"m"(inECX)
-        :"eax","ecx"
+        :"rax","ecx"
     );
 
-    ASSERT_TAGGED((char *)&outEAX + 0, {0});
-    ASSERT_TAGGED((char *)&outEAX + 1, {0,1});
-    ASSERT_TAGGED((char *)&outEAX + 2, {0,1,2});
-    ASSERT_TAGGED((char *)&outEAX + 3, {0,1,2,3});
+    ASSERT_TAGGED((char *)&outRAX + 0, {0});
+    ASSERT_TAGGED((char *)&outRAX + 1, {0,1});
+    ASSERT_TAGGED((char *)&outRAX + 2, {0,1,2});
+    ASSERT_TAGGED((char *)&outRAX + 3, {0,1,2,3});
+    ASSERT_TAGGED((char *)&outRAX + 4, { });
+    ASSERT_TAGGED((char *)&outRAX + 5, { });
+    ASSERT_TAGGED((char *)&outRAX + 6, { });
+    ASSERT_TAGGED((char *)&outRAX + 7, { });
     return passed;
 }
 
@@ -2863,21 +2919,25 @@ static int testcase109() {
 
     __gtaint_reset();
     uint32_t inEAX = 1;
-    uint32_t outEAX = 1;
+    uint64_t outRAX = 1;
     __gtaint_setn(&inEAX, 4);
     asm volatile (
         "mov EAX,%1;\n"
         "btc    eax,0x0;\n" // <--
-        "mov %0,EAX;\n"
-        :"=m"(outEAX)
+        "mov %0,RAX;\n"
+        :"=m"(outRAX)
         :"m"(inEAX)
-        :"eax"
+        :"rax"
     );
 
-    ASSERT_TAGGED((char *)&outEAX + 0, {0});
-    ASSERT_TAGGED((char *)&outEAX + 1, {1});
-    ASSERT_TAGGED((char *)&outEAX + 2, {2});
-    ASSERT_TAGGED((char *)&outEAX + 3, {3});
+    ASSERT_TAGGED((char *)&outRAX + 0, {0});
+    ASSERT_TAGGED((char *)&outRAX + 1, {1});
+    ASSERT_TAGGED((char *)&outRAX + 2, {2});
+    ASSERT_TAGGED((char *)&outRAX + 3, {3});
+    ASSERT_TAGGED((char *)&outRAX + 4, { });
+    ASSERT_TAGGED((char *)&outRAX + 5, { });
+    ASSERT_TAGGED((char *)&outRAX + 6, { });
+    ASSERT_TAGGED((char *)&outRAX + 7, { });
     return passed;
 }
 
@@ -2888,21 +2948,25 @@ static int testcase110() {
 
     __gtaint_reset();
     uint32_t inEAX = 1;
-    uint32_t outEAX = 1;
+    uint64_t outRAX = 1;
     __gtaint_setn(&inEAX, 4);
     asm volatile (
         "mov EAX,%1;\n"
         "btc    eax,0xf;\n" // <--
-        "mov %0,EAX;\n"
-        :"=m"(outEAX)
+        "mov %0,RAX;\n"
+        :"=m"(outRAX)
         :"m"(inEAX)
-        :"eax"
+        :"rax"
     );
 
-    ASSERT_TAGGED((char *)&outEAX + 0, {0});
-    ASSERT_TAGGED((char *)&outEAX + 1, {1});
-    ASSERT_TAGGED((char *)&outEAX + 2, {2});
-    ASSERT_TAGGED((char *)&outEAX + 3, {3});
+    ASSERT_TAGGED((char *)&outRAX + 0, {0});
+    ASSERT_TAGGED((char *)&outRAX + 1, {1});
+    ASSERT_TAGGED((char *)&outRAX + 2, {2});
+    ASSERT_TAGGED((char *)&outRAX + 3, {3});
+    ASSERT_TAGGED((char *)&outRAX + 4, { });
+    ASSERT_TAGGED((char *)&outRAX + 5, { });
+    ASSERT_TAGGED((char *)&outRAX + 6, { });
+    ASSERT_TAGGED((char *)&outRAX + 7, { });
     return passed;
 }
 
@@ -2913,21 +2977,25 @@ static int testcase111() {
 
     __gtaint_reset();
     uint32_t inEAX = 1;
-    uint32_t outEAX = 1;
+    uint64_t outRAX = 1;
     __gtaint_setn(&inEAX, 4);
     asm volatile (
         "mov EAX,%1;\n"
         "btc    eax,eax;\n" // <--
-        "mov %0,EAX;\n"
-        :"=m"(outEAX)
+        "mov %0,RAX;\n"
+        :"=m"(outRAX)
         :"m"(inEAX)
-        :"eax"
+        :"rax"
     );
 
-    ASSERT_TAGGED((char *)&outEAX + 0, {0});
-    ASSERT_TAGGED((char *)&outEAX + 1, {0,1});
-    ASSERT_TAGGED((char *)&outEAX + 2, {0,2});
-    ASSERT_TAGGED((char *)&outEAX + 3, {0,3});
+    ASSERT_TAGGED((char *)&outRAX + 0, {0});
+    ASSERT_TAGGED((char *)&outRAX + 1, {0,1});
+    ASSERT_TAGGED((char *)&outRAX + 2, {0,2});
+    ASSERT_TAGGED((char *)&outRAX + 3, {0,3});
+    ASSERT_TAGGED((char *)&outRAX + 4, { });
+    ASSERT_TAGGED((char *)&outRAX + 5, { });
+    ASSERT_TAGGED((char *)&outRAX + 6, { });
+    ASSERT_TAGGED((char *)&outRAX + 7, { });
     return passed;
 }
 
@@ -2939,23 +3007,27 @@ static int testcase112() {
     __gtaint_reset();
     uint32_t inEAX = 1;
     uint32_t inECX = 1;
-    uint32_t outEAX = 1;
+    uint64_t outRAX = 1;
     __gtaint_setn(&inEAX, 4);
     __gtaint_setn(&inECX, 4);
     asm volatile (
         "mov EAX,%1;\n"
         "mov ECX,%2;\n"
         "btc    eax,ecx;\n" // <--
-        "mov %0,EAX;\n"
-        :"=m"(outEAX)
+        "mov %0,RAX;\n"
+        :"=m"(outRAX)
         :"m"(inEAX),"m"(inECX)
-        :"eax","ecx"
+        :"rax","ecx"
     );
 
-    ASSERT_TAGGED((char *)&outEAX + 0, {0,4});
-    ASSERT_TAGGED((char *)&outEAX + 1, {1,4});
-    ASSERT_TAGGED((char *)&outEAX + 2, {2,4});
-    ASSERT_TAGGED((char *)&outEAX + 3, {3,4});
+    ASSERT_TAGGED((char *)&outRAX + 0, {0,4});
+    ASSERT_TAGGED((char *)&outRAX + 1, {1,4});
+    ASSERT_TAGGED((char *)&outRAX + 2, {2,4});
+    ASSERT_TAGGED((char *)&outRAX + 3, {3,4});
+    ASSERT_TAGGED((char *)&outRAX + 4, { });
+    ASSERT_TAGGED((char *)&outRAX + 5, { });
+    ASSERT_TAGGED((char *)&outRAX + 6, { });
+    ASSERT_TAGGED((char *)&outRAX + 7, { });
     return passed;
 }
 
@@ -3180,21 +3252,25 @@ static int testcase121() {
 
     __gtaint_reset();
     uint32_t inEAX = 1;
-    uint32_t outEAX = 1;
+    uint64_t outRAX = 1;
     __gtaint_setn(&inEAX, 4);
     asm volatile (
         "mov EAX,%1;\n"
         "btr    eax,0x0;\n" // <--
-        "mov %0,EAX;\n"
-        :"=m"(outEAX)
+        "mov %0,RAX;\n"
+        :"=m"(outRAX)
         :"m"(inEAX)
-        :"eax"
+        :"rax"
     );
 
-    ASSERT_TAGGED((char *)&outEAX + 0, {0});
-    ASSERT_TAGGED((char *)&outEAX + 1, {1});
-    ASSERT_TAGGED((char *)&outEAX + 2, {2});
-    ASSERT_TAGGED((char *)&outEAX + 3, {3});
+    ASSERT_TAGGED((char *)&outRAX + 0, {0});
+    ASSERT_TAGGED((char *)&outRAX + 1, {1});
+    ASSERT_TAGGED((char *)&outRAX + 2, {2});
+    ASSERT_TAGGED((char *)&outRAX + 3, {3});
+    ASSERT_TAGGED((char *)&outRAX + 4, { });
+    ASSERT_TAGGED((char *)&outRAX + 5, { });
+    ASSERT_TAGGED((char *)&outRAX + 6, { });
+    ASSERT_TAGGED((char *)&outRAX + 7, { });
     return passed;
 }
 
@@ -3205,21 +3281,25 @@ static int testcase122() {
 
     __gtaint_reset();
     uint32_t inEAX = 1;
-    uint32_t outEAX = 1;
+    uint64_t outRAX = 1;
     __gtaint_setn(&inEAX, 4);
     asm volatile (
         "mov EAX,%1;\n"
         "btr    eax,0xf;\n" // <--
-        "mov %0,EAX;\n"
-        :"=m"(outEAX)
+        "mov %0,RAX;\n"
+        :"=m"(outRAX)
         :"m"(inEAX)
-        :"eax"
+        :"rax"
     );
 
-    ASSERT_TAGGED((char *)&outEAX + 0, {0});
-    ASSERT_TAGGED((char *)&outEAX + 1, {1});
-    ASSERT_TAGGED((char *)&outEAX + 2, {2});
-    ASSERT_TAGGED((char *)&outEAX + 3, {3});
+    ASSERT_TAGGED((char *)&outRAX + 0, {0});
+    ASSERT_TAGGED((char *)&outRAX + 1, {1});
+    ASSERT_TAGGED((char *)&outRAX + 2, {2});
+    ASSERT_TAGGED((char *)&outRAX + 3, {3});
+    ASSERT_TAGGED((char *)&outRAX + 4, { });
+    ASSERT_TAGGED((char *)&outRAX + 5, { });
+    ASSERT_TAGGED((char *)&outRAX + 6, { });
+    ASSERT_TAGGED((char *)&outRAX + 7, { });
     return passed;
 }
 
@@ -3230,21 +3310,25 @@ static int testcase123() {
 
     __gtaint_reset();
     uint32_t inEAX = 1;
-    uint32_t outEAX = 1;
+    uint64_t outRAX = 1;
     __gtaint_setn(&inEAX, 4);
     asm volatile (
         "mov EAX,%1;\n"
         "btr    eax,eax;\n" // <--
-        "mov %0,EAX;\n"
-        :"=m"(outEAX)
+        "mov %0,RAX;\n"
+        :"=m"(outRAX)
         :"m"(inEAX)
-        :"eax"
+        :"rax"
     );
 
-    ASSERT_TAGGED((char *)&outEAX + 0, {0});
-    ASSERT_TAGGED((char *)&outEAX + 1, {0,1});
-    ASSERT_TAGGED((char *)&outEAX + 2, {0,2});
-    ASSERT_TAGGED((char *)&outEAX + 3, {0,3});
+    ASSERT_TAGGED((char *)&outRAX + 0, {0});
+    ASSERT_TAGGED((char *)&outRAX + 1, {0,1});
+    ASSERT_TAGGED((char *)&outRAX + 2, {0,2});
+    ASSERT_TAGGED((char *)&outRAX + 3, {0,3});
+    ASSERT_TAGGED((char *)&outRAX + 4, { });
+    ASSERT_TAGGED((char *)&outRAX + 5, { });
+    ASSERT_TAGGED((char *)&outRAX + 6, { });
+    ASSERT_TAGGED((char *)&outRAX + 7, { });
     return passed;
 }
 
@@ -3256,23 +3340,27 @@ static int testcase124() {
     __gtaint_reset();
     uint32_t inEAX = 1;
     uint32_t inECX = 1;
-    uint32_t outEAX = 1;
+    uint64_t outRAX = 1;
     __gtaint_setn(&inEAX, 4);
     __gtaint_setn(&inECX, 4);
     asm volatile (
         "mov EAX,%1;\n"
         "mov ECX,%2;\n"
         "btr    eax,ecx;\n" // <--
-        "mov %0,EAX;\n"
-        :"=m"(outEAX)
+        "mov %0,RAX;\n"
+        :"=m"(outRAX)
         :"m"(inEAX),"m"(inECX)
-        :"eax","ecx"
+        :"rax","ecx"
     );
 
-    ASSERT_TAGGED((char *)&outEAX + 0, {0,4});
-    ASSERT_TAGGED((char *)&outEAX + 1, {1,4});
-    ASSERT_TAGGED((char *)&outEAX + 2, {2,4});
-    ASSERT_TAGGED((char *)&outEAX + 3, {3,4});
+    ASSERT_TAGGED((char *)&outRAX + 0, {0,4});
+    ASSERT_TAGGED((char *)&outRAX + 1, {1,4});
+    ASSERT_TAGGED((char *)&outRAX + 2, {2,4});
+    ASSERT_TAGGED((char *)&outRAX + 3, {3,4});
+    ASSERT_TAGGED((char *)&outRAX + 4, { });
+    ASSERT_TAGGED((char *)&outRAX + 5, { });
+    ASSERT_TAGGED((char *)&outRAX + 6, { });
+    ASSERT_TAGGED((char *)&outRAX + 7, { });
     return passed;
 }
 
@@ -3497,21 +3585,25 @@ static int testcase133() {
 
     __gtaint_reset();
     uint32_t inEAX = 1;
-    uint32_t outEAX = 1;
+    uint64_t outRAX = 1;
     __gtaint_setn(&inEAX, 4);
     asm volatile (
         "mov EAX,%1;\n"
         "bts    eax,0x0;\n" // <--
-        "mov %0,EAX;\n"
-        :"=m"(outEAX)
+        "mov %0,RAX;\n"
+        :"=m"(outRAX)
         :"m"(inEAX)
-        :"eax"
+        :"rax"
     );
 
-    ASSERT_TAGGED((char *)&outEAX + 0, {0});
-    ASSERT_TAGGED((char *)&outEAX + 1, {1});
-    ASSERT_TAGGED((char *)&outEAX + 2, {2});
-    ASSERT_TAGGED((char *)&outEAX + 3, {3});
+    ASSERT_TAGGED((char *)&outRAX + 0, {0});
+    ASSERT_TAGGED((char *)&outRAX + 1, {1});
+    ASSERT_TAGGED((char *)&outRAX + 2, {2});
+    ASSERT_TAGGED((char *)&outRAX + 3, {3});
+    ASSERT_TAGGED((char *)&outRAX + 4, { });
+    ASSERT_TAGGED((char *)&outRAX + 5, { });
+    ASSERT_TAGGED((char *)&outRAX + 6, { });
+    ASSERT_TAGGED((char *)&outRAX + 7, { });
     return passed;
 }
 
@@ -3522,21 +3614,25 @@ static int testcase134() {
 
     __gtaint_reset();
     uint32_t inEAX = 1;
-    uint32_t outEAX = 1;
+    uint64_t outRAX = 1;
     __gtaint_setn(&inEAX, 4);
     asm volatile (
         "mov EAX,%1;\n"
         "bts    eax,0xf;\n" // <--
-        "mov %0,EAX;\n"
-        :"=m"(outEAX)
+        "mov %0,RAX;\n"
+        :"=m"(outRAX)
         :"m"(inEAX)
-        :"eax"
+        :"rax"
     );
 
-    ASSERT_TAGGED((char *)&outEAX + 0, {0});
-    ASSERT_TAGGED((char *)&outEAX + 1, {1});
-    ASSERT_TAGGED((char *)&outEAX + 2, {2});
-    ASSERT_TAGGED((char *)&outEAX + 3, {3});
+    ASSERT_TAGGED((char *)&outRAX + 0, {0});
+    ASSERT_TAGGED((char *)&outRAX + 1, {1});
+    ASSERT_TAGGED((char *)&outRAX + 2, {2});
+    ASSERT_TAGGED((char *)&outRAX + 3, {3});
+    ASSERT_TAGGED((char *)&outRAX + 4, { });
+    ASSERT_TAGGED((char *)&outRAX + 5, { });
+    ASSERT_TAGGED((char *)&outRAX + 6, { });
+    ASSERT_TAGGED((char *)&outRAX + 7, { });
     return passed;
 }
 
@@ -3547,21 +3643,25 @@ static int testcase135() {
 
     __gtaint_reset();
     uint32_t inEAX = 1;
-    uint32_t outEAX = 1;
+    uint64_t outRAX = 1;
     __gtaint_setn(&inEAX, 4);
     asm volatile (
         "mov EAX,%1;\n"
         "bts    eax,eax;\n" // <--
-        "mov %0,EAX;\n"
-        :"=m"(outEAX)
+        "mov %0,RAX;\n"
+        :"=m"(outRAX)
         :"m"(inEAX)
-        :"eax"
+        :"rax"
     );
 
-    ASSERT_TAGGED((char *)&outEAX + 0, {0});
-    ASSERT_TAGGED((char *)&outEAX + 1, {0,1});
-    ASSERT_TAGGED((char *)&outEAX + 2, {0,2});
-    ASSERT_TAGGED((char *)&outEAX + 3, {0,3});
+    ASSERT_TAGGED((char *)&outRAX + 0, {0});
+    ASSERT_TAGGED((char *)&outRAX + 1, {0,1});
+    ASSERT_TAGGED((char *)&outRAX + 2, {0,2});
+    ASSERT_TAGGED((char *)&outRAX + 3, {0,3});
+    ASSERT_TAGGED((char *)&outRAX + 4, { });
+    ASSERT_TAGGED((char *)&outRAX + 5, { });
+    ASSERT_TAGGED((char *)&outRAX + 6, { });
+    ASSERT_TAGGED((char *)&outRAX + 7, { });
     return passed;
 }
 
@@ -3573,23 +3673,27 @@ static int testcase136() {
     __gtaint_reset();
     uint32_t inEAX = 1;
     uint32_t inECX = 1;
-    uint32_t outEAX = 1;
+    uint64_t outRAX = 1;
     __gtaint_setn(&inEAX, 4);
     __gtaint_setn(&inECX, 4);
     asm volatile (
         "mov EAX,%1;\n"
         "mov ECX,%2;\n"
         "bts    eax,ecx;\n" // <--
-        "mov %0,EAX;\n"
-        :"=m"(outEAX)
+        "mov %0,RAX;\n"
+        :"=m"(outRAX)
         :"m"(inEAX),"m"(inECX)
-        :"eax","ecx"
+        :"rax","ecx"
     );
 
-    ASSERT_TAGGED((char *)&outEAX + 0, {0,4});
-    ASSERT_TAGGED((char *)&outEAX + 1, {1,4});
-    ASSERT_TAGGED((char *)&outEAX + 2, {2,4});
-    ASSERT_TAGGED((char *)&outEAX + 3, {3,4});
+    ASSERT_TAGGED((char *)&outRAX + 0, {0,4});
+    ASSERT_TAGGED((char *)&outRAX + 1, {1,4});
+    ASSERT_TAGGED((char *)&outRAX + 2, {2,4});
+    ASSERT_TAGGED((char *)&outRAX + 3, {3,4});
+    ASSERT_TAGGED((char *)&outRAX + 4, { });
+    ASSERT_TAGGED((char *)&outRAX + 5, { });
+    ASSERT_TAGGED((char *)&outRAX + 6, { });
+    ASSERT_TAGGED((char *)&outRAX + 7, { });
     return passed;
 }
 
@@ -3719,21 +3823,25 @@ static int testcase141() {
 
     __gtaint_reset();
     uint32_t inEAX = 1;
-    uint32_t outEAX = 1;
+    uint64_t outRAX = 1;
     __gtaint_setn(&inEAX, 4);
     asm volatile (
         "mov EAX,%1;\n"
         "bzhi   eax,eax,eax;\n" // <--
-        "mov %0,EAX;\n"
-        :"=m"(outEAX)
+        "mov %0,RAX;\n"
+        :"=m"(outRAX)
         :"m"(inEAX)
-        :"eax"
+        :"rax"
     );
 
-    ASSERT_TAGGED((char *)&outEAX + 0, {0,1,2,3});
-    ASSERT_TAGGED((char *)&outEAX + 1, {0,1,2,3});
-    ASSERT_TAGGED((char *)&outEAX + 2, {0,1,2,3});
-    ASSERT_TAGGED((char *)&outEAX + 3, {0,1,2,3});
+    ASSERT_TAGGED((char *)&outRAX + 0, {0,1,2,3});
+    ASSERT_TAGGED((char *)&outRAX + 1, {0,1,2,3});
+    ASSERT_TAGGED((char *)&outRAX + 2, {0,1,2,3});
+    ASSERT_TAGGED((char *)&outRAX + 3, {0,1,2,3});
+    ASSERT_TAGGED((char *)&outRAX + 4, { });
+    ASSERT_TAGGED((char *)&outRAX + 5, { });
+    ASSERT_TAGGED((char *)&outRAX + 6, { });
+    ASSERT_TAGGED((char *)&outRAX + 7, { });
     return passed;
 }
 
@@ -3745,23 +3853,27 @@ static int testcase142() {
     __gtaint_reset();
     uint32_t inEAX = 1;
     uint8_t inCL = 1;
-    uint32_t outEAX = 1;
+    uint64_t outRAX = 1;
     __gtaint_setn(&inEAX, 4);
     __gtaint_setn(&inCL, 1);
     asm volatile (
         "mov EAX,%1;\n"
         "mov CL,%2;\n"
         "bzhi   eax,eax,ecx;\n" // <--
-        "mov %0,EAX;\n"
-        :"=m"(outEAX)
+        "mov %0,RAX;\n"
+        :"=m"(outRAX)
         :"m"(inEAX),"m"(inCL)
-        :"eax","cl"
+        :"rax","cl"
     );
 
-    ASSERT_TAGGED((char *)&outEAX + 0, {0,1,2,3,4});
-    ASSERT_TAGGED((char *)&outEAX + 1, {0,1,2,3,4});
-    ASSERT_TAGGED((char *)&outEAX + 2, {0,1,2,3,4});
-    ASSERT_TAGGED((char *)&outEAX + 3, {0,1,2,3,4});
+    ASSERT_TAGGED((char *)&outRAX + 0, {0,1,2,3,4});
+    ASSERT_TAGGED((char *)&outRAX + 1, {0,1,2,3,4});
+    ASSERT_TAGGED((char *)&outRAX + 2, {0,1,2,3,4});
+    ASSERT_TAGGED((char *)&outRAX + 3, {0,1,2,3,4});
+    ASSERT_TAGGED((char *)&outRAX + 4, { });
+    ASSERT_TAGGED((char *)&outRAX + 5, { });
+    ASSERT_TAGGED((char *)&outRAX + 6, { });
+    ASSERT_TAGGED((char *)&outRAX + 7, { });
     return passed;
 }
 
@@ -3772,21 +3884,25 @@ static int testcase143() {
 
     __gtaint_reset();
     uint32_t inECX = 1;
-    uint32_t outEAX = 1;
+    uint64_t outRAX = 1;
     __gtaint_setn(&inECX, 4);
     asm volatile (
         "mov ECX,%1;\n"
         "bzhi   eax,ecx,ecx;\n" // <--
-        "mov %0,EAX;\n"
-        :"=m"(outEAX)
+        "mov %0,RAX;\n"
+        :"=m"(outRAX)
         :"m"(inECX)
-        :"eax","ecx"
+        :"rax","ecx"
     );
 
-    ASSERT_TAGGED((char *)&outEAX + 0, {0,1,2,3});
-    ASSERT_TAGGED((char *)&outEAX + 1, {0,1,2,3});
-    ASSERT_TAGGED((char *)&outEAX + 2, {0,1,2,3});
-    ASSERT_TAGGED((char *)&outEAX + 3, {0,1,2,3});
+    ASSERT_TAGGED((char *)&outRAX + 0, {0,1,2,3});
+    ASSERT_TAGGED((char *)&outRAX + 1, {0,1,2,3});
+    ASSERT_TAGGED((char *)&outRAX + 2, {0,1,2,3});
+    ASSERT_TAGGED((char *)&outRAX + 3, {0,1,2,3});
+    ASSERT_TAGGED((char *)&outRAX + 4, { });
+    ASSERT_TAGGED((char *)&outRAX + 5, { });
+    ASSERT_TAGGED((char *)&outRAX + 6, { });
+    ASSERT_TAGGED((char *)&outRAX + 7, { });
     return passed;
 }
 
@@ -3798,23 +3914,27 @@ static int testcase144() {
     __gtaint_reset();
     uint32_t inECX = 1;
     uint8_t inDL = 0;
-    uint32_t outEAX = 1;
+    uint64_t outRAX = 1;
     __gtaint_setn(&inECX, 4);
     __gtaint_setn(&inDL, 1);
     asm volatile (
         "mov ECX,%1;\n"
         "mov DL,%2;\n"
         "bzhi   eax,ecx,edx;\n" // <--
-        "mov %0,EAX;\n"
-        :"=m"(outEAX)
+        "mov %0,RAX;\n"
+        :"=m"(outRAX)
         :"m"(inECX),"m"(inDL)
-        :"eax","ecx","dl"
+        :"rax","ecx","dl"
     );
 
-    ASSERT_TAGGED((char *)&outEAX + 0, {0,1,2,3,4});
-    ASSERT_TAGGED((char *)&outEAX + 1, {0,1,2,3,4});
-    ASSERT_TAGGED((char *)&outEAX + 2, {0,1,2,3,4});
-    ASSERT_TAGGED((char *)&outEAX + 3, {0,1,2,3,4});
+    ASSERT_TAGGED((char *)&outRAX + 0, {0,1,2,3,4});
+    ASSERT_TAGGED((char *)&outRAX + 1, {0,1,2,3,4});
+    ASSERT_TAGGED((char *)&outRAX + 2, {0,1,2,3,4});
+    ASSERT_TAGGED((char *)&outRAX + 3, {0,1,2,3,4});
+    ASSERT_TAGGED((char *)&outRAX + 4, { });
+    ASSERT_TAGGED((char *)&outRAX + 5, { });
+    ASSERT_TAGGED((char *)&outRAX + 6, { });
+    ASSERT_TAGGED((char *)&outRAX + 7, { });
     return passed;
 }
 
@@ -7116,23 +7236,27 @@ static int testcase259() {
     __gtaint_reset();
     uint32_t inEAX = 1;
     uint32_t inEDX = 0;
-    uint32_t outEAX = 1;
+    uint64_t outRAX = 1;
     __gtaint_setn(&inEAX, 4);
     __gtaint_setn(&inEDX, 4);
     asm volatile (
         "mov EAX,%1;\n"
         "mov EDX,%2;\n"
         "mulx   eax,eax,eax;\n" // <--
-        "mov %0,EAX;\n"
-        :"=m"(outEAX)
+        "mov %0,RAX;\n"
+        :"=m"(outRAX)
         :"m"(inEAX),"m"(inEDX)
-        :"eax","edx"
+        :"rax","edx"
     );
 
-    ASSERT_TAGGED((char *)&outEAX + 0, {0,1,2,3,4,5,6,7});
-    ASSERT_TAGGED((char *)&outEAX + 1, {0,1,2,3,4,5,6,7});
-    ASSERT_TAGGED((char *)&outEAX + 2, {0,1,2,3,4,5,6,7});
-    ASSERT_TAGGED((char *)&outEAX + 3, {0,1,2,3,4,5,6,7});
+    ASSERT_TAGGED((char *)&outRAX + 0, {0,1,2,3,4,5,6,7});
+    ASSERT_TAGGED((char *)&outRAX + 1, {0,1,2,3,4,5,6,7});
+    ASSERT_TAGGED((char *)&outRAX + 2, {0,1,2,3,4,5,6,7});
+    ASSERT_TAGGED((char *)&outRAX + 3, {0,1,2,3,4,5,6,7});
+    ASSERT_TAGGED((char *)&outRAX + 4, { });
+    ASSERT_TAGGED((char *)&outRAX + 5, { });
+    ASSERT_TAGGED((char *)&outRAX + 6, { });
+    ASSERT_TAGGED((char *)&outRAX + 7, { });
     return passed;
 }
 
@@ -7144,23 +7268,27 @@ static int testcase260() {
     __gtaint_reset();
     uint32_t inECX = 1;
     uint32_t inEDX = 0;
-    uint32_t outEAX = 1;
+    uint64_t outRAX = 1;
     __gtaint_setn(&inECX, 4);
     __gtaint_setn(&inEDX, 4);
     asm volatile (
         "mov ECX,%1;\n"
         "mov EDX,%2;\n"
         "mulx   eax,eax,ecx;\n" // <--
-        "mov %0,EAX;\n"
-        :"=m"(outEAX)
+        "mov %0,RAX;\n"
+        :"=m"(outRAX)
         :"m"(inECX),"m"(inEDX)
-        :"eax","ecx","edx"
+        :"rax","ecx","edx"
     );
 
-    ASSERT_TAGGED((char *)&outEAX + 0, {0,1,2,3,4,5,6,7});
-    ASSERT_TAGGED((char *)&outEAX + 1, {0,1,2,3,4,5,6,7});
-    ASSERT_TAGGED((char *)&outEAX + 2, {0,1,2,3,4,5,6,7});
-    ASSERT_TAGGED((char *)&outEAX + 3, {0,1,2,3,4,5,6,7});
+    ASSERT_TAGGED((char *)&outRAX + 0, {0,1,2,3,4,5,6,7});
+    ASSERT_TAGGED((char *)&outRAX + 1, {0,1,2,3,4,5,6,7});
+    ASSERT_TAGGED((char *)&outRAX + 2, {0,1,2,3,4,5,6,7});
+    ASSERT_TAGGED((char *)&outRAX + 3, {0,1,2,3,4,5,6,7});
+    ASSERT_TAGGED((char *)&outRAX + 4, { });
+    ASSERT_TAGGED((char *)&outRAX + 5, { });
+    ASSERT_TAGGED((char *)&outRAX + 6, { });
+    ASSERT_TAGGED((char *)&outRAX + 7, { });
     return passed;
 }
 
@@ -7172,29 +7300,37 @@ static int testcase261() {
     __gtaint_reset();
     uint32_t inEAX = 1;
     uint32_t inEDX = 0;
-    uint32_t outEAX = 1;
-    uint32_t outECX = 1;
+    uint64_t outRAX = 1;
+    uint64_t outRCX = 1;
     __gtaint_setn(&inEAX, 4);
     __gtaint_setn(&inEDX, 4);
     asm volatile (
         "mov EAX,%2;\n"
         "mov EDX,%3;\n"
         "mulx   eax,ecx,eax;\n" // <--
-        "mov %0,EAX;\n"
-        "mov %1,ECX;\n"
-        :"=m"(outEAX),"=m"(outECX)
+        "mov %0,RAX;\n"
+        "mov %1,RCX;\n"
+        :"=m"(outRAX),"=m"(outRCX)
         :"m"(inEAX),"m"(inEDX)
-        :"eax","ecx","edx"
+        :"rax","rcx","edx"
     );
 
-    ASSERT_TAGGED((char *)&outEAX + 0, {0,1,2,3,4,5,6,7});
-    ASSERT_TAGGED((char *)&outEAX + 1, {0,1,2,3,4,5,6,7});
-    ASSERT_TAGGED((char *)&outEAX + 2, {0,1,2,3,4,5,6,7});
-    ASSERT_TAGGED((char *)&outEAX + 3, {0,1,2,3,4,5,6,7});
-    ASSERT_TAGGED((char *)&outECX + 0, {0,4});
-    ASSERT_TAGGED((char *)&outECX + 1, {0,1,4,5});
-    ASSERT_TAGGED((char *)&outECX + 2, {0,1,2,4,5,6});
-    ASSERT_TAGGED((char *)&outECX + 3, {0,1,2,3,4,5,6,7});
+    ASSERT_TAGGED((char *)&outRAX + 0, {0,1,2,3,4,5,6,7});
+    ASSERT_TAGGED((char *)&outRAX + 1, {0,1,2,3,4,5,6,7});
+    ASSERT_TAGGED((char *)&outRAX + 2, {0,1,2,3,4,5,6,7});
+    ASSERT_TAGGED((char *)&outRAX + 3, {0,1,2,3,4,5,6,7});
+    ASSERT_TAGGED((char *)&outRAX + 4, { });
+    ASSERT_TAGGED((char *)&outRAX + 5, { });
+    ASSERT_TAGGED((char *)&outRAX + 6, { });
+    ASSERT_TAGGED((char *)&outRAX + 7, { });
+    ASSERT_TAGGED((char *)&outRCX + 0, {0,4});
+    ASSERT_TAGGED((char *)&outRCX + 1, {0,1,4,5});
+    ASSERT_TAGGED((char *)&outRCX + 2, {0,1,2,4,5,6});
+    ASSERT_TAGGED((char *)&outRCX + 3, {0,1,2,3,4,5,6,7});
+    ASSERT_TAGGED((char *)&outRCX + 4, { });
+    ASSERT_TAGGED((char *)&outRCX + 5, { });
+    ASSERT_TAGGED((char *)&outRCX + 6, { });
+    ASSERT_TAGGED((char *)&outRCX + 7, { });
     return passed;
 }
 
@@ -7206,29 +7342,37 @@ static int testcase262() {
     __gtaint_reset();
     uint32_t inECX = 1;
     uint32_t inEDX = 0;
-    uint32_t outEAX = 1;
-    uint32_t outECX = 1;
+    uint64_t outRAX = 1;
+    uint64_t outRCX = 1;
     __gtaint_setn(&inECX, 4);
     __gtaint_setn(&inEDX, 4);
     asm volatile (
         "mov ECX,%2;\n"
         "mov EDX,%3;\n"
         "mulx   eax,ecx,ecx;\n" // <--
-        "mov %0,EAX;\n"
-        "mov %1,ECX;\n"
-        :"=m"(outEAX),"=m"(outECX)
+        "mov %0,RAX;\n"
+        "mov %1,RCX;\n"
+        :"=m"(outRAX),"=m"(outRCX)
         :"m"(inECX),"m"(inEDX)
-        :"eax","ecx","edx"
+        :"rax","rcx","edx"
     );
 
-    ASSERT_TAGGED((char *)&outEAX + 0, {0,1,2,3,4,5,6,7});
-    ASSERT_TAGGED((char *)&outEAX + 1, {0,1,2,3,4,5,6,7});
-    ASSERT_TAGGED((char *)&outEAX + 2, {0,1,2,3,4,5,6,7});
-    ASSERT_TAGGED((char *)&outEAX + 3, {0,1,2,3,4,5,6,7});
-    ASSERT_TAGGED((char *)&outECX + 0, {0,4});
-    ASSERT_TAGGED((char *)&outECX + 1, {0,1,4,5});
-    ASSERT_TAGGED((char *)&outECX + 2, {0,1,2,4,5,6});
-    ASSERT_TAGGED((char *)&outECX + 3, {0,1,2,3,4,5,6,7});
+    ASSERT_TAGGED((char *)&outRAX + 0, {0,1,2,3,4,5,6,7});
+    ASSERT_TAGGED((char *)&outRAX + 1, {0,1,2,3,4,5,6,7});
+    ASSERT_TAGGED((char *)&outRAX + 2, {0,1,2,3,4,5,6,7});
+    ASSERT_TAGGED((char *)&outRAX + 3, {0,1,2,3,4,5,6,7});
+    ASSERT_TAGGED((char *)&outRAX + 4, { });
+    ASSERT_TAGGED((char *)&outRAX + 5, { });
+    ASSERT_TAGGED((char *)&outRAX + 6, { });
+    ASSERT_TAGGED((char *)&outRAX + 7, { });
+    ASSERT_TAGGED((char *)&outRCX + 0, {0,4});
+    ASSERT_TAGGED((char *)&outRCX + 1, {0,1,4,5});
+    ASSERT_TAGGED((char *)&outRCX + 2, {0,1,2,4,5,6});
+    ASSERT_TAGGED((char *)&outRCX + 3, {0,1,2,3,4,5,6,7});
+    ASSERT_TAGGED((char *)&outRCX + 4, { });
+    ASSERT_TAGGED((char *)&outRCX + 5, { });
+    ASSERT_TAGGED((char *)&outRCX + 6, { });
+    ASSERT_TAGGED((char *)&outRCX + 7, { });
     return passed;
 }
 
@@ -7240,29 +7384,37 @@ static int testcase263() {
     __gtaint_reset();
     uint32_t inEAX = 1;
     uint32_t inEDX = 0;
-    uint32_t outEAX = 1;
-    uint32_t outECX = 1;
+    uint64_t outRAX = 1;
+    uint64_t outRCX = 1;
     __gtaint_setn(&inEAX, 4);
     __gtaint_setn(&inEDX, 4);
     asm volatile (
         "mov EAX,%2;\n"
         "mov EDX,%3;\n"
         "mulx   ecx,eax,eax;\n" // <--
-        "mov %0,EAX;\n"
-        "mov %1,ECX;\n"
-        :"=m"(outEAX),"=m"(outECX)
+        "mov %0,RAX;\n"
+        "mov %1,RCX;\n"
+        :"=m"(outRAX),"=m"(outRCX)
         :"m"(inEAX),"m"(inEDX)
-        :"eax","ecx","edx"
+        :"rax","rcx","edx"
     );
 
-    ASSERT_TAGGED((char *)&outEAX + 0, {0,4});
-    ASSERT_TAGGED((char *)&outEAX + 1, {0,1,4,5});
-    ASSERT_TAGGED((char *)&outEAX + 2, {0,1,2,4,5,6});
-    ASSERT_TAGGED((char *)&outEAX + 3, {0,1,2,3,4,5,6,7});
-    ASSERT_TAGGED((char *)&outECX + 0, {0,1,2,3,4,5,6,7});
-    ASSERT_TAGGED((char *)&outECX + 1, {0,1,2,3,4,5,6,7});
-    ASSERT_TAGGED((char *)&outECX + 2, {0,1,2,3,4,5,6,7});
-    ASSERT_TAGGED((char *)&outECX + 3, {0,1,2,3,4,5,6,7});
+    ASSERT_TAGGED((char *)&outRAX + 0, {0,4});
+    ASSERT_TAGGED((char *)&outRAX + 1, {0,1,4,5});
+    ASSERT_TAGGED((char *)&outRAX + 2, {0,1,2,4,5,6});
+    ASSERT_TAGGED((char *)&outRAX + 3, {0,1,2,3,4,5,6,7});
+    ASSERT_TAGGED((char *)&outRAX + 4, { });
+    ASSERT_TAGGED((char *)&outRAX + 5, { });
+    ASSERT_TAGGED((char *)&outRAX + 6, { });
+    ASSERT_TAGGED((char *)&outRAX + 7, { });
+    ASSERT_TAGGED((char *)&outRCX + 0, {0,1,2,3,4,5,6,7});
+    ASSERT_TAGGED((char *)&outRCX + 1, {0,1,2,3,4,5,6,7});
+    ASSERT_TAGGED((char *)&outRCX + 2, {0,1,2,3,4,5,6,7});
+    ASSERT_TAGGED((char *)&outRCX + 3, {0,1,2,3,4,5,6,7});
+    ASSERT_TAGGED((char *)&outRCX + 4, { });
+    ASSERT_TAGGED((char *)&outRCX + 5, { });
+    ASSERT_TAGGED((char *)&outRCX + 6, { });
+    ASSERT_TAGGED((char *)&outRCX + 7, { });
     return passed;
 }
 
@@ -7274,29 +7426,37 @@ static int testcase264() {
     __gtaint_reset();
     uint32_t inECX = 1;
     uint32_t inEDX = 0;
-    uint32_t outEAX = 1;
-    uint32_t outECX = 1;
+    uint64_t outRAX = 1;
+    uint64_t outRCX = 1;
     __gtaint_setn(&inECX, 4);
     __gtaint_setn(&inEDX, 4);
     asm volatile (
         "mov ECX,%2;\n"
         "mov EDX,%3;\n"
         "mulx   ecx,eax,ecx;\n" // <--
-        "mov %0,EAX;\n"
-        "mov %1,ECX;\n"
-        :"=m"(outEAX),"=m"(outECX)
+        "mov %0,RAX;\n"
+        "mov %1,RCX;\n"
+        :"=m"(outRAX),"=m"(outRCX)
         :"m"(inECX),"m"(inEDX)
-        :"eax","ecx","edx"
+        :"rax","rcx","edx"
     );
 
-    ASSERT_TAGGED((char *)&outEAX + 0, {0,4});
-    ASSERT_TAGGED((char *)&outEAX + 1, {0,1,4,5});
-    ASSERT_TAGGED((char *)&outEAX + 2, {0,1,2,4,5,6});
-    ASSERT_TAGGED((char *)&outEAX + 3, {0,1,2,3,4,5,6,7});
-    ASSERT_TAGGED((char *)&outECX + 0, {0,1,2,3,4,5,6,7});
-    ASSERT_TAGGED((char *)&outECX + 1, {0,1,2,3,4,5,6,7});
-    ASSERT_TAGGED((char *)&outECX + 2, {0,1,2,3,4,5,6,7});
-    ASSERT_TAGGED((char *)&outECX + 3, {0,1,2,3,4,5,6,7});
+    ASSERT_TAGGED((char *)&outRAX + 0, {0,4});
+    ASSERT_TAGGED((char *)&outRAX + 1, {0,1,4,5});
+    ASSERT_TAGGED((char *)&outRAX + 2, {0,1,2,4,5,6});
+    ASSERT_TAGGED((char *)&outRAX + 3, {0,1,2,3,4,5,6,7});
+    ASSERT_TAGGED((char *)&outRAX + 4, { });
+    ASSERT_TAGGED((char *)&outRAX + 5, { });
+    ASSERT_TAGGED((char *)&outRAX + 6, { });
+    ASSERT_TAGGED((char *)&outRAX + 7, { });
+    ASSERT_TAGGED((char *)&outRCX + 0, {0,1,2,3,4,5,6,7});
+    ASSERT_TAGGED((char *)&outRCX + 1, {0,1,2,3,4,5,6,7});
+    ASSERT_TAGGED((char *)&outRCX + 2, {0,1,2,3,4,5,6,7});
+    ASSERT_TAGGED((char *)&outRCX + 3, {0,1,2,3,4,5,6,7});
+    ASSERT_TAGGED((char *)&outRCX + 4, { });
+    ASSERT_TAGGED((char *)&outRCX + 5, { });
+    ASSERT_TAGGED((char *)&outRCX + 6, { });
+    ASSERT_TAGGED((char *)&outRCX + 7, { });
     return passed;
 }
 
@@ -7308,23 +7468,27 @@ static int testcase265() {
     __gtaint_reset();
     uint32_t inEAX = 1;
     uint32_t inEDX = 0;
-    uint32_t outECX = 1;
+    uint64_t outRCX = 1;
     __gtaint_setn(&inEAX, 4);
     __gtaint_setn(&inEDX, 4);
     asm volatile (
         "mov EAX,%1;\n"
         "mov EDX,%2;\n"
         "mulx   ecx,ecx,eax;\n" // <--
-        "mov %0,ECX;\n"
-        :"=m"(outECX)
+        "mov %0,RCX;\n"
+        :"=m"(outRCX)
         :"m"(inEAX),"m"(inEDX)
-        :"eax","ecx","edx"
+        :"eax","rcx","edx"
     );
 
-    ASSERT_TAGGED((char *)&outECX + 0, {0,1,2,3,4,5,6,7});
-    ASSERT_TAGGED((char *)&outECX + 1, {0,1,2,3,4,5,6,7});
-    ASSERT_TAGGED((char *)&outECX + 2, {0,1,2,3,4,5,6,7});
-    ASSERT_TAGGED((char *)&outECX + 3, {0,1,2,3,4,5,6,7});
+    ASSERT_TAGGED((char *)&outRCX + 0, {0,1,2,3,4,5,6,7});
+    ASSERT_TAGGED((char *)&outRCX + 1, {0,1,2,3,4,5,6,7});
+    ASSERT_TAGGED((char *)&outRCX + 2, {0,1,2,3,4,5,6,7});
+    ASSERT_TAGGED((char *)&outRCX + 3, {0,1,2,3,4,5,6,7});
+    ASSERT_TAGGED((char *)&outRCX + 4, { });
+    ASSERT_TAGGED((char *)&outRCX + 5, { });
+    ASSERT_TAGGED((char *)&outRCX + 6, { });
+    ASSERT_TAGGED((char *)&outRCX + 7, { });
     return passed;
 }
 
@@ -7336,23 +7500,27 @@ static int testcase266() {
     __gtaint_reset();
     uint32_t inECX = 1;
     uint32_t inEDX = 0;
-    uint32_t outECX = 1;
+    uint64_t outRCX = 1;
     __gtaint_setn(&inECX, 4);
     __gtaint_setn(&inEDX, 4);
     asm volatile (
         "mov ECX,%1;\n"
         "mov EDX,%2;\n"
         "mulx   ecx,ecx,ecx;\n" // <--
-        "mov %0,ECX;\n"
-        :"=m"(outECX)
+        "mov %0,RCX;\n"
+        :"=m"(outRCX)
         :"m"(inECX),"m"(inEDX)
-        :"ecx","edx"
+        :"rcx","edx"
     );
 
-    ASSERT_TAGGED((char *)&outECX + 0, {0,1,2,3,4,5,6,7});
-    ASSERT_TAGGED((char *)&outECX + 1, {0,1,2,3,4,5,6,7});
-    ASSERT_TAGGED((char *)&outECX + 2, {0,1,2,3,4,5,6,7});
-    ASSERT_TAGGED((char *)&outECX + 3, {0,1,2,3,4,5,6,7});
+    ASSERT_TAGGED((char *)&outRCX + 0, {0,1,2,3,4,5,6,7});
+    ASSERT_TAGGED((char *)&outRCX + 1, {0,1,2,3,4,5,6,7});
+    ASSERT_TAGGED((char *)&outRCX + 2, {0,1,2,3,4,5,6,7});
+    ASSERT_TAGGED((char *)&outRCX + 3, {0,1,2,3,4,5,6,7});
+    ASSERT_TAGGED((char *)&outRCX + 4, { });
+    ASSERT_TAGGED((char *)&outRCX + 5, { });
+    ASSERT_TAGGED((char *)&outRCX + 6, { });
+    ASSERT_TAGGED((char *)&outRCX + 7, { });
     return passed;
 }
 
@@ -7726,21 +7894,25 @@ static int testcase278() {
 
     __gtaint_reset();
     uint32_t inEAX = 1;
-    uint32_t outEAX = 1;
+    uint64_t outRAX = 1;
     __gtaint_setn(&inEAX, 4);
     asm volatile (
         "mov EAX,%1;\n"
         "neg    eax;\n" // <--
-        "mov %0,EAX;\n"
-        :"=m"(outEAX)
+        "mov %0,RAX;\n"
+        :"=m"(outRAX)
         :"m"(inEAX)
-        :"eax"
+        :"rax"
     );
 
-    ASSERT_TAGGED((char *)&outEAX + 0, {0});
-    ASSERT_TAGGED((char *)&outEAX + 1, {0,1});
-    ASSERT_TAGGED((char *)&outEAX + 2, {0,1,2});
-    ASSERT_TAGGED((char *)&outEAX + 3, {0,1,2,3});
+    ASSERT_TAGGED((char *)&outRAX + 0, {0});
+    ASSERT_TAGGED((char *)&outRAX + 1, {0,1});
+    ASSERT_TAGGED((char *)&outRAX + 2, {0,1,2});
+    ASSERT_TAGGED((char *)&outRAX + 3, {0,1,2,3});
+    ASSERT_TAGGED((char *)&outRAX + 4, { });
+    ASSERT_TAGGED((char *)&outRAX + 5, { });
+    ASSERT_TAGGED((char *)&outRAX + 6, { });
+    ASSERT_TAGGED((char *)&outRAX + 7, { });
     return passed;
 }
 
@@ -7847,21 +8019,25 @@ static int testcase283() {
 
     __gtaint_reset();
     uint32_t inEAX = 1;
-    uint32_t outEAX = 1;
+    uint64_t outRAX = 1;
     __gtaint_setn(&inEAX, 4);
     asm volatile (
         "mov EAX,%1;\n"
         "not    eax;\n" // <--
-        "mov %0,EAX;\n"
-        :"=m"(outEAX)
+        "mov %0,RAX;\n"
+        :"=m"(outRAX)
         :"m"(inEAX)
-        :"eax"
+        :"rax"
     );
 
-    ASSERT_TAGGED((char *)&outEAX + 0, {0});
-    ASSERT_TAGGED((char *)&outEAX + 1, {1});
-    ASSERT_TAGGED((char *)&outEAX + 2, {2});
-    ASSERT_TAGGED((char *)&outEAX + 3, {3});
+    ASSERT_TAGGED((char *)&outRAX + 0, {0});
+    ASSERT_TAGGED((char *)&outRAX + 1, {1});
+    ASSERT_TAGGED((char *)&outRAX + 2, {2});
+    ASSERT_TAGGED((char *)&outRAX + 3, {3});
+    ASSERT_TAGGED((char *)&outRAX + 4, { });
+    ASSERT_TAGGED((char *)&outRAX + 5, { });
+    ASSERT_TAGGED((char *)&outRAX + 6, { });
+    ASSERT_TAGGED((char *)&outRAX + 7, { });
     return passed;
 }
 
@@ -12552,21 +12728,25 @@ static int testcase477() {
 
     __gtaint_reset();
     uint32_t inEAX = 1;
-    uint32_t outEAX = 1;
+    uint64_t outRAX = 1;
     __gtaint_setn(&inEAX, 4);
     asm volatile (
         "mov EAX,%1;\n"
         "rorx   eax,eax,0x0;\n" // <--
-        "mov %0,EAX;\n"
-        :"=m"(outEAX)
+        "mov %0,RAX;\n"
+        :"=m"(outRAX)
         :"m"(inEAX)
-        :"eax"
+        :"rax"
     );
 
-    ASSERT_TAGGED((char *)&outEAX + 0, {0,1,2,3});
-    ASSERT_TAGGED((char *)&outEAX + 1, {0,1,2,3});
-    ASSERT_TAGGED((char *)&outEAX + 2, {0,1,2,3});
-    ASSERT_TAGGED((char *)&outEAX + 3, {0,1,2,3});
+    ASSERT_TAGGED((char *)&outRAX + 0, {0,1,2,3});
+    ASSERT_TAGGED((char *)&outRAX + 1, {0,1,2,3});
+    ASSERT_TAGGED((char *)&outRAX + 2, {0,1,2,3});
+    ASSERT_TAGGED((char *)&outRAX + 3, {0,1,2,3});
+    ASSERT_TAGGED((char *)&outRAX + 4, { });
+    ASSERT_TAGGED((char *)&outRAX + 5, { });
+    ASSERT_TAGGED((char *)&outRAX + 6, { });
+    ASSERT_TAGGED((char *)&outRAX + 7, { });
     return passed;
 }
 
@@ -12577,21 +12757,25 @@ static int testcase478() {
 
     __gtaint_reset();
     uint32_t inEAX = 1;
-    uint32_t outEAX = 1;
+    uint64_t outRAX = 1;
     __gtaint_setn(&inEAX, 4);
     asm volatile (
         "mov EAX,%1;\n"
         "rorx   eax,eax,0xf;\n" // <--
-        "mov %0,EAX;\n"
-        :"=m"(outEAX)
+        "mov %0,RAX;\n"
+        :"=m"(outRAX)
         :"m"(inEAX)
-        :"eax"
+        :"rax"
     );
 
-    ASSERT_TAGGED((char *)&outEAX + 0, {0,1,2,3});
-    ASSERT_TAGGED((char *)&outEAX + 1, {0,1,2,3});
-    ASSERT_TAGGED((char *)&outEAX + 2, {0,1,2,3});
-    ASSERT_TAGGED((char *)&outEAX + 3, {0,1,2,3});
+    ASSERT_TAGGED((char *)&outRAX + 0, {0,1,2,3});
+    ASSERT_TAGGED((char *)&outRAX + 1, {0,1,2,3});
+    ASSERT_TAGGED((char *)&outRAX + 2, {0,1,2,3});
+    ASSERT_TAGGED((char *)&outRAX + 3, {0,1,2,3});
+    ASSERT_TAGGED((char *)&outRAX + 4, { });
+    ASSERT_TAGGED((char *)&outRAX + 5, { });
+    ASSERT_TAGGED((char *)&outRAX + 6, { });
+    ASSERT_TAGGED((char *)&outRAX + 7, { });
     return passed;
 }
 
@@ -12602,21 +12786,25 @@ static int testcase479() {
 
     __gtaint_reset();
     uint32_t inECX = 1;
-    uint32_t outEAX = 1;
+    uint64_t outRAX = 1;
     __gtaint_setn(&inECX, 4);
     asm volatile (
         "mov ECX,%1;\n"
         "rorx   eax,ecx,0x0;\n" // <--
-        "mov %0,EAX;\n"
-        :"=m"(outEAX)
+        "mov %0,RAX;\n"
+        :"=m"(outRAX)
         :"m"(inECX)
-        :"eax","ecx"
+        :"rax","ecx"
     );
 
-    ASSERT_TAGGED((char *)&outEAX + 0, {0,1,2,3});
-    ASSERT_TAGGED((char *)&outEAX + 1, {0,1,2,3});
-    ASSERT_TAGGED((char *)&outEAX + 2, {0,1,2,3});
-    ASSERT_TAGGED((char *)&outEAX + 3, {0,1,2,3});
+    ASSERT_TAGGED((char *)&outRAX + 0, {0,1,2,3});
+    ASSERT_TAGGED((char *)&outRAX + 1, {0,1,2,3});
+    ASSERT_TAGGED((char *)&outRAX + 2, {0,1,2,3});
+    ASSERT_TAGGED((char *)&outRAX + 3, {0,1,2,3});
+    ASSERT_TAGGED((char *)&outRAX + 4, { });
+    ASSERT_TAGGED((char *)&outRAX + 5, { });
+    ASSERT_TAGGED((char *)&outRAX + 6, { });
+    ASSERT_TAGGED((char *)&outRAX + 7, { });
     return passed;
 }
 
@@ -12627,21 +12815,25 @@ static int testcase480() {
 
     __gtaint_reset();
     uint32_t inECX = 1;
-    uint32_t outEAX = 1;
+    uint64_t outRAX = 1;
     __gtaint_setn(&inECX, 4);
     asm volatile (
         "mov ECX,%1;\n"
         "rorx   eax,ecx,0xf;\n" // <--
-        "mov %0,EAX;\n"
-        :"=m"(outEAX)
+        "mov %0,RAX;\n"
+        :"=m"(outRAX)
         :"m"(inECX)
-        :"eax","ecx"
+        :"rax","ecx"
     );
 
-    ASSERT_TAGGED((char *)&outEAX + 0, {0,1,2,3});
-    ASSERT_TAGGED((char *)&outEAX + 1, {0,1,2,3});
-    ASSERT_TAGGED((char *)&outEAX + 2, {0,1,2,3});
-    ASSERT_TAGGED((char *)&outEAX + 3, {0,1,2,3});
+    ASSERT_TAGGED((char *)&outRAX + 0, {0,1,2,3});
+    ASSERT_TAGGED((char *)&outRAX + 1, {0,1,2,3});
+    ASSERT_TAGGED((char *)&outRAX + 2, {0,1,2,3});
+    ASSERT_TAGGED((char *)&outRAX + 3, {0,1,2,3});
+    ASSERT_TAGGED((char *)&outRAX + 4, { });
+    ASSERT_TAGGED((char *)&outRAX + 5, { });
+    ASSERT_TAGGED((char *)&outRAX + 6, { });
+    ASSERT_TAGGED((char *)&outRAX + 7, { });
     return passed;
 }
 
@@ -13319,21 +13511,25 @@ static int testcase507() {
 
     __gtaint_reset();
     uint32_t inEAX = 1;
-    uint32_t outEAX = 1;
+    uint64_t outRAX = 1;
     __gtaint_setn(&inEAX, 4);
     asm volatile (
         "mov EAX,%1;\n"
         "sarx   eax,eax,eax;\n" // <--
-        "mov %0,EAX;\n"
-        :"=m"(outEAX)
+        "mov %0,RAX;\n"
+        :"=m"(outRAX)
         :"m"(inEAX)
-        :"eax"
+        :"rax"
     );
 
-    ASSERT_TAGGED((char *)&outEAX + 0, {0,1,2,3});
-    ASSERT_TAGGED((char *)&outEAX + 1, {0,1,2,3});
-    ASSERT_TAGGED((char *)&outEAX + 2, {0,1,2,3});
-    ASSERT_TAGGED((char *)&outEAX + 3, {0,1,2,3});
+    ASSERT_TAGGED((char *)&outRAX + 0, {0,1,2,3});
+    ASSERT_TAGGED((char *)&outRAX + 1, {0,1,2,3});
+    ASSERT_TAGGED((char *)&outRAX + 2, {0,1,2,3});
+    ASSERT_TAGGED((char *)&outRAX + 3, {0,1,2,3});
+    ASSERT_TAGGED((char *)&outRAX + 4, { });
+    ASSERT_TAGGED((char *)&outRAX + 5, { });
+    ASSERT_TAGGED((char *)&outRAX + 6, { });
+    ASSERT_TAGGED((char *)&outRAX + 7, { });
     return passed;
 }
 
@@ -13345,23 +13541,27 @@ static int testcase508() {
     __gtaint_reset();
     uint32_t inEAX = 1;
     uint32_t inECX = 1;
-    uint32_t outEAX = 1;
+    uint64_t outRAX = 1;
     __gtaint_setn(&inEAX, 4);
     __gtaint_setn(&inECX, 4);
     asm volatile (
         "mov EAX,%1;\n"
         "mov ECX,%2;\n"
         "sarx   eax,eax,ecx;\n" // <--
-        "mov %0,EAX;\n"
-        :"=m"(outEAX)
+        "mov %0,RAX;\n"
+        :"=m"(outRAX)
         :"m"(inEAX),"m"(inECX)
-        :"eax","ecx"
+        :"rax","ecx"
     );
 
-    ASSERT_TAGGED((char *)&outEAX + 0, {0,1,2,3,4});
-    ASSERT_TAGGED((char *)&outEAX + 1, {0,1,2,3,4});
-    ASSERT_TAGGED((char *)&outEAX + 2, {0,1,2,3,4});
-    ASSERT_TAGGED((char *)&outEAX + 3, {0,1,2,3,4});
+    ASSERT_TAGGED((char *)&outRAX + 0, {0,1,2,3,4});
+    ASSERT_TAGGED((char *)&outRAX + 1, {0,1,2,3,4});
+    ASSERT_TAGGED((char *)&outRAX + 2, {0,1,2,3,4});
+    ASSERT_TAGGED((char *)&outRAX + 3, {0,1,2,3,4});
+    ASSERT_TAGGED((char *)&outRAX + 4, { });
+    ASSERT_TAGGED((char *)&outRAX + 5, { });
+    ASSERT_TAGGED((char *)&outRAX + 6, { });
+    ASSERT_TAGGED((char *)&outRAX + 7, { });
     return passed;
 }
 
@@ -13372,21 +13572,25 @@ static int testcase509() {
 
     __gtaint_reset();
     uint32_t inECX = 1;
-    uint32_t outEAX = 1;
+    uint64_t outRAX = 1;
     __gtaint_setn(&inECX, 4);
     asm volatile (
         "mov ECX,%1;\n"
         "sarx   eax,ecx,ecx;\n" // <--
-        "mov %0,EAX;\n"
-        :"=m"(outEAX)
+        "mov %0,RAX;\n"
+        :"=m"(outRAX)
         :"m"(inECX)
-        :"eax","ecx"
+        :"rax","ecx"
     );
 
-    ASSERT_TAGGED((char *)&outEAX + 0, {0,1,2,3});
-    ASSERT_TAGGED((char *)&outEAX + 1, {0,1,2,3});
-    ASSERT_TAGGED((char *)&outEAX + 2, {0,1,2,3});
-    ASSERT_TAGGED((char *)&outEAX + 3, {0,1,2,3});
+    ASSERT_TAGGED((char *)&outRAX + 0, {0,1,2,3});
+    ASSERT_TAGGED((char *)&outRAX + 1, {0,1,2,3});
+    ASSERT_TAGGED((char *)&outRAX + 2, {0,1,2,3});
+    ASSERT_TAGGED((char *)&outRAX + 3, {0,1,2,3});
+    ASSERT_TAGGED((char *)&outRAX + 4, { });
+    ASSERT_TAGGED((char *)&outRAX + 5, { });
+    ASSERT_TAGGED((char *)&outRAX + 6, { });
+    ASSERT_TAGGED((char *)&outRAX + 7, { });
     return passed;
 }
 
@@ -13398,23 +13602,27 @@ static int testcase510() {
     __gtaint_reset();
     uint32_t inECX = 1;
     uint32_t inEDX = 0;
-    uint32_t outEAX = 1;
+    uint64_t outRAX = 1;
     __gtaint_setn(&inECX, 4);
     __gtaint_setn(&inEDX, 4);
     asm volatile (
         "mov ECX,%1;\n"
         "mov EDX,%2;\n"
         "sarx   eax,ecx,edx;\n" // <--
-        "mov %0,EAX;\n"
-        :"=m"(outEAX)
+        "mov %0,RAX;\n"
+        :"=m"(outRAX)
         :"m"(inECX),"m"(inEDX)
-        :"eax","ecx","edx"
+        :"rax","ecx","edx"
     );
 
-    ASSERT_TAGGED((char *)&outEAX + 0, {0,1,2,3,4});
-    ASSERT_TAGGED((char *)&outEAX + 1, {0,1,2,3,4});
-    ASSERT_TAGGED((char *)&outEAX + 2, {0,1,2,3,4});
-    ASSERT_TAGGED((char *)&outEAX + 3, {0,1,2,3,4});
+    ASSERT_TAGGED((char *)&outRAX + 0, {0,1,2,3,4});
+    ASSERT_TAGGED((char *)&outRAX + 1, {0,1,2,3,4});
+    ASSERT_TAGGED((char *)&outRAX + 2, {0,1,2,3,4});
+    ASSERT_TAGGED((char *)&outRAX + 3, {0,1,2,3,4});
+    ASSERT_TAGGED((char *)&outRAX + 4, { });
+    ASSERT_TAGGED((char *)&outRAX + 5, { });
+    ASSERT_TAGGED((char *)&outRAX + 6, { });
+    ASSERT_TAGGED((char *)&outRAX + 7, { });
     return passed;
 }
 
@@ -15190,21 +15398,25 @@ static int testcase578() {
 
     __gtaint_reset();
     uint32_t inEAX = 1;
-    uint32_t outEAX = 1;
+    uint64_t outRAX = 1;
     __gtaint_setn(&inEAX, 4);
     asm volatile (
         "mov EAX,%1;\n"
         "shlx   eax,eax,eax;\n" // <--
-        "mov %0,EAX;\n"
-        :"=m"(outEAX)
+        "mov %0,RAX;\n"
+        :"=m"(outRAX)
         :"m"(inEAX)
-        :"eax"
+        :"rax"
     );
 
-    ASSERT_TAGGED((char *)&outEAX + 0, {0,1,2,3});
-    ASSERT_TAGGED((char *)&outEAX + 1, {0,1,2,3});
-    ASSERT_TAGGED((char *)&outEAX + 2, {0,1,2,3});
-    ASSERT_TAGGED((char *)&outEAX + 3, {0,1,2,3});
+    ASSERT_TAGGED((char *)&outRAX + 0, {0,1,2,3});
+    ASSERT_TAGGED((char *)&outRAX + 1, {0,1,2,3});
+    ASSERT_TAGGED((char *)&outRAX + 2, {0,1,2,3});
+    ASSERT_TAGGED((char *)&outRAX + 3, {0,1,2,3});
+    ASSERT_TAGGED((char *)&outRAX + 4, { });
+    ASSERT_TAGGED((char *)&outRAX + 5, { });
+    ASSERT_TAGGED((char *)&outRAX + 6, { });
+    ASSERT_TAGGED((char *)&outRAX + 7, { });
     return passed;
 }
 
@@ -15216,23 +15428,27 @@ static int testcase579() {
     __gtaint_reset();
     uint32_t inEAX = 1;
     uint32_t inECX = 1;
-    uint32_t outEAX = 1;
+    uint64_t outRAX = 1;
     __gtaint_setn(&inEAX, 4);
     __gtaint_setn(&inECX, 4);
     asm volatile (
         "mov EAX,%1;\n"
         "mov ECX,%2;\n"
         "shlx   eax,eax,ecx;\n" // <--
-        "mov %0,EAX;\n"
-        :"=m"(outEAX)
+        "mov %0,RAX;\n"
+        :"=m"(outRAX)
         :"m"(inEAX),"m"(inECX)
-        :"eax","ecx"
+        :"rax","ecx"
     );
 
-    ASSERT_TAGGED((char *)&outEAX + 0, {0,1,2,3,4});
-    ASSERT_TAGGED((char *)&outEAX + 1, {0,1,2,3,4});
-    ASSERT_TAGGED((char *)&outEAX + 2, {0,1,2,3,4});
-    ASSERT_TAGGED((char *)&outEAX + 3, {0,1,2,3,4});
+    ASSERT_TAGGED((char *)&outRAX + 0, {0,1,2,3,4});
+    ASSERT_TAGGED((char *)&outRAX + 1, {0,1,2,3,4});
+    ASSERT_TAGGED((char *)&outRAX + 2, {0,1,2,3,4});
+    ASSERT_TAGGED((char *)&outRAX + 3, {0,1,2,3,4});
+    ASSERT_TAGGED((char *)&outRAX + 4, { });
+    ASSERT_TAGGED((char *)&outRAX + 5, { });
+    ASSERT_TAGGED((char *)&outRAX + 6, { });
+    ASSERT_TAGGED((char *)&outRAX + 7, { });
     return passed;
 }
 
@@ -15243,21 +15459,25 @@ static int testcase580() {
 
     __gtaint_reset();
     uint32_t inECX = 1;
-    uint32_t outEAX = 1;
+    uint64_t outRAX = 1;
     __gtaint_setn(&inECX, 4);
     asm volatile (
         "mov ECX,%1;\n"
         "shlx   eax,ecx,ecx;\n" // <--
-        "mov %0,EAX;\n"
-        :"=m"(outEAX)
+        "mov %0,RAX;\n"
+        :"=m"(outRAX)
         :"m"(inECX)
-        :"eax","ecx"
+        :"rax","ecx"
     );
 
-    ASSERT_TAGGED((char *)&outEAX + 0, {0,1,2,3});
-    ASSERT_TAGGED((char *)&outEAX + 1, {0,1,2,3});
-    ASSERT_TAGGED((char *)&outEAX + 2, {0,1,2,3});
-    ASSERT_TAGGED((char *)&outEAX + 3, {0,1,2,3});
+    ASSERT_TAGGED((char *)&outRAX + 0, {0,1,2,3});
+    ASSERT_TAGGED((char *)&outRAX + 1, {0,1,2,3});
+    ASSERT_TAGGED((char *)&outRAX + 2, {0,1,2,3});
+    ASSERT_TAGGED((char *)&outRAX + 3, {0,1,2,3});
+    ASSERT_TAGGED((char *)&outRAX + 4, { });
+    ASSERT_TAGGED((char *)&outRAX + 5, { });
+    ASSERT_TAGGED((char *)&outRAX + 6, { });
+    ASSERT_TAGGED((char *)&outRAX + 7, { });
     return passed;
 }
 
@@ -15269,23 +15489,27 @@ static int testcase581() {
     __gtaint_reset();
     uint32_t inECX = 1;
     uint32_t inEDX = 0;
-    uint32_t outEAX = 1;
+    uint64_t outRAX = 1;
     __gtaint_setn(&inECX, 4);
     __gtaint_setn(&inEDX, 4);
     asm volatile (
         "mov ECX,%1;\n"
         "mov EDX,%2;\n"
         "shlx   eax,ecx,edx;\n" // <--
-        "mov %0,EAX;\n"
-        :"=m"(outEAX)
+        "mov %0,RAX;\n"
+        :"=m"(outRAX)
         :"m"(inECX),"m"(inEDX)
-        :"eax","ecx","edx"
+        :"rax","ecx","edx"
     );
 
-    ASSERT_TAGGED((char *)&outEAX + 0, {0,1,2,3,4});
-    ASSERT_TAGGED((char *)&outEAX + 1, {0,1,2,3,4});
-    ASSERT_TAGGED((char *)&outEAX + 2, {0,1,2,3,4});
-    ASSERT_TAGGED((char *)&outEAX + 3, {0,1,2,3,4});
+    ASSERT_TAGGED((char *)&outRAX + 0, {0,1,2,3,4});
+    ASSERT_TAGGED((char *)&outRAX + 1, {0,1,2,3,4});
+    ASSERT_TAGGED((char *)&outRAX + 2, {0,1,2,3,4});
+    ASSERT_TAGGED((char *)&outRAX + 3, {0,1,2,3,4});
+    ASSERT_TAGGED((char *)&outRAX + 4, { });
+    ASSERT_TAGGED((char *)&outRAX + 5, { });
+    ASSERT_TAGGED((char *)&outRAX + 6, { });
+    ASSERT_TAGGED((char *)&outRAX + 7, { });
     return passed;
 }
 
@@ -16337,21 +16561,25 @@ static int testcase621() {
 
     __gtaint_reset();
     uint32_t inEAX = 1;
-    uint32_t outEAX = 1;
+    uint64_t outRAX = 1;
     __gtaint_setn(&inEAX, 4);
     asm volatile (
         "mov EAX,%1;\n"
         "shrx   eax,eax,eax;\n" // <--
-        "mov %0,EAX;\n"
-        :"=m"(outEAX)
+        "mov %0,RAX;\n"
+        :"=m"(outRAX)
         :"m"(inEAX)
-        :"eax"
+        :"rax"
     );
 
-    ASSERT_TAGGED((char *)&outEAX + 0, {0,1,2,3});
-    ASSERT_TAGGED((char *)&outEAX + 1, {0,1,2,3});
-    ASSERT_TAGGED((char *)&outEAX + 2, {0,1,2,3});
-    ASSERT_TAGGED((char *)&outEAX + 3, {0,1,2,3});
+    ASSERT_TAGGED((char *)&outRAX + 0, {0,1,2,3});
+    ASSERT_TAGGED((char *)&outRAX + 1, {0,1,2,3});
+    ASSERT_TAGGED((char *)&outRAX + 2, {0,1,2,3});
+    ASSERT_TAGGED((char *)&outRAX + 3, {0,1,2,3});
+    ASSERT_TAGGED((char *)&outRAX + 4, { });
+    ASSERT_TAGGED((char *)&outRAX + 5, { });
+    ASSERT_TAGGED((char *)&outRAX + 6, { });
+    ASSERT_TAGGED((char *)&outRAX + 7, { });
     return passed;
 }
 
@@ -16363,23 +16591,27 @@ static int testcase622() {
     __gtaint_reset();
     uint32_t inEAX = 1;
     uint32_t inECX = 1;
-    uint32_t outEAX = 1;
+    uint64_t outRAX = 1;
     __gtaint_setn(&inEAX, 4);
     __gtaint_setn(&inECX, 4);
     asm volatile (
         "mov EAX,%1;\n"
         "mov ECX,%2;\n"
         "shrx   eax,eax,ecx;\n" // <--
-        "mov %0,EAX;\n"
-        :"=m"(outEAX)
+        "mov %0,RAX;\n"
+        :"=m"(outRAX)
         :"m"(inEAX),"m"(inECX)
-        :"eax","ecx"
+        :"rax","ecx"
     );
 
-    ASSERT_TAGGED((char *)&outEAX + 0, {0,1,2,3,4});
-    ASSERT_TAGGED((char *)&outEAX + 1, {0,1,2,3,4});
-    ASSERT_TAGGED((char *)&outEAX + 2, {0,1,2,3,4});
-    ASSERT_TAGGED((char *)&outEAX + 3, {0,1,2,3,4});
+    ASSERT_TAGGED((char *)&outRAX + 0, {0,1,2,3,4});
+    ASSERT_TAGGED((char *)&outRAX + 1, {0,1,2,3,4});
+    ASSERT_TAGGED((char *)&outRAX + 2, {0,1,2,3,4});
+    ASSERT_TAGGED((char *)&outRAX + 3, {0,1,2,3,4});
+    ASSERT_TAGGED((char *)&outRAX + 4, { });
+    ASSERT_TAGGED((char *)&outRAX + 5, { });
+    ASSERT_TAGGED((char *)&outRAX + 6, { });
+    ASSERT_TAGGED((char *)&outRAX + 7, { });
     return passed;
 }
 
@@ -16390,21 +16622,25 @@ static int testcase623() {
 
     __gtaint_reset();
     uint32_t inECX = 1;
-    uint32_t outEAX = 1;
+    uint64_t outRAX = 1;
     __gtaint_setn(&inECX, 4);
     asm volatile (
         "mov ECX,%1;\n"
         "shrx   eax,ecx,ecx;\n" // <--
-        "mov %0,EAX;\n"
-        :"=m"(outEAX)
+        "mov %0,RAX;\n"
+        :"=m"(outRAX)
         :"m"(inECX)
-        :"eax","ecx"
+        :"rax","ecx"
     );
 
-    ASSERT_TAGGED((char *)&outEAX + 0, {0,1,2,3});
-    ASSERT_TAGGED((char *)&outEAX + 1, {0,1,2,3});
-    ASSERT_TAGGED((char *)&outEAX + 2, {0,1,2,3});
-    ASSERT_TAGGED((char *)&outEAX + 3, {0,1,2,3});
+    ASSERT_TAGGED((char *)&outRAX + 0, {0,1,2,3});
+    ASSERT_TAGGED((char *)&outRAX + 1, {0,1,2,3});
+    ASSERT_TAGGED((char *)&outRAX + 2, {0,1,2,3});
+    ASSERT_TAGGED((char *)&outRAX + 3, {0,1,2,3});
+    ASSERT_TAGGED((char *)&outRAX + 4, { });
+    ASSERT_TAGGED((char *)&outRAX + 5, { });
+    ASSERT_TAGGED((char *)&outRAX + 6, { });
+    ASSERT_TAGGED((char *)&outRAX + 7, { });
     return passed;
 }
 
@@ -16416,23 +16652,27 @@ static int testcase624() {
     __gtaint_reset();
     uint32_t inECX = 1;
     uint32_t inEDX = 0;
-    uint32_t outEAX = 1;
+    uint64_t outRAX = 1;
     __gtaint_setn(&inECX, 4);
     __gtaint_setn(&inEDX, 4);
     asm volatile (
         "mov ECX,%1;\n"
         "mov EDX,%2;\n"
         "shrx   eax,ecx,edx;\n" // <--
-        "mov %0,EAX;\n"
-        :"=m"(outEAX)
+        "mov %0,RAX;\n"
+        :"=m"(outRAX)
         :"m"(inECX),"m"(inEDX)
-        :"eax","ecx","edx"
+        :"rax","ecx","edx"
     );
 
-    ASSERT_TAGGED((char *)&outEAX + 0, {0,1,2,3,4});
-    ASSERT_TAGGED((char *)&outEAX + 1, {0,1,2,3,4});
-    ASSERT_TAGGED((char *)&outEAX + 2, {0,1,2,3,4});
-    ASSERT_TAGGED((char *)&outEAX + 3, {0,1,2,3,4});
+    ASSERT_TAGGED((char *)&outRAX + 0, {0,1,2,3,4});
+    ASSERT_TAGGED((char *)&outRAX + 1, {0,1,2,3,4});
+    ASSERT_TAGGED((char *)&outRAX + 2, {0,1,2,3,4});
+    ASSERT_TAGGED((char *)&outRAX + 3, {0,1,2,3,4});
+    ASSERT_TAGGED((char *)&outRAX + 4, { });
+    ASSERT_TAGGED((char *)&outRAX + 5, { });
+    ASSERT_TAGGED((char *)&outRAX + 6, { });
+    ASSERT_TAGGED((char *)&outRAX + 7, { });
     return passed;
 }
 

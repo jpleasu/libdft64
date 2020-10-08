@@ -209,7 +209,11 @@ void ins_inspect(INS ins) {
     case XED_ICLASS_XORPS:
     case XED_ICLASS_XORPD:
     case XED_ICLASS_PXOR:
-        ins_bytevec_op(ins);
+        if (reg_eq(ins)) {
+            ins_clear_op(ins);
+        } else {
+            ins_bytevec_op(ins);
+        }
         break;
 
     // **** arithmetic ****
