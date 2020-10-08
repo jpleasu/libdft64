@@ -38,7 +38,7 @@ namespace {
                 dst_tags.set(i, t);
             dst_tags.template zext<sz>();
         }
-        template <char scode, char dcode, size_t sz>
+        template <char dcode, char scode, size_t sz>
         static void HOOK_DECL binary(THREADID tid, typename Tagset<dcode>::arg_type dst,
                                      typename Tagset<scode>::arg_type src) {
             Tagset<scode> src_tags(tid, src);
@@ -65,7 +65,7 @@ namespace {
             instrumentation_t::ins_binary_op(ins);
         }
 
-        template <char scode, char dcode, size_t sz>
+        template <char dcode, char scode, size_t sz>
         static void HOOK_DECL binary(THREADID tid, typename Tagset<dcode>::arg_type dst,
                                      typename Tagset<scode>::arg_type src) {
             Tagset<scode> src_tags(tid, src);
@@ -76,7 +76,7 @@ namespace {
 
             dst_tags.template zext<sz>();
         }
-        template <char scode1, char scode2, char dcode, size_t sz>
+        template <char dcode, char scode1, char scode2, size_t sz>
         static void HOOK_DECL ternary(THREADID tid, typename Tagset<dcode>::arg_type dst,
                                       typename Tagset<scode1>::arg_type src1, typename Tagset<scode2>::arg_type src2) {
             Tagset<scode1> src1_tags(tid, src1);
@@ -111,7 +111,7 @@ namespace {
             }
             dst_tags.template zext<sz>();
         }
-        template <char scode, char dcode, size_t sz>
+        template <char dcode, char scode, size_t sz>
         static void HOOK_DECL binary(THREADID tid, typename Tagset<dcode>::arg_type dst,
                                      typename Tagset<scode>::arg_type src) {
             Tagset<scode> src_tags(tid, src);

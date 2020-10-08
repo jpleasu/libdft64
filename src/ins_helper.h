@@ -300,9 +300,9 @@ inline size_t REG_INDX(REG reg) {
 
 #define CALL(fn) INS_InsertCall(ins, IPOINT_BEFORE, (AFUNPTR)fn, IARG_FAST_ANALYSIS_CALL, IARG_THREAD_ID, IARG_END)
 
-#define R_CALL(fn, dst)                                                                                                \
+#define R_CALL(fn, reg0)                                                                                               \
     INS_InsertCall(ins, IPOINT_BEFORE, (AFUNPTR)fn, IARG_FAST_ANALYSIS_CALL, IARG_THREAD_ID, IARG_UINT32,              \
-                   REG_INDX(dst), IARG_END)
+                   REG_INDX(reg0), IARG_END)
 
 #define M_CALL(is_read, fn)                                                                                            \
     INS_InsertCall(ins, IPOINT_BEFORE, (AFUNPTR)fn, IARG_FAST_ANALYSIS_CALL, IARG_THREAD_ID,                           \
@@ -314,13 +314,13 @@ inline size_t REG_INDX(REG reg) {
     INS_InsertCall(ins, IPOINT_BEFORE, (AFUNPTR)fn, IARG_FAST_ANALYSIS_CALL, IARG_THREAD_ID, IARG_MEMORYREAD_EA,       \
                    IARG_END)
 
-#define R2R_CALL(fn, dst, src)                                                                                         \
+#define RR_CALL(fn, reg0, reg1)                                                                                        \
     INS_InsertCall(ins, IPOINT_BEFORE, (AFUNPTR)fn, IARG_FAST_ANALYSIS_CALL, IARG_THREAD_ID, IARG_UINT32,              \
-                   REG_INDX(dst), IARG_UINT32, REG_INDX(src), IARG_END)
+                   REG_INDX(reg0), IARG_UINT32, REG_INDX(reg1), IARG_END)
 
-#define R2R_CALL_P(fn, dst, src)                                                                                       \
+#define RR_CALL_P(fn, reg0, reg1)                                                                                      \
     INS_InsertPredicatedCall(ins, IPOINT_BEFORE, (AFUNPTR)fn, IARG_FAST_ANALYSIS_CALL, IARG_THREAD_ID, IARG_UINT32,    \
-                             REG_INDX(dst), IARG_UINT32, REG_INDX(src), IARG_END)
+                             REG_INDX(reg0), IARG_UINT32, REG_INDX(reg1), IARG_END)
 
 #define M2R_CALL(fn, dst)                                                                                              \
     INS_InsertCall(ins, IPOINT_BEFORE, (AFUNPTR)fn, IARG_FAST_ANALYSIS_CALL, IARG_THREAD_ID, IARG_UINT32,              \
@@ -342,9 +342,9 @@ inline size_t REG_INDX(REG reg) {
     INS_InsertCall(ins, IPOINT_BEFORE, (AFUNPTR)tagmap_clrn, IARG_FAST_ANALYSIS_CALL, IARG_MEMORYWRITE_EA,             \
                    IARG_UINT32, n, IARG_END);
 
-#define RR2R_CALL(fn, dst, src1, src2)                                                                                 \
+#define RRR_CALL(fn, reg0, reg1, reg2)                                                                                 \
     INS_InsertCall(ins, IPOINT_BEFORE, (AFUNPTR)fn, IARG_FAST_ANALYSIS_CALL, IARG_THREAD_ID, IARG_UINT32,              \
-                   REG_INDX(dst), IARG_UINT32, REG_INDX(src1), IARG_UINT32, REG_INDX(src2), IARG_END)
+                   REG_INDX(reg0), IARG_UINT32, REG_INDX(reg1), IARG_UINT32, REG_INDX(reg2), IARG_END)
 
 #define HOOK_DECL PIN_FAST_ANALYSIS_CALL __attribute__((optimize("unroll-loops")))
 
@@ -530,70 +530,70 @@ namespace {
         }
 
         static void ins_binary_op(INS ins) {
-            REG reg_dst, reg_src;
+            REG reg0, reg1;
             if (INS_MemoryOperandCount(ins) == 0) {
-                reg_dst = INS_OperandReg(ins, OP_0);
-                reg_src = INS_OperandReg(ins, OP_1);
-                if (REG_is_gr64(reg_dst)) {
-                    R2R_CALL((instrumentation_t::template binary<'r', 'r', 8>), reg_dst, reg_src);
-                } else if (REG_is_gr32(reg_dst)) {
-                    R2R_CALL((instrumentation_t::template binary<'r', 'r', 4>), reg_dst, reg_src);
-                } else if (REG_is_gr16(reg_dst)) {
-                    R2R_CALL((instrumentation_t::template binary<'r', 'r', 2>), reg_dst, reg_src);
-                } else if (REG_is_xmm(reg_dst)) {
-                    R2R_CALL((instrumentation_t::template binary<'r', 'r', 16>), reg_dst, reg_src);
-                } else if (REG_is_ymm(reg_dst)) {
-                    R2R_CALL((instrumentation_t::template binary<'r', 'r', 32>), reg_dst, reg_src);
-                } else if (REG_is_mm(reg_dst)) {
-                    R2R_CALL((instrumentation_t::template binary<'r', 'r', 8>), reg_dst, reg_src);
+                reg0 = INS_OperandReg(ins, OP_0);
+                reg1 = INS_OperandReg(ins, OP_1);
+                if (REG_is_gr64(reg0)) {
+                    RR_CALL((instrumentation_t::template binary<'r', 'r', 8>), reg0, reg1);
+                } else if (REG_is_gr32(reg0)) {
+                    RR_CALL((instrumentation_t::template binary<'r', 'r', 4>), reg0, reg1);
+                } else if (REG_is_gr16(reg0)) {
+                    RR_CALL((instrumentation_t::template binary<'r', 'r', 2>), reg0, reg1);
+                } else if (REG_is_xmm(reg0)) {
+                    RR_CALL((instrumentation_t::template binary<'r', 'r', 16>), reg0, reg1);
+                } else if (REG_is_ymm(reg0)) {
+                    RR_CALL((instrumentation_t::template binary<'r', 'r', 32>), reg0, reg1);
+                } else if (REG_is_mm(reg0)) {
+                    RR_CALL((instrumentation_t::template binary<'r', 'r', 8>), reg0, reg1);
                 } else {
-                    if (REG_is_Lower8(reg_dst) && REG_is_Lower8(reg_src)) {
-                        R2R_CALL((instrumentation_t::template binary<'r', 'r', 1>), reg_dst, reg_src);
-                    } else if (REG_is_Upper8(reg_dst) && REG_is_Upper8(reg_src)) {
-                        R2R_CALL((instrumentation_t::template binary<'R', 'R', 1>), reg_dst, reg_src);
-                    } else if (REG_is_Lower8(reg_dst)) {
-                        R2R_CALL((instrumentation_t::template binary<'R', 'r', 1>), reg_dst, reg_src);
+                    if (REG_is_Lower8(reg0) && REG_is_Lower8(reg1)) {
+                        RR_CALL((instrumentation_t::template binary<'r', 'r', 1>), reg0, reg1);
+                    } else if (REG_is_Upper8(reg0) && REG_is_Upper8(reg1)) {
+                        RR_CALL((instrumentation_t::template binary<'R', 'R', 1>), reg0, reg1);
+                    } else if (REG_is_Lower8(reg0)) {
+                        RR_CALL((instrumentation_t::template binary<'r', 'R', 1>), reg0, reg1);
                     } else {
-                        R2R_CALL((instrumentation_t::template binary<'r', 'R', 1>), reg_dst, reg_src);
+                        RR_CALL((instrumentation_t::template binary<'R', 'r', 1>), reg0, reg1);
                     }
                 }
             } else if (INS_OperandIsMemory(ins, OP_1)) {
-                reg_dst = INS_OperandReg(ins, OP_0);
-                if (REG_is_gr64(reg_dst)) {
-                    M2R_CALL((instrumentation_t::template binary<'m', 'r', 8>), reg_dst);
-                } else if (REG_is_gr32(reg_dst)) {
-                    M2R_CALL((instrumentation_t::template binary<'m', 'r', 4>), reg_dst);
-                } else if (REG_is_gr16(reg_dst)) {
-                    M2R_CALL((instrumentation_t::template binary<'m', 'r', 2>), reg_dst);
-                } else if (REG_is_xmm(reg_dst)) {
-                    M2R_CALL((instrumentation_t::template binary<'m', 'r', 16>), reg_dst);
-                } else if (REG_is_ymm(reg_dst)) {
-                    M2R_CALL((instrumentation_t::template binary<'m', 'r', 32>), reg_dst);
-                } else if (REG_is_mm(reg_dst)) {
-                    M2R_CALL((instrumentation_t::template binary<'m', 'r', 8>), reg_dst);
-                } else if (REG_is_Upper8(reg_dst)) {
-                    M2R_CALL((instrumentation_t::template binary<'m', 'R', 1>), reg_dst);
+                reg0 = INS_OperandReg(ins, OP_0);
+                if (REG_is_gr64(reg0)) {
+                    M2R_CALL((instrumentation_t::template binary<'r', 'm', 8>), reg0);
+                } else if (REG_is_gr32(reg0)) {
+                    M2R_CALL((instrumentation_t::template binary<'r', 'm', 4>), reg0);
+                } else if (REG_is_gr16(reg0)) {
+                    M2R_CALL((instrumentation_t::template binary<'r', 'm', 2>), reg0);
+                } else if (REG_is_xmm(reg0)) {
+                    M2R_CALL((instrumentation_t::template binary<'r', 'm', 16>), reg0);
+                } else if (REG_is_ymm(reg0)) {
+                    M2R_CALL((instrumentation_t::template binary<'r', 'm', 32>), reg0);
+                } else if (REG_is_mm(reg0)) {
+                    M2R_CALL((instrumentation_t::template binary<'r', 'm', 8>), reg0);
+                } else if (REG_is_Upper8(reg0)) {
+                    M2R_CALL((instrumentation_t::template binary<'R', 'm', 1>), reg0);
                 } else {
-                    M2R_CALL((instrumentation_t::template binary<'m', 'r', 1>), reg_dst);
+                    M2R_CALL((instrumentation_t::template binary<'r', 'm', 1>), reg0);
                 }
             } else {
-                reg_src = INS_OperandReg(ins, OP_1);
-                if (REG_is_gr64(reg_src)) {
-                    R2M_CALL((instrumentation_t::template binary<'r', 'm', 8>), reg_src);
-                } else if (REG_is_gr32(reg_src)) {
-                    R2M_CALL((instrumentation_t::template binary<'r', 'm', 4>), reg_src);
-                } else if (REG_is_gr16(reg_src)) {
-                    R2M_CALL((instrumentation_t::template binary<'r', 'm', 2>), reg_src);
-                } else if (REG_is_xmm(reg_src)) {
-                    R2M_CALL((instrumentation_t::template binary<'r', 'm', 16>), reg_src);
-                } else if (REG_is_ymm(reg_src)) {
-                    R2M_CALL((instrumentation_t::template binary<'r', 'm', 32>), reg_src);
-                } else if (REG_is_mm(reg_src)) {
-                    R2M_CALL((instrumentation_t::template binary<'r', 'm', 8>), reg_src);
-                } else if (REG_is_Upper8(reg_src)) {
-                    R2M_CALL((instrumentation_t::template binary<'R', 'm', 1>), reg_src);
+                reg1 = INS_OperandReg(ins, OP_1);
+                if (REG_is_gr64(reg1)) {
+                    R2M_CALL((instrumentation_t::template binary<'m', 'r', 8>), reg1);
+                } else if (REG_is_gr32(reg1)) {
+                    R2M_CALL((instrumentation_t::template binary<'m', 'r', 4>), reg1);
+                } else if (REG_is_gr16(reg1)) {
+                    R2M_CALL((instrumentation_t::template binary<'m', 'r', 2>), reg1);
+                } else if (REG_is_xmm(reg1)) {
+                    R2M_CALL((instrumentation_t::template binary<'m', 'r', 16>), reg1);
+                } else if (REG_is_ymm(reg1)) {
+                    R2M_CALL((instrumentation_t::template binary<'m', 'r', 32>), reg1);
+                } else if (REG_is_mm(reg1)) {
+                    R2M_CALL((instrumentation_t::template binary<'m', 'r', 8>), reg1);
+                } else if (REG_is_Upper8(reg1)) {
+                    R2M_CALL((instrumentation_t::template binary<'m', 'R', 1>), reg1);
                 } else {
-                    R2M_CALL((instrumentation_t::template binary<'r', 'm', 1>), reg_src);
+                    R2M_CALL((instrumentation_t::template binary<'m', 'r', 1>), reg1);
                 }
             }
         }
@@ -603,38 +603,32 @@ namespace {
 
         static void ins_ternary_op(INS ins) {
             if (INS_OperandIsReg(ins, OP_0)) {
-                REG reg_dst = INS_OperandReg(ins, OP_0);
+                REG reg0 = INS_OperandReg(ins, OP_0);
                 if (INS_OperandIsReg(ins, OP_1)) {
-                    REG reg_src1 = INS_OperandReg(ins, OP_1);
+                    REG reg1 = INS_OperandReg(ins, OP_1);
                     if (INS_OperandIsReg(ins, OP_2)) {
-                        REG reg_src2 = INS_OperandReg(ins, OP_2);
-                        switch (REG_Size(reg_dst)) {
+                        REG reg2 = INS_OperandReg(ins, OP_2);
+                        switch (REG_Size(reg0)) {
                         case 1:
-                            RR2R_CALL((instrumentation_t::template ternary<'r', 'r', 'r', 1>), reg_dst, reg_src1,
-                                      reg_src2);
+                            RRR_CALL((instrumentation_t::template ternary<'r', 'r', 'r', 1>), reg0, reg1, reg2);
                             break;
                         case 2:
-                            RR2R_CALL((instrumentation_t::template ternary<'r', 'r', 'r', 2>), reg_dst, reg_src1,
-                                      reg_src2);
+                            RRR_CALL((instrumentation_t::template ternary<'r', 'r', 'r', 2>), reg0, reg1, reg2);
                             break;
                         case 4:
-                            RR2R_CALL((instrumentation_t::template ternary<'r', 'r', 'r', 4>), reg_dst, reg_src1,
-                                      reg_src2);
+                            RRR_CALL((instrumentation_t::template ternary<'r', 'r', 'r', 4>), reg0, reg1, reg2);
                             break;
                         case 8:
-                            RR2R_CALL((instrumentation_t::template ternary<'r', 'r', 'r', 8>), reg_dst, reg_src1,
-                                      reg_src2);
+                            RRR_CALL((instrumentation_t::template ternary<'r', 'r', 'r', 8>), reg0, reg1, reg2);
                             break;
                         case 16:
-                            RR2R_CALL((instrumentation_t::template ternary<'r', 'r', 'r', 16>), reg_dst, reg_src1,
-                                      reg_src2);
+                            RRR_CALL((instrumentation_t::template ternary<'r', 'r', 'r', 16>), reg0, reg1, reg2);
                             break;
                         case 32:
-                            RR2R_CALL((instrumentation_t::template ternary<'r', 'r', 'r', 32>), reg_dst, reg_src1,
-                                      reg_src2);
+                            RRR_CALL((instrumentation_t::template ternary<'r', 'r', 'r', 32>), reg0, reg1, reg2);
                             break;
                         default:
-                            uninstrumented(ins, "ternary rr2r");
+                            uninstrumented(ins, "ternary rrr");
                         }
                         return;
                     }
@@ -644,16 +638,16 @@ namespace {
         }
 
         //// hook functions
-        template <char dcode, size_t sz>
-        static void HOOK_DECL unary(THREADID tid, typename Tagset<dcode>::arg_type dst);
+        template <char code0, size_t sz>
+        static void HOOK_DECL unary(THREADID tid, typename Tagset<code0>::arg_type op0);
 
-        template <char scode, char dcode, size_t sz>
-        static void HOOK_DECL binary(THREADID tid, typename Tagset<dcode>::arg_type dst,
-                                     typename Tagset<scode>::arg_type src);
+        template <char code0, char code1, size_t sz>
+        static void HOOK_DECL binary(THREADID tid, typename Tagset<code0>::arg_type op0,
+                                     typename Tagset<code1>::arg_type op1);
 
-        template <char scode1, char scode2, char dcode, size_t sz>
-        static void HOOK_DECL ternary(THREADID tid, typename Tagset<dcode>::arg_type dst,
-                                      typename Tagset<scode1>::arg_type src1, typename Tagset<scode2>::arg_type src2);
+        template <char code0, char code1, char code2, size_t sz>
+        static void HOOK_DECL ternary(THREADID tid, typename Tagset<code0>::arg_type op0,
+                                      typename Tagset<code1>::arg_type op1, typename Tagset<code2>::arg_type op2);
     };
 
 } // namespace

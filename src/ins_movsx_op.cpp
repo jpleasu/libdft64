@@ -190,24 +190,24 @@ void ins_movsx_op(INS ins) {
     reg_src = INS_OperandReg(ins, OP_1);
     if (REG_is_gr16(reg_dst)) {
       if (REG_is_Upper8(reg_src))
-        R2R_CALL(_movsx_r2r_opwb_u, reg_dst, reg_src);
+        RR_CALL(_movsx_r2r_opwb_u, reg_dst, reg_src);
       else
-        R2R_CALL(_movsx_r2r_opwb_l, reg_dst, reg_src);
+        RR_CALL(_movsx_r2r_opwb_l, reg_dst, reg_src);
     } else if (REG_is_gr16(reg_src)) {
       if (REG_is_gr64(reg_dst))
-        R2R_CALL(_movsx_r2r_opqw, reg_dst, reg_src);
+        RR_CALL(_movsx_r2r_opqw, reg_dst, reg_src);
       else if (REG_is_gr32(reg_dst))
-        R2R_CALL(_movsx_r2r_oplw, reg_dst, reg_src);
+        RR_CALL(_movsx_r2r_oplw, reg_dst, reg_src);
     } else if (REG_is_Upper8(reg_src)) {
       if (REG_is_gr64(reg_dst))
-        R2R_CALL(_movsx_r2r_opqb_u, reg_dst, reg_src);
+        RR_CALL(_movsx_r2r_opqb_u, reg_dst, reg_src);
       else if (REG_is_gr32(reg_dst))
-        R2R_CALL(_movsx_r2r_oplb_u, reg_dst, reg_src);
+        RR_CALL(_movsx_r2r_oplb_u, reg_dst, reg_src);
     } else { // lower8
       if (REG_is_gr64(reg_dst))
-        R2R_CALL(_movsx_r2r_opqb_l, reg_dst, reg_src);
+        RR_CALL(_movsx_r2r_opqb_l, reg_dst, reg_src);
       else if (REG_is_gr32(reg_dst))
-        R2R_CALL(_movsx_r2r_oplb_l, reg_dst, reg_src);
+        RR_CALL(_movsx_r2r_oplb_l, reg_dst, reg_src);
     }
   } else {
     reg_dst = INS_OperandReg(ins, OP_0);
@@ -237,7 +237,7 @@ void ins_movsxd_op(INS ins) {
   }
   if (INS_MemoryOperandCount(ins) == 0) {
     reg_src = INS_OperandReg(ins, OP_1);
-    R2R_CALL(_movsx_r2r_opql, reg_dst, reg_src);
+    RR_CALL(_movsx_r2r_opql, reg_dst, reg_src);
   } else {
     M2R_CALL(_movsx_m2r_opql, reg_dst);
   }

@@ -34,13 +34,13 @@ void ins_punpckl_op(INS ins) {
         reg_src = INS_OperandReg(ins, OP_1);
         switch (REG_Size(reg_dst)) {
         case 8:
-            R2R_CALL((r2r_punpckl_op<blocksize, 8>), reg_dst, reg_src);
+            RR_CALL((r2r_punpckl_op<blocksize, 8>), reg_dst, reg_src);
             break;
         case 16:
-            R2R_CALL((r2r_punpckl_op<blocksize, 16>), reg_dst, reg_src);
+            RR_CALL((r2r_punpckl_op<blocksize, 16>), reg_dst, reg_src);
             break;
         case 32:
-            R2R_CALL((r2r_punpckl_op<blocksize, 32>), reg_dst, reg_src);
+            RR_CALL((r2r_punpckl_op<blocksize, 32>), reg_dst, reg_src);
             break;
         default:
             uninstrumented(ins, "punpckl regsize");

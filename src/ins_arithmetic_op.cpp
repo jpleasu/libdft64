@@ -33,7 +33,7 @@ namespace {
             dst_tags.template zext<sz>();
         }
         // cascade src into dst
-        template <char scode, char dcode, size_t sz>
+        template <char dcode, char scode, size_t sz>
         static void HOOK_DECL binary(THREADID tid, typename Tagset<dcode>::arg_type dst,
                                      typename Tagset<scode>::arg_type src) {
             Tagset<scode> src_tags(tid, src);
@@ -88,6 +88,7 @@ namespace {
         }
 
         static void ins_binary_imm(INS ins) {
+            // binary imul
             UINT64 val = INS_OperandImmediate(ins, OP_1);
             if (val == 0ul) {
                 unary_clear::ins_unary_op(ins);
@@ -96,7 +97,7 @@ namespace {
             }
         }
 
-        template <char scode, char dcode, size_t sz>
+        template <char dcode, char scode, size_t sz>
         static void HOOK_DECL binary(THREADID tid, typename Tagset<dcode>::arg_type dst,
                                      typename Tagset<scode>::arg_type src) {
             Tagset<scode> src_tags(tid, src);
@@ -113,7 +114,7 @@ namespace {
         }
 
         static void ins_ternary_imm(INS ins) {
-            // instrumentation_t::ins_binary_op(ins);
+            // ternary imul
             UINT64 val = INS_OperandImmediate(ins, OP_2);
             if (val == 0ul) {
                 unary_clear::ins_unary_op(ins);
@@ -121,9 +122,25 @@ namespace {
                 mul_casc::ins_binary_op(ins);
             }
         }
-        static void ins_ternary_op(INS ins) {
-            uninstrumented(ins, "mul ternary");
-            dump_instruction(ins);
+        template <char dcode1, char dcode2, char scode, size_t sz>
+        static void HOOK_DECL ternary(THREADID tid, typename Tagset<dcode1>::arg_type dst1,
+                                      typename Tagset<dcode2>::arg_type dst2, typename Tagset<scode>::arg_type src) {
+            Tagset<dcode1> dst1_tags(tid, dst1); // high result
+            Tagset<dcode2> dst2_tags(tid, dst2); // low result
+            Tagset<scode> src_tags(tid, src);
+            Tagset<'r'> d_tags(tid, DFT_REG_RDX);
+
+            tag_t t = tag_combine(d_tags.get(0), src_tags.get(0));
+            dst2_tags.set(0, t);
+            for (size_t i = 1; i < sz; ++i) {
+                t = tag_combine(t, d_tags.get(i), src_tags.get(i));
+                dst2_tags.set(i, t);
+            }
+            for (size_t i = 0; i < sz; ++i)
+                dst1_tags.set(i, t);
+
+            dst1_tags.template zext<sz>();
+            dst2_tags.template zext<sz>();
         }
     };
 } // namespace

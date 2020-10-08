@@ -523,20 +523,20 @@ void ins_xadd_op(INS ins) {
         reg_dst = INS_OperandReg(ins, OP_0);
         reg_src = INS_OperandReg(ins, OP_1);
         if (REG_is_gr64(reg_dst)) {
-            R2R_CALL(_xadd_r2r_opq, reg_dst, reg_src);
+            RR_CALL(_xadd_r2r_opq, reg_dst, reg_src);
         } else if (REG_is_gr32(reg_dst)) {
-            R2R_CALL(_xadd_r2r_opl, reg_dst, reg_src);
+            RR_CALL(_xadd_r2r_opl, reg_dst, reg_src);
         } else if (REG_is_gr16(reg_dst)) {
-            R2R_CALL(_xadd_r2r_opw, reg_dst, reg_src);
+            RR_CALL(_xadd_r2r_opw, reg_dst, reg_src);
         } else if (REG_is_gr8(reg_dst)) {
             if (REG_is_Lower8(reg_dst) && REG_is_Lower8(reg_src))
-                R2R_CALL(_xadd_r2r_opb_l, reg_dst, reg_src);
+                RR_CALL(_xadd_r2r_opb_l, reg_dst, reg_src);
             else if (REG_is_Upper8(reg_dst) && REG_is_Upper8(reg_src))
-                R2R_CALL(_xadd_r2r_opb_u, reg_dst, reg_src);
+                RR_CALL(_xadd_r2r_opb_u, reg_dst, reg_src);
             else if (REG_is_Lower8(reg_dst))
-                R2R_CALL(_xadd_r2r_opb_lu, reg_dst, reg_src);
+                RR_CALL(_xadd_r2r_opb_lu, reg_dst, reg_src);
             else
-                R2R_CALL(_xadd_r2r_opb_ul, reg_dst, reg_src);
+                RR_CALL(_xadd_r2r_opb_ul, reg_dst, reg_src);
         }
     } else {
         reg_src = INS_OperandReg(ins, OP_1);

@@ -83,7 +83,7 @@ namespace {
         static void ins_binary_imm(INS ins) {
             // only a bit is changed, noop on byte taint
         }
-        template <char scode, char dcode, size_t sz>
+        template <char dcode, char scode, size_t sz>
         static void HOOK_DECL binary(THREADID tid, typename Tagset<dcode>::arg_type dst,
                                      typename Tagset<scode>::arg_type src) {
             Tagset<scode> src_tags(tid, src);
@@ -128,7 +128,7 @@ namespace {
         static void ins_ternary_imm(INS ins) {
             uninstrumented(ins, "bextr ternary imm");
         }
-        template <char scode1, char scode2, char dcode, size_t sz>
+        template <char dcode, char scode1, char scode2, size_t sz>
         static void HOOK_DECL ternary(THREADID tid, typename Tagset<dcode>::arg_type dst,
                                       typename Tagset<scode1>::arg_type src1, typename Tagset<scode2>::arg_type src2) {
             Tagset<scode1> src1_tags(tid, src1);
@@ -258,6 +258,7 @@ void ins_inspect(INS ins) {
         break;
     case XED_ICLASS_MUL:
     case XED_ICLASS_IMUL:
+    case XED_ICLASS_MULX:
         ins_mul_op(ins);
         break;
     case XED_ICLASS_MULSD:

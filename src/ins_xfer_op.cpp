@@ -309,26 +309,26 @@ void ins_xfer_op(INS ins) {
     reg_dst = INS_OperandReg(ins, OP_0);
     reg_src = INS_OperandReg(ins, OP_1);
     if (REG_is_gr64(reg_dst)) {
-      R2R_CALL(r2r_xfer_opq, reg_dst, reg_src);
+      RR_CALL(r2r_xfer_opq, reg_dst, reg_src);
     } else if (REG_is_gr32(reg_dst)) {
-      R2R_CALL(r2r_xfer_opl, reg_dst, reg_src);
+      RR_CALL(r2r_xfer_opl, reg_dst, reg_src);
     } else if (REG_is_gr16(reg_dst)) {
-      R2R_CALL(r2r_xfer_opw, reg_dst, reg_src);
+      RR_CALL(r2r_xfer_opw, reg_dst, reg_src);
     } else if (REG_is_xmm(reg_dst)) {
-      R2R_CALL(r2r_xfer_opx, reg_dst, reg_src);
+      RR_CALL(r2r_xfer_opx, reg_dst, reg_src);
     } else if (REG_is_ymm(reg_dst)) {
-      R2R_CALL(r2r_xfer_opy, reg_dst, reg_src);
+      RR_CALL(r2r_xfer_opy, reg_dst, reg_src);
     } else if (REG_is_mm(reg_dst)) {
-      R2R_CALL(r2r_xfer_opq, reg_dst, reg_src);
+      RR_CALL(r2r_xfer_opq, reg_dst, reg_src);
     } else {
       if (REG_is_Lower8(reg_dst) && REG_is_Lower8(reg_src)) {
-        R2R_CALL(r2r_xfer_opb_l, reg_dst, reg_src);
+        RR_CALL(r2r_xfer_opb_l, reg_dst, reg_src);
       } else if (REG_is_Upper8(reg_dst) && REG_is_Upper8(reg_src)) {
-        R2R_CALL(r2r_xfer_opb_u, reg_dst, reg_src);
+        RR_CALL(r2r_xfer_opb_u, reg_dst, reg_src);
       } else if (REG_is_Lower8(reg_dst)) {
-        R2R_CALL(r2r_xfer_opb_lu, reg_dst, reg_src);
+        RR_CALL(r2r_xfer_opb_lu, reg_dst, reg_src);
       } else {
-        R2R_CALL(r2r_xfer_opb_ul, reg_dst, reg_src);
+        RR_CALL(r2r_xfer_opb_ul, reg_dst, reg_src);
       }
     }
   } else if (INS_OperandIsMemory(ins, OP_1)) {
@@ -378,11 +378,11 @@ void ins_xfer_op_predicated(INS ins) {
     reg_dst = INS_OperandReg(ins, OP_0);
     reg_src = INS_OperandReg(ins, OP_1);
     if (REG_is_gr64(reg_dst)) {
-      R2R_CALL_P(r2r_xfer_opq, reg_dst, reg_src);
+      RR_CALL_P(r2r_xfer_opq, reg_dst, reg_src);
     } else if (REG_is_gr32(reg_dst)) {
-      R2R_CALL_P(r2r_xfer_opl, reg_dst, reg_src);
+      RR_CALL_P(r2r_xfer_opl, reg_dst, reg_src);
     } else {
-      R2R_CALL_P(r2r_xfer_opw, reg_dst, reg_src);
+      RR_CALL_P(r2r_xfer_opw, reg_dst, reg_src);
     }
   } else {
     reg_dst = INS_OperandReg(ins, OP_0);
@@ -514,29 +514,29 @@ void ins_lea(INS ins) {
   }
   if (reg_base != REG_INVALID() && reg_indx == REG_INVALID()) {
     if (REG_is_gr64(reg_dst)) {
-      R2R_CALL(r2r_xfer_opq, reg_dst, reg_base);
+      RR_CALL(r2r_xfer_opq, reg_dst, reg_base);
     } else if (REG_is_gr32(reg_dst)) {
-      R2R_CALL(r2r_xfer_opl, reg_dst, reg_base);
+      RR_CALL(r2r_xfer_opl, reg_dst, reg_base);
     } else if (REG_is_gr16(reg_dst)) {
-      R2R_CALL(r2r_xfer_opw, reg_dst, reg_base);
+      RR_CALL(r2r_xfer_opw, reg_dst, reg_base);
     }
   }
   if (reg_base == REG_INVALID() && reg_indx != REG_INVALID()) {
     if (REG_is_gr64(reg_dst)) {
-      R2R_CALL(r2r_xfer_opq, reg_dst, reg_indx);
+      RR_CALL(r2r_xfer_opq, reg_dst, reg_indx);
     } else if (REG_is_gr32(reg_dst)) {
-      R2R_CALL(r2r_xfer_opl, reg_dst, reg_indx);
+      RR_CALL(r2r_xfer_opl, reg_dst, reg_indx);
     } else if (REG_is_gr16(reg_dst)) {
-      R2R_CALL(r2r_xfer_opw, reg_dst, reg_indx);
+      RR_CALL(r2r_xfer_opw, reg_dst, reg_indx);
     }
   }
   if (reg_base != REG_INVALID() && reg_indx != REG_INVALID()) {
     if (REG_is_gr64(reg_dst)) {
-      RR2R_CALL(_lea_opq, reg_dst, reg_base, reg_indx);
+      RRR_CALL(_lea_opq, reg_dst, reg_base, reg_indx);
     } else if (REG_is_gr32(reg_dst)) {
-      RR2R_CALL(_lea_opl, reg_dst, reg_base, reg_indx);
+      RRR_CALL(_lea_opl, reg_dst, reg_base, reg_indx);
     } else if (REG_is_gr16(reg_dst)) {
-      RR2R_CALL(_lea_opw, reg_dst, reg_base, reg_indx);
+      RRR_CALL(_lea_opw, reg_dst, reg_base, reg_indx);
     }
   }
 }
