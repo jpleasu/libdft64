@@ -374,7 +374,7 @@ namespace {
     template <>
     struct Tagset<'r'> {
         using arg_type = uint32_t;
-        tag_t *tags;
+        tag_t *const tags;
         Tagset(THREADID tid, arg_type reg) : tags(RTAG[reg]) {
         }
         tag_t get(int i) {
@@ -383,6 +383,9 @@ namespace {
         void set(int i, tag_t v) {
             tags[i] = v;
         }
+        void add(int i, tag_t v) {
+            tags[i] = tag_combine(tags[i], v);
+        }
         void swap(int i, int j) {
             tags[i] ^= tags[j];
             tags[j] ^= tags[i];
@@ -391,31 +394,17 @@ namespace {
         template <size_t sz>
         void zext() {
             maybe_zext<sz>(tags);
+        }
+
+      protected:
+        Tagset(tag_t *tags) : tags(tags) {
         }
     };
 
     // high, 1 byte registers (offset by 1)
     template <>
-    struct Tagset<'R'> {
-        using arg_type = uint32_t;
-        tag_t *tags;
-        Tagset(THREADID tid, arg_type reg) : tags(RTAG[reg]) {
-        }
-        tag_t get(int i) {
-            return tags[i + 1];
-        }
-        void set(int i, tag_t v) {
-            tags[i + 1] = v;
-        }
-        void swap(int i, int j) {
-            tags[i] ^= tags[j];
-            tags[j] ^= tags[i];
-            tags[i] ^= tags[j];
-        }
-
-        template <size_t sz>
-        void zext() {
-            maybe_zext<sz>(tags);
+    struct Tagset<'R'> : public Tagset<'r'> {
+        Tagset(THREADID tid, arg_type reg) : Tagset<'r'>((tag_t *)RTAG[reg] + 1) {
         }
     };
 
@@ -423,16 +412,18 @@ namespace {
     template <>
     struct Tagset<'m'> {
         using arg_type = ADDRINT;
-        ADDRINT addr;
+        const ADDRINT addr;
         Tagset(THREADID tid, arg_type addr) : addr(addr) {
         }
         tag_t get(int i) {
-            return tagmap_getb(addr);
+            return tagmap_getb(addr + i);
         }
         void set(int i, tag_t v) {
-            tagmap_setb(addr, v);
+            tagmap_setb(addr + i, v);
         }
-
+        void add(int i, tag_t v) {
+            set(i, tag_combine(get(i), v));
+        }
         void swap(int i, int j) {
             tag_t tmp = get(i);
             set(i, get(j));
