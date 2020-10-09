@@ -1,6 +1,9 @@
 # libdft: Practical Dynamic Data Flow Tracking
 
-These code is modified from [VUzzer64](https://github.com/vusec/vuzzer64), and it is originally from [libdft](https://www.cs.columbia.edu/~vpk/research/libdft/).
+Modified from
+[AngoraFuzzer/libdft64](https://github.com/AngoraFuzzer/libdft64), 
+[VUzzer64](https://github.com/vusec/vuzzer64), and 
+[libdft](https://www.cs.columbia.edu/~vpk/research/libdft/).
 
 ## Features
 
