@@ -7,6 +7,7 @@
 #include "ins_generic_op.h"
 #include "ins_movsx_op.h"
 #include "ins_punpck_op.h"
+#include "ins_shift_op.h"
 #include "ins_xchg_op.h"
 #include "ins_xfer_op.h"
 
@@ -196,6 +197,10 @@ void ins_inspect(INS ins) {
 
     switch (ins_indx) {
     // **** logical ****
+    case XED_ICLASS_NOT:
+    case XED_ICLASS_NOT_LOCK:
+        ins_bytevec_op(ins);
+        break;
     case XED_ICLASS_AND:
     case XED_ICLASS_PAND:
     case XED_ICLASS_ANDN:
@@ -234,6 +239,8 @@ void ins_inspect(INS ins) {
     case XED_ICLASS_INC_LOCK:
     case XED_ICLASS_DEC:
     case XED_ICLASS_DEC_LOCK:
+    case XED_ICLASS_NEG:
+    case XED_ICLASS_NEG_LOCK:
     case XED_ICLASS_ADC: // there is no tagging of CF, assume it can be anything.. always carry
         ins_bytecasc_op(ins);
         break;
@@ -461,18 +468,21 @@ void ins_inspect(INS ins) {
         M_CLEAR_N(8);
         break;
 
-    case XED_ICLASS_RCL:
-    case XED_ICLASS_RCR:
-    case XED_ICLASS_ROL:
-    case XED_ICLASS_ROR:
     case XED_ICLASS_SHL:
+    case XED_ICLASS_SHLD:
+    case XED_ICLASS_SHLX:
+        ins_lshift_op(ins);
+        break;
+
+    case XED_ICLASS_ROL:
+    case XED_ICLASS_RCL:
+
     case XED_ICLASS_SAR:
     case XED_ICLASS_SHR:
-    case XED_ICLASS_SHLD:
     case XED_ICLASS_SHRD:
-    case XED_ICLASS_NEG:
-    case XED_ICLASS_NOT:
-    case XED_ICLASS_NOP:
+    case XED_ICLASS_RCR:
+    case XED_ICLASS_ROR:
+
     case XED_ICLASS_XSAVEC:
     case XED_ICLASS_XRSTOR:
         ins_zext_dst(ins);
@@ -550,6 +560,8 @@ void ins_inspect(INS ins) {
         // break;
 
     // Ignore
+    case XED_ICLASS_NOP:
+
     case XED_ICLASS_JMP:
     case XED_ICLASS_JZ:
     case XED_ICLASS_JNZ:

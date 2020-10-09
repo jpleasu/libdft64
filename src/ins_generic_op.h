@@ -1,5 +1,5 @@
-#ifndef __INS_BINARY_OP_H__
-#define __INS_BINARY_OP_H__
+#ifndef __INS_GENERIC_OP_H__
+#define __INS_GENERIC_OP_H__
 #include "pin.H"
 
 void ins_blender_op(INS ins);

@@ -1,6 +1,6 @@
 
-#ifndef __INS_UNITARY_OP_H__
-#define __INS_UNITARY_OP_H__
+#ifndef __INS_ARITHMETIC_OP_H__
+#define __INS_ARITHMETIC_OP_H__
 #include "pin.H"
 
 void ins_div_op(INS ins);

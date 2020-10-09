@@ -377,7 +377,7 @@ namespace {
         tag_t *const tags;
         Tagset(THREADID tid, arg_type reg) : tags(RTAG[reg]) {
         }
-        tag_t get(int i) {
+        tag_t get(int i) const {
             return tags[i];
         }
         void set(int i, tag_t v) {
@@ -415,7 +415,7 @@ namespace {
         const ADDRINT addr;
         Tagset(THREADID tid, arg_type addr) : addr(addr) {
         }
-        tag_t get(int i) {
+        tag_t get(int i) const {
             return tagmap_getb(addr + i);
         }
         void set(int i, tag_t v) {
@@ -432,6 +432,16 @@ namespace {
 
         template <size_t sz>
         void zext() {
+        }
+    };
+
+    template <size_t sz>
+    struct TagsetCopy : public Tagset<'r'> {
+        tag_t tags[sz];
+        template <typename TS>
+        TagsetCopy(const TS &ts) : Tagset<'r'>(tags) {
+            for (size_t i = 0; i < sz; ++i)
+                tags[i] = ts.get(i);
         }
     };
 
