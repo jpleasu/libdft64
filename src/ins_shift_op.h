@@ -4,5 +4,6 @@
 #include "pin.H"
 
 void ins_lshift_op(INS ins);
+void ins_rotate_op(INS ins, bool left, bool carry);
 
 #endif

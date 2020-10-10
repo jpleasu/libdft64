@@ -404,7 +404,7 @@ namespace {
     // high, 1 byte registers (offset by 1)
     template <>
     struct Tagset<'R'> : public Tagset<'r'> {
-        Tagset(THREADID tid, arg_type reg) : Tagset<'r'>((tag_t *)RTAG[reg] + 1) {
+        Tagset(THREADID tid, arg_type reg) : Tagset<'r'>(&RTAG[reg][0] + 1) {
         }
     };
 
@@ -437,11 +437,12 @@ namespace {
 
     template <size_t sz>
     struct TagsetCopy : public Tagset<'r'> {
-        tag_t tags[sz];
+        tag_t tags_copy[sz];
+
         template <typename TS>
-        TagsetCopy(const TS &ts) : Tagset<'r'>(tags) {
+        TagsetCopy(const TS &ts) : Tagset<'r'>(&tags_copy[0]) {
             for (size_t i = 0; i < sz; ++i)
-                tags[i] = ts.get(i);
+                tags_copy[i] = ts.get(i);
         }
     };
 
@@ -649,6 +650,14 @@ namespace {
         template <char code0, char code1, char code2, size_t sz>
         static void HOOK_DECL ternary(THREADID tid, typename Tagset<code0>::arg_type op0,
                                       typename Tagset<code1>::arg_type op1, typename Tagset<code2>::arg_type op2);
+    };
+
+    template <bool b, typename T = void>
+    struct enable_if;
+
+    template <typename T>
+    struct enable_if<true, T> {
+        using type = T;
     };
 
 } // namespace

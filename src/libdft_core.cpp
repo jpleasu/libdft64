@@ -474,14 +474,25 @@ void ins_inspect(INS ins) {
         ins_lshift_op(ins);
         break;
 
-    case XED_ICLASS_ROL:
     case XED_ICLASS_RCL:
+        ins_rotate_op(ins, true, true);
+        break;
+    case XED_ICLASS_ROL:
+        ins_rotate_op(ins, true, false);
+        break;
+    case XED_ICLASS_RCR:
+        ins_rotate_op(ins, false, true);
+        break;
+    case XED_ICLASS_ROR:
+    case XED_ICLASS_RORX:
+        ins_rotate_op(ins, false, false);
+        break;
 
     case XED_ICLASS_SAR:
+    case XED_ICLASS_SARX:
     case XED_ICLASS_SHR:
     case XED_ICLASS_SHRD:
-    case XED_ICLASS_RCR:
-    case XED_ICLASS_ROR:
+    case XED_ICLASS_SHRX:
 
     case XED_ICLASS_XSAVEC:
     case XED_ICLASS_XRSTOR:

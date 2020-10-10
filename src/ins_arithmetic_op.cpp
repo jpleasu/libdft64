@@ -2,13 +2,6 @@
 #include "ins_helper.h"
 
 namespace {
-    template <bool b, typename T = void>
-    struct enable_if;
-
-    template <typename T>
-    struct enable_if<true, T> {
-        using type = T;
-    };
     struct unary_clear : public instrumentation_base<unary_clear> {
         template <char dcode, size_t sz>
         static void HOOK_DECL unary(THREADID tid, typename Tagset<dcode>::arg_type dst) {

@@ -28,7 +28,7 @@ TEST_ROOTS := test_mini
 
 # This defines the tools which will be run during the the tests, and were not already defined in
 # TEST_TOOL_ROOTS.
-TOOL_ROOTS := track nullpin libdft gtaint# libdft-dta
+TOOL_ROOTS := libdft gtaint# track nullpin libdft-dta
 
 # This defines the static analysis tools which will be run during the the tests. They should not
 # be defined in TEST_TOOL_ROOTS. If a test with the same name exists, it should be defined in
@@ -94,6 +94,10 @@ LOGGING_FLAGS = -DNO_PINTOOL_LOG
 TOOL_CXXFLAGS += $(LOGGING_FLAGS) -I$(LIBDFT_INC_PATH) -L$(LIBDFT_PATH)
 TOOL_LIBS += -L$(LIBDFT_PATH) -ldft
 
+$(OBJDIR)/gtaint$(PINTOOL_SUFFIX): $(OBJDIR)/gtaint$(OBJ_SUFFIX) $(LIBDFT_PATH)/libdft.a
+	$(LINKER) $(TOOL_LDFLAGS) $(LINK_EXE)$@ $< $(TOOL_LPATHS) $(TOOL_LIBS)
+
+
 INPUT_FILE=cur_input
 test_mini: $(OBJDIR)/track$(PINTOOL_SUFFIX) ${OBJDIR}/mini_test$(EXE_SUFFIX)
 	$(PIN) -t $< -- $(OBJDIR)mini_test$(EXE_SUFFIX)  ${INPUT_FILE}
@@ -103,15 +107,18 @@ test_gtaint: $(OBJDIR)/gtaint$(PINTOOL_SUFFIX) ${OBJDIR}/gtaint_test$(EXE_SUFFIX
 
 
 GTAINT_TESTCASE_DIR:=$(OBJDIR)../gtaint_testcases
-$(GTAINT_TESTCASE_DIR)/testcases.a: $(wildcard $(GTAINT_TESTCASE_DIR)/*.cpp)
+GTAINT_TESTCASES_AR:=$(GTAINT_TESTCASE_DIR)/testcases.a
+GTAINT_TESTCASES_SRC:=$(wildcard $(GTAINT_TESTCASE_DIR)/*.cpp)
+
+$(GTAINT_TESTCASES_AR): $(GTAINT_TESTCASES_SRC)
 	make -C $(GTAINT_TESTCASE_DIR)
 
-$(OBJDIR)gtaint_testcases$(EXE_SUFFIX): gtaint_testcases.cpp $(GTAINT_TESTCASE_DIR)/testcases.a
+$(OBJDIR)gtaint_testcases$(EXE_SUFFIX): gtaint_testcases.cpp $(GTAINT_TESTCASES_AR)
 	$(APP_CXX) $(APP_CXXFLAGS_NOOPT) $(SSE2) $(COMP_EXE)$@ $^ $(APP_LDFLAGS_NOOPT) $(APP_LIBS) \
-        -Wl,--whole-archive $(GTAINT_TESTCASE_DIR)/testcases.a -Wl,--no-whole-archive \
+        -Wl,--whole-archive $(GTAINT_TESTCASES_AR) -Wl,--no-whole-archive \
         $(CXX_LPATHS) $(CXX_LIBS)
 
-testcases_gtaint: $(OBJDIR)/gtaint$(PINTOOL_SUFFIX) ${OBJDIR}/gtaint_testcases$(EXE_SUFFIX)
+testcases_gtaint: $(OBJDIR)/gtaint$(PINTOOL_SUFFIX) $(OBJDIR)gtaint_testcases$(EXE_SUFFIX)
 	setarch x86_64 -R $(PIN) -t $< -filter_no_shared_libs -- $(OBJDIR)gtaint_testcases$(EXE_SUFFIX)  ${INPUT_FILE}
 
 clean_testcases: clean
