@@ -221,23 +221,21 @@ namespace {
 
     template <bool is_signed, int byte_shift, bool slop>
     struct rshift_imm : public instrumentation_base<rshift_imm<is_signed, byte_shift, slop>> {
-        // shr
+        // shr/sar
         template <char dcode, size_t sz>
         static typename enable_if<(byte_shift < sz)>::type HOOK_DECL unary(THREADID tid,
                                                                            typename Tagset<dcode>::arg_type dst) {
             Tagset<dcode> dst_tags(tid, dst);
 
+            const tag_t hi_tag = is_signed ? dst_tags.get(sz - 1) : tag_traits<tag_t>::cleared_val;
             for (size_t i = 0; i + byte_shift < sz; ++i)
                 dst_tags.set(i, dst_tags.get(i + byte_shift));
-
-            const tag_t t = is_signed ? dst_tags.get(sz - 1) : tag_traits<tag_t>::cleared_val;
             for (size_t i = sz - byte_shift; i < sz; ++i)
-                dst_tags.set(i, t);
+                dst_tags.set(i, hi_tag);
 
-            if (slop) {
+            if (slop)
                 for (size_t i = 0; i + byte_shift + 1 < sz; ++i)
-                    dst_tags.add(i, dst_tags.get(i + byte_shift + 1));
-            }
+                    dst_tags.add(i, dst_tags.get(i + 1));
             dst_tags.template zext<sz>();
         }
         template <char dcode, size_t sz>
@@ -274,8 +272,12 @@ namespace {
             UINT64 val = INS_OperandImmediate(ins, OP_1);
             UINT32 w = INS_OperandWidth(ins, OP_0);
             if ((val & 0x1f) >= w) {
-                ins_clear_op(ins);
-                return;
+                if (is_signed)
+                    val = w - 1;
+                else {
+                    ins_clear_op(ins);
+                    return;
+                }
             }
 
             int rshft = val % w;
@@ -301,14 +303,22 @@ namespace {
                     uninstrumented(ins, "rshift binary impl");
                 }
             } else {
-                uninstrumented(ins, "rshift binary");
+                base_t::ins_binary_op(ins);
             }
         }
 
-        template <char dcode, char scode, size_t sz>
+        // shr/sar
+        template <char dcode, char shftcode, size_t sz>
         static void HOOK_DECL binary(THREADID tid, typename Tagset<dcode>::arg_type dst,
-                                     typename Tagset<scode>::arg_type src) {
-            // XXX
+                                     typename Tagset<shftcode>::arg_type shft) {
+            Tagset<dcode> dst_tags(tid, dst);
+            Tagset<shftcode> shft_tags(tid, shft);
+            tag_t t = shft_tags.get(0);
+            for (size_t i = 0; i < sz; ++i)
+                t = tag_combine(t, dst_tags.get(i));
+            for (size_t i = 0; i < sz; ++i)
+                dst_tags.set(i, t);
+            dst_tags.template zext<sz>();
         }
 
 #if 0
