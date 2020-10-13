@@ -37,7 +37,7 @@ namespace {
         template <char dcode, size_t sz>
         static typename enable_if<(byte_shift >= sz)>::type HOOK_DECL unary(THREADID tid,
                                                                             typename Tagset<dcode>::arg_type dst) {
-            // placeholder for switch
+            // stub for switch
         }
 
         template <char dcode, char scode, size_t sz>
@@ -63,7 +63,7 @@ namespace {
         static typename enable_if<(byte_shift >= sz)>::type HOOK_DECL binary(THREADID tid,
                                                                              typename Tagset<dcode>::arg_type dst,
                                                                              typename Tagset<scode>::arg_type src) {
-            // placeholder
+            // stub for switch
         }
     };
 
@@ -163,11 +163,14 @@ namespace {
     // right rotation in byte_shift bytes,
     template <int byte_shift, bool lslop, bool rslop>
     struct rotate_const : public instrumentation_base<rotate_const<byte_shift, lslop, rslop>> {
-        template <char dcode, size_t sz>
-        static typename enable_if<(byte_shift <= sz)>::type HOOK_DECL unary(THREADID tid,
-                                                                            typename Tagset<dcode>::arg_type dst) {
+        using typename instrumentation_base<rotate_const<byte_shift, lslop, rslop>>::instrumentation_t;
+
+        template <char dcode, char scode, size_t sz>
+        static typename enable_if<(byte_shift <= sz)>::type HOOK_DECL binary(THREADID tid,
+                                                                             typename Tagset<dcode>::arg_type dst,
+                                                                             typename Tagset<scode>::arg_type src) {
             Tagset<dcode> dst_tags(tid, dst);
-            TagsetCopy<sz> src_tags(dst_tags);
+            TagsetCopy<sz> src_tags(Tagset<scode>(tid, src));
 
             size_t h = sz - byte_shift;
             for (size_t i = 0; i < sz; ++i)
@@ -187,11 +190,22 @@ namespace {
 
             dst_tags.template zext<sz>();
         }
+        template <char dcode, char scode, size_t sz>
+        static typename enable_if<(byte_shift > sz)>::type HOOK_DECL binary(THREADID tid,
+                                                                            typename Tagset<dcode>::arg_type dst,
+                                                                            typename Tagset<scode>::arg_type src) {
+            // stub for switch
+        }
+        template <char dcode, size_t sz>
+        static typename enable_if<(byte_shift <= sz)>::type HOOK_DECL unary(THREADID tid,
+                                                                            typename Tagset<dcode>::arg_type dst) {
+            instrumentation_t::template binary<dcode, dcode, sz>(tid, dst, dst);
+        }
 
         template <char dcode, size_t sz>
         static typename enable_if<(byte_shift > sz)>::type HOOK_DECL unary(THREADID tid,
                                                                            typename Tagset<dcode>::arg_type dst) {
-            // placeholder
+            // stub for switch
         }
     };
 
@@ -259,10 +273,26 @@ namespace {
             dst_tags.template zext<sz>();
         }
 
-        // rorx?
+        // rorx
         static void ins_ternary_imm(INS ins) {
-            uninstrumented(ins, "rotate ternary imm");
+            UINT64 val = INS_OperandImmediate(ins, OP_2);
+            UINT32 w = INS_OperandWidth(ins, OP_0);
+            int rshft = val % w;
+
+            bool slop = (rshft % 8) != 0;
+#undef CASE
+#define CASE(SHIFT)                                                                                                    \
+    case (SHIFT):                                                                                                      \
+        if (slop) {                                                                                                    \
+            rotate_const<SHIFT, true, true>::ins_unary_op(ins);                                                        \
+        } else {                                                                                                       \
+            rotate_const<SHIFT, false, false>::ins_unary_op(ins);                                                      \
+        }                                                                                                              \
+        break;
+
+            SWITCH8(rshft / 8);
         }
+
         static void ins_ternary_op(INS ins) {
             uninstrumented(ins, "rotate ternary");
         }
