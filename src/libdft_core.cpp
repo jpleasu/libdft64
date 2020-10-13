@@ -251,8 +251,13 @@ void ins_inspect(INS ins) {
     case XED_ICLASS_ADDSS:
         ins_bytecasc_op(ins, 0ul);
         break;
-    case XED_ICLASS_SBB:
     case XED_ICLASS_SUB:
+        if (INS_OperandIsImmediate(ins, OP_1) && INS_OperandImmediate(ins, OP_1) == 0ul) {
+            ins_zext_dst(ins);
+            break;
+        }
+        /* no break intentional */
+    case XED_ICLASS_SBB:
     case XED_ICLASS_SUBSD:
     case XED_ICLASS_PSUBB:
     case XED_ICLASS_PSUBW:
