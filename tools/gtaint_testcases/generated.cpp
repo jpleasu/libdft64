@@ -12998,7 +12998,7 @@ static int testcase484() {
 static int testcase485() {
     int passed = 1;
 
-    printf("%s     rex.W shl al,0xf\n", __func__);fflush(stdout);
+    printf("%s     rex.W shl al,0x2\n", __func__);fflush(stdout);
 
     __gtaint_reset();
     uint8_t inAL = 1;
@@ -13006,7 +13006,95 @@ static int testcase485() {
     __gtaint_setn(&inAL, 1);
     asm volatile (
         "mov AL,%1;\n"
-        "rex.W shl al,0xf;\n" // <--
+        "rex.W shl al,0x2;\n" // <--
+        "mov %0,AL;\n"
+        :"=m"(outAL)
+        :"m"(inAL)
+        :"al"
+    );
+
+    ASSERT_TAGGED((char *)&outAL + 0, {0});
+    return passed;
+}
+
+static int testcase486() {
+    int passed = 1;
+
+    printf("%s     rex.W shl al,0x4\n", __func__);fflush(stdout);
+
+    __gtaint_reset();
+    uint8_t inAL = 1;
+    uint8_t outAL = 1;
+    __gtaint_setn(&inAL, 1);
+    asm volatile (
+        "mov AL,%1;\n"
+        "rex.W shl al,0x4;\n" // <--
+        "mov %0,AL;\n"
+        :"=m"(outAL)
+        :"m"(inAL)
+        :"al"
+    );
+
+    ASSERT_TAGGED((char *)&outAL + 0, {0});
+    return passed;
+}
+
+static int testcase487() {
+    int passed = 1;
+
+    printf("%s     rex.W shl al,0x5\n", __func__);fflush(stdout);
+
+    __gtaint_reset();
+    uint8_t inAL = 1;
+    uint8_t outAL = 1;
+    __gtaint_setn(&inAL, 1);
+    asm volatile (
+        "mov AL,%1;\n"
+        "rex.W shl al,0x5;\n" // <--
+        "mov %0,AL;\n"
+        :"=m"(outAL)
+        :"m"(inAL)
+        :"al"
+    );
+
+    ASSERT_TAGGED((char *)&outAL + 0, {0});
+    return passed;
+}
+
+static int testcase488() {
+    int passed = 1;
+
+    printf("%s     rex.W shl al,0x6\n", __func__);fflush(stdout);
+
+    __gtaint_reset();
+    uint8_t inAL = 1;
+    uint8_t outAL = 1;
+    __gtaint_setn(&inAL, 1);
+    asm volatile (
+        "mov AL,%1;\n"
+        "rex.W shl al,0x6;\n" // <--
+        "mov %0,AL;\n"
+        :"=m"(outAL)
+        :"m"(inAL)
+        :"al"
+    );
+
+    ASSERT_TAGGED((char *)&outAL + 0, {0});
+    return passed;
+}
+
+static int testcase489() {
+    int passed = 1;
+
+    printf("%s     rex.W shl al,0x8\n", __func__);fflush(stdout);
+
+    __gtaint_reset();
+    uint8_t inAL = 1;
+    uint8_t outAL = 1;
+    __gtaint_setn(&inAL, 1);
+    asm volatile (
+        "mov AL,%1;\n"
+        "rex.W shl al,0x8;\n" // <--
         "mov %0,AL;\n"
         :"=m"(outAL)
         :"m"(inAL)
@@ -13017,7 +13105,7 @@ static int testcase485() {
     return passed;
 }
 
-static int testcase486() {
+static int testcase490() {
     int passed = 1;
 
     printf("%s     rex.W shl al,1\n", __func__);fflush(stdout);
@@ -13039,7 +13127,7 @@ static int testcase486() {
     return passed;
 }
 
-static int testcase487() {
+static int testcase491() {
     int passed = 1;
 
     printf("%s     rex.W shl al,cl\n", __func__);fflush(stdout);
@@ -13064,7 +13152,7 @@ static int testcase487() {
     return passed;
 }
 
-static int testcase488() {
+static int testcase492() {
     int passed = 1;
 
     printf("%s     rex.W shr al,0x0\n", __func__);fflush(stdout);
@@ -13086,7 +13174,7 @@ static int testcase488() {
     return passed;
 }
 
-static int testcase489() {
+static int testcase493() {
     int passed = 1;
 
     printf("%s     rex.W shr al,0x1\n", __func__);fflush(stdout);
@@ -13108,10 +13196,10 @@ static int testcase489() {
     return passed;
 }
 
-static int testcase490() {
+static int testcase494() {
     int passed = 1;
 
-    printf("%s     rex.W shr al,0xf\n", __func__);fflush(stdout);
+    printf("%s     rex.W shr al,0x2\n", __func__);fflush(stdout);
 
     __gtaint_reset();
     uint8_t inAL = 1;
@@ -13119,7 +13207,95 @@ static int testcase490() {
     __gtaint_setn(&inAL, 1);
     asm volatile (
         "mov AL,%1;\n"
-        "rex.W shr al,0xf;\n" // <--
+        "rex.W shr al,0x2;\n" // <--
+        "mov %0,AL;\n"
+        :"=m"(outAL)
+        :"m"(inAL)
+        :"al"
+    );
+
+    ASSERT_TAGGED((char *)&outAL + 0, {0});
+    return passed;
+}
+
+static int testcase495() {
+    int passed = 1;
+
+    printf("%s     rex.W shr al,0x4\n", __func__);fflush(stdout);
+
+    __gtaint_reset();
+    uint8_t inAL = 1;
+    uint8_t outAL = 1;
+    __gtaint_setn(&inAL, 1);
+    asm volatile (
+        "mov AL,%1;\n"
+        "rex.W shr al,0x4;\n" // <--
+        "mov %0,AL;\n"
+        :"=m"(outAL)
+        :"m"(inAL)
+        :"al"
+    );
+
+    ASSERT_TAGGED((char *)&outAL + 0, {0});
+    return passed;
+}
+
+static int testcase496() {
+    int passed = 1;
+
+    printf("%s     rex.W shr al,0x5\n", __func__);fflush(stdout);
+
+    __gtaint_reset();
+    uint8_t inAL = 1;
+    uint8_t outAL = 1;
+    __gtaint_setn(&inAL, 1);
+    asm volatile (
+        "mov AL,%1;\n"
+        "rex.W shr al,0x5;\n" // <--
+        "mov %0,AL;\n"
+        :"=m"(outAL)
+        :"m"(inAL)
+        :"al"
+    );
+
+    ASSERT_TAGGED((char *)&outAL + 0, {0});
+    return passed;
+}
+
+static int testcase497() {
+    int passed = 1;
+
+    printf("%s     rex.W shr al,0x6\n", __func__);fflush(stdout);
+
+    __gtaint_reset();
+    uint8_t inAL = 1;
+    uint8_t outAL = 1;
+    __gtaint_setn(&inAL, 1);
+    asm volatile (
+        "mov AL,%1;\n"
+        "rex.W shr al,0x6;\n" // <--
+        "mov %0,AL;\n"
+        :"=m"(outAL)
+        :"m"(inAL)
+        :"al"
+    );
+
+    ASSERT_TAGGED((char *)&outAL + 0, {0});
+    return passed;
+}
+
+static int testcase498() {
+    int passed = 1;
+
+    printf("%s     rex.W shr al,0x8\n", __func__);fflush(stdout);
+
+    __gtaint_reset();
+    uint8_t inAL = 1;
+    uint8_t outAL = 1;
+    __gtaint_setn(&inAL, 1);
+    asm volatile (
+        "mov AL,%1;\n"
+        "rex.W shr al,0x8;\n" // <--
         "mov %0,AL;\n"
         :"=m"(outAL)
         :"m"(inAL)
@@ -13130,7 +13306,7 @@ static int testcase490() {
     return passed;
 }
 
-static int testcase491() {
+static int testcase499() {
     int passed = 1;
 
     printf("%s     rex.W shr al,1\n", __func__);fflush(stdout);
@@ -13152,7 +13328,7 @@ static int testcase491() {
     return passed;
 }
 
-static int testcase492() {
+static int testcase500() {
     int passed = 1;
 
     printf("%s     rex.W shr al,cl\n", __func__);fflush(stdout);
@@ -13177,7 +13353,7 @@ static int testcase492() {
     return passed;
 }
 
-static int testcase493() {
+static int testcase501() {
     int passed = 1;
 
     printf("%s     rex.W sub al,0x0\n", __func__);fflush(stdout);
@@ -13199,7 +13375,7 @@ static int testcase493() {
     return passed;
 }
 
-static int testcase494() {
+static int testcase502() {
     int passed = 1;
 
     printf("%s     rex.W sub al,0xf\n", __func__);fflush(stdout);
@@ -13221,7 +13397,7 @@ static int testcase494() {
     return passed;
 }
 
-static int testcase495() {
+static int testcase503() {
     int passed = 1;
 
     printf("%s     rex.W sub al,al\n", __func__);fflush(stdout);
@@ -13243,7 +13419,7 @@ static int testcase495() {
     return passed;
 }
 
-static int testcase496() {
+static int testcase504() {
     int passed = 1;
 
     printf("%s     rex.W sub al,cl\n", __func__);fflush(stdout);
@@ -13268,7 +13444,7 @@ static int testcase496() {
     return passed;
 }
 
-static int testcase497() {
+static int testcase505() {
     int passed = 1;
 
     printf("%s     rex.W xadd al,al\n", __func__);fflush(stdout);
@@ -13290,7 +13466,7 @@ static int testcase497() {
     return passed;
 }
 
-static int testcase498() {
+static int testcase506() {
     int passed = 1;
 
     printf("%s     rex.W xadd al,cl\n", __func__);fflush(stdout);
@@ -13318,7 +13494,7 @@ static int testcase498() {
     return passed;
 }
 
-static int testcase499() {
+static int testcase507() {
     int passed = 1;
 
     printf("%s     rex.W xchg al,al\n", __func__);fflush(stdout);
@@ -13340,7 +13516,7 @@ static int testcase499() {
     return passed;
 }
 
-static int testcase500() {
+static int testcase508() {
     int passed = 1;
 
     printf("%s     rex.W xchg al,cl\n", __func__);fflush(stdout);
@@ -13368,7 +13544,7 @@ static int testcase500() {
     return passed;
 }
 
-static int testcase501() {
+static int testcase509() {
     int passed = 1;
 
     printf("%s     rex.W xor al,0x0\n", __func__);fflush(stdout);
@@ -13390,7 +13566,7 @@ static int testcase501() {
     return passed;
 }
 
-static int testcase502() {
+static int testcase510() {
     int passed = 1;
 
     printf("%s     rex.W xor al,0xf\n", __func__);fflush(stdout);
@@ -13412,7 +13588,7 @@ static int testcase502() {
     return passed;
 }
 
-static int testcase503() {
+static int testcase511() {
     int passed = 1;
 
     printf("%s     rex.W xor al,al\n", __func__);fflush(stdout);
@@ -13434,7 +13610,7 @@ static int testcase503() {
     return passed;
 }
 
-static int testcase504() {
+static int testcase512() {
     int passed = 1;
 
     printf("%s     rex.W xor al,cl\n", __func__);fflush(stdout);
@@ -13459,7 +13635,7 @@ static int testcase504() {
     return passed;
 }
 
-static int testcase505() {
+static int testcase513() {
     int passed = 1;
 
     printf("%s     rol    ah,0x0\n", __func__);fflush(stdout);
@@ -13481,7 +13657,7 @@ static int testcase505() {
     return passed;
 }
 
-static int testcase506() {
+static int testcase514() {
     int passed = 1;
 
     printf("%s     rol    ah,0x1\n", __func__);fflush(stdout);
@@ -13503,7 +13679,7 @@ static int testcase506() {
     return passed;
 }
 
-static int testcase507() {
+static int testcase515() {
     int passed = 1;
 
     printf("%s     rol    ah,0x2\n", __func__);fflush(stdout);
@@ -13525,7 +13701,7 @@ static int testcase507() {
     return passed;
 }
 
-static int testcase508() {
+static int testcase516() {
     int passed = 1;
 
     printf("%s     rol    ah,0x4\n", __func__);fflush(stdout);
@@ -13547,7 +13723,7 @@ static int testcase508() {
     return passed;
 }
 
-static int testcase509() {
+static int testcase517() {
     int passed = 1;
 
     printf("%s     rol    ah,0x5\n", __func__);fflush(stdout);
@@ -13569,7 +13745,7 @@ static int testcase509() {
     return passed;
 }
 
-static int testcase510() {
+static int testcase518() {
     int passed = 1;
 
     printf("%s     rol    ah,0x6\n", __func__);fflush(stdout);
@@ -13591,7 +13767,7 @@ static int testcase510() {
     return passed;
 }
 
-static int testcase511() {
+static int testcase519() {
     int passed = 1;
 
     printf("%s     rol    ah,0x8\n", __func__);fflush(stdout);
@@ -13613,7 +13789,7 @@ static int testcase511() {
     return passed;
 }
 
-static int testcase512() {
+static int testcase520() {
     int passed = 1;
 
     printf("%s     rol    ah,1\n", __func__);fflush(stdout);
@@ -13635,7 +13811,7 @@ static int testcase512() {
     return passed;
 }
 
-static int testcase513() {
+static int testcase521() {
     int passed = 1;
 
     printf("%s     rol    al,0x0\n", __func__);fflush(stdout);
@@ -13657,7 +13833,7 @@ static int testcase513() {
     return passed;
 }
 
-static int testcase514() {
+static int testcase522() {
     int passed = 1;
 
     printf("%s     rol    al,0x1\n", __func__);fflush(stdout);
@@ -13679,7 +13855,7 @@ static int testcase514() {
     return passed;
 }
 
-static int testcase515() {
+static int testcase523() {
     int passed = 1;
 
     printf("%s     rol    al,0x2\n", __func__);fflush(stdout);
@@ -13701,7 +13877,7 @@ static int testcase515() {
     return passed;
 }
 
-static int testcase516() {
+static int testcase524() {
     int passed = 1;
 
     printf("%s     rol    al,0x4\n", __func__);fflush(stdout);
@@ -13723,7 +13899,7 @@ static int testcase516() {
     return passed;
 }
 
-static int testcase517() {
+static int testcase525() {
     int passed = 1;
 
     printf("%s     rol    al,0x5\n", __func__);fflush(stdout);
@@ -13745,7 +13921,7 @@ static int testcase517() {
     return passed;
 }
 
-static int testcase518() {
+static int testcase526() {
     int passed = 1;
 
     printf("%s     rol    al,0x6\n", __func__);fflush(stdout);
@@ -13767,7 +13943,7 @@ static int testcase518() {
     return passed;
 }
 
-static int testcase519() {
+static int testcase527() {
     int passed = 1;
 
     printf("%s     rol    al,0x8\n", __func__);fflush(stdout);
@@ -13789,7 +13965,7 @@ static int testcase519() {
     return passed;
 }
 
-static int testcase520() {
+static int testcase528() {
     int passed = 1;
 
     printf("%s     rol    al,1\n", __func__);fflush(stdout);
@@ -13811,7 +13987,7 @@ static int testcase520() {
     return passed;
 }
 
-static int testcase521() {
+static int testcase529() {
     int passed = 1;
 
     printf("%s     rol    al,cl\n", __func__);fflush(stdout);
@@ -13836,7 +14012,7 @@ static int testcase521() {
     return passed;
 }
 
-static int testcase522() {
+static int testcase530() {
     int passed = 1;
 
     printf("%s     rol    ax,0x0\n", __func__);fflush(stdout);
@@ -13859,7 +14035,7 @@ static int testcase522() {
     return passed;
 }
 
-static int testcase523() {
+static int testcase531() {
     int passed = 1;
 
     printf("%s     rol    ax,0x1\n", __func__);fflush(stdout);
@@ -13882,7 +14058,7 @@ static int testcase523() {
     return passed;
 }
 
-static int testcase524() {
+static int testcase532() {
     int passed = 1;
 
     printf("%s     rol    ax,0x10\n", __func__);fflush(stdout);
@@ -13905,7 +14081,7 @@ static int testcase524() {
     return passed;
 }
 
-static int testcase525() {
+static int testcase533() {
     int passed = 1;
 
     printf("%s     rol    ax,0x2\n", __func__);fflush(stdout);
@@ -13928,7 +14104,7 @@ static int testcase525() {
     return passed;
 }
 
-static int testcase526() {
+static int testcase534() {
     int passed = 1;
 
     printf("%s     rol    ax,0x8\n", __func__);fflush(stdout);
@@ -13951,7 +14127,7 @@ static int testcase526() {
     return passed;
 }
 
-static int testcase527() {
+static int testcase535() {
     int passed = 1;
 
     printf("%s     rol    ax,0x9\n", __func__);fflush(stdout);
@@ -13974,7 +14150,7 @@ static int testcase527() {
     return passed;
 }
 
-static int testcase528() {
+static int testcase536() {
     int passed = 1;
 
     printf("%s     rol    ax,0xa\n", __func__);fflush(stdout);
@@ -13997,7 +14173,7 @@ static int testcase528() {
     return passed;
 }
 
-static int testcase529() {
+static int testcase537() {
     int passed = 1;
 
     printf("%s     rol    ax,1\n", __func__);fflush(stdout);
@@ -14020,7 +14196,7 @@ static int testcase529() {
     return passed;
 }
 
-static int testcase530() {
+static int testcase538() {
     int passed = 1;
 
     printf("%s     rol    ax,cl\n", __func__);fflush(stdout);
@@ -14046,7 +14222,7 @@ static int testcase530() {
     return passed;
 }
 
-static int testcase531() {
+static int testcase539() {
     int passed = 1;
 
     printf("%s     rol    eax,0x0\n", __func__);fflush(stdout);
@@ -14075,7 +14251,7 @@ static int testcase531() {
     return passed;
 }
 
-static int testcase532() {
+static int testcase540() {
     int passed = 1;
 
     printf("%s     rol    eax,0x1\n", __func__);fflush(stdout);
@@ -14104,7 +14280,7 @@ static int testcase532() {
     return passed;
 }
 
-static int testcase533() {
+static int testcase541() {
     int passed = 1;
 
     printf("%s     rol    eax,0x10\n", __func__);fflush(stdout);
@@ -14133,7 +14309,7 @@ static int testcase533() {
     return passed;
 }
 
-static int testcase534() {
+static int testcase542() {
     int passed = 1;
 
     printf("%s     rol    eax,0x11\n", __func__);fflush(stdout);
@@ -14162,7 +14338,7 @@ static int testcase534() {
     return passed;
 }
 
-static int testcase535() {
+static int testcase543() {
     int passed = 1;
 
     printf("%s     rol    eax,0x12\n", __func__);fflush(stdout);
@@ -14191,7 +14367,7 @@ static int testcase535() {
     return passed;
 }
 
-static int testcase536() {
+static int testcase544() {
     int passed = 1;
 
     printf("%s     rol    eax,0x2\n", __func__);fflush(stdout);
@@ -14220,7 +14396,7 @@ static int testcase536() {
     return passed;
 }
 
-static int testcase537() {
+static int testcase545() {
     int passed = 1;
 
     printf("%s     rol    eax,0x20\n", __func__);fflush(stdout);
@@ -14249,7 +14425,7 @@ static int testcase537() {
     return passed;
 }
 
-static int testcase538() {
+static int testcase546() {
     int passed = 1;
 
     printf("%s     rol    eax,1\n", __func__);fflush(stdout);
@@ -14278,7 +14454,7 @@ static int testcase538() {
     return passed;
 }
 
-static int testcase539() {
+static int testcase547() {
     int passed = 1;
 
     printf("%s     rol    eax,cl\n", __func__);fflush(stdout);
@@ -14310,7 +14486,7 @@ static int testcase539() {
     return passed;
 }
 
-static int testcase540() {
+static int testcase548() {
     int passed = 1;
 
     printf("%s     rol    rax,0x0\n", __func__);fflush(stdout);
@@ -14339,7 +14515,7 @@ static int testcase540() {
     return passed;
 }
 
-static int testcase541() {
+static int testcase549() {
     int passed = 1;
 
     printf("%s     rol    rax,0x1\n", __func__);fflush(stdout);
@@ -14368,7 +14544,7 @@ static int testcase541() {
     return passed;
 }
 
-static int testcase542() {
+static int testcase550() {
     int passed = 1;
 
     printf("%s     rol    rax,0x2\n", __func__);fflush(stdout);
@@ -14397,7 +14573,7 @@ static int testcase542() {
     return passed;
 }
 
-static int testcase543() {
+static int testcase551() {
     int passed = 1;
 
     printf("%s     rol    rax,0x20\n", __func__);fflush(stdout);
@@ -14426,7 +14602,7 @@ static int testcase543() {
     return passed;
 }
 
-static int testcase544() {
+static int testcase552() {
     int passed = 1;
 
     printf("%s     rol    rax,0x21\n", __func__);fflush(stdout);
@@ -14455,7 +14631,7 @@ static int testcase544() {
     return passed;
 }
 
-static int testcase545() {
+static int testcase553() {
     int passed = 1;
 
     printf("%s     rol    rax,0x22\n", __func__);fflush(stdout);
@@ -14484,7 +14660,7 @@ static int testcase545() {
     return passed;
 }
 
-static int testcase546() {
+static int testcase554() {
     int passed = 1;
 
     printf("%s     rol    rax,0x40\n", __func__);fflush(stdout);
@@ -14513,7 +14689,7 @@ static int testcase546() {
     return passed;
 }
 
-static int testcase547() {
+static int testcase555() {
     int passed = 1;
 
     printf("%s     rol    rax,1\n", __func__);fflush(stdout);
@@ -14542,7 +14718,7 @@ static int testcase547() {
     return passed;
 }
 
-static int testcase548() {
+static int testcase556() {
     int passed = 1;
 
     printf("%s     rol    rax,cl\n", __func__);fflush(stdout);
@@ -14574,7 +14750,7 @@ static int testcase548() {
     return passed;
 }
 
-static int testcase549() {
+static int testcase557() {
     int passed = 1;
 
     printf("%s     ror    ah,0x0\n", __func__);fflush(stdout);
@@ -14596,7 +14772,7 @@ static int testcase549() {
     return passed;
 }
 
-static int testcase550() {
+static int testcase558() {
     int passed = 1;
 
     printf("%s     ror    ah,0x1\n", __func__);fflush(stdout);
@@ -14618,7 +14794,7 @@ static int testcase550() {
     return passed;
 }
 
-static int testcase551() {
+static int testcase559() {
     int passed = 1;
 
     printf("%s     ror    ah,0x2\n", __func__);fflush(stdout);
@@ -14640,7 +14816,7 @@ static int testcase551() {
     return passed;
 }
 
-static int testcase552() {
+static int testcase560() {
     int passed = 1;
 
     printf("%s     ror    ah,0x4\n", __func__);fflush(stdout);
@@ -14662,7 +14838,7 @@ static int testcase552() {
     return passed;
 }
 
-static int testcase553() {
+static int testcase561() {
     int passed = 1;
 
     printf("%s     ror    ah,0x5\n", __func__);fflush(stdout);
@@ -14684,7 +14860,7 @@ static int testcase553() {
     return passed;
 }
 
-static int testcase554() {
+static int testcase562() {
     int passed = 1;
 
     printf("%s     ror    ah,0x6\n", __func__);fflush(stdout);
@@ -14706,7 +14882,7 @@ static int testcase554() {
     return passed;
 }
 
-static int testcase555() {
+static int testcase563() {
     int passed = 1;
 
     printf("%s     ror    ah,0x8\n", __func__);fflush(stdout);
@@ -14728,7 +14904,7 @@ static int testcase555() {
     return passed;
 }
 
-static int testcase556() {
+static int testcase564() {
     int passed = 1;
 
     printf("%s     ror    ah,1\n", __func__);fflush(stdout);
@@ -14750,7 +14926,7 @@ static int testcase556() {
     return passed;
 }
 
-static int testcase557() {
+static int testcase565() {
     int passed = 1;
 
     printf("%s     ror    al,0x0\n", __func__);fflush(stdout);
@@ -14772,7 +14948,7 @@ static int testcase557() {
     return passed;
 }
 
-static int testcase558() {
+static int testcase566() {
     int passed = 1;
 
     printf("%s     ror    al,0x1\n", __func__);fflush(stdout);
@@ -14794,7 +14970,7 @@ static int testcase558() {
     return passed;
 }
 
-static int testcase559() {
+static int testcase567() {
     int passed = 1;
 
     printf("%s     ror    al,0x2\n", __func__);fflush(stdout);
@@ -14816,7 +14992,7 @@ static int testcase559() {
     return passed;
 }
 
-static int testcase560() {
+static int testcase568() {
     int passed = 1;
 
     printf("%s     ror    al,0x4\n", __func__);fflush(stdout);
@@ -14838,7 +15014,7 @@ static int testcase560() {
     return passed;
 }
 
-static int testcase561() {
+static int testcase569() {
     int passed = 1;
 
     printf("%s     ror    al,0x5\n", __func__);fflush(stdout);
@@ -14860,7 +15036,7 @@ static int testcase561() {
     return passed;
 }
 
-static int testcase562() {
+static int testcase570() {
     int passed = 1;
 
     printf("%s     ror    al,0x6\n", __func__);fflush(stdout);
@@ -14882,7 +15058,7 @@ static int testcase562() {
     return passed;
 }
 
-static int testcase563() {
+static int testcase571() {
     int passed = 1;
 
     printf("%s     ror    al,0x8\n", __func__);fflush(stdout);
@@ -14904,7 +15080,7 @@ static int testcase563() {
     return passed;
 }
 
-static int testcase564() {
+static int testcase572() {
     int passed = 1;
 
     printf("%s     ror    al,1\n", __func__);fflush(stdout);
@@ -14926,7 +15102,7 @@ static int testcase564() {
     return passed;
 }
 
-static int testcase565() {
+static int testcase573() {
     int passed = 1;
 
     printf("%s     ror    al,cl\n", __func__);fflush(stdout);
@@ -14951,7 +15127,7 @@ static int testcase565() {
     return passed;
 }
 
-static int testcase566() {
+static int testcase574() {
     int passed = 1;
 
     printf("%s     ror    ax,0x0\n", __func__);fflush(stdout);
@@ -14974,7 +15150,7 @@ static int testcase566() {
     return passed;
 }
 
-static int testcase567() {
+static int testcase575() {
     int passed = 1;
 
     printf("%s     ror    ax,0x1\n", __func__);fflush(stdout);
@@ -14997,7 +15173,7 @@ static int testcase567() {
     return passed;
 }
 
-static int testcase568() {
+static int testcase576() {
     int passed = 1;
 
     printf("%s     ror    ax,0x10\n", __func__);fflush(stdout);
@@ -15020,7 +15196,7 @@ static int testcase568() {
     return passed;
 }
 
-static int testcase569() {
+static int testcase577() {
     int passed = 1;
 
     printf("%s     ror    ax,0x2\n", __func__);fflush(stdout);
@@ -15043,7 +15219,7 @@ static int testcase569() {
     return passed;
 }
 
-static int testcase570() {
+static int testcase578() {
     int passed = 1;
 
     printf("%s     ror    ax,0x8\n", __func__);fflush(stdout);
@@ -15066,7 +15242,7 @@ static int testcase570() {
     return passed;
 }
 
-static int testcase571() {
+static int testcase579() {
     int passed = 1;
 
     printf("%s     ror    ax,0x9\n", __func__);fflush(stdout);
@@ -15089,7 +15265,7 @@ static int testcase571() {
     return passed;
 }
 
-static int testcase572() {
+static int testcase580() {
     int passed = 1;
 
     printf("%s     ror    ax,0xa\n", __func__);fflush(stdout);
@@ -15112,7 +15288,7 @@ static int testcase572() {
     return passed;
 }
 
-static int testcase573() {
+static int testcase581() {
     int passed = 1;
 
     printf("%s     ror    ax,1\n", __func__);fflush(stdout);
@@ -15135,7 +15311,7 @@ static int testcase573() {
     return passed;
 }
 
-static int testcase574() {
+static int testcase582() {
     int passed = 1;
 
     printf("%s     ror    ax,cl\n", __func__);fflush(stdout);
@@ -15161,7 +15337,7 @@ static int testcase574() {
     return passed;
 }
 
-static int testcase575() {
+static int testcase583() {
     int passed = 1;
 
     printf("%s     ror    eax,0x0\n", __func__);fflush(stdout);
@@ -15190,7 +15366,7 @@ static int testcase575() {
     return passed;
 }
 
-static int testcase576() {
+static int testcase584() {
     int passed = 1;
 
     printf("%s     ror    eax,0x1\n", __func__);fflush(stdout);
@@ -15219,7 +15395,7 @@ static int testcase576() {
     return passed;
 }
 
-static int testcase577() {
+static int testcase585() {
     int passed = 1;
 
     printf("%s     ror    eax,0x10\n", __func__);fflush(stdout);
@@ -15248,7 +15424,7 @@ static int testcase577() {
     return passed;
 }
 
-static int testcase578() {
+static int testcase586() {
     int passed = 1;
 
     printf("%s     ror    eax,0x11\n", __func__);fflush(stdout);
@@ -15277,7 +15453,7 @@ static int testcase578() {
     return passed;
 }
 
-static int testcase579() {
+static int testcase587() {
     int passed = 1;
 
     printf("%s     ror    eax,0x12\n", __func__);fflush(stdout);
@@ -15306,7 +15482,7 @@ static int testcase579() {
     return passed;
 }
 
-static int testcase580() {
+static int testcase588() {
     int passed = 1;
 
     printf("%s     ror    eax,0x2\n", __func__);fflush(stdout);
@@ -15335,7 +15511,7 @@ static int testcase580() {
     return passed;
 }
 
-static int testcase581() {
+static int testcase589() {
     int passed = 1;
 
     printf("%s     ror    eax,0x20\n", __func__);fflush(stdout);
@@ -15364,7 +15540,7 @@ static int testcase581() {
     return passed;
 }
 
-static int testcase582() {
+static int testcase590() {
     int passed = 1;
 
     printf("%s     ror    eax,1\n", __func__);fflush(stdout);
@@ -15393,7 +15569,7 @@ static int testcase582() {
     return passed;
 }
 
-static int testcase583() {
+static int testcase591() {
     int passed = 1;
 
     printf("%s     ror    eax,cl\n", __func__);fflush(stdout);
@@ -15425,7 +15601,7 @@ static int testcase583() {
     return passed;
 }
 
-static int testcase584() {
+static int testcase592() {
     int passed = 1;
 
     printf("%s     ror    rax,0x0\n", __func__);fflush(stdout);
@@ -15454,7 +15630,7 @@ static int testcase584() {
     return passed;
 }
 
-static int testcase585() {
+static int testcase593() {
     int passed = 1;
 
     printf("%s     ror    rax,0x1\n", __func__);fflush(stdout);
@@ -15483,7 +15659,7 @@ static int testcase585() {
     return passed;
 }
 
-static int testcase586() {
+static int testcase594() {
     int passed = 1;
 
     printf("%s     ror    rax,0x2\n", __func__);fflush(stdout);
@@ -15512,7 +15688,7 @@ static int testcase586() {
     return passed;
 }
 
-static int testcase587() {
+static int testcase595() {
     int passed = 1;
 
     printf("%s     ror    rax,0x20\n", __func__);fflush(stdout);
@@ -15541,7 +15717,7 @@ static int testcase587() {
     return passed;
 }
 
-static int testcase588() {
+static int testcase596() {
     int passed = 1;
 
     printf("%s     ror    rax,0x21\n", __func__);fflush(stdout);
@@ -15570,7 +15746,7 @@ static int testcase588() {
     return passed;
 }
 
-static int testcase589() {
+static int testcase597() {
     int passed = 1;
 
     printf("%s     ror    rax,0x22\n", __func__);fflush(stdout);
@@ -15599,7 +15775,7 @@ static int testcase589() {
     return passed;
 }
 
-static int testcase590() {
+static int testcase598() {
     int passed = 1;
 
     printf("%s     ror    rax,0x40\n", __func__);fflush(stdout);
@@ -15628,7 +15804,7 @@ static int testcase590() {
     return passed;
 }
 
-static int testcase591() {
+static int testcase599() {
     int passed = 1;
 
     printf("%s     ror    rax,1\n", __func__);fflush(stdout);
@@ -15657,7 +15833,7 @@ static int testcase591() {
     return passed;
 }
 
-static int testcase592() {
+static int testcase600() {
     int passed = 1;
 
     printf("%s     ror    rax,cl\n", __func__);fflush(stdout);
@@ -15689,7 +15865,7 @@ static int testcase592() {
     return passed;
 }
 
-static int testcase593() {
+static int testcase601() {
     int passed = 1;
 
     printf("%s     rorx   eax,eax,0x0\n", __func__);fflush(stdout);
@@ -15718,10 +15894,10 @@ static int testcase593() {
     return passed;
 }
 
-static int testcase594() {
+static int testcase602() {
     int passed = 1;
 
-    printf("%s     rorx   eax,eax,0xf\n", __func__);fflush(stdout);
+    printf("%s     rorx   eax,eax,0x10\n", __func__);fflush(stdout);
 
     __gtaint_reset();
     uint32_t inEAX = 1;
@@ -15729,17 +15905,17 @@ static int testcase594() {
     __gtaint_setn(&inEAX, 4);
     asm volatile (
         "mov EAX,%1;\n"
-        "rorx   eax,eax,0xf;\n" // <--
+        "rorx   eax,eax,0x10;\n" // <--
         "mov %0,RAX;\n"
         :"=m"(outRAX)
         :"m"(inEAX)
         :"rax"
     );
 
-    ASSERT_TAGGED((char *)&outRAX + 0, {1,2});
-    ASSERT_TAGGED((char *)&outRAX + 1, {2,3});
-    ASSERT_TAGGED((char *)&outRAX + 2, {0,3});
-    ASSERT_TAGGED((char *)&outRAX + 3, {0,1});
+    ASSERT_TAGGED((char *)&outRAX + 0, {2});
+    ASSERT_TAGGED((char *)&outRAX + 1, {3});
+    ASSERT_TAGGED((char *)&outRAX + 2, {0});
+    ASSERT_TAGGED((char *)&outRAX + 3, {1});
     ASSERT_TAGGED((char *)&outRAX + 4, { });
     ASSERT_TAGGED((char *)&outRAX + 5, { });
     ASSERT_TAGGED((char *)&outRAX + 6, { });
@@ -15747,7 +15923,123 @@ static int testcase594() {
     return passed;
 }
 
-static int testcase595() {
+static int testcase603() {
+    int passed = 1;
+
+    printf("%s     rorx   eax,eax,0x11\n", __func__);fflush(stdout);
+
+    __gtaint_reset();
+    uint32_t inEAX = 1;
+    uint64_t outRAX = 1;
+    __gtaint_setn(&inEAX, 4);
+    asm volatile (
+        "mov EAX,%1;\n"
+        "rorx   eax,eax,0x11;\n" // <--
+        "mov %0,RAX;\n"
+        :"=m"(outRAX)
+        :"m"(inEAX)
+        :"rax"
+    );
+
+    ASSERT_TAGGED((char *)&outRAX + 0, {2,3});
+    ASSERT_TAGGED((char *)&outRAX + 1, {0,3});
+    ASSERT_TAGGED((char *)&outRAX + 2, {0,1});
+    ASSERT_TAGGED((char *)&outRAX + 3, {1,2});
+    ASSERT_TAGGED((char *)&outRAX + 4, { });
+    ASSERT_TAGGED((char *)&outRAX + 5, { });
+    ASSERT_TAGGED((char *)&outRAX + 6, { });
+    ASSERT_TAGGED((char *)&outRAX + 7, { });
+    return passed;
+}
+
+static int testcase604() {
+    int passed = 1;
+
+    printf("%s     rorx   eax,eax,0x12\n", __func__);fflush(stdout);
+
+    __gtaint_reset();
+    uint32_t inEAX = 1;
+    uint64_t outRAX = 1;
+    __gtaint_setn(&inEAX, 4);
+    asm volatile (
+        "mov EAX,%1;\n"
+        "rorx   eax,eax,0x12;\n" // <--
+        "mov %0,RAX;\n"
+        :"=m"(outRAX)
+        :"m"(inEAX)
+        :"rax"
+    );
+
+    ASSERT_TAGGED((char *)&outRAX + 0, {2,3});
+    ASSERT_TAGGED((char *)&outRAX + 1, {0,3});
+    ASSERT_TAGGED((char *)&outRAX + 2, {0,1});
+    ASSERT_TAGGED((char *)&outRAX + 3, {1,2});
+    ASSERT_TAGGED((char *)&outRAX + 4, { });
+    ASSERT_TAGGED((char *)&outRAX + 5, { });
+    ASSERT_TAGGED((char *)&outRAX + 6, { });
+    ASSERT_TAGGED((char *)&outRAX + 7, { });
+    return passed;
+}
+
+static int testcase605() {
+    int passed = 1;
+
+    printf("%s     rorx   eax,eax,0x2\n", __func__);fflush(stdout);
+
+    __gtaint_reset();
+    uint32_t inEAX = 1;
+    uint64_t outRAX = 1;
+    __gtaint_setn(&inEAX, 4);
+    asm volatile (
+        "mov EAX,%1;\n"
+        "rorx   eax,eax,0x2;\n" // <--
+        "mov %0,RAX;\n"
+        :"=m"(outRAX)
+        :"m"(inEAX)
+        :"rax"
+    );
+
+    ASSERT_TAGGED((char *)&outRAX + 0, {0,1});
+    ASSERT_TAGGED((char *)&outRAX + 1, {1,2});
+    ASSERT_TAGGED((char *)&outRAX + 2, {2,3});
+    ASSERT_TAGGED((char *)&outRAX + 3, {0,3});
+    ASSERT_TAGGED((char *)&outRAX + 4, { });
+    ASSERT_TAGGED((char *)&outRAX + 5, { });
+    ASSERT_TAGGED((char *)&outRAX + 6, { });
+    ASSERT_TAGGED((char *)&outRAX + 7, { });
+    return passed;
+}
+
+static int testcase606() {
+    int passed = 1;
+
+    printf("%s     rorx   eax,eax,0x20\n", __func__);fflush(stdout);
+
+    __gtaint_reset();
+    uint32_t inEAX = 1;
+    uint64_t outRAX = 1;
+    __gtaint_setn(&inEAX, 4);
+    asm volatile (
+        "mov EAX,%1;\n"
+        "rorx   eax,eax,0x20;\n" // <--
+        "mov %0,RAX;\n"
+        :"=m"(outRAX)
+        :"m"(inEAX)
+        :"rax"
+    );
+
+    ASSERT_TAGGED((char *)&outRAX + 0, {0});
+    ASSERT_TAGGED((char *)&outRAX + 1, {1});
+    ASSERT_TAGGED((char *)&outRAX + 2, {2});
+    ASSERT_TAGGED((char *)&outRAX + 3, {3});
+    ASSERT_TAGGED((char *)&outRAX + 4, { });
+    ASSERT_TAGGED((char *)&outRAX + 5, { });
+    ASSERT_TAGGED((char *)&outRAX + 6, { });
+    ASSERT_TAGGED((char *)&outRAX + 7, { });
+    return passed;
+}
+
+static int testcase607() {
     int passed = 1;
 
     printf("%s     rorx   eax,ecx,0x0\n", __func__);fflush(stdout);
@@ -15776,10 +16068,10 @@ static int testcase595() {
     return passed;
 }
 
-static int testcase596() {
+static int testcase608() {
     int passed = 1;
 
-    printf("%s     rorx   eax,ecx,0xf\n", __func__);fflush(stdout);
+    printf("%s     rorx   eax,ecx,0x10\n", __func__);fflush(stdout);
 
     __gtaint_reset();
     uint32_t inECX = 1;
@@ -15787,17 +16079,17 @@ static int testcase596() {
     __gtaint_setn(&inECX, 4);
     asm volatile (
         "mov ECX,%1;\n"
-        "rorx   eax,ecx,0xf;\n" // <--
+        "rorx   eax,ecx,0x10;\n" // <--
         "mov %0,RAX;\n"
         :"=m"(outRAX)
         :"m"(inECX)
         :"rax","ecx"
     );
 
-    ASSERT_TAGGED((char *)&outRAX + 0, {1,2});
-    ASSERT_TAGGED((char *)&outRAX + 1, {2,3});
-    ASSERT_TAGGED((char *)&outRAX + 2, {0,3});
-    ASSERT_TAGGED((char *)&outRAX + 3, {0,1});
+    ASSERT_TAGGED((char *)&outRAX + 0, {2});
+    ASSERT_TAGGED((char *)&outRAX + 1, {3});
+    ASSERT_TAGGED((char *)&outRAX + 2, {0});
+    ASSERT_TAGGED((char *)&outRAX + 3, {1});
     ASSERT_TAGGED((char *)&outRAX + 4, { });
     ASSERT_TAGGED((char *)&outRAX + 5, { });
     ASSERT_TAGGED((char *)&outRAX + 6, { });
@@ -15805,7 +16097,123 @@ static int testcase596() {
     return passed;
 }
 
-static int testcase597() {
+static int testcase609() {
+    int passed = 1;
+
+    printf("%s     rorx   eax,ecx,0x11\n", __func__);fflush(stdout);
+
+    __gtaint_reset();
+    uint32_t inECX = 1;
+    uint64_t outRAX = 1;
+    __gtaint_setn(&inECX, 4);
+    asm volatile (
+        "mov ECX,%1;\n"
+        "rorx   eax,ecx,0x11;\n" // <--
+        "mov %0,RAX;\n"
+        :"=m"(outRAX)
+        :"m"(inECX)
+        :"rax","ecx"
+    );
+
+    ASSERT_TAGGED((char *)&outRAX + 0, {2,3});
+    ASSERT_TAGGED((char *)&outRAX + 1, {0,3});
+    ASSERT_TAGGED((char *)&outRAX + 2, {0,1});
+    ASSERT_TAGGED((char *)&outRAX + 3, {1,2});
+    ASSERT_TAGGED((char *)&outRAX + 4, { });
+    ASSERT_TAGGED((char *)&outRAX + 5, { });
+    ASSERT_TAGGED((char *)&outRAX + 6, { });
+    ASSERT_TAGGED((char *)&outRAX + 7, { });
+    return passed;
+}
+
+static int testcase610() {
+    int passed = 1;
+
+    printf("%s     rorx   eax,ecx,0x12\n", __func__);fflush(stdout);
+
+    __gtaint_reset();
+    uint32_t inECX = 1;
+    uint64_t outRAX = 1;
+    __gtaint_setn(&inECX, 4);
+    asm volatile (
+        "mov ECX,%1;\n"
+        "rorx   eax,ecx,0x12;\n" // <--
+        "mov %0,RAX;\n"
+        :"=m"(outRAX)
+        :"m"(inECX)
+        :"rax","ecx"
+    );
+
+    ASSERT_TAGGED((char *)&outRAX + 0, {2,3});
+    ASSERT_TAGGED((char *)&outRAX + 1, {0,3});
+    ASSERT_TAGGED((char *)&outRAX + 2, {0,1});
+    ASSERT_TAGGED((char *)&outRAX + 3, {1,2});
+    ASSERT_TAGGED((char *)&outRAX + 4, { });
+    ASSERT_TAGGED((char *)&outRAX + 5, { });
+    ASSERT_TAGGED((char *)&outRAX + 6, { });
+    ASSERT_TAGGED((char *)&outRAX + 7, { });
+    return passed;
+}
+
+static int testcase611() {
+    int passed = 1;
+
+    printf("%s     rorx   eax,ecx,0x2\n", __func__);fflush(stdout);
+
+    __gtaint_reset();
+    uint32_t inECX = 1;
+    uint64_t outRAX = 1;
+    __gtaint_setn(&inECX, 4);
+    asm volatile (
+        "mov ECX,%1;\n"
+        "rorx   eax,ecx,0x2;\n" // <--
+        "mov %0,RAX;\n"
+        :"=m"(outRAX)
+        :"m"(inECX)
+        :"rax","ecx"
+    );
+
+    ASSERT_TAGGED((char *)&outRAX + 0, {0,1});
+    ASSERT_TAGGED((char *)&outRAX + 1, {1,2});
+    ASSERT_TAGGED((char *)&outRAX + 2, {2,3});
+    ASSERT_TAGGED((char *)&outRAX + 3, {0,3});
+    ASSERT_TAGGED((char *)&outRAX + 4, { });
+    ASSERT_TAGGED((char *)&outRAX + 5, { });
+    ASSERT_TAGGED((char *)&outRAX + 6, { });
+    ASSERT_TAGGED((char *)&outRAX + 7, { });
+    return passed;
+}
+
+static int testcase612() {
+    int passed = 1;
+
+    printf("%s     rorx   eax,ecx,0x20\n", __func__);fflush(stdout);
+
+    __gtaint_reset();
+    uint32_t inECX = 1;
+    uint64_t outRAX = 1;
+    __gtaint_setn(&inECX, 4);
+    asm volatile (
+        "mov ECX,%1;\n"
+        "rorx   eax,ecx,0x20;\n" // <--
+        "mov %0,RAX;\n"
+        :"=m"(outRAX)
+        :"m"(inECX)
+        :"rax","ecx"
+    );
+
+    ASSERT_TAGGED((char *)&outRAX + 0, {0});
+    ASSERT_TAGGED((char *)&outRAX + 1, {1});
+    ASSERT_TAGGED((char *)&outRAX + 2, {2});
+    ASSERT_TAGGED((char *)&outRAX + 3, {3});
+    ASSERT_TAGGED((char *)&outRAX + 4, { });
+    ASSERT_TAGGED((char *)&outRAX + 5, { });
+    ASSERT_TAGGED((char *)&outRAX + 6, { });
+    ASSERT_TAGGED((char *)&outRAX + 7, { });
+    return passed;
+}
+
+static int testcase613() {
     int passed = 1;
 
     printf("%s     rorx   rax,rax,0x0\n", __func__);fflush(stdout);
@@ -15834,10 +16242,10 @@ static int testcase597() {
     return passed;
 }
 
-static int testcase598() {
+static int testcase614() {
     int passed = 1;
 
-    printf("%s     rorx   rax,rax,0xf\n", __func__);fflush(stdout);
+    printf("%s     rorx   rax,rax,0x2\n", __func__);fflush(stdout);
 
     __gtaint_reset();
     uint64_t inRAX = 1;
@@ -15845,25 +16253,141 @@ static int testcase598() {
     __gtaint_setn(&inRAX, 8);
     asm volatile (
         "mov RAX,%1;\n"
-        "rorx   rax,rax,0xf;\n" // <--
+        "rorx   rax,rax,0x2;\n" // <--
         "mov %0,RAX;\n"
         :"=m"(outRAX)
         :"m"(inRAX)
         :"rax"
     );
 
-    ASSERT_TAGGED((char *)&outRAX + 0, {1,2});
-    ASSERT_TAGGED((char *)&outRAX + 1, {2,3});
-    ASSERT_TAGGED((char *)&outRAX + 2, {3,4});
-    ASSERT_TAGGED((char *)&outRAX + 3, {4,5});
-    ASSERT_TAGGED((char *)&outRAX + 4, {5,6});
-    ASSERT_TAGGED((char *)&outRAX + 5, {6,7});
-    ASSERT_TAGGED((char *)&outRAX + 6, {0,7});
-    ASSERT_TAGGED((char *)&outRAX + 7, {0,1});
+    ASSERT_TAGGED((char *)&outRAX + 0, {0,1});
+    ASSERT_TAGGED((char *)&outRAX + 1, {1,2});
+    ASSERT_TAGGED((char *)&outRAX + 2, {2,3});
+    ASSERT_TAGGED((char *)&outRAX + 3, {3,4});
+    ASSERT_TAGGED((char *)&outRAX + 4, {4,5});
+    ASSERT_TAGGED((char *)&outRAX + 5, {5,6});
+    ASSERT_TAGGED((char *)&outRAX + 6, {6,7});
+    ASSERT_TAGGED((char *)&outRAX + 7, {0,7});
     return passed;
 }
 
-static int testcase599() {
+static int testcase615() {
+    int passed = 1;
+
+    printf("%s     rorx   rax,rax,0x20\n", __func__);fflush(stdout);
+
+    __gtaint_reset();
+    uint64_t inRAX = 1;
+    uint64_t outRAX = 1;
+    __gtaint_setn(&inRAX, 8);
+    asm volatile (
+        "mov RAX,%1;\n"
+        "rorx   rax,rax,0x20;\n" // <--
+        "mov %0,RAX;\n"
+        :"=m"(outRAX)
+        :"m"(inRAX)
+        :"rax"
+    );
+
+    ASSERT_TAGGED((char *)&outRAX + 0, {4});
+    ASSERT_TAGGED((char *)&outRAX + 1, {5});
+    ASSERT_TAGGED((char *)&outRAX + 2, {6});
+    ASSERT_TAGGED((char *)&outRAX + 3, {7});
+    ASSERT_TAGGED((char *)&outRAX + 4, {0});
+    ASSERT_TAGGED((char *)&outRAX + 5, {1});
+    ASSERT_TAGGED((char *)&outRAX + 6, {2});
+    ASSERT_TAGGED((char *)&outRAX + 7, {3});
+    return passed;
+}
+
+static int testcase616() {
+    int passed = 1;
+
+    printf("%s     rorx   rax,rax,0x21\n", __func__);fflush(stdout);
+
+    __gtaint_reset();
+    uint64_t inRAX = 1;
+    uint64_t outRAX = 1;
+    __gtaint_setn(&inRAX, 8);
+    asm volatile (
+        "mov RAX,%1;\n"
+        "rorx   rax,rax,0x21;\n" // <--
+        "mov %0,RAX;\n"
+        :"=m"(outRAX)
+        :"m"(inRAX)
+        :"rax"
+    );
+
+    ASSERT_TAGGED((char *)&outRAX + 0, {4,5});
+    ASSERT_TAGGED((char *)&outRAX + 1, {5,6});
+    ASSERT_TAGGED((char *)&outRAX + 2, {6,7});
+    ASSERT_TAGGED((char *)&outRAX + 3, {0,7});
+    ASSERT_TAGGED((char *)&outRAX + 4, {0,1});
+    ASSERT_TAGGED((char *)&outRAX + 5, {1,2});
+    ASSERT_TAGGED((char *)&outRAX + 6, {2,3});
+    ASSERT_TAGGED((char *)&outRAX + 7, {3,4});
+    return passed;
+}
+
+static int testcase617() {
+    int passed = 1;
+
+    printf("%s     rorx   rax,rax,0x22\n", __func__);fflush(stdout);
+
+    __gtaint_reset();
+    uint64_t inRAX = 1;
+    uint64_t outRAX = 1;
+    __gtaint_setn(&inRAX, 8);
+    asm volatile (
+        "mov RAX,%1;\n"
+        "rorx   rax,rax,0x22;\n" // <--
+        "mov %0,RAX;\n"
+        :"=m"(outRAX)
+        :"m"(inRAX)
+        :"rax"
+    );
+
+    ASSERT_TAGGED((char *)&outRAX + 0, {4,5});
+    ASSERT_TAGGED((char *)&outRAX + 1, {5,6});
+    ASSERT_TAGGED((char *)&outRAX + 2, {6,7});
+    ASSERT_TAGGED((char *)&outRAX + 3, {0,7});
+    ASSERT_TAGGED((char *)&outRAX + 4, {0,1});
+    ASSERT_TAGGED((char *)&outRAX + 5, {1,2});
+    ASSERT_TAGGED((char *)&outRAX + 6, {2,3});
+    ASSERT_TAGGED((char *)&outRAX + 7, {3,4});
+    return passed;
+}
+
+static int testcase618() {
+    int passed = 1;
+
+    printf("%s     rorx   rax,rax,0x40\n", __func__);fflush(stdout);
+
+    __gtaint_reset();
+    uint64_t inRAX = 1;
+    uint64_t outRAX = 1;
+    __gtaint_setn(&inRAX, 8);
+    asm volatile (
+        "mov RAX,%1;\n"
+        "rorx   rax,rax,0x40;\n" // <--
+        "mov %0,RAX;\n"
+        :"=m"(outRAX)
+        :"m"(inRAX)
+        :"rax"
+    );
+
+    ASSERT_TAGGED((char *)&outRAX + 0, {0});
+    ASSERT_TAGGED((char *)&outRAX + 1, {1});
+    ASSERT_TAGGED((char *)&outRAX + 2, {2});
+    ASSERT_TAGGED((char *)&outRAX + 3, {3});
+    ASSERT_TAGGED((char *)&outRAX + 4, {4});
+    ASSERT_TAGGED((char *)&outRAX + 5, {5});
+    ASSERT_TAGGED((char *)&outRAX + 6, {6});
+    ASSERT_TAGGED((char *)&outRAX + 7, {7});
+    return passed;
+}
+
+static int testcase619() {
     int passed = 1;
 
     printf("%s     rorx   rax,rcx,0x0\n", __func__);fflush(stdout);
@@ -15892,10 +16416,10 @@ static int testcase599() {
     return passed;
 }
 
-static int testcase600() {
+static int testcase620() {
     int passed = 1;
 
-    printf("%s     rorx   rax,rcx,0xf\n", __func__);fflush(stdout);
+    printf("%s     rorx   rax,rcx,0x2\n", __func__);fflush(stdout);
 
     __gtaint_reset();
     uint64_t inRCX = 1;
@@ -15903,25 +16427,141 @@ static int testcase600() {
     __gtaint_setn(&inRCX, 8);
     asm volatile (
         "mov RCX,%1;\n"
-        "rorx   rax,rcx,0xf;\n" // <--
+        "rorx   rax,rcx,0x2;\n" // <--
         "mov %0,RAX;\n"
         :"=m"(outRAX)
         :"m"(inRCX)
         :"rax","rcx"
     );
 
-    ASSERT_TAGGED((char *)&outRAX + 0, {1,2});
-    ASSERT_TAGGED((char *)&outRAX + 1, {2,3});
-    ASSERT_TAGGED((char *)&outRAX + 2, {3,4});
-    ASSERT_TAGGED((char *)&outRAX + 3, {4,5});
-    ASSERT_TAGGED((char *)&outRAX + 4, {5,6});
-    ASSERT_TAGGED((char *)&outRAX + 5, {6,7});
-    ASSERT_TAGGED((char *)&outRAX + 6, {0,7});
-    ASSERT_TAGGED((char *)&outRAX + 7, {0,1});
+    ASSERT_TAGGED((char *)&outRAX + 0, {0,1});
+    ASSERT_TAGGED((char *)&outRAX + 1, {1,2});
+    ASSERT_TAGGED((char *)&outRAX + 2, {2,3});
+    ASSERT_TAGGED((char *)&outRAX + 3, {3,4});
+    ASSERT_TAGGED((char *)&outRAX + 4, {4,5});
+    ASSERT_TAGGED((char *)&outRAX + 5, {5,6});
+    ASSERT_TAGGED((char *)&outRAX + 6, {6,7});
+    ASSERT_TAGGED((char *)&outRAX + 7, {0,7});
     return passed;
 }
 
-static int testcase601() {
+static int testcase621() {
+    int passed = 1;
+
+    printf("%s     rorx   rax,rcx,0x20\n", __func__);fflush(stdout);
+
+    __gtaint_reset();
+    uint64_t inRCX = 1;
+    uint64_t outRAX = 1;
+    __gtaint_setn(&inRCX, 8);
+    asm volatile (
+        "mov RCX,%1;\n"
+        "rorx   rax,rcx,0x20;\n" // <--
+        "mov %0,RAX;\n"
+        :"=m"(outRAX)
+        :"m"(inRCX)
+        :"rax","rcx"
+    );
+
+    ASSERT_TAGGED((char *)&outRAX + 0, {4});
+    ASSERT_TAGGED((char *)&outRAX + 1, {5});
+    ASSERT_TAGGED((char *)&outRAX + 2, {6});
+    ASSERT_TAGGED((char *)&outRAX + 3, {7});
+    ASSERT_TAGGED((char *)&outRAX + 4, {0});
+    ASSERT_TAGGED((char *)&outRAX + 5, {1});
+    ASSERT_TAGGED((char *)&outRAX + 6, {2});
+    ASSERT_TAGGED((char *)&outRAX + 7, {3});
+    return passed;
+}
+
+static int testcase622() {
+    int passed = 1;
+
+    printf("%s     rorx   rax,rcx,0x21\n", __func__);fflush(stdout);
+
+    __gtaint_reset();
+    uint64_t inRCX = 1;
+    uint64_t outRAX = 1;
+    __gtaint_setn(&inRCX, 8);
+    asm volatile (
+        "mov RCX,%1;\n"
+        "rorx   rax,rcx,0x21;\n" // <--
+        "mov %0,RAX;\n"
+        :"=m"(outRAX)
+        :"m"(inRCX)
+        :"rax","rcx"
+    );
+
+    ASSERT_TAGGED((char *)&outRAX + 0, {4,5});
+    ASSERT_TAGGED((char *)&outRAX + 1, {5,6});
+    ASSERT_TAGGED((char *)&outRAX + 2, {6,7});
+    ASSERT_TAGGED((char *)&outRAX + 3, {0,7});
+    ASSERT_TAGGED((char *)&outRAX + 4, {0,1});
+    ASSERT_TAGGED((char *)&outRAX + 5, {1,2});
+    ASSERT_TAGGED((char *)&outRAX + 6, {2,3});
+    ASSERT_TAGGED((char *)&outRAX + 7, {3,4});
+    return passed;
+}
+
+static int testcase623() {
+    int passed = 1;
+
+    printf("%s     rorx   rax,rcx,0x22\n", __func__);fflush(stdout);
+
+    __gtaint_reset();
+    uint64_t inRCX = 1;
+    uint64_t outRAX = 1;
+    __gtaint_setn(&inRCX, 8);
+    asm volatile (
+        "mov RCX,%1;\n"
+        "rorx   rax,rcx,0x22;\n" // <--
+        "mov %0,RAX;\n"
+        :"=m"(outRAX)
+        :"m"(inRCX)
+        :"rax","rcx"
+    );
+
+    ASSERT_TAGGED((char *)&outRAX + 0, {4,5});
+    ASSERT_TAGGED((char *)&outRAX + 1, {5,6});
+    ASSERT_TAGGED((char *)&outRAX + 2, {6,7});
+    ASSERT_TAGGED((char *)&outRAX + 3, {0,7});
+    ASSERT_TAGGED((char *)&outRAX + 4, {0,1});
+    ASSERT_TAGGED((char *)&outRAX + 5, {1,2});
+    ASSERT_TAGGED((char *)&outRAX + 6, {2,3});
+    ASSERT_TAGGED((char *)&outRAX + 7, {3,4});
+    return passed;
+}
+
+static int testcase624() {
+    int passed = 1;
+
+    printf("%s     rorx   rax,rcx,0x40\n", __func__);fflush(stdout);
+
+    __gtaint_reset();
+    uint64_t inRCX = 1;
+    uint64_t outRAX = 1;
+    __gtaint_setn(&inRCX, 8);
+    asm volatile (
+        "mov RCX,%1;\n"
+        "rorx   rax,rcx,0x40;\n" // <--
+        "mov %0,RAX;\n"
+        :"=m"(outRAX)
+        :"m"(inRCX)
+        :"rax","rcx"
+    );
+
+    ASSERT_TAGGED((char *)&outRAX + 0, {0});
+    ASSERT_TAGGED((char *)&outRAX + 1, {1});
+    ASSERT_TAGGED((char *)&outRAX + 2, {2});
+    ASSERT_TAGGED((char *)&outRAX + 3, {3});
+    ASSERT_TAGGED((char *)&outRAX + 4, {4});
+    ASSERT_TAGGED((char *)&outRAX + 5, {5});
+    ASSERT_TAGGED((char *)&outRAX + 6, {6});
+    ASSERT_TAGGED((char *)&outRAX + 7, {7});
+    return passed;
+}
+
+static int testcase625() {
     int passed = 1;
 
     printf("%s     sar    ah,0x0\n", __func__);fflush(stdout);
@@ -15943,7 +16583,7 @@ static int testcase601() {
     return passed;
 }
 
-static int testcase602() {
+static int testcase626() {
     int passed = 1;
 
     printf("%s     sar    ah,0x1\n", __func__);fflush(stdout);
@@ -15965,7 +16605,7 @@ static int testcase602() {
     return passed;
 }
 
-static int testcase603() {
+static int testcase627() {
     int passed = 1;
 
     printf("%s     sar    ah,0xf\n", __func__);fflush(stdout);
@@ -15987,7 +16627,7 @@ static int testcase603() {
     return passed;
 }
 
-static int testcase604() {
+static int testcase628() {
     int passed = 1;
 
     printf("%s     sar    ah,1\n", __func__);fflush(stdout);
@@ -16009,7 +16649,7 @@ static int testcase604() {
     return passed;
 }
 
-static int testcase605() {
+static int testcase629() {
     int passed = 1;
 
     printf("%s     sar    al,0x0\n", __func__);fflush(stdout);
@@ -16031,7 +16671,7 @@ static int testcase605() {
     return passed;
 }
 
-static int testcase606() {
+static int testcase630() {
     int passed = 1;
 
     printf("%s     sar    al,0x1\n", __func__);fflush(stdout);
@@ -16053,7 +16693,7 @@ static int testcase606() {
     return passed;
 }
 
-static int testcase607() {
+static int testcase631() {
     int passed = 1;
 
     printf("%s     sar    al,0xf\n", __func__);fflush(stdout);
@@ -16075,7 +16715,7 @@ static int testcase607() {
     return passed;
 }
 
-static int testcase608() {
+static int testcase632() {
     int passed = 1;
 
     printf("%s     sar    al,1\n", __func__);fflush(stdout);
@@ -16097,7 +16737,7 @@ static int testcase608() {
     return passed;
 }
 
-static int testcase609() {
+static int testcase633() {
     int passed = 1;
 
     printf("%s     sar    al,cl\n", __func__);fflush(stdout);
@@ -16122,7 +16762,7 @@ static int testcase609() {
     return passed;
 }
 
-static int testcase610() {
+static int testcase634() {
     int passed = 1;
 
     printf("%s     sar    ax,0x0\n", __func__);fflush(stdout);
@@ -16145,7 +16785,7 @@ static int testcase610() {
     return passed;
 }
 
-static int testcase611() {
+static int testcase635() {
     int passed = 1;
 
     printf("%s     sar    ax,0x1\n", __func__);fflush(stdout);
@@ -16168,7 +16808,7 @@ static int testcase611() {
     return passed;
 }
 
-static int testcase612() {
+static int testcase636() {
     int passed = 1;
 
     printf("%s     sar    ax,0xf\n", __func__);fflush(stdout);
@@ -16191,7 +16831,7 @@ static int testcase612() {
     return passed;
 }
 
-static int testcase613() {
+static int testcase637() {
     int passed = 1;
 
     printf("%s     sar    ax,1\n", __func__);fflush(stdout);
@@ -16214,7 +16854,7 @@ static int testcase613() {
     return passed;
 }
 
-static int testcase614() {
+static int testcase638() {
     int passed = 1;
 
     printf("%s     sar    ax,cl\n", __func__);fflush(stdout);
@@ -16240,7 +16880,7 @@ static int testcase614() {
     return passed;
 }
 
-static int testcase615() {
+static int testcase639() {
     int passed = 1;
 
     printf("%s     sar    eax,0x0\n", __func__);fflush(stdout);
@@ -16269,7 +16909,7 @@ static int testcase615() {
     return passed;
 }
 
-static int testcase616() {
+static int testcase640() {
     int passed = 1;
 
     printf("%s     sar    eax,0x1\n", __func__);fflush(stdout);
@@ -16298,7 +16938,7 @@ static int testcase616() {
     return passed;
 }
 
-static int testcase617() {
+static int testcase641() {
     int passed = 1;
 
     printf("%s     sar    eax,0xf\n", __func__);fflush(stdout);
@@ -16327,7 +16967,7 @@ static int testcase617() {
     return passed;
 }
 
-static int testcase618() {
+static int testcase642() {
     int passed = 1;
 
     printf("%s     sar    eax,1\n", __func__);fflush(stdout);
@@ -16356,7 +16996,7 @@ static int testcase618() {
     return passed;
 }
 
-static int testcase619() {
+static int testcase643() {
     int passed = 1;
 
     printf("%s     sar    eax,cl\n", __func__);fflush(stdout);
@@ -16388,7 +17028,7 @@ static int testcase619() {
     return passed;
 }
 
-static int testcase620() {
+static int testcase644() {
     int passed = 1;
 
     printf("%s     sar    rax,0x0\n", __func__);fflush(stdout);
@@ -16417,7 +17057,7 @@ static int testcase620() {
     return passed;
 }
 
-static int testcase621() {
+static int testcase645() {
     int passed = 1;
 
     printf("%s     sar    rax,0x1\n", __func__);fflush(stdout);
@@ -16446,7 +17086,7 @@ static int testcase621() {
     return passed;
 }
 
-static int testcase622() {
+static int testcase646() {
     int passed = 1;
 
     printf("%s     sar    rax,0xf\n", __func__);fflush(stdout);
@@ -16475,7 +17115,7 @@ static int testcase622() {
     return passed;
 }
 
-static int testcase623() {
+static int testcase647() {
     int passed = 1;
 
     printf("%s     sar    rax,1\n", __func__);fflush(stdout);
@@ -16504,7 +17144,7 @@ static int testcase623() {
     return passed;
 }
 
-static int testcase624() {
+static int testcase648() {
     int passed = 1;
 
     printf("%s     sar    rax,cl\n", __func__);fflush(stdout);
@@ -16536,7 +17176,7 @@ static int testcase624() {
     return passed;
 }
 
-static int testcase625() {
+static int testcase649() {
     int passed = 1;
 
     printf("%s     sarx   eax,eax,eax\n", __func__);fflush(stdout);
@@ -16565,7 +17205,7 @@ static int testcase625() {
     return passed;
 }
 
-static int testcase626() {
+static int testcase650() {
     int passed = 1;
 
     printf("%s     sarx   eax,eax,ecx\n", __func__);fflush(stdout);
@@ -16597,7 +17237,7 @@ static int testcase626() {
     return passed;
 }
 
-static int testcase627() {
+static int testcase651() {
     int passed = 1;
 
     printf("%s     sarx   eax,ecx,ecx\n", __func__);fflush(stdout);
@@ -16626,7 +17266,7 @@ static int testcase627() {
     return passed;
 }
 
-static int testcase628() {
+static int testcase652() {
     int passed = 1;
 
     printf("%s     sarx   eax,ecx,edx\n", __func__);fflush(stdout);
@@ -16658,7 +17298,7 @@ static int testcase628() {
     return passed;
 }
 
-static int testcase629() {
+static int testcase653() {
     int passed = 1;
 
     printf("%s     sarx   rax,rax,rax\n", __func__);fflush(stdout);
@@ -16687,7 +17327,7 @@ static int testcase629() {
     return passed;
 }
 
-static int testcase630() {
+static int testcase654() {
     int passed = 1;
 
     printf("%s     sarx   rax,rax,rcx\n", __func__);fflush(stdout);
@@ -16719,7 +17359,7 @@ static int testcase630() {
     return passed;
 }
 
-static int testcase631() {
+static int testcase655() {
     int passed = 1;
 
     printf("%s     sarx   rax,rcx,rcx\n", __func__);fflush(stdout);
@@ -16748,7 +17388,7 @@ static int testcase631() {
     return passed;
 }
 
-static int testcase632() {
+static int testcase656() {
     int passed = 1;
 
     printf("%s     sarx   rax,rcx,rdx\n", __func__);fflush(stdout);
@@ -16780,7 +17420,7 @@ static int testcase632() {
     return passed;
 }
 
-static int testcase633() {
+static int testcase657() {
     int passed = 1;
 
     printf("%s     sbb    ah,0x0\n", __func__);fflush(stdout);
@@ -16802,7 +17442,7 @@ static int testcase633() {
     return passed;
 }
 
-static int testcase634() {
+static int testcase658() {
     int passed = 1;
 
     printf("%s     sbb    ah,0xf\n", __func__);fflush(stdout);
@@ -16824,7 +17464,7 @@ static int testcase634() {
     return passed;
 }
 
-static int testcase635() {
+static int testcase659() {
     int passed = 1;
 
     printf("%s     sbb    ah,ah\n", __func__);fflush(stdout);
@@ -16846,7 +17486,7 @@ static int testcase635() {
     return passed;
 }
 
-static int testcase636() {
+static int testcase660() {
     int passed = 1;
 
     printf("%s     sbb    ah,al\n", __func__);fflush(stdout);
@@ -16868,7 +17508,7 @@ static int testcase636() {
     return passed;
 }
 
-static int testcase637() {
+static int testcase661() {
     int passed = 1;
 
     printf("%s     sbb    ah,ch\n", __func__);fflush(stdout);
@@ -16893,7 +17533,7 @@ static int testcase637() {
     return passed;
 }
 
-static int testcase638() {
+static int testcase662() {
     int passed = 1;
 
     printf("%s     sbb    al,0x0\n", __func__);fflush(stdout);
@@ -16915,7 +17555,7 @@ static int testcase638() {
     return passed;
 }
 
-static int testcase639() {
+static int testcase663() {
     int passed = 1;
 
     printf("%s     sbb    al,0xf\n", __func__);fflush(stdout);
@@ -16937,7 +17577,7 @@ static int testcase639() {
     return passed;
 }
 
-static int testcase640() {
+static int testcase664() {
     int passed = 1;
 
     printf("%s     sbb    al,al\n", __func__);fflush(stdout);
@@ -16959,7 +17599,7 @@ static int testcase640() {
     return passed;
 }
 
-static int testcase641() {
+static int testcase665() {
     int passed = 1;
 
     printf("%s     sbb    al,cl\n", __func__);fflush(stdout);
@@ -16984,7 +17624,7 @@ static int testcase641() {
     return passed;
 }
 
-static int testcase642() {
+static int testcase666() {
     int passed = 1;
 
     printf("%s     sbb    ax,0x0\n", __func__);fflush(stdout);
@@ -17007,7 +17647,7 @@ static int testcase642() {
     return passed;
 }
 
-static int testcase643() {
+static int testcase667() {
     int passed = 1;
 
     printf("%s     sbb    ax,0x1\n", __func__);fflush(stdout);
@@ -17030,7 +17670,7 @@ static int testcase643() {
     return passed;
 }
 
-static int testcase644() {
+static int testcase668() {
     int passed = 1;
 
     printf("%s     sbb    ax,0xff\n", __func__);fflush(stdout);
@@ -17053,7 +17693,7 @@ static int testcase644() {
     return passed;
 }
 
-static int testcase645() {
+static int testcase669() {
     int passed = 1;
 
     printf("%s     sbb    ax,0xffff\n", __func__);fflush(stdout);
@@ -17076,7 +17716,7 @@ static int testcase645() {
     return passed;
 }
 
-static int testcase646() {
+static int testcase670() {
     int passed = 1;
 
     printf("%s     sbb    ax,ax\n", __func__);fflush(stdout);
@@ -17099,7 +17739,7 @@ static int testcase646() {
     return passed;
 }
 
-static int testcase647() {
+static int testcase671() {
     int passed = 1;
 
     printf("%s     sbb    ax,cx\n", __func__);fflush(stdout);
@@ -17125,7 +17765,7 @@ static int testcase647() {
     return passed;
 }
 
-static int testcase648() {
+static int testcase672() {
     int passed = 1;
 
     printf("%s     sbb    ch,al\n", __func__);fflush(stdout);
@@ -17150,7 +17790,7 @@ static int testcase648() {
     return passed;
 }
 
-static int testcase649() {
+static int testcase673() {
     int passed = 1;
 
     printf("%s     sbb    eax,0x0\n", __func__);fflush(stdout);
@@ -17179,7 +17819,7 @@ static int testcase649() {
     return passed;
 }
 
-static int testcase650() {
+static int testcase674() {
     int passed = 1;
 
     printf("%s     sbb    eax,0x1\n", __func__);fflush(stdout);
@@ -17208,7 +17848,7 @@ static int testcase650() {
     return passed;
 }
 
-static int testcase651() {
+static int testcase675() {
     int passed = 1;
 
     printf("%s     sbb    eax,0xffff\n", __func__);fflush(stdout);
@@ -17237,7 +17877,7 @@ static int testcase651() {
     return passed;
 }
 
-static int testcase652() {
+static int testcase676() {
     int passed = 1;
 
     printf("%s     sbb    eax,0xffffffff\n", __func__);fflush(stdout);
@@ -17266,7 +17906,7 @@ static int testcase652() {
     return passed;
 }
 
-static int testcase653() {
+static int testcase677() {
     int passed = 1;
 
     printf("%s     sbb    eax,eax\n", __func__);fflush(stdout);
@@ -17295,7 +17935,7 @@ static int testcase653() {
     return passed;
 }
 
-static int testcase654() {
+static int testcase678() {
     int passed = 1;
 
     printf("%s     sbb    eax,ecx\n", __func__);fflush(stdout);
@@ -17327,7 +17967,7 @@ static int testcase654() {
     return passed;
 }
 
-static int testcase655() {
+static int testcase679() {
     int passed = 1;
 
     printf("%s     sbb    rax,0x0\n", __func__);fflush(stdout);
@@ -17356,7 +17996,7 @@ static int testcase655() {
     return passed;
 }
 
-static int testcase656() {
+static int testcase680() {
     int passed = 1;
 
     printf("%s     sbb    rax,0x1\n", __func__);fflush(stdout);
@@ -17385,7 +18025,7 @@ static int testcase656() {
     return passed;
 }
 
-static int testcase657() {
+static int testcase681() {
     int passed = 1;
 
     printf("%s     sbb    rax,0xffff\n", __func__);fflush(stdout);
@@ -17414,7 +18054,7 @@ static int testcase657() {
     return passed;
 }
 
-static int testcase658() {
+static int testcase682() {
     int passed = 1;
 
     printf("%s     sbb    rax,0xffffffffffffffff\n", __func__);fflush(stdout);
@@ -17443,7 +18083,7 @@ static int testcase658() {
     return passed;
 }
 
-static int testcase659() {
+static int testcase683() {
     int passed = 1;
 
     printf("%s     sbb    rax,rax\n", __func__);fflush(stdout);
@@ -17472,7 +18112,7 @@ static int testcase659() {
     return passed;
 }
 
-static int testcase660() {
+static int testcase684() {
     int passed = 1;
 
     printf("%s     sbb    rax,rcx\n", __func__);fflush(stdout);
@@ -17504,7 +18144,7 @@ static int testcase660() {
     return passed;
 }
 
-static int testcase661() {
+static int testcase685() {
     int passed = 1;
 
     printf("%s     shl    ah,0x0\n", __func__);fflush(stdout);
@@ -17526,7 +18166,7 @@ static int testcase661() {
     return passed;
 }
 
-static int testcase662() {
+static int testcase686() {
     int passed = 1;
 
     printf("%s     shl    ah,0x1\n", __func__);fflush(stdout);
@@ -17548,10 +18188,10 @@ static int testcase662() {
     return passed;
 }
 
-static int testcase663() {
+static int testcase687() {
     int passed = 1;
 
-    printf("%s     shl    ah,0xf\n", __func__);fflush(stdout);
+    printf("%s     shl    ah,0x2\n", __func__);fflush(stdout);
 
     __gtaint_reset();
     uint8_t inAH = 1;
@@ -17559,7 +18199,95 @@ static int testcase663() {
     __gtaint_setn(&inAH, 1);
     asm volatile (
         "mov AH,%1;\n"
-        "shl    ah,0xf;\n" // <--
+        "shl    ah,0x2;\n" // <--
+        "mov %0,AH;\n"
+        :"=m"(outAH)
+        :"m"(inAH)
+        :"ah"
+    );
+
+    ASSERT_TAGGED((char *)&outAH + 0, {0});
+    return passed;
+}
+
+static int testcase688() {
+    int passed = 1;
+
+    printf("%s     shl    ah,0x4\n", __func__);fflush(stdout);
+
+    __gtaint_reset();
+    uint8_t inAH = 1;
+    uint8_t outAH = 1;
+    __gtaint_setn(&inAH, 1);
+    asm volatile (
+        "mov AH,%1;\n"
+        "shl    ah,0x4;\n" // <--
+        "mov %0,AH;\n"
+        :"=m"(outAH)
+        :"m"(inAH)
+        :"ah"
+    );
+
+    ASSERT_TAGGED((char *)&outAH + 0, {0});
+    return passed;
+}
+
+static int testcase689() {
+    int passed = 1;
+
+    printf("%s     shl    ah,0x5\n", __func__);fflush(stdout);
+
+    __gtaint_reset();
+    uint8_t inAH = 1;
+    uint8_t outAH = 1;
+    __gtaint_setn(&inAH, 1);
+    asm volatile (
+        "mov AH,%1;\n"
+        "shl    ah,0x5;\n" // <--
+        "mov %0,AH;\n"
+        :"=m"(outAH)
+        :"m"(inAH)
+        :"ah"
+    );
+
+    ASSERT_TAGGED((char *)&outAH + 0, {0});
+    return passed;
+}
+
+static int testcase690() {
+    int passed = 1;
+
+    printf("%s     shl    ah,0x6\n", __func__);fflush(stdout);
+
+    __gtaint_reset();
+    uint8_t inAH = 1;
+    uint8_t outAH = 1;
+    __gtaint_setn(&inAH, 1);
+    asm volatile (
+        "mov AH,%1;\n"
+        "shl    ah,0x6;\n" // <--
+        "mov %0,AH;\n"
+        :"=m"(outAH)
+        :"m"(inAH)
+        :"ah"
+    );
+
+    ASSERT_TAGGED((char *)&outAH + 0, {0});
+    return passed;
+}
+
+static int testcase691() {
+    int passed = 1;
+
+    printf("%s     shl    ah,0x8\n", __func__);fflush(stdout);
+
+    __gtaint_reset();
+    uint8_t inAH = 1;
+    uint8_t outAH = 1;
+    __gtaint_setn(&inAH, 1);
+    asm volatile (
+        "mov AH,%1;\n"
+        "shl    ah,0x8;\n" // <--
         "mov %0,AH;\n"
         :"=m"(outAH)
         :"m"(inAH)
@@ -17570,7 +18298,7 @@ static int testcase663() {
     return passed;
 }
 
-static int testcase664() {
+static int testcase692() {
     int passed = 1;
 
     printf("%s     shl    ah,1\n", __func__);fflush(stdout);
@@ -17592,7 +18320,7 @@ static int testcase664() {
     return passed;
 }
 
-static int testcase665() {
+static int testcase693() {
     int passed = 1;
 
     printf("%s     shl    al,0x0\n", __func__);fflush(stdout);
@@ -17614,7 +18342,7 @@ static int testcase665() {
     return passed;
 }
 
-static int testcase666() {
+static int testcase694() {
     int passed = 1;
 
     printf("%s     shl    al,0x1\n", __func__);fflush(stdout);
@@ -17636,10 +18364,10 @@ static int testcase666() {
     return passed;
 }
 
-static int testcase667() {
+static int testcase695() {
     int passed = 1;
 
-    printf("%s     shl    al,0xf\n", __func__);fflush(stdout);
+    printf("%s     shl    al,0x2\n", __func__);fflush(stdout);
 
     __gtaint_reset();
     uint8_t inAL = 1;
@@ -17647,7 +18375,95 @@ static int testcase667() {
     __gtaint_setn(&inAL, 1);
     asm volatile (
         "mov AL,%1;\n"
-        "shl    al,0xf;\n" // <--
+        "shl    al,0x2;\n" // <--
+        "mov %0,AL;\n"
+        :"=m"(outAL)
+        :"m"(inAL)
+        :"al"
+    );
+
+    ASSERT_TAGGED((char *)&outAL + 0, {0});
+    return passed;
+}
+
+static int testcase696() {
+    int passed = 1;
+
+    printf("%s     shl    al,0x4\n", __func__);fflush(stdout);
+
+    __gtaint_reset();
+    uint8_t inAL = 1;
+    uint8_t outAL = 1;
+    __gtaint_setn(&inAL, 1);
+    asm volatile (
+        "mov AL,%1;\n"
+        "shl    al,0x4;\n" // <--
+        "mov %0,AL;\n"
+        :"=m"(outAL)
+        :"m"(inAL)
+        :"al"
+    );
+
+    ASSERT_TAGGED((char *)&outAL + 0, {0});
+    return passed;
+}
+
+static int testcase697() {
+    int passed = 1;
+
+    printf("%s     shl    al,0x5\n", __func__);fflush(stdout);
+
+    __gtaint_reset();
+    uint8_t inAL = 1;
+    uint8_t outAL = 1;
+    __gtaint_setn(&inAL, 1);
+    asm volatile (
+        "mov AL,%1;\n"
+        "shl    al,0x5;\n" // <--
+        "mov %0,AL;\n"
+        :"=m"(outAL)
+        :"m"(inAL)
+        :"al"
+    );
+
+    ASSERT_TAGGED((char *)&outAL + 0, {0});
+    return passed;
+}
+
+static int testcase698() {
+    int passed = 1;
+
+    printf("%s     shl    al,0x6\n", __func__);fflush(stdout);
+
+    __gtaint_reset();
+    uint8_t inAL = 1;
+    uint8_t outAL = 1;
+    __gtaint_setn(&inAL, 1);
+    asm volatile (
+        "mov AL,%1;\n"
+        "shl    al,0x6;\n" // <--
+        "mov %0,AL;\n"
+        :"=m"(outAL)
+        :"m"(inAL)
+        :"al"
+    );
+
+    ASSERT_TAGGED((char *)&outAL + 0, {0});
+    return passed;
+}
+
+static int testcase699() {
+    int passed = 1;
+
+    printf("%s     shl    al,0x8\n", __func__);fflush(stdout);
+
+    __gtaint_reset();
+    uint8_t inAL = 1;
+    uint8_t outAL = 1;
+    __gtaint_setn(&inAL, 1);
+    asm volatile (
+        "mov AL,%1;\n"
+        "shl    al,0x8;\n" // <--
         "mov %0,AL;\n"
         :"=m"(outAL)
         :"m"(inAL)
@@ -17658,7 +18474,7 @@ static int testcase667() {
     return passed;
 }
 
-static int testcase668() {
+static int testcase700() {
     int passed = 1;
 
     printf("%s     shl    al,1\n", __func__);fflush(stdout);
@@ -17680,7 +18496,7 @@ static int testcase668() {
     return passed;
 }
 
-static int testcase669() {
+static int testcase701() {
     int passed = 1;
 
     printf("%s     shl    al,cl\n", __func__);fflush(stdout);
@@ -17705,7 +18521,7 @@ static int testcase669() {
     return passed;
 }
 
-static int testcase670() {
+static int testcase702() {
     int passed = 1;
 
     printf("%s     shl    ax,0x0\n", __func__);fflush(stdout);
@@ -17728,7 +18544,7 @@ static int testcase670() {
     return passed;
 }
 
-static int testcase671() {
+static int testcase703() {
     int passed = 1;
 
     printf("%s     shl    ax,0x1\n", __func__);fflush(stdout);
@@ -17751,10 +18567,10 @@ static int testcase671() {
     return passed;
 }
 
-static int testcase672() {
+static int testcase704() {
     int passed = 1;
 
-    printf("%s     shl    ax,0xf\n", __func__);fflush(stdout);
+    printf("%s     shl    ax,0x10\n", __func__);fflush(stdout);
 
     __gtaint_reset();
     uint16_t inAX = 1;
@@ -17762,7 +18578,53 @@ static int testcase672() {
     __gtaint_setn(&inAX, 2);
     asm volatile (
         "mov AX,%1;\n"
-        "shl    ax,0xf;\n" // <--
+        "shl    ax,0x10;\n" // <--
+        "mov %0,AX;\n"
+        :"=m"(outAX)
+        :"m"(inAX)
+        :"ax"
+    );
+
+    ASSERT_TAGGED((char *)&outAX + 0, { });
+    ASSERT_TAGGED((char *)&outAX + 1, { });
+    return passed;
+}
+
+static int testcase705() {
+    int passed = 1;
+
+    printf("%s     shl    ax,0x2\n", __func__);fflush(stdout);
+
+    __gtaint_reset();
+    uint16_t inAX = 1;
+    uint16_t outAX = 1;
+    __gtaint_setn(&inAX, 2);
+    asm volatile (
+        "mov AX,%1;\n"
+        "shl    ax,0x2;\n" // <--
+        "mov %0,AX;\n"
+        :"=m"(outAX)
+        :"m"(inAX)
+        :"ax"
+    );
+
+    ASSERT_TAGGED((char *)&outAX + 0, {0});
+    ASSERT_TAGGED((char *)&outAX + 1, {0,1});
+    return passed;
+}
+
+static int testcase706() {
+    int passed = 1;
+
+    printf("%s     shl    ax,0x8\n", __func__);fflush(stdout);
+
+    __gtaint_reset();
+    uint16_t inAX = 1;
+    uint16_t outAX = 1;
+    __gtaint_setn(&inAX, 2);
+    asm volatile (
+        "mov AX,%1;\n"
+        "shl    ax,0x8;\n" // <--
         "mov %0,AX;\n"
         :"=m"(outAX)
         :"m"(inAX)
@@ -17774,7 +18636,53 @@ static int testcase672() {
     return passed;
 }
 
-static int testcase673() {
+static int testcase707() {
+    int passed = 1;
+
+    printf("%s     shl    ax,0x9\n", __func__);fflush(stdout);
+
+    __gtaint_reset();
+    uint16_t inAX = 1;
+    uint16_t outAX = 1;
+    __gtaint_setn(&inAX, 2);
+    asm volatile (
+        "mov AX,%1;\n"
+        "shl    ax,0x9;\n" // <--
+        "mov %0,AX;\n"
+        :"=m"(outAX)
+        :"m"(inAX)
+        :"ax"
+    );
+
+    ASSERT_TAGGED((char *)&outAX + 0, { });
+    ASSERT_TAGGED((char *)&outAX + 1, {0});
+    return passed;
+}
+
+static int testcase708() {
+    int passed = 1;
+
+    printf("%s     shl    ax,0xa\n", __func__);fflush(stdout);
+
+    __gtaint_reset();
+    uint16_t inAX = 1;
+    uint16_t outAX = 1;
+    __gtaint_setn(&inAX, 2);
+    asm volatile (
+        "mov AX,%1;\n"
+        "shl    ax,0xa;\n" // <--
+        "mov %0,AX;\n"
+        :"=m"(outAX)
+        :"m"(inAX)
+        :"ax"
+    );
+
+    ASSERT_TAGGED((char *)&outAX + 0, { });
+    ASSERT_TAGGED((char *)&outAX + 1, {0});
+    return passed;
+}
+
+static int testcase709() {
     int passed = 1;
 
     printf("%s     shl    ax,1\n", __func__);fflush(stdout);
@@ -17797,7 +18705,7 @@ static int testcase673() {
     return passed;
 }
 
-static int testcase674() {
+static int testcase710() {
     int passed = 1;
 
     printf("%s     shl    ax,cl\n", __func__);fflush(stdout);
@@ -17823,7 +18731,7 @@ static int testcase674() {
     return passed;
 }
 
-static int testcase675() {
+static int testcase711() {
     int passed = 1;
 
     printf("%s     shl    eax,0x0\n", __func__);fflush(stdout);
@@ -17852,7 +18760,7 @@ static int testcase675() {
     return passed;
 }
 
-static int testcase676() {
+static int testcase712() {
     int passed = 1;
 
     printf("%s     shl    eax,0x1\n", __func__);fflush(stdout);
@@ -17881,10 +18789,10 @@ static int testcase676() {
     return passed;
 }
 
-static int testcase677() {
+static int testcase713() {
     int passed = 1;
 
-    printf("%s     shl    eax,0xf\n", __func__);fflush(stdout);
+    printf("%s     shl    eax,0x10\n", __func__);fflush(stdout);
 
     __gtaint_reset();
     uint32_t inEAX = 1;
@@ -17892,7 +18800,7 @@ static int testcase677() {
     __gtaint_setn(&inEAX, 4);
     asm volatile (
         "mov EAX,%1;\n"
-        "shl    eax,0xf;\n" // <--
+        "shl    eax,0x10;\n" // <--
         "mov %0,RAX;\n"
         :"=m"(outRAX)
         :"m"(inEAX)
@@ -17900,9 +18808,9 @@ static int testcase677() {
     );
 
     ASSERT_TAGGED((char *)&outRAX + 0, { });
-    ASSERT_TAGGED((char *)&outRAX + 1, {0});
-    ASSERT_TAGGED((char *)&outRAX + 2, {0,1});
-    ASSERT_TAGGED((char *)&outRAX + 3, {1,2});
+    ASSERT_TAGGED((char *)&outRAX + 1, { });
+    ASSERT_TAGGED((char *)&outRAX + 2, {0});
+    ASSERT_TAGGED((char *)&outRAX + 3, {1});
     ASSERT_TAGGED((char *)&outRAX + 4, { });
     ASSERT_TAGGED((char *)&outRAX + 5, { });
     ASSERT_TAGGED((char *)&outRAX + 6, { });
@@ -17910,7 +18818,123 @@ static int testcase677() {
     return passed;
 }
 
-static int testcase678() {
+static int testcase714() {
+    int passed = 1;
+
+    printf("%s     shl    eax,0x11\n", __func__);fflush(stdout);
+
+    __gtaint_reset();
+    uint32_t inEAX = 1;
+    uint64_t outRAX = 1;
+    __gtaint_setn(&inEAX, 4);
+    asm volatile (
+        "mov EAX,%1;\n"
+        "shl    eax,0x11;\n" // <--
+        "mov %0,RAX;\n"
+        :"=m"(outRAX)
+        :"m"(inEAX)
+        :"rax"
+    );
+
+    ASSERT_TAGGED((char *)&outRAX + 0, { });
+    ASSERT_TAGGED((char *)&outRAX + 1, { });
+    ASSERT_TAGGED((char *)&outRAX + 2, {0});
+    ASSERT_TAGGED((char *)&outRAX + 3, {0,1});
+    ASSERT_TAGGED((char *)&outRAX + 4, { });
+    ASSERT_TAGGED((char *)&outRAX + 5, { });
+    ASSERT_TAGGED((char *)&outRAX + 6, { });
+    ASSERT_TAGGED((char *)&outRAX + 7, { });
+    return passed;
+}
+
+static int testcase715() {
+    int passed = 1;
+
+    printf("%s     shl    eax,0x12\n", __func__);fflush(stdout);
+
+    __gtaint_reset();
+    uint32_t inEAX = 1;
+    uint64_t outRAX = 1;
+    __gtaint_setn(&inEAX, 4);
+    asm volatile (
+        "mov EAX,%1;\n"
+        "shl    eax,0x12;\n" // <--
+        "mov %0,RAX;\n"
+        :"=m"(outRAX)
+        :"m"(inEAX)
+        :"rax"
+    );
+
+    ASSERT_TAGGED((char *)&outRAX + 0, { });
+    ASSERT_TAGGED((char *)&outRAX + 1, { });
+    ASSERT_TAGGED((char *)&outRAX + 2, {0});
+    ASSERT_TAGGED((char *)&outRAX + 3, {0,1});
+    ASSERT_TAGGED((char *)&outRAX + 4, { });
+    ASSERT_TAGGED((char *)&outRAX + 5, { });
+    ASSERT_TAGGED((char *)&outRAX + 6, { });
+    ASSERT_TAGGED((char *)&outRAX + 7, { });
+    return passed;
+}
+
+static int testcase716() {
+    int passed = 1;
+
+    printf("%s     shl    eax,0x2\n", __func__);fflush(stdout);
+
+    __gtaint_reset();
+    uint32_t inEAX = 1;
+    uint64_t outRAX = 1;
+    __gtaint_setn(&inEAX, 4);
+    asm volatile (
+        "mov EAX,%1;\n"
+        "shl    eax,0x2;\n" // <--
+        "mov %0,RAX;\n"
+        :"=m"(outRAX)
+        :"m"(inEAX)
+        :"rax"
+    );
+
+    ASSERT_TAGGED((char *)&outRAX + 0, {0});
+    ASSERT_TAGGED((char *)&outRAX + 1, {0,1});
+    ASSERT_TAGGED((char *)&outRAX + 2, {1,2});
+    ASSERT_TAGGED((char *)&outRAX + 3, {2,3});
+    ASSERT_TAGGED((char *)&outRAX + 4, { });
+    ASSERT_TAGGED((char *)&outRAX + 5, { });
+    ASSERT_TAGGED((char *)&outRAX + 6, { });
+    ASSERT_TAGGED((char *)&outRAX + 7, { });
+    return passed;
+}
+
+static int testcase717() {
+    int passed = 1;
+
+    printf("%s     shl    eax,0x20\n", __func__);fflush(stdout);
+
+    __gtaint_reset();
+    uint32_t inEAX = 1;
+    uint64_t outRAX = 1;
+    __gtaint_setn(&inEAX, 4);
+    asm volatile (
+        "mov EAX,%1;\n"
+        "shl    eax,0x20;\n" // <--
+        "mov %0,RAX;\n"
+        :"=m"(outRAX)
+        :"m"(inEAX)
+        :"rax"
+    );
+
+    ASSERT_TAGGED((char *)&outRAX + 0, {0});
+    ASSERT_TAGGED((char *)&outRAX + 1, {1});
+    ASSERT_TAGGED((char *)&outRAX + 2, {2});
+    ASSERT_TAGGED((char *)&outRAX + 3, {3});
+    ASSERT_TAGGED((char *)&outRAX + 4, { });
+    ASSERT_TAGGED((char *)&outRAX + 5, { });
+    ASSERT_TAGGED((char *)&outRAX + 6, { });
+    ASSERT_TAGGED((char *)&outRAX + 7, { });
+    return passed;
+}
+
+static int testcase718() {
     int passed = 1;
 
     printf("%s     shl    eax,1\n", __func__);fflush(stdout);
@@ -17939,7 +18963,7 @@ static int testcase678() {
     return passed;
 }
 
-static int testcase679() {
+static int testcase719() {
     int passed = 1;
 
     printf("%s     shl    eax,cl\n", __func__);fflush(stdout);
@@ -17971,7 +18995,7 @@ static int testcase679() {
     return passed;
 }
 
-static int testcase680() {
+static int testcase720() {
     int passed = 1;
 
     printf("%s     shl    rax,0x0\n", __func__);fflush(stdout);
@@ -18000,7 +19024,7 @@ static int testcase680() {
     return passed;
 }
 
-static int testcase681() {
+static int testcase721() {
     int passed = 1;
 
     printf("%s     shl    rax,0x1\n", __func__);fflush(stdout);
@@ -18029,10 +19053,10 @@ static int testcase681() {
     return passed;
 }
 
-static int testcase682() {
+static int testcase722() {
     int passed = 1;
 
-    printf("%s     shl    rax,0xf\n", __func__);fflush(stdout);
+    printf("%s     shl    rax,0x2\n", __func__);fflush(stdout);
 
     __gtaint_reset();
     uint64_t inRAX = 1;
@@ -18040,7 +19064,36 @@ static int testcase682() {
     __gtaint_setn(&inRAX, 8);
     asm volatile (
         "mov RAX,%1;\n"
-        "shl    rax,0xf;\n" // <--
+        "shl    rax,0x2;\n" // <--
+        "mov %0,RAX;\n"
+        :"=m"(outRAX)
+        :"m"(inRAX)
+        :"rax"
+    );
+
+    ASSERT_TAGGED((char *)&outRAX + 0, {0});
+    ASSERT_TAGGED((char *)&outRAX + 1, {0,1});
+    ASSERT_TAGGED((char *)&outRAX + 2, {1,2});
+    ASSERT_TAGGED((char *)&outRAX + 3, {2,3});
+    ASSERT_TAGGED((char *)&outRAX + 4, {3,4});
+    ASSERT_TAGGED((char *)&outRAX + 5, {4,5});
+    ASSERT_TAGGED((char *)&outRAX + 6, {5,6});
+    ASSERT_TAGGED((char *)&outRAX + 7, {6,7});
+    return passed;
+}
+
+static int testcase723() {
+    int passed = 1;
+
+    printf("%s     shl    rax,0x20\n", __func__);fflush(stdout);
+
+    __gtaint_reset();
+    uint64_t inRAX = 1;
+    uint64_t outRAX = 1;
+    __gtaint_setn(&inRAX, 8);
+    asm volatile (
+        "mov RAX,%1;\n"
+        "shl    rax,0x20;\n" // <--
         "mov %0,RAX;\n"
         :"=m"(outRAX)
         :"m"(inRAX)
@@ -18048,17 +19101,104 @@ static int testcase682() {
     );
 
     ASSERT_TAGGED((char *)&outRAX + 0, { });
-    ASSERT_TAGGED((char *)&outRAX + 1, {0});
-    ASSERT_TAGGED((char *)&outRAX + 2, {0,1});
-    ASSERT_TAGGED((char *)&outRAX + 3, {1,2});
-    ASSERT_TAGGED((char *)&outRAX + 4, {2,3});
-    ASSERT_TAGGED((char *)&outRAX + 5, {3,4});
-    ASSERT_TAGGED((char *)&outRAX + 6, {4,5});
-    ASSERT_TAGGED((char *)&outRAX + 7, {5,6});
+    ASSERT_TAGGED((char *)&outRAX + 1, { });
+    ASSERT_TAGGED((char *)&outRAX + 2, { });
+    ASSERT_TAGGED((char *)&outRAX + 3, { });
+    ASSERT_TAGGED((char *)&outRAX + 4, {0});
+    ASSERT_TAGGED((char *)&outRAX + 5, {1});
+    ASSERT_TAGGED((char *)&outRAX + 6, {2});
+    ASSERT_TAGGED((char *)&outRAX + 7, {3});
     return passed;
 }
 
-static int testcase683() {
+static int testcase724() {
+    int passed = 1;
+
+    printf("%s     shl    rax,0x21\n", __func__);fflush(stdout);
+
+    __gtaint_reset();
+    uint64_t inRAX = 1;
+    uint64_t outRAX = 1;
+    __gtaint_setn(&inRAX, 8);
+    asm volatile (
+        "mov RAX,%1;\n"
+        "shl    rax,0x21;\n" // <--
+        "mov %0,RAX;\n"
+        :"=m"(outRAX)
+        :"m"(inRAX)
+        :"rax"
+    );
+
+    ASSERT_TAGGED((char *)&outRAX + 0, { });
+    ASSERT_TAGGED((char *)&outRAX + 1, { });
+    ASSERT_TAGGED((char *)&outRAX + 2, { });
+    ASSERT_TAGGED((char *)&outRAX + 3, { });
+    ASSERT_TAGGED((char *)&outRAX + 4, {0});
+    ASSERT_TAGGED((char *)&outRAX + 5, {0,1});
+    ASSERT_TAGGED((char *)&outRAX + 6, {1,2});
+    ASSERT_TAGGED((char *)&outRAX + 7, {2,3});
+    return passed;
+}
+
+static int testcase725() {
+    int passed = 1;
+
+    printf("%s     shl    rax,0x22\n", __func__);fflush(stdout);
+
+    __gtaint_reset();
+    uint64_t inRAX = 1;
+    uint64_t outRAX = 1;
+    __gtaint_setn(&inRAX, 8);
+    asm volatile (
+        "mov RAX,%1;\n"
+        "shl    rax,0x22;\n" // <--
+        "mov %0,RAX;\n"
+        :"=m"(outRAX)
+        :"m"(inRAX)
+        :"rax"
+    );
+
+    ASSERT_TAGGED((char *)&outRAX + 0, { });
+    ASSERT_TAGGED((char *)&outRAX + 1, { });
+    ASSERT_TAGGED((char *)&outRAX + 2, { });
+    ASSERT_TAGGED((char *)&outRAX + 3, { });
+    ASSERT_TAGGED((char *)&outRAX + 4, {0});
+    ASSERT_TAGGED((char *)&outRAX + 5, {0,1});
+    ASSERT_TAGGED((char *)&outRAX + 6, {1,2});
+    ASSERT_TAGGED((char *)&outRAX + 7, {2,3});
+    return passed;
+}
+
+static int testcase726() {
+    int passed = 1;
+
+    printf("%s     shl    rax,0x40\n", __func__);fflush(stdout);
+
+    __gtaint_reset();
+    uint64_t inRAX = 1;
+    uint64_t outRAX = 1;
+    __gtaint_setn(&inRAX, 8);
+    asm volatile (
+        "mov RAX,%1;\n"
+        "shl    rax,0x40;\n" // <--
+        "mov %0,RAX;\n"
+        :"=m"(outRAX)
+        :"m"(inRAX)
+        :"rax"
+    );
+
+    ASSERT_TAGGED((char *)&outRAX + 0, {0});
+    ASSERT_TAGGED((char *)&outRAX + 1, {1});
+    ASSERT_TAGGED((char *)&outRAX + 2, {2});
+    ASSERT_TAGGED((char *)&outRAX + 3, {3});
+    ASSERT_TAGGED((char *)&outRAX + 4, {4});
+    ASSERT_TAGGED((char *)&outRAX + 5, {5});
+    ASSERT_TAGGED((char *)&outRAX + 6, {6});
+    ASSERT_TAGGED((char *)&outRAX + 7, {7});
+    return passed;
+}
+
+static int testcase727() {
     int passed = 1;
 
     printf("%s     shl    rax,1\n", __func__);fflush(stdout);
@@ -18087,7 +19227,7 @@ static int testcase683() {
     return passed;
 }
 
-static int testcase684() {
+static int testcase728() {
     int passed = 1;
 
     printf("%s     shl    rax,cl\n", __func__);fflush(stdout);
@@ -18119,7 +19259,7 @@ static int testcase684() {
     return passed;
 }
 
-static int testcase685() {
+static int testcase729() {
     int passed = 1;
 
     printf("%s     shld   ax,ax,0x0\n", __func__);fflush(stdout);
@@ -18142,10 +19282,10 @@ static int testcase685() {
     return passed;
 }
 
-static int testcase686() {
+static int testcase730() {
     int passed = 1;
 
-    printf("%s     shld   ax,ax,0xf\n", __func__);fflush(stdout);
+    printf("%s     shld   ax,ax,0x10\n", __func__);fflush(stdout);
 
     __gtaint_reset();
     uint16_t inAX = 1;
@@ -18153,7 +19293,30 @@ static int testcase686() {
     __gtaint_setn(&inAX, 2);
     asm volatile (
         "mov AX,%1;\n"
-        "shld   ax,ax,0xf;\n" // <--
+        "shld   ax,ax,0x10;\n" // <--
+        "mov %0,AX;\n"
+        :"=m"(outAX)
+        :"m"(inAX)
+        :"ax"
+    );
+
+    ASSERT_TAGGED((char *)&outAX + 0, {0});
+    ASSERT_TAGGED((char *)&outAX + 1, {1});
+    return passed;
+}
+
+static int testcase731() {
+    int passed = 1;
+
+    printf("%s     shld   ax,ax,0x2\n", __func__);fflush(stdout);
+
+    __gtaint_reset();
+    uint16_t inAX = 1;
+    uint16_t outAX = 1;
+    __gtaint_setn(&inAX, 2);
+    asm volatile (
+        "mov AX,%1;\n"
+        "shld   ax,ax,0x2;\n" // <--
         "mov %0,AX;\n"
         :"=m"(outAX)
         :"m"(inAX)
@@ -18165,7 +19328,76 @@ static int testcase686() {
     return passed;
 }
 
-static int testcase687() {
+static int testcase732() {
+    int passed = 1;
+
+    printf("%s     shld   ax,ax,0x8\n", __func__);fflush(stdout);
+
+    __gtaint_reset();
+    uint16_t inAX = 1;
+    uint16_t outAX = 1;
+    __gtaint_setn(&inAX, 2);
+    asm volatile (
+        "mov AX,%1;\n"
+        "shld   ax,ax,0x8;\n" // <--
+        "mov %0,AX;\n"
+        :"=m"(outAX)
+        :"m"(inAX)
+        :"ax"
+    );
+
+    ASSERT_TAGGED((char *)&outAX + 0, {1});
+    ASSERT_TAGGED((char *)&outAX + 1, {0});
+    return passed;
+}
+
+static int testcase733() {
+    int passed = 1;
+
+    printf("%s     shld   ax,ax,0x9\n", __func__);fflush(stdout);
+
+    __gtaint_reset();
+    uint16_t inAX = 1;
+    uint16_t outAX = 1;
+    __gtaint_setn(&inAX, 2);
+    asm volatile (
+        "mov AX,%1;\n"
+        "shld   ax,ax,0x9;\n" // <--
+        "mov %0,AX;\n"
+        :"=m"(outAX)
+        :"m"(inAX)
+        :"ax"
+    );
+
+    ASSERT_TAGGED((char *)&outAX + 0, {0,1});
+    ASSERT_TAGGED((char *)&outAX + 1, {0,1});
+    return passed;
+}
+
+static int testcase734() {
+    int passed = 1;
+
+    printf("%s     shld   ax,ax,0xa\n", __func__);fflush(stdout);
+
+    __gtaint_reset();
+    uint16_t inAX = 1;
+    uint16_t outAX = 1;
+    __gtaint_setn(&inAX, 2);
+    asm volatile (
+        "mov AX,%1;\n"
+        "shld   ax,ax,0xa;\n" // <--
+        "mov %0,AX;\n"
+        :"=m"(outAX)
+        :"m"(inAX)
+        :"ax"
+    );
+
+    ASSERT_TAGGED((char *)&outAX + 0, {0,1});
+    ASSERT_TAGGED((char *)&outAX + 1, {0,1});
+    return passed;
+}
+
+static int testcase735() {
     int passed = 1;
 
     printf("%s     shld   ax,ax,cl\n", __func__);fflush(stdout);
@@ -18191,7 +19423,7 @@ static int testcase687() {
     return passed;
 }
 
-static int testcase688() {
+static int testcase736() {
     int passed = 1;
 
     printf("%s     shld   ax,cx,0x0\n", __func__);fflush(stdout);
@@ -18217,10 +19449,10 @@ static int testcase688() {
     return passed;
 }
 
-static int testcase689() {
+static int testcase737() {
     int passed = 1;
 
-    printf("%s     shld   ax,cx,0xf\n", __func__);fflush(stdout);
+    printf("%s     shld   ax,cx,0x10\n", __func__);fflush(stdout);
 
     __gtaint_reset();
     uint16_t inAX = 1;
@@ -18231,7 +19463,85 @@ static int testcase689() {
     asm volatile (
         "mov AX,%1;\n"
         "mov CX,%2;\n"
-        "shld   ax,cx,0xf;\n" // <--
+        "shld   ax,cx,0x10;\n" // <--
+        "mov %0,AX;\n"
+        :"=m"(outAX)
+        :"m"(inAX),"m"(inCX)
+        :"ax","cx"
+    );
+
+    ASSERT_TAGGED((char *)&outAX + 0, {2});
+    ASSERT_TAGGED((char *)&outAX + 1, {3});
+    return passed;
+}
+
+static int testcase738() {
+    int passed = 1;
+
+    printf("%s     shld   ax,cx,0x2\n", __func__);fflush(stdout);
+
+    __gtaint_reset();
+    uint16_t inAX = 1;
+    uint16_t inCX = 1;
+    uint16_t outAX = 1;
+    __gtaint_setn(&inAX, 2);
+    __gtaint_setn(&inCX, 2);
+    asm volatile (
+        "mov AX,%1;\n"
+        "mov CX,%2;\n"
+        "shld   ax,cx,0x2;\n" // <--
+        "mov %0,AX;\n"
+        :"=m"(outAX)
+        :"m"(inAX),"m"(inCX)
+        :"ax","cx"
+    );
+
+    ASSERT_TAGGED((char *)&outAX + 0, {0,3});
+    ASSERT_TAGGED((char *)&outAX + 1, {0,1});
+    return passed;
+}
+
+static int testcase739() {
+    int passed = 1;
+
+    printf("%s     shld   ax,cx,0x8\n", __func__);fflush(stdout);
+
+    __gtaint_reset();
+    uint16_t inAX = 1;
+    uint16_t inCX = 1;
+    uint16_t outAX = 1;
+    __gtaint_setn(&inAX, 2);
+    __gtaint_setn(&inCX, 2);
+    asm volatile (
+        "mov AX,%1;\n"
+        "mov CX,%2;\n"
+        "shld   ax,cx,0x8;\n" // <--
+        "mov %0,AX;\n"
+        :"=m"(outAX)
+        :"m"(inAX),"m"(inCX)
+        :"ax","cx"
+    );
+
+    ASSERT_TAGGED((char *)&outAX + 0, {3});
+    ASSERT_TAGGED((char *)&outAX + 1, {0});
+    return passed;
+}
+
+static int testcase740() {
+    int passed = 1;
+
+    printf("%s     shld   ax,cx,0x9\n", __func__);fflush(stdout);
+
+    __gtaint_reset();
+    uint16_t inAX = 1;
+    uint16_t inCX = 1;
+    uint16_t outAX = 1;
+    __gtaint_setn(&inAX, 2);
+    __gtaint_setn(&inCX, 2);
+    asm volatile (
+        "mov AX,%1;\n"
+        "mov CX,%2;\n"
+        "shld   ax,cx,0x9;\n" // <--
         "mov %0,AX;\n"
         :"=m"(outAX)
         :"m"(inAX),"m"(inCX)
@@ -18243,7 +19553,33 @@ static int testcase689() {
     return passed;
 }
 
-static int testcase690() {
+static int testcase741() {
+    int passed = 1;
+
+    printf("%s     shld   ax,cx,0xa\n", __func__);fflush(stdout);
+
+    __gtaint_reset();
+    uint16_t inAX = 1;
+    uint16_t inCX = 1;
+    uint16_t outAX = 1;
+    __gtaint_setn(&inAX, 2);
+    __gtaint_setn(&inCX, 2);
+    asm volatile (
+        "mov AX,%1;\n"
+        "mov CX,%2;\n"
+        "shld   ax,cx,0xa;\n" // <--
+        "mov %0,AX;\n"
+        :"=m"(outAX)
+        :"m"(inAX),"m"(inCX)
+        :"ax","cx"
+    );
+
+    ASSERT_TAGGED((char *)&outAX + 0, {2,3});
+    ASSERT_TAGGED((char *)&outAX + 1, {0,3});
+    return passed;
+}
+
+static int testcase742() {
     int passed = 1;
 
     printf("%s     shld   ax,cx,cl\n", __func__);fflush(stdout);
@@ -18269,7 +19605,7 @@ static int testcase690() {
     return passed;
 }
 
-static int testcase691() {
+static int testcase743() {
     int passed = 1;
 
     printf("%s     shld   eax,eax,0x0\n", __func__);fflush(stdout);
@@ -18298,10 +19634,10 @@ static int testcase691() {
     return passed;
 }
 
-static int testcase692() {
+static int testcase744() {
     int passed = 1;
 
-    printf("%s     shld   eax,eax,0xf\n", __func__);fflush(stdout);
+    printf("%s     shld   eax,eax,0x10\n", __func__);fflush(stdout);
 
     __gtaint_reset();
     uint32_t inEAX = 1;
@@ -18309,17 +19645,17 @@ static int testcase692() {
     __gtaint_setn(&inEAX, 4);
     asm volatile (
         "mov EAX,%1;\n"
-        "shld   eax,eax,0xf;\n" // <--
+        "shld   eax,eax,0x10;\n" // <--
         "mov %0,RAX;\n"
         :"=m"(outRAX)
         :"m"(inEAX)
         :"rax"
     );
 
-    ASSERT_TAGGED((char *)&outRAX + 0, {2,3});
-    ASSERT_TAGGED((char *)&outRAX + 1, {0,3});
-    ASSERT_TAGGED((char *)&outRAX + 2, {0,1});
-    ASSERT_TAGGED((char *)&outRAX + 3, {1,2});
+    ASSERT_TAGGED((char *)&outRAX + 0, {2});
+    ASSERT_TAGGED((char *)&outRAX + 1, {3});
+    ASSERT_TAGGED((char *)&outRAX + 2, {0});
+    ASSERT_TAGGED((char *)&outRAX + 3, {1});
     ASSERT_TAGGED((char *)&outRAX + 4, { });
     ASSERT_TAGGED((char *)&outRAX + 5, { });
     ASSERT_TAGGED((char *)&outRAX + 6, { });
@@ -18327,7 +19663,123 @@ static int testcase692() {
     return passed;
 }
 
-static int testcase693() {
+static int testcase745() {
+    int passed = 1;
+
+    printf("%s     shld   eax,eax,0x11\n", __func__);fflush(stdout);
+
+    __gtaint_reset();
+    uint32_t inEAX = 1;
+    uint64_t outRAX = 1;
+    __gtaint_setn(&inEAX, 4);
+    asm volatile (
+        "mov EAX,%1;\n"
+        "shld   eax,eax,0x11;\n" // <--
+        "mov %0,RAX;\n"
+        :"=m"(outRAX)
+        :"m"(inEAX)
+        :"rax"
+    );
+
+    ASSERT_TAGGED((char *)&outRAX + 0, {1,2});
+    ASSERT_TAGGED((char *)&outRAX + 1, {2,3});
+    ASSERT_TAGGED((char *)&outRAX + 2, {0,3});
+    ASSERT_TAGGED((char *)&outRAX + 3, {0,1});
+    ASSERT_TAGGED((char *)&outRAX + 4, { });
+    ASSERT_TAGGED((char *)&outRAX + 5, { });
+    ASSERT_TAGGED((char *)&outRAX + 6, { });
+    ASSERT_TAGGED((char *)&outRAX + 7, { });
+    return passed;
+}
+
+static int testcase746() {
+    int passed = 1;
+
+    printf("%s     shld   eax,eax,0x12\n", __func__);fflush(stdout);
+
+    __gtaint_reset();
+    uint32_t inEAX = 1;
+    uint64_t outRAX = 1;
+    __gtaint_setn(&inEAX, 4);
+    asm volatile (
+        "mov EAX,%1;\n"
+        "shld   eax,eax,0x12;\n" // <--
+        "mov %0,RAX;\n"
+        :"=m"(outRAX)
+        :"m"(inEAX)
+        :"rax"
+    );
+
+    ASSERT_TAGGED((char *)&outRAX + 0, {1,2});
+    ASSERT_TAGGED((char *)&outRAX + 1, {2,3});
+    ASSERT_TAGGED((char *)&outRAX + 2, {0,3});
+    ASSERT_TAGGED((char *)&outRAX + 3, {0,1});
+    ASSERT_TAGGED((char *)&outRAX + 4, { });
+    ASSERT_TAGGED((char *)&outRAX + 5, { });
+    ASSERT_TAGGED((char *)&outRAX + 6, { });
+    ASSERT_TAGGED((char *)&outRAX + 7, { });
+    return passed;
+}
+
+static int testcase747() {
+    int passed = 1;
+
+    printf("%s     shld   eax,eax,0x2\n", __func__);fflush(stdout);
+
+    __gtaint_reset();
+    uint32_t inEAX = 1;
+    uint64_t outRAX = 1;
+    __gtaint_setn(&inEAX, 4);
+    asm volatile (
+        "mov EAX,%1;\n"
+        "shld   eax,eax,0x2;\n" // <--
+        "mov %0,RAX;\n"
+        :"=m"(outRAX)
+        :"m"(inEAX)
+        :"rax"
+    );
+
+    ASSERT_TAGGED((char *)&outRAX + 0, {0,3});
+    ASSERT_TAGGED((char *)&outRAX + 1, {0,1});
+    ASSERT_TAGGED((char *)&outRAX + 2, {1,2});
+    ASSERT_TAGGED((char *)&outRAX + 3, {2,3});
+    ASSERT_TAGGED((char *)&outRAX + 4, { });
+    ASSERT_TAGGED((char *)&outRAX + 5, { });
+    ASSERT_TAGGED((char *)&outRAX + 6, { });
+    ASSERT_TAGGED((char *)&outRAX + 7, { });
+    return passed;
+}
+
+static int testcase748() {
+    int passed = 1;
+
+    printf("%s     shld   eax,eax,0x20\n", __func__);fflush(stdout);
+
+    __gtaint_reset();
+    uint32_t inEAX = 1;
+    uint64_t outRAX = 1;
+    __gtaint_setn(&inEAX, 4);
+    asm volatile (
+        "mov EAX,%1;\n"
+        "shld   eax,eax,0x20;\n" // <--
+        "mov %0,RAX;\n"
+        :"=m"(outRAX)
+        :"m"(inEAX)
+        :"rax"
+    );
+
+    ASSERT_TAGGED((char *)&outRAX + 0, {0});
+    ASSERT_TAGGED((char *)&outRAX + 1, {1});
+    ASSERT_TAGGED((char *)&outRAX + 2, {2});
+    ASSERT_TAGGED((char *)&outRAX + 3, {3});
+    ASSERT_TAGGED((char *)&outRAX + 4, { });
+    ASSERT_TAGGED((char *)&outRAX + 5, { });
+    ASSERT_TAGGED((char *)&outRAX + 6, { });
+    ASSERT_TAGGED((char *)&outRAX + 7, { });
+    return passed;
+}
+
+static int testcase749() {
     int passed = 1;
 
     printf("%s     shld   eax,eax,cl\n", __func__);fflush(stdout);
@@ -18359,7 +19811,7 @@ static int testcase693() {
     return passed;
 }
 
-static int testcase694() {
+static int testcase750() {
     int passed = 1;
 
     printf("%s     shld   eax,ecx,0x0\n", __func__);fflush(stdout);
@@ -18391,10 +19843,10 @@ static int testcase694() {
     return passed;
 }
 
-static int testcase695() {
+static int testcase751() {
     int passed = 1;
 
-    printf("%s     shld   eax,ecx,0xf\n", __func__);fflush(stdout);
+    printf("%s     shld   eax,ecx,0x10\n", __func__);fflush(stdout);
 
     __gtaint_reset();
     uint32_t inEAX = 1;
@@ -18405,17 +19857,17 @@ static int testcase695() {
     asm volatile (
         "mov EAX,%1;\n"
         "mov ECX,%2;\n"
-        "shld   eax,ecx,0xf;\n" // <--
+        "shld   eax,ecx,0x10;\n" // <--
         "mov %0,RAX;\n"
         :"=m"(outRAX)
         :"m"(inEAX),"m"(inECX)
         :"rax","ecx"
     );
 
-    ASSERT_TAGGED((char *)&outRAX + 0, {6,7});
-    ASSERT_TAGGED((char *)&outRAX + 1, {0,7});
-    ASSERT_TAGGED((char *)&outRAX + 2, {0,1});
-    ASSERT_TAGGED((char *)&outRAX + 3, {1,2});
+    ASSERT_TAGGED((char *)&outRAX + 0, {6});
+    ASSERT_TAGGED((char *)&outRAX + 1, {7});
+    ASSERT_TAGGED((char *)&outRAX + 2, {0});
+    ASSERT_TAGGED((char *)&outRAX + 3, {1});
     ASSERT_TAGGED((char *)&outRAX + 4, { });
     ASSERT_TAGGED((char *)&outRAX + 5, { });
     ASSERT_TAGGED((char *)&outRAX + 6, { });
@@ -18423,7 +19875,135 @@ static int testcase695() {
     return passed;
 }
 
-static int testcase696() {
+static int testcase752() {
+    int passed = 1;
+
+    printf("%s     shld   eax,ecx,0x11\n", __func__);fflush(stdout);
+
+    __gtaint_reset();
+    uint32_t inEAX = 1;
+    uint32_t inECX = 1;
+    uint64_t outRAX = 1;
+    __gtaint_setn(&inEAX, 4);
+    __gtaint_setn(&inECX, 4);
+    asm volatile (
+        "mov EAX,%1;\n"
+        "mov ECX,%2;\n"
+        "shld   eax,ecx,0x11;\n" // <--
+        "mov %0,RAX;\n"
+        :"=m"(outRAX)
+        :"m"(inEAX),"m"(inECX)
+        :"rax","ecx"
+    );
+
+    ASSERT_TAGGED((char *)&outRAX + 0, {5,6});
+    ASSERT_TAGGED((char *)&outRAX + 1, {6,7});
+    ASSERT_TAGGED((char *)&outRAX + 2, {0,7});
+    ASSERT_TAGGED((char *)&outRAX + 3, {0,1});
+    ASSERT_TAGGED((char *)&outRAX + 4, { });
+    ASSERT_TAGGED((char *)&outRAX + 5, { });
+    ASSERT_TAGGED((char *)&outRAX + 6, { });
+    ASSERT_TAGGED((char *)&outRAX + 7, { });
+    return passed;
+}
+
+static int testcase753() {
+    int passed = 1;
+
+    printf("%s     shld   eax,ecx,0x12\n", __func__);fflush(stdout);
+
+    __gtaint_reset();
+    uint32_t inEAX = 1;
+    uint32_t inECX = 1;
+    uint64_t outRAX = 1;
+    __gtaint_setn(&inEAX, 4);
+    __gtaint_setn(&inECX, 4);
+    asm volatile (
+        "mov EAX,%1;\n"
+        "mov ECX,%2;\n"
+        "shld   eax,ecx,0x12;\n" // <--
+        "mov %0,RAX;\n"
+        :"=m"(outRAX)
+        :"m"(inEAX),"m"(inECX)
+        :"rax","ecx"
+    );
+
+    ASSERT_TAGGED((char *)&outRAX + 0, {5,6});
+    ASSERT_TAGGED((char *)&outRAX + 1, {6,7});
+    ASSERT_TAGGED((char *)&outRAX + 2, {0,7});
+    ASSERT_TAGGED((char *)&outRAX + 3, {0,1});
+    ASSERT_TAGGED((char *)&outRAX + 4, { });
+    ASSERT_TAGGED((char *)&outRAX + 5, { });
+    ASSERT_TAGGED((char *)&outRAX + 6, { });
+    ASSERT_TAGGED((char *)&outRAX + 7, { });
+    return passed;
+}
+
+static int testcase754() {
+    int passed = 1;
+
+    printf("%s     shld   eax,ecx,0x2\n", __func__);fflush(stdout);
+
+    __gtaint_reset();
+    uint32_t inEAX = 1;
+    uint32_t inECX = 1;
+    uint64_t outRAX = 1;
+    __gtaint_setn(&inEAX, 4);
+    __gtaint_setn(&inECX, 4);
+    asm volatile (
+        "mov EAX,%1;\n"
+        "mov ECX,%2;\n"
+        "shld   eax,ecx,0x2;\n" // <--
+        "mov %0,RAX;\n"
+        :"=m"(outRAX)
+        :"m"(inEAX),"m"(inECX)
+        :"rax","ecx"
+    );
+
+    ASSERT_TAGGED((char *)&outRAX + 0, {0,7});
+    ASSERT_TAGGED((char *)&outRAX + 1, {0,1});
+    ASSERT_TAGGED((char *)&outRAX + 2, {1,2});
+    ASSERT_TAGGED((char *)&outRAX + 3, {2,3});
+    ASSERT_TAGGED((char *)&outRAX + 4, { });
+    ASSERT_TAGGED((char *)&outRAX + 5, { });
+    ASSERT_TAGGED((char *)&outRAX + 6, { });
+    ASSERT_TAGGED((char *)&outRAX + 7, { });
+    return passed;
+}
+
+static int testcase755() {
+    int passed = 1;
+
+    printf("%s     shld   eax,ecx,0x20\n", __func__);fflush(stdout);
+
+    __gtaint_reset();
+    uint32_t inEAX = 1;
+    uint32_t inECX = 1;
+    uint64_t outRAX = 1;
+    __gtaint_setn(&inEAX, 4);
+    __gtaint_setn(&inECX, 4);
+    asm volatile (
+        "mov EAX,%1;\n"
+        "mov ECX,%2;\n"
+        "shld   eax,ecx,0x20;\n" // <--
+        "mov %0,RAX;\n"
+        :"=m"(outRAX)
+        :"m"(inEAX),"m"(inECX)
+        :"rax","ecx"
+    );
+
+    ASSERT_TAGGED((char *)&outRAX + 0, {0});
+    ASSERT_TAGGED((char *)&outRAX + 1, {1});
+    ASSERT_TAGGED((char *)&outRAX + 2, {2});
+    ASSERT_TAGGED((char *)&outRAX + 3, {3});
+    ASSERT_TAGGED((char *)&outRAX + 4, { });
+    ASSERT_TAGGED((char *)&outRAX + 5, { });
+    ASSERT_TAGGED((char *)&outRAX + 6, { });
+    ASSERT_TAGGED((char *)&outRAX + 7, { });
+    return passed;
+}
+
+static int testcase756() {
     int passed = 1;
 
     printf("%s     shld   eax,ecx,cl\n", __func__);fflush(stdout);
@@ -18455,7 +20035,7 @@ static int testcase696() {
     return passed;
 }
 
-static int testcase697() {
+static int testcase757() {
     int passed = 1;
 
     printf("%s     shld   rax,rax,0x0\n", __func__);fflush(stdout);
@@ -18484,10 +20064,10 @@ static int testcase697() {
     return passed;
 }
 
-static int testcase698() {
+static int testcase758() {
     int passed = 1;
 
-    printf("%s     shld   rax,rax,0xf\n", __func__);fflush(stdout);
+    printf("%s     shld   rax,rax,0x2\n", __func__);fflush(stdout);
 
     __gtaint_reset();
     uint64_t inRAX = 1;
@@ -18495,25 +20075,141 @@ static int testcase698() {
     __gtaint_setn(&inRAX, 8);
     asm volatile (
         "mov RAX,%1;\n"
-        "shld   rax,rax,0xf;\n" // <--
+        "shld   rax,rax,0x2;\n" // <--
         "mov %0,RAX;\n"
         :"=m"(outRAX)
         :"m"(inRAX)
         :"rax"
     );
 
-    ASSERT_TAGGED((char *)&outRAX + 0, {6,7});
-    ASSERT_TAGGED((char *)&outRAX + 1, {0,7});
-    ASSERT_TAGGED((char *)&outRAX + 2, {0,1});
-    ASSERT_TAGGED((char *)&outRAX + 3, {1,2});
-    ASSERT_TAGGED((char *)&outRAX + 4, {2,3});
-    ASSERT_TAGGED((char *)&outRAX + 5, {3,4});
-    ASSERT_TAGGED((char *)&outRAX + 6, {4,5});
-    ASSERT_TAGGED((char *)&outRAX + 7, {5,6});
+    ASSERT_TAGGED((char *)&outRAX + 0, {0,7});
+    ASSERT_TAGGED((char *)&outRAX + 1, {0,1});
+    ASSERT_TAGGED((char *)&outRAX + 2, {1,2});
+    ASSERT_TAGGED((char *)&outRAX + 3, {2,3});
+    ASSERT_TAGGED((char *)&outRAX + 4, {3,4});
+    ASSERT_TAGGED((char *)&outRAX + 5, {4,5});
+    ASSERT_TAGGED((char *)&outRAX + 6, {5,6});
+    ASSERT_TAGGED((char *)&outRAX + 7, {6,7});
     return passed;
 }
 
-static int testcase699() {
+static int testcase759() {
+    int passed = 1;
+
+    printf("%s     shld   rax,rax,0x20\n", __func__);fflush(stdout);
+
+    __gtaint_reset();
+    uint64_t inRAX = 1;
+    uint64_t outRAX = 1;
+    __gtaint_setn(&inRAX, 8);
+    asm volatile (
+        "mov RAX,%1;\n"
+        "shld   rax,rax,0x20;\n" // <--
+        "mov %0,RAX;\n"
+        :"=m"(outRAX)
+        :"m"(inRAX)
+        :"rax"
+    );
+
+    ASSERT_TAGGED((char *)&outRAX + 0, {4});
+    ASSERT_TAGGED((char *)&outRAX + 1, {5});
+    ASSERT_TAGGED((char *)&outRAX + 2, {6});
+    ASSERT_TAGGED((char *)&outRAX + 3, {7});
+    ASSERT_TAGGED((char *)&outRAX + 4, {0});
+    ASSERT_TAGGED((char *)&outRAX + 5, {1});
+    ASSERT_TAGGED((char *)&outRAX + 6, {2});
+    ASSERT_TAGGED((char *)&outRAX + 7, {3});
+    return passed;
+}
+
+static int testcase760() {
+    int passed = 1;
+
+    printf("%s     shld   rax,rax,0x21\n", __func__);fflush(stdout);
+
+    __gtaint_reset();
+    uint64_t inRAX = 1;
+    uint64_t outRAX = 1;
+    __gtaint_setn(&inRAX, 8);
+    asm volatile (
+        "mov RAX,%1;\n"
+        "shld   rax,rax,0x21;\n" // <--
+        "mov %0,RAX;\n"
+        :"=m"(outRAX)
+        :"m"(inRAX)
+        :"rax"
+    );
+
+    ASSERT_TAGGED((char *)&outRAX + 0, {3,4});
+    ASSERT_TAGGED((char *)&outRAX + 1, {4,5});
+    ASSERT_TAGGED((char *)&outRAX + 2, {5,6});
+    ASSERT_TAGGED((char *)&outRAX + 3, {6,7});
+    ASSERT_TAGGED((char *)&outRAX + 4, {0,7});
+    ASSERT_TAGGED((char *)&outRAX + 5, {0,1});
+    ASSERT_TAGGED((char *)&outRAX + 6, {1,2});
+    ASSERT_TAGGED((char *)&outRAX + 7, {2,3});
+    return passed;
+}
+
+static int testcase761() {
+    int passed = 1;
+
+    printf("%s     shld   rax,rax,0x22\n", __func__);fflush(stdout);
+
+    __gtaint_reset();
+    uint64_t inRAX = 1;
+    uint64_t outRAX = 1;
+    __gtaint_setn(&inRAX, 8);
+    asm volatile (
+        "mov RAX,%1;\n"
+        "shld   rax,rax,0x22;\n" // <--
+        "mov %0,RAX;\n"
+        :"=m"(outRAX)
+        :"m"(inRAX)
+        :"rax"
+    );
+
+    ASSERT_TAGGED((char *)&outRAX + 0, {3,4});
+    ASSERT_TAGGED((char *)&outRAX + 1, {4,5});
+    ASSERT_TAGGED((char *)&outRAX + 2, {5,6});
+    ASSERT_TAGGED((char *)&outRAX + 3, {6,7});
+    ASSERT_TAGGED((char *)&outRAX + 4, {0,7});
+    ASSERT_TAGGED((char *)&outRAX + 5, {0,1});
+    ASSERT_TAGGED((char *)&outRAX + 6, {1,2});
+    ASSERT_TAGGED((char *)&outRAX + 7, {2,3});
+    return passed;
+}
+
+static int testcase762() {
+    int passed = 1;
+
+    printf("%s     shld   rax,rax,0x40\n", __func__);fflush(stdout);
+
+    __gtaint_reset();
+    uint64_t inRAX = 1;
+    uint64_t outRAX = 1;
+    __gtaint_setn(&inRAX, 8);
+    asm volatile (
+        "mov RAX,%1;\n"
+        "shld   rax,rax,0x40;\n" // <--
+        "mov %0,RAX;\n"
+        :"=m"(outRAX)
+        :"m"(inRAX)
+        :"rax"
+    );
+
+    ASSERT_TAGGED((char *)&outRAX + 0, {0});
+    ASSERT_TAGGED((char *)&outRAX + 1, {1});
+    ASSERT_TAGGED((char *)&outRAX + 2, {2});
+    ASSERT_TAGGED((char *)&outRAX + 3, {3});
+    ASSERT_TAGGED((char *)&outRAX + 4, {4});
+    ASSERT_TAGGED((char *)&outRAX + 5, {5});
+    ASSERT_TAGGED((char *)&outRAX + 6, {6});
+    ASSERT_TAGGED((char *)&outRAX + 7, {7});
+    return passed;
+}
+
+static int testcase763() {
     int passed = 1;
 
     printf("%s     shld   rax,rax,cl\n", __func__);fflush(stdout);
@@ -18545,7 +20241,7 @@ static int testcase699() {
     return passed;
 }
 
-static int testcase700() {
+static int testcase764() {
     int passed = 1;
 
     printf("%s     shld   rax,rcx,0x0\n", __func__);fflush(stdout);
@@ -18577,10 +20273,10 @@ static int testcase700() {
     return passed;
 }
 
-static int testcase701() {
+static int testcase765() {
     int passed = 1;
 
-    printf("%s     shld   rax,rcx,0xf\n", __func__);fflush(stdout);
+    printf("%s     shld   rax,rcx,0x2\n", __func__);fflush(stdout);
 
     __gtaint_reset();
     uint64_t inRAX = 1;
@@ -18591,25 +20287,153 @@ static int testcase701() {
     asm volatile (
         "mov RAX,%1;\n"
         "mov RCX,%2;\n"
-        "shld   rax,rcx,0xf;\n" // <--
+        "shld   rax,rcx,0x2;\n" // <--
         "mov %0,RAX;\n"
         :"=m"(outRAX)
         :"m"(inRAX),"m"(inRCX)
         :"rax","rcx"
     );
 
-    ASSERT_TAGGED((char *)&outRAX + 0, {14,15});
-    ASSERT_TAGGED((char *)&outRAX + 1, {0,15});
-    ASSERT_TAGGED((char *)&outRAX + 2, {0,1});
-    ASSERT_TAGGED((char *)&outRAX + 3, {1,2});
-    ASSERT_TAGGED((char *)&outRAX + 4, {2,3});
-    ASSERT_TAGGED((char *)&outRAX + 5, {3,4});
-    ASSERT_TAGGED((char *)&outRAX + 6, {4,5});
-    ASSERT_TAGGED((char *)&outRAX + 7, {5,6});
+    ASSERT_TAGGED((char *)&outRAX + 0, {0,15});
+    ASSERT_TAGGED((char *)&outRAX + 1, {0,1});
+    ASSERT_TAGGED((char *)&outRAX + 2, {1,2});
+    ASSERT_TAGGED((char *)&outRAX + 3, {2,3});
+    ASSERT_TAGGED((char *)&outRAX + 4, {3,4});
+    ASSERT_TAGGED((char *)&outRAX + 5, {4,5});
+    ASSERT_TAGGED((char *)&outRAX + 6, {5,6});
+    ASSERT_TAGGED((char *)&outRAX + 7, {6,7});
     return passed;
 }
 
-static int testcase702() {
+static int testcase766() {
+    int passed = 1;
+
+    printf("%s     shld   rax,rcx,0x20\n", __func__);fflush(stdout);
+
+    __gtaint_reset();
+    uint64_t inRAX = 1;
+    uint64_t inRCX = 1;
+    uint64_t outRAX = 1;
+    __gtaint_setn(&inRAX, 8);
+    __gtaint_setn(&inRCX, 8);
+    asm volatile (
+        "mov RAX,%1;\n"
+        "mov RCX,%2;\n"
+        "shld   rax,rcx,0x20;\n" // <--
+        "mov %0,RAX;\n"
+        :"=m"(outRAX)
+        :"m"(inRAX),"m"(inRCX)
+        :"rax","rcx"
+    );
+
+    ASSERT_TAGGED((char *)&outRAX + 0, {12});
+    ASSERT_TAGGED((char *)&outRAX + 1, {13});
+    ASSERT_TAGGED((char *)&outRAX + 2, {14});
+    ASSERT_TAGGED((char *)&outRAX + 3, {15});
+    ASSERT_TAGGED((char *)&outRAX + 4, {0});
+    ASSERT_TAGGED((char *)&outRAX + 5, {1});
+    ASSERT_TAGGED((char *)&outRAX + 6, {2});
+    ASSERT_TAGGED((char *)&outRAX + 7, {3});
+    return passed;
+}
+
+static int testcase767() {
+    int passed = 1;
+
+    printf("%s     shld   rax,rcx,0x21\n", __func__);fflush(stdout);
+
+    __gtaint_reset();
+    uint64_t inRAX = 1;
+    uint64_t inRCX = 1;
+    uint64_t outRAX = 1;
+    __gtaint_setn(&inRAX, 8);
+    __gtaint_setn(&inRCX, 8);
+    asm volatile (
+        "mov RAX,%1;\n"
+        "mov RCX,%2;\n"
+        "shld   rax,rcx,0x21;\n" // <--
+        "mov %0,RAX;\n"
+        :"=m"(outRAX)
+        :"m"(inRAX),"m"(inRCX)
+        :"rax","rcx"
+    );
+
+    ASSERT_TAGGED((char *)&outRAX + 0, {11,12});
+    ASSERT_TAGGED((char *)&outRAX + 1, {12,13});
+    ASSERT_TAGGED((char *)&outRAX + 2, {13,14});
+    ASSERT_TAGGED((char *)&outRAX + 3, {14,15});
+    ASSERT_TAGGED((char *)&outRAX + 4, {0,15});
+    ASSERT_TAGGED((char *)&outRAX + 5, {0,1});
+    ASSERT_TAGGED((char *)&outRAX + 6, {1,2});
+    ASSERT_TAGGED((char *)&outRAX + 7, {2,3});
+    return passed;
+}
+
+static int testcase768() {
+    int passed = 1;
+
+    printf("%s     shld   rax,rcx,0x22\n", __func__);fflush(stdout);
+
+    __gtaint_reset();
+    uint64_t inRAX = 1;
+    uint64_t inRCX = 1;
+    uint64_t outRAX = 1;
+    __gtaint_setn(&inRAX, 8);
+    __gtaint_setn(&inRCX, 8);
+    asm volatile (
+        "mov RAX,%1;\n"
+        "mov RCX,%2;\n"
+        "shld   rax,rcx,0x22;\n" // <--
+        "mov %0,RAX;\n"
+        :"=m"(outRAX)
+        :"m"(inRAX),"m"(inRCX)
+        :"rax","rcx"
+    );
+
+    ASSERT_TAGGED((char *)&outRAX + 0, {11,12});
+    ASSERT_TAGGED((char *)&outRAX + 1, {12,13});
+    ASSERT_TAGGED((char *)&outRAX + 2, {13,14});
+    ASSERT_TAGGED((char *)&outRAX + 3, {14,15});
+    ASSERT_TAGGED((char *)&outRAX + 4, {0,15});
+    ASSERT_TAGGED((char *)&outRAX + 5, {0,1});
+    ASSERT_TAGGED((char *)&outRAX + 6, {1,2});
+    ASSERT_TAGGED((char *)&outRAX + 7, {2,3});
+    return passed;
+}
+
+static int testcase769() {
+    int passed = 1;
+
+    printf("%s     shld   rax,rcx,0x40\n", __func__);fflush(stdout);
+
+    __gtaint_reset();
+    uint64_t inRAX = 1;
+    uint64_t inRCX = 1;
+    uint64_t outRAX = 1;
+    __gtaint_setn(&inRAX, 8);
+    __gtaint_setn(&inRCX, 8);
+    asm volatile (
+        "mov RAX,%1;\n"
+        "mov RCX,%2;\n"
+        "shld   rax,rcx,0x40;\n" // <--
+        "mov %0,RAX;\n"
+        :"=m"(outRAX)
+        :"m"(inRAX),"m"(inRCX)
+        :"rax","rcx"
+    );
+
+    ASSERT_TAGGED((char *)&outRAX + 0, {0});
+    ASSERT_TAGGED((char *)&outRAX + 1, {1});
+    ASSERT_TAGGED((char *)&outRAX + 2, {2});
+    ASSERT_TAGGED((char *)&outRAX + 3, {3});
+    ASSERT_TAGGED((char *)&outRAX + 4, {4});
+    ASSERT_TAGGED((char *)&outRAX + 5, {5});
+    ASSERT_TAGGED((char *)&outRAX + 6, {6});
+    ASSERT_TAGGED((char *)&outRAX + 7, {7});
+    return passed;
+}
+
+static int testcase770() {
     int passed = 1;
 
     printf("%s     shld   rax,rcx,cl\n", __func__);fflush(stdout);
@@ -18641,7 +20465,7 @@ static int testcase702() {
     return passed;
 }
 
-static int testcase703() {
+static int testcase771() {
     int passed = 1;
 
     printf("%s     shlx   eax,eax,eax\n", __func__);fflush(stdout);
@@ -18670,7 +20494,7 @@ static int testcase703() {
     return passed;
 }
 
-static int testcase704() {
+static int testcase772() {
     int passed = 1;
 
     printf("%s     shlx   eax,eax,ecx\n", __func__);fflush(stdout);
@@ -18702,7 +20526,7 @@ static int testcase704() {
     return passed;
 }
 
-static int testcase705() {
+static int testcase773() {
     int passed = 1;
 
     printf("%s     shlx   eax,ecx,ecx\n", __func__);fflush(stdout);
@@ -18731,7 +20555,7 @@ static int testcase705() {
     return passed;
 }
 
-static int testcase706() {
+static int testcase774() {
     int passed = 1;
 
     printf("%s     shlx   eax,ecx,edx\n", __func__);fflush(stdout);
@@ -18763,7 +20587,7 @@ static int testcase706() {
     return passed;
 }
 
-static int testcase707() {
+static int testcase775() {
     int passed = 1;
 
     printf("%s     shlx   rax,rax,rax\n", __func__);fflush(stdout);
@@ -18792,7 +20616,7 @@ static int testcase707() {
     return passed;
 }
 
-static int testcase708() {
+static int testcase776() {
     int passed = 1;
 
     printf("%s     shlx   rax,rax,rcx\n", __func__);fflush(stdout);
@@ -18824,7 +20648,7 @@ static int testcase708() {
     return passed;
 }
 
-static int testcase709() {
+static int testcase777() {
     int passed = 1;
 
     printf("%s     shlx   rax,rcx,rcx\n", __func__);fflush(stdout);
@@ -18853,7 +20677,7 @@ static int testcase709() {
     return passed;
 }
 
-static int testcase710() {
+static int testcase778() {
     int passed = 1;
 
     printf("%s     shlx   rax,rcx,rdx\n", __func__);fflush(stdout);
@@ -18885,7 +20709,7 @@ static int testcase710() {
     return passed;
 }
 
-static int testcase711() {
+static int testcase779() {
     int passed = 1;
 
     printf("%s     shr    ah,0x0\n", __func__);fflush(stdout);
@@ -18907,7 +20731,7 @@ static int testcase711() {
     return passed;
 }
 
-static int testcase712() {
+static int testcase780() {
     int passed = 1;
 
     printf("%s     shr    ah,0x1\n", __func__);fflush(stdout);
@@ -18929,10 +20753,10 @@ static int testcase712() {
     return passed;
 }
 
-static int testcase713() {
+static int testcase781() {
     int passed = 1;
 
-    printf("%s     shr    ah,0xf\n", __func__);fflush(stdout);
+    printf("%s     shr    ah,0x2\n", __func__);fflush(stdout);
 
     __gtaint_reset();
     uint8_t inAH = 1;
@@ -18940,7 +20764,95 @@ static int testcase713() {
     __gtaint_setn(&inAH, 1);
     asm volatile (
         "mov AH,%1;\n"
-        "shr    ah,0xf;\n" // <--
+        "shr    ah,0x2;\n" // <--
+        "mov %0,AH;\n"
+        :"=m"(outAH)
+        :"m"(inAH)
+        :"ah"
+    );
+
+    ASSERT_TAGGED((char *)&outAH + 0, {0});
+    return passed;
+}
+
+static int testcase782() {
+    int passed = 1;
+
+    printf("%s     shr    ah,0x4\n", __func__);fflush(stdout);
+
+    __gtaint_reset();
+    uint8_t inAH = 1;
+    uint8_t outAH = 1;
+    __gtaint_setn(&inAH, 1);
+    asm volatile (
+        "mov AH,%1;\n"
+        "shr    ah,0x4;\n" // <--
+        "mov %0,AH;\n"
+        :"=m"(outAH)
+        :"m"(inAH)
+        :"ah"
+    );
+
+    ASSERT_TAGGED((char *)&outAH + 0, {0});
+    return passed;
+}
+
+static int testcase783() {
+    int passed = 1;
+
+    printf("%s     shr    ah,0x5\n", __func__);fflush(stdout);
+
+    __gtaint_reset();
+    uint8_t inAH = 1;
+    uint8_t outAH = 1;
+    __gtaint_setn(&inAH, 1);
+    asm volatile (
+        "mov AH,%1;\n"
+        "shr    ah,0x5;\n" // <--
+        "mov %0,AH;\n"
+        :"=m"(outAH)
+        :"m"(inAH)
+        :"ah"
+    );
+
+    ASSERT_TAGGED((char *)&outAH + 0, {0});
+    return passed;
+}
+
+static int testcase784() {
+    int passed = 1;
+
+    printf("%s     shr    ah,0x6\n", __func__);fflush(stdout);
+
+    __gtaint_reset();
+    uint8_t inAH = 1;
+    uint8_t outAH = 1;
+    __gtaint_setn(&inAH, 1);
+    asm volatile (
+        "mov AH,%1;\n"
+        "shr    ah,0x6;\n" // <--
+        "mov %0,AH;\n"
+        :"=m"(outAH)
+        :"m"(inAH)
+        :"ah"
+    );
+
+    ASSERT_TAGGED((char *)&outAH + 0, {0});
+    return passed;
+}
+
+static int testcase785() {
+    int passed = 1;
+
+    printf("%s     shr    ah,0x8\n", __func__);fflush(stdout);
+
+    __gtaint_reset();
+    uint8_t inAH = 1;
+    uint8_t outAH = 1;
+    __gtaint_setn(&inAH, 1);
+    asm volatile (
+        "mov AH,%1;\n"
+        "shr    ah,0x8;\n" // <--
         "mov %0,AH;\n"
         :"=m"(outAH)
         :"m"(inAH)
@@ -18951,7 +20863,7 @@ static int testcase713() {
     return passed;
 }
 
-static int testcase714() {
+static int testcase786() {
     int passed = 1;
 
     printf("%s     shr    ah,1\n", __func__);fflush(stdout);
@@ -18973,7 +20885,7 @@ static int testcase714() {
     return passed;
 }
 
-static int testcase715() {
+static int testcase787() {
     int passed = 1;
 
     printf("%s     shr    al,0x0\n", __func__);fflush(stdout);
@@ -18995,7 +20907,7 @@ static int testcase715() {
     return passed;
 }
 
-static int testcase716() {
+static int testcase788() {
     int passed = 1;
 
     printf("%s     shr    al,0x1\n", __func__);fflush(stdout);
@@ -19017,10 +20929,10 @@ static int testcase716() {
     return passed;
 }
 
-static int testcase717() {
+static int testcase789() {
     int passed = 1;
 
-    printf("%s     shr    al,0xf\n", __func__);fflush(stdout);
+    printf("%s     shr    al,0x2\n", __func__);fflush(stdout);
 
     __gtaint_reset();
     uint8_t inAL = 1;
@@ -19028,7 +20940,95 @@ static int testcase717() {
     __gtaint_setn(&inAL, 1);
     asm volatile (
         "mov AL,%1;\n"
-        "shr    al,0xf;\n" // <--
+        "shr    al,0x2;\n" // <--
+        "mov %0,AL;\n"
+        :"=m"(outAL)
+        :"m"(inAL)
+        :"al"
+    );
+
+    ASSERT_TAGGED((char *)&outAL + 0, {0});
+    return passed;
+}
+
+static int testcase790() {
+    int passed = 1;
+
+    printf("%s     shr    al,0x4\n", __func__);fflush(stdout);
+
+    __gtaint_reset();
+    uint8_t inAL = 1;
+    uint8_t outAL = 1;
+    __gtaint_setn(&inAL, 1);
+    asm volatile (
+        "mov AL,%1;\n"
+        "shr    al,0x4;\n" // <--
+        "mov %0,AL;\n"
+        :"=m"(outAL)
+        :"m"(inAL)
+        :"al"
+    );
+
+    ASSERT_TAGGED((char *)&outAL + 0, {0});
+    return passed;
+}
+
+static int testcase791() {
+    int passed = 1;
+
+    printf("%s     shr    al,0x5\n", __func__);fflush(stdout);
+
+    __gtaint_reset();
+    uint8_t inAL = 1;
+    uint8_t outAL = 1;
+    __gtaint_setn(&inAL, 1);
+    asm volatile (
+        "mov AL,%1;\n"
+        "shr    al,0x5;\n" // <--
+        "mov %0,AL;\n"
+        :"=m"(outAL)
+        :"m"(inAL)
+        :"al"
+    );
+
+    ASSERT_TAGGED((char *)&outAL + 0, {0});
+    return passed;
+}
+
+static int testcase792() {
+    int passed = 1;
+
+    printf("%s     shr    al,0x6\n", __func__);fflush(stdout);
+
+    __gtaint_reset();
+    uint8_t inAL = 1;
+    uint8_t outAL = 1;
+    __gtaint_setn(&inAL, 1);
+    asm volatile (
+        "mov AL,%1;\n"
+        "shr    al,0x6;\n" // <--
+        "mov %0,AL;\n"
+        :"=m"(outAL)
+        :"m"(inAL)
+        :"al"
+    );
+
+    ASSERT_TAGGED((char *)&outAL + 0, {0});
+    return passed;
+}
+
+static int testcase793() {
+    int passed = 1;
+
+    printf("%s     shr    al,0x8\n", __func__);fflush(stdout);
+
+    __gtaint_reset();
+    uint8_t inAL = 1;
+    uint8_t outAL = 1;
+    __gtaint_setn(&inAL, 1);
+    asm volatile (
+        "mov AL,%1;\n"
+        "shr    al,0x8;\n" // <--
         "mov %0,AL;\n"
         :"=m"(outAL)
         :"m"(inAL)
@@ -19039,7 +21039,7 @@ static int testcase717() {
     return passed;
 }
 
-static int testcase718() {
+static int testcase794() {
     int passed = 1;
 
     printf("%s     shr    al,1\n", __func__);fflush(stdout);
@@ -19061,7 +21061,7 @@ static int testcase718() {
     return passed;
 }
 
-static int testcase719() {
+static int testcase795() {
     int passed = 1;
 
     printf("%s     shr    al,cl\n", __func__);fflush(stdout);
@@ -19086,7 +21086,7 @@ static int testcase719() {
     return passed;
 }
 
-static int testcase720() {
+static int testcase796() {
     int passed = 1;
 
     printf("%s     shr    ax,0x0\n", __func__);fflush(stdout);
@@ -19109,7 +21109,7 @@ static int testcase720() {
     return passed;
 }
 
-static int testcase721() {
+static int testcase797() {
     int passed = 1;
 
     printf("%s     shr    ax,0x1\n", __func__);fflush(stdout);
@@ -19132,10 +21132,10 @@ static int testcase721() {
     return passed;
 }
 
-static int testcase722() {
+static int testcase798() {
     int passed = 1;
 
-    printf("%s     shr    ax,0xf\n", __func__);fflush(stdout);
+    printf("%s     shr    ax,0x10\n", __func__);fflush(stdout);
 
     __gtaint_reset();
     uint16_t inAX = 1;
@@ -19143,7 +21143,53 @@ static int testcase722() {
     __gtaint_setn(&inAX, 2);
     asm volatile (
         "mov AX,%1;\n"
-        "shr    ax,0xf;\n" // <--
+        "shr    ax,0x10;\n" // <--
+        "mov %0,AX;\n"
+        :"=m"(outAX)
+        :"m"(inAX)
+        :"ax"
+    );
+
+    ASSERT_TAGGED((char *)&outAX + 0, { });
+    ASSERT_TAGGED((char *)&outAX + 1, { });
+    return passed;
+}
+
+static int testcase799() {
+    int passed = 1;
+
+    printf("%s     shr    ax,0x2\n", __func__);fflush(stdout);
+
+    __gtaint_reset();
+    uint16_t inAX = 1;
+    uint16_t outAX = 1;
+    __gtaint_setn(&inAX, 2);
+    asm volatile (
+        "mov AX,%1;\n"
+        "shr    ax,0x2;\n" // <--
+        "mov %0,AX;\n"
+        :"=m"(outAX)
+        :"m"(inAX)
+        :"ax"
+    );
+
+    ASSERT_TAGGED((char *)&outAX + 0, {0,1});
+    ASSERT_TAGGED((char *)&outAX + 1, {1});
+    return passed;
+}
+
+static int testcase800() {
+    int passed = 1;
+
+    printf("%s     shr    ax,0x8\n", __func__);fflush(stdout);
+
+    __gtaint_reset();
+    uint16_t inAX = 1;
+    uint16_t outAX = 1;
+    __gtaint_setn(&inAX, 2);
+    asm volatile (
+        "mov AX,%1;\n"
+        "shr    ax,0x8;\n" // <--
         "mov %0,AX;\n"
         :"=m"(outAX)
         :"m"(inAX)
@@ -19155,7 +21201,53 @@ static int testcase722() {
     return passed;
 }
 
-static int testcase723() {
+static int testcase801() {
+    int passed = 1;
+
+    printf("%s     shr    ax,0x9\n", __func__);fflush(stdout);
+
+    __gtaint_reset();
+    uint16_t inAX = 1;
+    uint16_t outAX = 1;
+    __gtaint_setn(&inAX, 2);
+    asm volatile (
+        "mov AX,%1;\n"
+        "shr    ax,0x9;\n" // <--
+        "mov %0,AX;\n"
+        :"=m"(outAX)
+        :"m"(inAX)
+        :"ax"
+    );
+
+    ASSERT_TAGGED((char *)&outAX + 0, {1});
+    ASSERT_TAGGED((char *)&outAX + 1, { });
+    return passed;
+}
+
+static int testcase802() {
+    int passed = 1;
+
+    printf("%s     shr    ax,0xa\n", __func__);fflush(stdout);
+
+    __gtaint_reset();
+    uint16_t inAX = 1;
+    uint16_t outAX = 1;
+    __gtaint_setn(&inAX, 2);
+    asm volatile (
+        "mov AX,%1;\n"
+        "shr    ax,0xa;\n" // <--
+        "mov %0,AX;\n"
+        :"=m"(outAX)
+        :"m"(inAX)
+        :"ax"
+    );
+
+    ASSERT_TAGGED((char *)&outAX + 0, {1});
+    ASSERT_TAGGED((char *)&outAX + 1, { });
+    return passed;
+}
+
+static int testcase803() {
     int passed = 1;
 
     printf("%s     shr    ax,1\n", __func__);fflush(stdout);
@@ -19178,7 +21270,7 @@ static int testcase723() {
     return passed;
 }
 
-static int testcase724() {
+static int testcase804() {
     int passed = 1;
 
     printf("%s     shr    ax,cl\n", __func__);fflush(stdout);
@@ -19204,7 +21296,7 @@ static int testcase724() {
     return passed;
 }
 
-static int testcase725() {
+static int testcase805() {
     int passed = 1;
 
     printf("%s     shr    eax,0x0\n", __func__);fflush(stdout);
@@ -19233,7 +21325,7 @@ static int testcase725() {
     return passed;
 }
 
-static int testcase726() {
+static int testcase806() {
     int passed = 1;
 
     printf("%s     shr    eax,0x1\n", __func__);fflush(stdout);
@@ -19262,10 +21354,10 @@ static int testcase726() {
     return passed;
 }
 
-static int testcase727() {
+static int testcase807() {
     int passed = 1;
 
-    printf("%s     shr    eax,0xf\n", __func__);fflush(stdout);
+    printf("%s     shr    eax,0x10\n", __func__);fflush(stdout);
 
     __gtaint_reset();
     uint32_t inEAX = 1;
@@ -19273,16 +21365,16 @@ static int testcase727() {
     __gtaint_setn(&inEAX, 4);
     asm volatile (
         "mov EAX,%1;\n"
-        "shr    eax,0xf;\n" // <--
+        "shr    eax,0x10;\n" // <--
         "mov %0,RAX;\n"
         :"=m"(outRAX)
         :"m"(inEAX)
         :"rax"
     );
 
-    ASSERT_TAGGED((char *)&outRAX + 0, {1,2});
-    ASSERT_TAGGED((char *)&outRAX + 1, {2,3});
-    ASSERT_TAGGED((char *)&outRAX + 2, {3});
+    ASSERT_TAGGED((char *)&outRAX + 0, {2});
+    ASSERT_TAGGED((char *)&outRAX + 1, {3});
+    ASSERT_TAGGED((char *)&outRAX + 2, { });
     ASSERT_TAGGED((char *)&outRAX + 3, { });
     ASSERT_TAGGED((char *)&outRAX + 4, { });
     ASSERT_TAGGED((char *)&outRAX + 5, { });
@@ -19291,7 +21383,123 @@ static int testcase727() {
     return passed;
 }
 
-static int testcase728() {
+static int testcase808() {
+    int passed = 1;
+
+    printf("%s     shr    eax,0x11\n", __func__);fflush(stdout);
+
+    __gtaint_reset();
+    uint32_t inEAX = 1;
+    uint64_t outRAX = 1;
+    __gtaint_setn(&inEAX, 4);
+    asm volatile (
+        "mov EAX,%1;\n"
+        "shr    eax,0x11;\n" // <--
+        "mov %0,RAX;\n"
+        :"=m"(outRAX)
+        :"m"(inEAX)
+        :"rax"
+    );
+
+    ASSERT_TAGGED((char *)&outRAX + 0, {2,3});
+    ASSERT_TAGGED((char *)&outRAX + 1, {3});
+    ASSERT_TAGGED((char *)&outRAX + 2, { });
+    ASSERT_TAGGED((char *)&outRAX + 3, { });
+    ASSERT_TAGGED((char *)&outRAX + 4, { });
+    ASSERT_TAGGED((char *)&outRAX + 5, { });
+    ASSERT_TAGGED((char *)&outRAX + 6, { });
+    ASSERT_TAGGED((char *)&outRAX + 7, { });
+    return passed;
+}
+
+static int testcase809() {
+    int passed = 1;
+
+    printf("%s     shr    eax,0x12\n", __func__);fflush(stdout);
+
+    __gtaint_reset();
+    uint32_t inEAX = 1;
+    uint64_t outRAX = 1;
+    __gtaint_setn(&inEAX, 4);
+    asm volatile (
+        "mov EAX,%1;\n"
+        "shr    eax,0x12;\n" // <--
+        "mov %0,RAX;\n"
+        :"=m"(outRAX)
+        :"m"(inEAX)
+        :"rax"
+    );
+
+    ASSERT_TAGGED((char *)&outRAX + 0, {2,3});
+    ASSERT_TAGGED((char *)&outRAX + 1, {3});
+    ASSERT_TAGGED((char *)&outRAX + 2, { });
+    ASSERT_TAGGED((char *)&outRAX + 3, { });
+    ASSERT_TAGGED((char *)&outRAX + 4, { });
+    ASSERT_TAGGED((char *)&outRAX + 5, { });
+    ASSERT_TAGGED((char *)&outRAX + 6, { });
+    ASSERT_TAGGED((char *)&outRAX + 7, { });
+    return passed;
+}
+
+static int testcase810() {
+    int passed = 1;
+
+    printf("%s     shr    eax,0x2\n", __func__);fflush(stdout);
+
+    __gtaint_reset();
+    uint32_t inEAX = 1;
+    uint64_t outRAX = 1;
+    __gtaint_setn(&inEAX, 4);
+    asm volatile (
+        "mov EAX,%1;\n"
+        "shr    eax,0x2;\n" // <--
+        "mov %0,RAX;\n"
+        :"=m"(outRAX)
+        :"m"(inEAX)
+        :"rax"
+    );
+
+    ASSERT_TAGGED((char *)&outRAX + 0, {0,1});
+    ASSERT_TAGGED((char *)&outRAX + 1, {1,2});
+    ASSERT_TAGGED((char *)&outRAX + 2, {2,3});
+    ASSERT_TAGGED((char *)&outRAX + 3, {3});
+    ASSERT_TAGGED((char *)&outRAX + 4, { });
+    ASSERT_TAGGED((char *)&outRAX + 5, { });
+    ASSERT_TAGGED((char *)&outRAX + 6, { });
+    ASSERT_TAGGED((char *)&outRAX + 7, { });
+    return passed;
+}
+
+static int testcase811() {
+    int passed = 1;
+
+    printf("%s     shr    eax,0x20\n", __func__);fflush(stdout);
+
+    __gtaint_reset();
+    uint32_t inEAX = 1;
+    uint64_t outRAX = 1;
+    __gtaint_setn(&inEAX, 4);
+    asm volatile (
+        "mov EAX,%1;\n"
+        "shr    eax,0x20;\n" // <--
+        "mov %0,RAX;\n"
+        :"=m"(outRAX)
+        :"m"(inEAX)
+        :"rax"
+    );
+
+    ASSERT_TAGGED((char *)&outRAX + 0, {0});
+    ASSERT_TAGGED((char *)&outRAX + 1, {1});
+    ASSERT_TAGGED((char *)&outRAX + 2, {2});
+    ASSERT_TAGGED((char *)&outRAX + 3, {3});
+    ASSERT_TAGGED((char *)&outRAX + 4, { });
+    ASSERT_TAGGED((char *)&outRAX + 5, { });
+    ASSERT_TAGGED((char *)&outRAX + 6, { });
+    ASSERT_TAGGED((char *)&outRAX + 7, { });
+    return passed;
+}
+
+static int testcase812() {
     int passed = 1;
 
     printf("%s     shr    eax,1\n", __func__);fflush(stdout);
@@ -19320,7 +21528,7 @@ static int testcase728() {
     return passed;
 }
 
-static int testcase729() {
+static int testcase813() {
     int passed = 1;
 
     printf("%s     shr    eax,cl\n", __func__);fflush(stdout);
@@ -19352,7 +21560,7 @@ static int testcase729() {
     return passed;
 }
 
-static int testcase730() {
+static int testcase814() {
     int passed = 1;
 
     printf("%s     shr    rax,0x0\n", __func__);fflush(stdout);
@@ -19381,7 +21589,7 @@ static int testcase730() {
     return passed;
 }
 
-static int testcase731() {
+static int testcase815() {
     int passed = 1;
 
     printf("%s     shr    rax,0x1\n", __func__);fflush(stdout);
@@ -19410,10 +21618,10 @@ static int testcase731() {
     return passed;
 }
 
-static int testcase732() {
+static int testcase816() {
     int passed = 1;
 
-    printf("%s     shr    rax,0xf\n", __func__);fflush(stdout);
+    printf("%s     shr    rax,0x2\n", __func__);fflush(stdout);
 
     __gtaint_reset();
     uint64_t inRAX = 1;
@@ -19421,25 +21629,141 @@ static int testcase732() {
     __gtaint_setn(&inRAX, 8);
     asm volatile (
         "mov RAX,%1;\n"
-        "shr    rax,0xf;\n" // <--
+        "shr    rax,0x2;\n" // <--
         "mov %0,RAX;\n"
         :"=m"(outRAX)
         :"m"(inRAX)
         :"rax"
     );
 
-    ASSERT_TAGGED((char *)&outRAX + 0, {1,2});
-    ASSERT_TAGGED((char *)&outRAX + 1, {2,3});
-    ASSERT_TAGGED((char *)&outRAX + 2, {3,4});
-    ASSERT_TAGGED((char *)&outRAX + 3, {4,5});
-    ASSERT_TAGGED((char *)&outRAX + 4, {5,6});
-    ASSERT_TAGGED((char *)&outRAX + 5, {6,7});
-    ASSERT_TAGGED((char *)&outRAX + 6, {7});
+    ASSERT_TAGGED((char *)&outRAX + 0, {0,1});
+    ASSERT_TAGGED((char *)&outRAX + 1, {1,2});
+    ASSERT_TAGGED((char *)&outRAX + 2, {2,3});
+    ASSERT_TAGGED((char *)&outRAX + 3, {3,4});
+    ASSERT_TAGGED((char *)&outRAX + 4, {4,5});
+    ASSERT_TAGGED((char *)&outRAX + 5, {5,6});
+    ASSERT_TAGGED((char *)&outRAX + 6, {6,7});
+    ASSERT_TAGGED((char *)&outRAX + 7, {7});
+    return passed;
+}
+
+static int testcase817() {
+    int passed = 1;
+
+    printf("%s     shr    rax,0x20\n", __func__);fflush(stdout);
+
+    __gtaint_reset();
+    uint64_t inRAX = 1;
+    uint64_t outRAX = 1;
+    __gtaint_setn(&inRAX, 8);
+    asm volatile (
+        "mov RAX,%1;\n"
+        "shr    rax,0x20;\n" // <--
+        "mov %0,RAX;\n"
+        :"=m"(outRAX)
+        :"m"(inRAX)
+        :"rax"
+    );
+
+    ASSERT_TAGGED((char *)&outRAX + 0, {4});
+    ASSERT_TAGGED((char *)&outRAX + 1, {5});
+    ASSERT_TAGGED((char *)&outRAX + 2, {6});
+    ASSERT_TAGGED((char *)&outRAX + 3, {7});
+    ASSERT_TAGGED((char *)&outRAX + 4, { });
+    ASSERT_TAGGED((char *)&outRAX + 5, { });
+    ASSERT_TAGGED((char *)&outRAX + 6, { });
     ASSERT_TAGGED((char *)&outRAX + 7, { });
     return passed;
 }
 
-static int testcase733() {
+static int testcase818() {
+    int passed = 1;
+
+    printf("%s     shr    rax,0x21\n", __func__);fflush(stdout);
+
+    __gtaint_reset();
+    uint64_t inRAX = 1;
+    uint64_t outRAX = 1;
+    __gtaint_setn(&inRAX, 8);
+    asm volatile (
+        "mov RAX,%1;\n"
+        "shr    rax,0x21;\n" // <--
+        "mov %0,RAX;\n"
+        :"=m"(outRAX)
+        :"m"(inRAX)
+        :"rax"
+    );
+
+    ASSERT_TAGGED((char *)&outRAX + 0, {4,5});
+    ASSERT_TAGGED((char *)&outRAX + 1, {5,6});
+    ASSERT_TAGGED((char *)&outRAX + 2, {6,7});
+    ASSERT_TAGGED((char *)&outRAX + 3, {7});
+    ASSERT_TAGGED((char *)&outRAX + 4, { });
+    ASSERT_TAGGED((char *)&outRAX + 5, { });
+    ASSERT_TAGGED((char *)&outRAX + 6, { });
+    ASSERT_TAGGED((char *)&outRAX + 7, { });
+    return passed;
+}
+
+static int testcase819() {
+    int passed = 1;
+
+    printf("%s     shr    rax,0x22\n", __func__);fflush(stdout);
+
+    __gtaint_reset();
+    uint64_t inRAX = 1;
+    uint64_t outRAX = 1;
+    __gtaint_setn(&inRAX, 8);
+    asm volatile (
+        "mov RAX,%1;\n"
+        "shr    rax,0x22;\n" // <--
+        "mov %0,RAX;\n"
+        :"=m"(outRAX)
+        :"m"(inRAX)
+        :"rax"
+    );
+
+    ASSERT_TAGGED((char *)&outRAX + 0, {4,5});
+    ASSERT_TAGGED((char *)&outRAX + 1, {5,6});
+    ASSERT_TAGGED((char *)&outRAX + 2, {6,7});
+    ASSERT_TAGGED((char *)&outRAX + 3, {7});
+    ASSERT_TAGGED((char *)&outRAX + 4, { });
+    ASSERT_TAGGED((char *)&outRAX + 5, { });
+    ASSERT_TAGGED((char *)&outRAX + 6, { });
+    ASSERT_TAGGED((char *)&outRAX + 7, { });
+    return passed;
+}
+
+static int testcase820() {
+    int passed = 1;
+
+    printf("%s     shr    rax,0x40\n", __func__);fflush(stdout);
+
+    __gtaint_reset();
+    uint64_t inRAX = 1;
+    uint64_t outRAX = 1;
+    __gtaint_setn(&inRAX, 8);
+    asm volatile (
+        "mov RAX,%1;\n"
+        "shr    rax,0x40;\n" // <--
+        "mov %0,RAX;\n"
+        :"=m"(outRAX)
+        :"m"(inRAX)
+        :"rax"
+    );
+
+    ASSERT_TAGGED((char *)&outRAX + 0, {0});
+    ASSERT_TAGGED((char *)&outRAX + 1, {1});
+    ASSERT_TAGGED((char *)&outRAX + 2, {2});
+    ASSERT_TAGGED((char *)&outRAX + 3, {3});
+    ASSERT_TAGGED((char *)&outRAX + 4, {4});
+    ASSERT_TAGGED((char *)&outRAX + 5, {5});
+    ASSERT_TAGGED((char *)&outRAX + 6, {6});
+    ASSERT_TAGGED((char *)&outRAX + 7, {7});
+    return passed;
+}
+
+static int testcase821() {
     int passed = 1;
 
     printf("%s     shr    rax,1\n", __func__);fflush(stdout);
@@ -19468,7 +21792,7 @@ static int testcase733() {
     return passed;
 }
 
-static int testcase734() {
+static int testcase822() {
     int passed = 1;
 
     printf("%s     shr    rax,cl\n", __func__);fflush(stdout);
@@ -19500,7 +21824,7 @@ static int testcase734() {
     return passed;
 }
 
-static int testcase735() {
+static int testcase823() {
     int passed = 1;
 
     printf("%s     shrd   ax,ax,0x0\n", __func__);fflush(stdout);
@@ -19523,10 +21847,10 @@ static int testcase735() {
     return passed;
 }
 
-static int testcase736() {
+static int testcase824() {
     int passed = 1;
 
-    printf("%s     shrd   ax,ax,0xf\n", __func__);fflush(stdout);
+    printf("%s     shrd   ax,ax,0x10\n", __func__);fflush(stdout);
 
     __gtaint_reset();
     uint16_t inAX = 1;
@@ -19534,7 +21858,30 @@ static int testcase736() {
     __gtaint_setn(&inAX, 2);
     asm volatile (
         "mov AX,%1;\n"
-        "shrd   ax,ax,0xf;\n" // <--
+        "shrd   ax,ax,0x10;\n" // <--
+        "mov %0,AX;\n"
+        :"=m"(outAX)
+        :"m"(inAX)
+        :"ax"
+    );
+
+    ASSERT_TAGGED((char *)&outAX + 0, {0});
+    ASSERT_TAGGED((char *)&outAX + 1, {1});
+    return passed;
+}
+
+static int testcase825() {
+    int passed = 1;
+
+    printf("%s     shrd   ax,ax,0x2\n", __func__);fflush(stdout);
+
+    __gtaint_reset();
+    uint16_t inAX = 1;
+    uint16_t outAX = 1;
+    __gtaint_setn(&inAX, 2);
+    asm volatile (
+        "mov AX,%1;\n"
+        "shrd   ax,ax,0x2;\n" // <--
         "mov %0,AX;\n"
         :"=m"(outAX)
         :"m"(inAX)
@@ -19546,7 +21893,76 @@ static int testcase736() {
     return passed;
 }
 
-static int testcase737() {
+static int testcase826() {
+    int passed = 1;
+
+    printf("%s     shrd   ax,ax,0x8\n", __func__);fflush(stdout);
+
+    __gtaint_reset();
+    uint16_t inAX = 1;
+    uint16_t outAX = 1;
+    __gtaint_setn(&inAX, 2);
+    asm volatile (
+        "mov AX,%1;\n"
+        "shrd   ax,ax,0x8;\n" // <--
+        "mov %0,AX;\n"
+        :"=m"(outAX)
+        :"m"(inAX)
+        :"ax"
+    );
+
+    ASSERT_TAGGED((char *)&outAX + 0, {1});
+    ASSERT_TAGGED((char *)&outAX + 1, {0});
+    return passed;
+}
+
+static int testcase827() {
+    int passed = 1;
+
+    printf("%s     shrd   ax,ax,0x9\n", __func__);fflush(stdout);
+
+    __gtaint_reset();
+    uint16_t inAX = 1;
+    uint16_t outAX = 1;
+    __gtaint_setn(&inAX, 2);
+    asm volatile (
+        "mov AX,%1;\n"
+        "shrd   ax,ax,0x9;\n" // <--
+        "mov %0,AX;\n"
+        :"=m"(outAX)
+        :"m"(inAX)
+        :"ax"
+    );
+
+    ASSERT_TAGGED((char *)&outAX + 0, {0,1});
+    ASSERT_TAGGED((char *)&outAX + 1, {0,1});
+    return passed;
+}
+
+static int testcase828() {
+    int passed = 1;
+
+    printf("%s     shrd   ax,ax,0xa\n", __func__);fflush(stdout);
+
+    __gtaint_reset();
+    uint16_t inAX = 1;
+    uint16_t outAX = 1;
+    __gtaint_setn(&inAX, 2);
+    asm volatile (
+        "mov AX,%1;\n"
+        "shrd   ax,ax,0xa;\n" // <--
+        "mov %0,AX;\n"
+        :"=m"(outAX)
+        :"m"(inAX)
+        :"ax"
+    );
+
+    ASSERT_TAGGED((char *)&outAX + 0, {0,1});
+    ASSERT_TAGGED((char *)&outAX + 1, {0,1});
+    return passed;
+}
+
+static int testcase829() {
     int passed = 1;
 
     printf("%s     shrd   ax,ax,cl\n", __func__);fflush(stdout);
@@ -19572,7 +21988,7 @@ static int testcase737() {
     return passed;
 }
 
-static int testcase738() {
+static int testcase830() {
     int passed = 1;
 
     printf("%s     shrd   ax,cx,0x0\n", __func__);fflush(stdout);
@@ -19598,10 +22014,10 @@ static int testcase738() {
     return passed;
 }
 
-static int testcase739() {
+static int testcase831() {
     int passed = 1;
 
-    printf("%s     shrd   ax,cx,0xf\n", __func__);fflush(stdout);
+    printf("%s     shrd   ax,cx,0x10\n", __func__);fflush(stdout);
 
     __gtaint_reset();
     uint16_t inAX = 1;
@@ -19612,7 +22028,85 @@ static int testcase739() {
     asm volatile (
         "mov AX,%1;\n"
         "mov CX,%2;\n"
-        "shrd   ax,cx,0xf;\n" // <--
+        "shrd   ax,cx,0x10;\n" // <--
+        "mov %0,AX;\n"
+        :"=m"(outAX)
+        :"m"(inAX),"m"(inCX)
+        :"ax","cx"
+    );
+
+    ASSERT_TAGGED((char *)&outAX + 0, {2});
+    ASSERT_TAGGED((char *)&outAX + 1, {3});
+    return passed;
+}
+
+static int testcase832() {
+    int passed = 1;
+
+    printf("%s     shrd   ax,cx,0x2\n", __func__);fflush(stdout);
+
+    __gtaint_reset();
+    uint16_t inAX = 1;
+    uint16_t inCX = 1;
+    uint16_t outAX = 1;
+    __gtaint_setn(&inAX, 2);
+    __gtaint_setn(&inCX, 2);
+    asm volatile (
+        "mov AX,%1;\n"
+        "mov CX,%2;\n"
+        "shrd   ax,cx,0x2;\n" // <--
+        "mov %0,AX;\n"
+        :"=m"(outAX)
+        :"m"(inAX),"m"(inCX)
+        :"ax","cx"
+    );
+
+    ASSERT_TAGGED((char *)&outAX + 0, {0,1});
+    ASSERT_TAGGED((char *)&outAX + 1, {1,2});
+    return passed;
+}
+
+static int testcase833() {
+    int passed = 1;
+
+    printf("%s     shrd   ax,cx,0x8\n", __func__);fflush(stdout);
+
+    __gtaint_reset();
+    uint16_t inAX = 1;
+    uint16_t inCX = 1;
+    uint16_t outAX = 1;
+    __gtaint_setn(&inAX, 2);
+    __gtaint_setn(&inCX, 2);
+    asm volatile (
+        "mov AX,%1;\n"
+        "mov CX,%2;\n"
+        "shrd   ax,cx,0x8;\n" // <--
+        "mov %0,AX;\n"
+        :"=m"(outAX)
+        :"m"(inAX),"m"(inCX)
+        :"ax","cx"
+    );
+
+    ASSERT_TAGGED((char *)&outAX + 0, {1});
+    ASSERT_TAGGED((char *)&outAX + 1, {2});
+    return passed;
+}
+
+static int testcase834() {
+    int passed = 1;
+
+    printf("%s     shrd   ax,cx,0x9\n", __func__);fflush(stdout);
+
+    __gtaint_reset();
+    uint16_t inAX = 1;
+    uint16_t inCX = 1;
+    uint16_t outAX = 1;
+    __gtaint_setn(&inAX, 2);
+    __gtaint_setn(&inCX, 2);
+    asm volatile (
+        "mov AX,%1;\n"
+        "mov CX,%2;\n"
+        "shrd   ax,cx,0x9;\n" // <--
         "mov %0,AX;\n"
         :"=m"(outAX)
         :"m"(inAX),"m"(inCX)
@@ -19624,7 +22118,33 @@ static int testcase739() {
     return passed;
 }
 
-static int testcase740() {
+static int testcase835() {
+    int passed = 1;
+
+    printf("%s     shrd   ax,cx,0xa\n", __func__);fflush(stdout);
+
+    __gtaint_reset();
+    uint16_t inAX = 1;
+    uint16_t inCX = 1;
+    uint16_t outAX = 1;
+    __gtaint_setn(&inAX, 2);
+    __gtaint_setn(&inCX, 2);
+    asm volatile (
+        "mov AX,%1;\n"
+        "mov CX,%2;\n"
+        "shrd   ax,cx,0xa;\n" // <--
+        "mov %0,AX;\n"
+        :"=m"(outAX)
+        :"m"(inAX),"m"(inCX)
+        :"ax","cx"
+    );
+
+    ASSERT_TAGGED((char *)&outAX + 0, {1,2});
+    ASSERT_TAGGED((char *)&outAX + 1, {2,3});
+    return passed;
+}
+
+static int testcase836() {
     int passed = 1;
 
     printf("%s     shrd   ax,cx,cl\n", __func__);fflush(stdout);
@@ -19650,7 +22170,7 @@ static int testcase740() {
     return passed;
 }
 
-static int testcase741() {
+static int testcase837() {
     int passed = 1;
 
     printf("%s     shrd   eax,eax,0x0\n", __func__);fflush(stdout);
@@ -19679,10 +22199,10 @@ static int testcase741() {
     return passed;
 }
 
-static int testcase742() {
+static int testcase838() {
     int passed = 1;
 
-    printf("%s     shrd   eax,eax,0xf\n", __func__);fflush(stdout);
+    printf("%s     shrd   eax,eax,0x10\n", __func__);fflush(stdout);
 
     __gtaint_reset();
     uint32_t inEAX = 1;
@@ -19690,17 +22210,17 @@ static int testcase742() {
     __gtaint_setn(&inEAX, 4);
     asm volatile (
         "mov EAX,%1;\n"
-        "shrd   eax,eax,0xf;\n" // <--
+        "shrd   eax,eax,0x10;\n" // <--
         "mov %0,RAX;\n"
         :"=m"(outRAX)
         :"m"(inEAX)
         :"rax"
     );
 
-    ASSERT_TAGGED((char *)&outRAX + 0, {1,2});
-    ASSERT_TAGGED((char *)&outRAX + 1, {2,3});
-    ASSERT_TAGGED((char *)&outRAX + 2, {0,3});
-    ASSERT_TAGGED((char *)&outRAX + 3, {0,1});
+    ASSERT_TAGGED((char *)&outRAX + 0, {2});
+    ASSERT_TAGGED((char *)&outRAX + 1, {3});
+    ASSERT_TAGGED((char *)&outRAX + 2, {0});
+    ASSERT_TAGGED((char *)&outRAX + 3, {1});
     ASSERT_TAGGED((char *)&outRAX + 4, { });
     ASSERT_TAGGED((char *)&outRAX + 5, { });
     ASSERT_TAGGED((char *)&outRAX + 6, { });
@@ -19708,7 +22228,123 @@ static int testcase742() {
     return passed;
 }
 
-static int testcase743() {
+static int testcase839() {
+    int passed = 1;
+
+    printf("%s     shrd   eax,eax,0x11\n", __func__);fflush(stdout);
+
+    __gtaint_reset();
+    uint32_t inEAX = 1;
+    uint64_t outRAX = 1;
+    __gtaint_setn(&inEAX, 4);
+    asm volatile (
+        "mov EAX,%1;\n"
+        "shrd   eax,eax,0x11;\n" // <--
+        "mov %0,RAX;\n"
+        :"=m"(outRAX)
+        :"m"(inEAX)
+        :"rax"
+    );
+
+    ASSERT_TAGGED((char *)&outRAX + 0, {2,3});
+    ASSERT_TAGGED((char *)&outRAX + 1, {0,3});
+    ASSERT_TAGGED((char *)&outRAX + 2, {0,1});
+    ASSERT_TAGGED((char *)&outRAX + 3, {1,2});
+    ASSERT_TAGGED((char *)&outRAX + 4, { });
+    ASSERT_TAGGED((char *)&outRAX + 5, { });
+    ASSERT_TAGGED((char *)&outRAX + 6, { });
+    ASSERT_TAGGED((char *)&outRAX + 7, { });
+    return passed;
+}
+
+static int testcase840() {
+    int passed = 1;
+
+    printf("%s     shrd   eax,eax,0x12\n", __func__);fflush(stdout);
+
+    __gtaint_reset();
+    uint32_t inEAX = 1;
+    uint64_t outRAX = 1;
+    __gtaint_setn(&inEAX, 4);
+    asm volatile (
+        "mov EAX,%1;\n"
+        "shrd   eax,eax,0x12;\n" // <--
+        "mov %0,RAX;\n"
+        :"=m"(outRAX)
+        :"m"(inEAX)
+        :"rax"
+    );
+
+    ASSERT_TAGGED((char *)&outRAX + 0, {2,3});
+    ASSERT_TAGGED((char *)&outRAX + 1, {0,3});
+    ASSERT_TAGGED((char *)&outRAX + 2, {0,1});
+    ASSERT_TAGGED((char *)&outRAX + 3, {1,2});
+    ASSERT_TAGGED((char *)&outRAX + 4, { });
+    ASSERT_TAGGED((char *)&outRAX + 5, { });
+    ASSERT_TAGGED((char *)&outRAX + 6, { });
+    ASSERT_TAGGED((char *)&outRAX + 7, { });
+    return passed;
+}
+
+static int testcase841() {
+    int passed = 1;
+
+    printf("%s     shrd   eax,eax,0x2\n", __func__);fflush(stdout);
+
+    __gtaint_reset();
+    uint32_t inEAX = 1;
+    uint64_t outRAX = 1;
+    __gtaint_setn(&inEAX, 4);
+    asm volatile (
+        "mov EAX,%1;\n"
+        "shrd   eax,eax,0x2;\n" // <--
+        "mov %0,RAX;\n"
+        :"=m"(outRAX)
+        :"m"(inEAX)
+        :"rax"
+    );
+
+    ASSERT_TAGGED((char *)&outRAX + 0, {0,1});
+    ASSERT_TAGGED((char *)&outRAX + 1, {1,2});
+    ASSERT_TAGGED((char *)&outRAX + 2, {2,3});
+    ASSERT_TAGGED((char *)&outRAX + 3, {0,3});
+    ASSERT_TAGGED((char *)&outRAX + 4, { });
+    ASSERT_TAGGED((char *)&outRAX + 5, { });
+    ASSERT_TAGGED((char *)&outRAX + 6, { });
+    ASSERT_TAGGED((char *)&outRAX + 7, { });
+    return passed;
+}
+
+static int testcase842() {
+    int passed = 1;
+
+    printf("%s     shrd   eax,eax,0x20\n", __func__);fflush(stdout);
+
+    __gtaint_reset();
+    uint32_t inEAX = 1;
+    uint64_t outRAX = 1;
+    __gtaint_setn(&inEAX, 4);
+    asm volatile (
+        "mov EAX,%1;\n"
+        "shrd   eax,eax,0x20;\n" // <--
+        "mov %0,RAX;\n"
+        :"=m"(outRAX)
+        :"m"(inEAX)
+        :"rax"
+    );
+
+    ASSERT_TAGGED((char *)&outRAX + 0, {0});
+    ASSERT_TAGGED((char *)&outRAX + 1, {1});
+    ASSERT_TAGGED((char *)&outRAX + 2, {2});
+    ASSERT_TAGGED((char *)&outRAX + 3, {3});
+    ASSERT_TAGGED((char *)&outRAX + 4, { });
+    ASSERT_TAGGED((char *)&outRAX + 5, { });
+    ASSERT_TAGGED((char *)&outRAX + 6, { });
+    ASSERT_TAGGED((char *)&outRAX + 7, { });
+    return passed;
+}
+
+static int testcase843() {
     int passed = 1;
 
     printf("%s     shrd   eax,eax,cl\n", __func__);fflush(stdout);
@@ -19740,7 +22376,7 @@ static int testcase743() {
     return passed;
 }
 
-static int testcase744() {
+static int testcase844() {
     int passed = 1;
 
     printf("%s     shrd   eax,ecx,0x0\n", __func__);fflush(stdout);
@@ -19772,10 +22408,10 @@ static int testcase744() {
     return passed;
 }
 
-static int testcase745() {
+static int testcase845() {
     int passed = 1;
 
-    printf("%s     shrd   eax,ecx,0xf\n", __func__);fflush(stdout);
+    printf("%s     shrd   eax,ecx,0x10\n", __func__);fflush(stdout);
 
     __gtaint_reset();
     uint32_t inEAX = 1;
@@ -19786,17 +22422,17 @@ static int testcase745() {
     asm volatile (
         "mov EAX,%1;\n"
         "mov ECX,%2;\n"
-        "shrd   eax,ecx,0xf;\n" // <--
+        "shrd   eax,ecx,0x10;\n" // <--
         "mov %0,RAX;\n"
         :"=m"(outRAX)
         :"m"(inEAX),"m"(inECX)
         :"rax","ecx"
     );
 
-    ASSERT_TAGGED((char *)&outRAX + 0, {1,2});
-    ASSERT_TAGGED((char *)&outRAX + 1, {2,3});
-    ASSERT_TAGGED((char *)&outRAX + 2, {3,4});
-    ASSERT_TAGGED((char *)&outRAX + 3, {4,5});
+    ASSERT_TAGGED((char *)&outRAX + 0, {2});
+    ASSERT_TAGGED((char *)&outRAX + 1, {3});
+    ASSERT_TAGGED((char *)&outRAX + 2, {4});
+    ASSERT_TAGGED((char *)&outRAX + 3, {5});
     ASSERT_TAGGED((char *)&outRAX + 4, { });
     ASSERT_TAGGED((char *)&outRAX + 5, { });
     ASSERT_TAGGED((char *)&outRAX + 6, { });
@@ -19804,7 +22440,135 @@ static int testcase745() {
     return passed;
 }
 
-static int testcase746() {
+static int testcase846() {
+    int passed = 1;
+
+    printf("%s     shrd   eax,ecx,0x11\n", __func__);fflush(stdout);
+
+    __gtaint_reset();
+    uint32_t inEAX = 1;
+    uint32_t inECX = 1;
+    uint64_t outRAX = 1;
+    __gtaint_setn(&inEAX, 4);
+    __gtaint_setn(&inECX, 4);
+    asm volatile (
+        "mov EAX,%1;\n"
+        "mov ECX,%2;\n"
+        "shrd   eax,ecx,0x11;\n" // <--
+        "mov %0,RAX;\n"
+        :"=m"(outRAX)
+        :"m"(inEAX),"m"(inECX)
+        :"rax","ecx"
+    );
+
+    ASSERT_TAGGED((char *)&outRAX + 0, {2,3});
+    ASSERT_TAGGED((char *)&outRAX + 1, {3,4});
+    ASSERT_TAGGED((char *)&outRAX + 2, {4,5});
+    ASSERT_TAGGED((char *)&outRAX + 3, {5,6});
+    ASSERT_TAGGED((char *)&outRAX + 4, { });
+    ASSERT_TAGGED((char *)&outRAX + 5, { });
+    ASSERT_TAGGED((char *)&outRAX + 6, { });
+    ASSERT_TAGGED((char *)&outRAX + 7, { });
+    return passed;
+}
+
+static int testcase847() {
+    int passed = 1;
+
+    printf("%s     shrd   eax,ecx,0x12\n", __func__);fflush(stdout);
+
+    __gtaint_reset();
+    uint32_t inEAX = 1;
+    uint32_t inECX = 1;
+    uint64_t outRAX = 1;
+    __gtaint_setn(&inEAX, 4);
+    __gtaint_setn(&inECX, 4);
+    asm volatile (
+        "mov EAX,%1;\n"
+        "mov ECX,%2;\n"
+        "shrd   eax,ecx,0x12;\n" // <--
+        "mov %0,RAX;\n"
+        :"=m"(outRAX)
+        :"m"(inEAX),"m"(inECX)
+        :"rax","ecx"
+    );
+
+    ASSERT_TAGGED((char *)&outRAX + 0, {2,3});
+    ASSERT_TAGGED((char *)&outRAX + 1, {3,4});
+    ASSERT_TAGGED((char *)&outRAX + 2, {4,5});
+    ASSERT_TAGGED((char *)&outRAX + 3, {5,6});
+    ASSERT_TAGGED((char *)&outRAX + 4, { });
+    ASSERT_TAGGED((char *)&outRAX + 5, { });
+    ASSERT_TAGGED((char *)&outRAX + 6, { });
+    ASSERT_TAGGED((char *)&outRAX + 7, { });
+    return passed;
+}
+
+static int testcase848() {
+    int passed = 1;
+
+    printf("%s     shrd   eax,ecx,0x2\n", __func__);fflush(stdout);
+
+    __gtaint_reset();
+    uint32_t inEAX = 1;
+    uint32_t inECX = 1;
+    uint64_t outRAX = 1;
+    __gtaint_setn(&inEAX, 4);
+    __gtaint_setn(&inECX, 4);
+    asm volatile (
+        "mov EAX,%1;\n"
+        "mov ECX,%2;\n"
+        "shrd   eax,ecx,0x2;\n" // <--
+        "mov %0,RAX;\n"
+        :"=m"(outRAX)
+        :"m"(inEAX),"m"(inECX)
+        :"rax","ecx"
+    );
+
+    ASSERT_TAGGED((char *)&outRAX + 0, {0,1});
+    ASSERT_TAGGED((char *)&outRAX + 1, {1,2});
+    ASSERT_TAGGED((char *)&outRAX + 2, {2,3});
+    ASSERT_TAGGED((char *)&outRAX + 3, {3,4});
+    ASSERT_TAGGED((char *)&outRAX + 4, { });
+    ASSERT_TAGGED((char *)&outRAX + 5, { });
+    ASSERT_TAGGED((char *)&outRAX + 6, { });
+    ASSERT_TAGGED((char *)&outRAX + 7, { });
+    return passed;
+}
+
+static int testcase849() {
+    int passed = 1;
+
+    printf("%s     shrd   eax,ecx,0x20\n", __func__);fflush(stdout);
+
+    __gtaint_reset();
+    uint32_t inEAX = 1;
+    uint32_t inECX = 1;
+    uint64_t outRAX = 1;
+    __gtaint_setn(&inEAX, 4);
+    __gtaint_setn(&inECX, 4);
+    asm volatile (
+        "mov EAX,%1;\n"
+        "mov ECX,%2;\n"
+        "shrd   eax,ecx,0x20;\n" // <--
+        "mov %0,RAX;\n"
+        :"=m"(outRAX)
+        :"m"(inEAX),"m"(inECX)
+        :"rax","ecx"
+    );
+
+    ASSERT_TAGGED((char *)&outRAX + 0, {0});
+    ASSERT_TAGGED((char *)&outRAX + 1, {1});
+    ASSERT_TAGGED((char *)&outRAX + 2, {2});
+    ASSERT_TAGGED((char *)&outRAX + 3, {3});
+    ASSERT_TAGGED((char *)&outRAX + 4, { });
+    ASSERT_TAGGED((char *)&outRAX + 5, { });
+    ASSERT_TAGGED((char *)&outRAX + 6, { });
+    ASSERT_TAGGED((char *)&outRAX + 7, { });
+    return passed;
+}
+
+static int testcase850() {
     int passed = 1;
 
     printf("%s     shrd   eax,ecx,cl\n", __func__);fflush(stdout);
@@ -19836,7 +22600,7 @@ static int testcase746() {
     return passed;
 }
 
-static int testcase747() {
+static int testcase851() {
     int passed = 1;
 
     printf("%s     shrd   rax,rax,0x0\n", __func__);fflush(stdout);
@@ -19865,10 +22629,10 @@ static int testcase747() {
     return passed;
 }
 
-static int testcase748() {
+static int testcase852() {
     int passed = 1;
 
-    printf("%s     shrd   rax,rax,0xf\n", __func__);fflush(stdout);
+    printf("%s     shrd   rax,rax,0x2\n", __func__);fflush(stdout);
 
     __gtaint_reset();
     uint64_t inRAX = 1;
@@ -19876,25 +22640,141 @@ static int testcase748() {
     __gtaint_setn(&inRAX, 8);
     asm volatile (
         "mov RAX,%1;\n"
-        "shrd   rax,rax,0xf;\n" // <--
+        "shrd   rax,rax,0x2;\n" // <--
         "mov %0,RAX;\n"
         :"=m"(outRAX)
         :"m"(inRAX)
         :"rax"
     );
 
-    ASSERT_TAGGED((char *)&outRAX + 0, {1,2});
-    ASSERT_TAGGED((char *)&outRAX + 1, {2,3});
-    ASSERT_TAGGED((char *)&outRAX + 2, {3,4});
-    ASSERT_TAGGED((char *)&outRAX + 3, {4,5});
-    ASSERT_TAGGED((char *)&outRAX + 4, {5,6});
-    ASSERT_TAGGED((char *)&outRAX + 5, {6,7});
-    ASSERT_TAGGED((char *)&outRAX + 6, {0,7});
-    ASSERT_TAGGED((char *)&outRAX + 7, {0,1});
+    ASSERT_TAGGED((char *)&outRAX + 0, {0,1});
+    ASSERT_TAGGED((char *)&outRAX + 1, {1,2});
+    ASSERT_TAGGED((char *)&outRAX + 2, {2,3});
+    ASSERT_TAGGED((char *)&outRAX + 3, {3,4});
+    ASSERT_TAGGED((char *)&outRAX + 4, {4,5});
+    ASSERT_TAGGED((char *)&outRAX + 5, {5,6});
+    ASSERT_TAGGED((char *)&outRAX + 6, {6,7});
+    ASSERT_TAGGED((char *)&outRAX + 7, {0,7});
     return passed;
 }
 
-static int testcase749() {
+static int testcase853() {
+    int passed = 1;
+
+    printf("%s     shrd   rax,rax,0x20\n", __func__);fflush(stdout);
+
+    __gtaint_reset();
+    uint64_t inRAX = 1;
+    uint64_t outRAX = 1;
+    __gtaint_setn(&inRAX, 8);
+    asm volatile (
+        "mov RAX,%1;\n"
+        "shrd   rax,rax,0x20;\n" // <--
+        "mov %0,RAX;\n"
+        :"=m"(outRAX)
+        :"m"(inRAX)
+        :"rax"
+    );
+
+    ASSERT_TAGGED((char *)&outRAX + 0, {4});
+    ASSERT_TAGGED((char *)&outRAX + 1, {5});
+    ASSERT_TAGGED((char *)&outRAX + 2, {6});
+    ASSERT_TAGGED((char *)&outRAX + 3, {7});
+    ASSERT_TAGGED((char *)&outRAX + 4, {0});
+    ASSERT_TAGGED((char *)&outRAX + 5, {1});
+    ASSERT_TAGGED((char *)&outRAX + 6, {2});
+    ASSERT_TAGGED((char *)&outRAX + 7, {3});
+    return passed;
+}
+
+static int testcase854() {
+    int passed = 1;
+
+    printf("%s     shrd   rax,rax,0x21\n", __func__);fflush(stdout);
+
+    __gtaint_reset();
+    uint64_t inRAX = 1;
+    uint64_t outRAX = 1;
+    __gtaint_setn(&inRAX, 8);
+    asm volatile (
+        "mov RAX,%1;\n"
+        "shrd   rax,rax,0x21;\n" // <--
+        "mov %0,RAX;\n"
+        :"=m"(outRAX)
+        :"m"(inRAX)
+        :"rax"
+    );
+
+    ASSERT_TAGGED((char *)&outRAX + 0, {4,5});
+    ASSERT_TAGGED((char *)&outRAX + 1, {5,6});
+    ASSERT_TAGGED((char *)&outRAX + 2, {6,7});
+    ASSERT_TAGGED((char *)&outRAX + 3, {0,7});
+    ASSERT_TAGGED((char *)&outRAX + 4, {0,1});
+    ASSERT_TAGGED((char *)&outRAX + 5, {1,2});
+    ASSERT_TAGGED((char *)&outRAX + 6, {2,3});
+    ASSERT_TAGGED((char *)&outRAX + 7, {3,4});
+    return passed;
+}
+
+static int testcase855() {
+    int passed = 1;
+
+    printf("%s     shrd   rax,rax,0x22\n", __func__);fflush(stdout);
+
+    __gtaint_reset();
+    uint64_t inRAX = 1;
+    uint64_t outRAX = 1;
+    __gtaint_setn(&inRAX, 8);
+    asm volatile (
+        "mov RAX,%1;\n"
+        "shrd   rax,rax,0x22;\n" // <--
+        "mov %0,RAX;\n"
+        :"=m"(outRAX)
+        :"m"(inRAX)
+        :"rax"
+    );
+
+    ASSERT_TAGGED((char *)&outRAX + 0, {4,5});
+    ASSERT_TAGGED((char *)&outRAX + 1, {5,6});
+    ASSERT_TAGGED((char *)&outRAX + 2, {6,7});
+    ASSERT_TAGGED((char *)&outRAX + 3, {0,7});
+    ASSERT_TAGGED((char *)&outRAX + 4, {0,1});
+    ASSERT_TAGGED((char *)&outRAX + 5, {1,2});
+    ASSERT_TAGGED((char *)&outRAX + 6, {2,3});
+    ASSERT_TAGGED((char *)&outRAX + 7, {3,4});
+    return passed;
+}
+
+static int testcase856() {
+    int passed = 1;
+
+    printf("%s     shrd   rax,rax,0x40\n", __func__);fflush(stdout);
+
+    __gtaint_reset();
+    uint64_t inRAX = 1;
+    uint64_t outRAX = 1;
+    __gtaint_setn(&inRAX, 8);
+    asm volatile (
+        "mov RAX,%1;\n"
+        "shrd   rax,rax,0x40;\n" // <--
+        "mov %0,RAX;\n"
+        :"=m"(outRAX)
+        :"m"(inRAX)
+        :"rax"
+    );
+
+    ASSERT_TAGGED((char *)&outRAX + 0, {0});
+    ASSERT_TAGGED((char *)&outRAX + 1, {1});
+    ASSERT_TAGGED((char *)&outRAX + 2, {2});
+    ASSERT_TAGGED((char *)&outRAX + 3, {3});
+    ASSERT_TAGGED((char *)&outRAX + 4, {4});
+    ASSERT_TAGGED((char *)&outRAX + 5, {5});
+    ASSERT_TAGGED((char *)&outRAX + 6, {6});
+    ASSERT_TAGGED((char *)&outRAX + 7, {7});
+    return passed;
+}
+
+static int testcase857() {
     int passed = 1;
 
     printf("%s     shrd   rax,rax,cl\n", __func__);fflush(stdout);
@@ -19926,7 +22806,7 @@ static int testcase749() {
     return passed;
 }
 
-static int testcase750() {
+static int testcase858() {
     int passed = 1;
 
     printf("%s     shrd   rax,rcx,0x0\n", __func__);fflush(stdout);
@@ -19958,10 +22838,10 @@ static int testcase750() {
     return passed;
 }
 
-static int testcase751() {
+static int testcase859() {
     int passed = 1;
 
-    printf("%s     shrd   rax,rcx,0xf\n", __func__);fflush(stdout);
+    printf("%s     shrd   rax,rcx,0x2\n", __func__);fflush(stdout);
 
     __gtaint_reset();
     uint64_t inRAX = 1;
@@ -19972,25 +22852,153 @@ static int testcase751() {
     asm volatile (
         "mov RAX,%1;\n"
         "mov RCX,%2;\n"
-        "shrd   rax,rcx,0xf;\n" // <--
+        "shrd   rax,rcx,0x2;\n" // <--
         "mov %0,RAX;\n"
         :"=m"(outRAX)
         :"m"(inRAX),"m"(inRCX)
         :"rax","rcx"
     );
 
-    ASSERT_TAGGED((char *)&outRAX + 0, {1,2});
-    ASSERT_TAGGED((char *)&outRAX + 1, {2,3});
-    ASSERT_TAGGED((char *)&outRAX + 2, {3,4});
-    ASSERT_TAGGED((char *)&outRAX + 3, {4,5});
-    ASSERT_TAGGED((char *)&outRAX + 4, {5,6});
-    ASSERT_TAGGED((char *)&outRAX + 5, {6,7});
-    ASSERT_TAGGED((char *)&outRAX + 6, {7,8});
-    ASSERT_TAGGED((char *)&outRAX + 7, {8,9});
+    ASSERT_TAGGED((char *)&outRAX + 0, {0,1});
+    ASSERT_TAGGED((char *)&outRAX + 1, {1,2});
+    ASSERT_TAGGED((char *)&outRAX + 2, {2,3});
+    ASSERT_TAGGED((char *)&outRAX + 3, {3,4});
+    ASSERT_TAGGED((char *)&outRAX + 4, {4,5});
+    ASSERT_TAGGED((char *)&outRAX + 5, {5,6});
+    ASSERT_TAGGED((char *)&outRAX + 6, {6,7});
+    ASSERT_TAGGED((char *)&outRAX + 7, {7,8});
     return passed;
 }
 
-static int testcase752() {
+static int testcase860() {
+    int passed = 1;
+
+    printf("%s     shrd   rax,rcx,0x20\n", __func__);fflush(stdout);
+
+    __gtaint_reset();
+    uint64_t inRAX = 1;
+    uint64_t inRCX = 1;
+    uint64_t outRAX = 1;
+    __gtaint_setn(&inRAX, 8);
+    __gtaint_setn(&inRCX, 8);
+    asm volatile (
+        "mov RAX,%1;\n"
+        "mov RCX,%2;\n"
+        "shrd   rax,rcx,0x20;\n" // <--
+        "mov %0,RAX;\n"
+        :"=m"(outRAX)
+        :"m"(inRAX),"m"(inRCX)
+        :"rax","rcx"
+    );
+
+    ASSERT_TAGGED((char *)&outRAX + 0, {4});
+    ASSERT_TAGGED((char *)&outRAX + 1, {5});
+    ASSERT_TAGGED((char *)&outRAX + 2, {6});
+    ASSERT_TAGGED((char *)&outRAX + 3, {7});
+    ASSERT_TAGGED((char *)&outRAX + 4, {8});
+    ASSERT_TAGGED((char *)&outRAX + 5, {9});
+    ASSERT_TAGGED((char *)&outRAX + 6, {10});
+    ASSERT_TAGGED((char *)&outRAX + 7, {11});
+    return passed;
+}
+
+static int testcase861() {
+    int passed = 1;
+
+    printf("%s     shrd   rax,rcx,0x21\n", __func__);fflush(stdout);
+
+    __gtaint_reset();
+    uint64_t inRAX = 1;
+    uint64_t inRCX = 1;
+    uint64_t outRAX = 1;
+    __gtaint_setn(&inRAX, 8);
+    __gtaint_setn(&inRCX, 8);
+    asm volatile (
+        "mov RAX,%1;\n"
+        "mov RCX,%2;\n"
+        "shrd   rax,rcx,0x21;\n" // <--
+        "mov %0,RAX;\n"
+        :"=m"(outRAX)
+        :"m"(inRAX),"m"(inRCX)
+        :"rax","rcx"
+    );
+
+    ASSERT_TAGGED((char *)&outRAX + 0, {4,5});
+    ASSERT_TAGGED((char *)&outRAX + 1, {5,6});
+    ASSERT_TAGGED((char *)&outRAX + 2, {6,7});
+    ASSERT_TAGGED((char *)&outRAX + 3, {7,8});
+    ASSERT_TAGGED((char *)&outRAX + 4, {8,9});
+    ASSERT_TAGGED((char *)&outRAX + 5, {9,10});
+    ASSERT_TAGGED((char *)&outRAX + 6, {10,11});
+    ASSERT_TAGGED((char *)&outRAX + 7, {11,12});
+    return passed;
+}
+
+static int testcase862() {
+    int passed = 1;
+
+    printf("%s     shrd   rax,rcx,0x22\n", __func__);fflush(stdout);
+
+    __gtaint_reset();
+    uint64_t inRAX = 1;
+    uint64_t inRCX = 1;
+    uint64_t outRAX = 1;
+    __gtaint_setn(&inRAX, 8);
+    __gtaint_setn(&inRCX, 8);
+    asm volatile (
+        "mov RAX,%1;\n"
+        "mov RCX,%2;\n"
+        "shrd   rax,rcx,0x22;\n" // <--
+        "mov %0,RAX;\n"
+        :"=m"(outRAX)
+        :"m"(inRAX),"m"(inRCX)
+        :"rax","rcx"
+    );
+
+    ASSERT_TAGGED((char *)&outRAX + 0, {4,5});
+    ASSERT_TAGGED((char *)&outRAX + 1, {5,6});
+    ASSERT_TAGGED((char *)&outRAX + 2, {6,7});
+    ASSERT_TAGGED((char *)&outRAX + 3, {7,8});
+    ASSERT_TAGGED((char *)&outRAX + 4, {8,9});
+    ASSERT_TAGGED((char *)&outRAX + 5, {9,10});
+    ASSERT_TAGGED((char *)&outRAX + 6, {10,11});
+    ASSERT_TAGGED((char *)&outRAX + 7, {11,12});
+    return passed;
+}
+
+static int testcase863() {
+    int passed = 1;
+
+    printf("%s     shrd   rax,rcx,0x40\n", __func__);fflush(stdout);
+
+    __gtaint_reset();
+    uint64_t inRAX = 1;
+    uint64_t inRCX = 1;
+    uint64_t outRAX = 1;
+    __gtaint_setn(&inRAX, 8);
+    __gtaint_setn(&inRCX, 8);
+    asm volatile (
+        "mov RAX,%1;\n"
+        "mov RCX,%2;\n"
+        "shrd   rax,rcx,0x40;\n" // <--
+        "mov %0,RAX;\n"
+        :"=m"(outRAX)
+        :"m"(inRAX),"m"(inRCX)
+        :"rax","rcx"
+    );
+
+    ASSERT_TAGGED((char *)&outRAX + 0, {0});
+    ASSERT_TAGGED((char *)&outRAX + 1, {1});
+    ASSERT_TAGGED((char *)&outRAX + 2, {2});
+    ASSERT_TAGGED((char *)&outRAX + 3, {3});
+    ASSERT_TAGGED((char *)&outRAX + 4, {4});
+    ASSERT_TAGGED((char *)&outRAX + 5, {5});
+    ASSERT_TAGGED((char *)&outRAX + 6, {6});
+    ASSERT_TAGGED((char *)&outRAX + 7, {7});
+    return passed;
+}
+
+static int testcase864() {
     int passed = 1;
 
     printf("%s     shrd   rax,rcx,cl\n", __func__);fflush(stdout);
@@ -20022,7 +23030,7 @@ static int testcase752() {
     return passed;
 }
 
-static int testcase753() {
+static int testcase865() {
     int passed = 1;
 
     printf("%s     shrx   eax,eax,eax\n", __func__);fflush(stdout);
@@ -20051,7 +23059,7 @@ static int testcase753() {
     return passed;
 }
 
-static int testcase754() {
+static int testcase866() {
     int passed = 1;
 
     printf("%s     shrx   eax,eax,ecx\n", __func__);fflush(stdout);
@@ -20083,7 +23091,7 @@ static int testcase754() {
     return passed;
 }
 
-static int testcase755() {
+static int testcase867() {
     int passed = 1;
 
     printf("%s     shrx   eax,ecx,ecx\n", __func__);fflush(stdout);
@@ -20112,7 +23120,7 @@ static int testcase755() {
     return passed;
 }
 
-static int testcase756() {
+static int testcase868() {
     int passed = 1;
 
     printf("%s     shrx   eax,ecx,edx\n", __func__);fflush(stdout);
@@ -20144,7 +23152,7 @@ static int testcase756() {
     return passed;
 }
 
-static int testcase757() {
+static int testcase869() {
     int passed = 1;
 
     printf("%s     shrx   rax,rax,rax\n", __func__);fflush(stdout);
@@ -20173,7 +23181,7 @@ static int testcase757() {
     return passed;
 }
 
-static int testcase758() {
+static int testcase870() {
     int passed = 1;
 
     printf("%s     shrx   rax,rax,rcx\n", __func__);fflush(stdout);
@@ -20205,7 +23213,7 @@ static int testcase758() {
     return passed;
 }
 
-static int testcase759() {
+static int testcase871() {
     int passed = 1;
 
     printf("%s     shrx   rax,rcx,rcx\n", __func__);fflush(stdout);
@@ -20234,7 +23242,7 @@ static int testcase759() {
     return passed;
 }
 
-static int testcase760() {
+static int testcase872() {
     int passed = 1;
 
     printf("%s     shrx   rax,rcx,rdx\n", __func__);fflush(stdout);
@@ -20266,7 +23274,7 @@ static int testcase760() {
     return passed;
 }
 
-static int testcase761() {
+static int testcase873() {
     int passed = 1;
 
     printf("%s     sub    ah,0x0\n", __func__);fflush(stdout);
@@ -20288,7 +23296,7 @@ static int testcase761() {
     return passed;
 }
 
-static int testcase762() {
+static int testcase874() {
     int passed = 1;
 
     printf("%s     sub    ah,0xf\n", __func__);fflush(stdout);
@@ -20310,7 +23318,7 @@ static int testcase762() {
     return passed;
 }
 
-static int testcase763() {
+static int testcase875() {
     int passed = 1;
 
     printf("%s     sub    ah,ah\n", __func__);fflush(stdout);
@@ -20332,7 +23340,7 @@ static int testcase763() {
     return passed;
 }
 
-static int testcase764() {
+static int testcase876() {
     int passed = 1;
 
     printf("%s     sub    ah,al\n", __func__);fflush(stdout);
@@ -20354,7 +23362,7 @@ static int testcase764() {
     return passed;
 }
 
-static int testcase765() {
+static int testcase877() {
     int passed = 1;
 
     printf("%s     sub    ah,ch\n", __func__);fflush(stdout);
@@ -20379,7 +23387,7 @@ static int testcase765() {
     return passed;
 }
 
-static int testcase766() {
+static int testcase878() {
     int passed = 1;
 
     printf("%s     sub    al,0x0\n", __func__);fflush(stdout);
@@ -20401,7 +23409,7 @@ static int testcase766() {
     return passed;
 }
 
-static int testcase767() {
+static int testcase879() {
     int passed = 1;
 
     printf("%s     sub    al,0xf\n", __func__);fflush(stdout);
@@ -20423,7 +23431,7 @@ static int testcase767() {
     return passed;
 }
 
-static int testcase768() {
+static int testcase880() {
     int passed = 1;
 
     printf("%s     sub    al,al\n", __func__);fflush(stdout);
@@ -20445,7 +23453,7 @@ static int testcase768() {
     return passed;
 }
 
-static int testcase769() {
+static int testcase881() {
     int passed = 1;
 
     printf("%s     sub    al,cl\n", __func__);fflush(stdout);
@@ -20470,7 +23478,7 @@ static int testcase769() {
     return passed;
 }
 
-static int testcase770() {
+static int testcase882() {
     int passed = 1;
 
     printf("%s     sub    ax,0x0\n", __func__);fflush(stdout);
@@ -20493,7 +23501,7 @@ static int testcase770() {
     return passed;
 }
 
-static int testcase771() {
+static int testcase883() {
     int passed = 1;
 
     printf("%s     sub    ax,0x1\n", __func__);fflush(stdout);
@@ -20516,7 +23524,7 @@ static int testcase771() {
     return passed;
 }
 
-static int testcase772() {
+static int testcase884() {
     int passed = 1;
 
     printf("%s     sub    ax,0xff\n", __func__);fflush(stdout);
@@ -20539,7 +23547,7 @@ static int testcase772() {
     return passed;
 }
 
-static int testcase773() {
+static int testcase885() {
     int passed = 1;
 
     printf("%s     sub    ax,0xffff\n", __func__);fflush(stdout);
@@ -20562,7 +23570,7 @@ static int testcase773() {
     return passed;
 }
 
-static int testcase774() {
+static int testcase886() {
     int passed = 1;
 
     printf("%s     sub    ax,ax\n", __func__);fflush(stdout);
@@ -20585,7 +23593,7 @@ static int testcase774() {
     return passed;
 }
 
-static int testcase775() {
+static int testcase887() {
     int passed = 1;
 
     printf("%s     sub    ax,cx\n", __func__);fflush(stdout);
@@ -20611,7 +23619,7 @@ static int testcase775() {
     return passed;
 }
 
-static int testcase776() {
+static int testcase888() {
     int passed = 1;
 
     printf("%s     sub    ch,al\n", __func__);fflush(stdout);
@@ -20636,7 +23644,7 @@ static int testcase776() {
     return passed;
 }
 
-static int testcase777() {
+static int testcase889() {
     int passed = 1;
 
     printf("%s     sub    eax,0x0\n", __func__);fflush(stdout);
@@ -20665,7 +23673,7 @@ static int testcase777() {
     return passed;
 }
 
-static int testcase778() {
+static int testcase890() {
     int passed = 1;
 
     printf("%s     sub    eax,0x1\n", __func__);fflush(stdout);
@@ -20694,7 +23702,7 @@ static int testcase778() {
     return passed;
 }
 
-static int testcase779() {
+static int testcase891() {
     int passed = 1;
 
     printf("%s     sub    eax,0xffff\n", __func__);fflush(stdout);
@@ -20723,7 +23731,7 @@ static int testcase779() {
     return passed;
 }
 
-static int testcase780() {
+static int testcase892() {
     int passed = 1;
 
     printf("%s     sub    eax,0xffffffff\n", __func__);fflush(stdout);
@@ -20752,7 +23760,7 @@ static int testcase780() {
     return passed;
 }
 
-static int testcase781() {
+static int testcase893() {
     int passed = 1;
 
     printf("%s     sub    eax,eax\n", __func__);fflush(stdout);
@@ -20781,7 +23789,7 @@ static int testcase781() {
     return passed;
 }
 
-static int testcase782() {
+static int testcase894() {
     int passed = 1;
 
     printf("%s     sub    eax,ecx\n", __func__);fflush(stdout);
@@ -20813,7 +23821,7 @@ static int testcase782() {
     return passed;
 }
 
-static int testcase783() {
+static int testcase895() {
     int passed = 1;
 
     printf("%s     sub    rax,0x1\n", __func__);fflush(stdout);
@@ -20842,7 +23850,7 @@ static int testcase783() {
     return passed;
 }
 
-static int testcase784() {
+static int testcase896() {
     int passed = 1;
 
     printf("%s     sub    rax,0xffffffffffffffff\n", __func__);fflush(stdout);
@@ -20871,7 +23879,7 @@ static int testcase784() {
     return passed;
 }
 
-static int testcase785() {
+static int testcase897() {
     int passed = 1;
 
     printf("%s     sub    rax,rax\n", __func__);fflush(stdout);
@@ -20900,7 +23908,7 @@ static int testcase785() {
     return passed;
 }
 
-static int testcase786() {
+static int testcase898() {
     int passed = 1;
 
     printf("%s     sub    rax,rcx\n", __func__);fflush(stdout);
@@ -20932,7 +23940,7 @@ static int testcase786() {
     return passed;
 }
 
-static int testcase787() {
+static int testcase899() {
     int passed = 1;
 
     printf("%s     xadd   ah,ah\n", __func__);fflush(stdout);
@@ -20954,7 +23962,7 @@ static int testcase787() {
     return passed;
 }
 
-static int testcase788() {
+static int testcase900() {
     int passed = 1;
 
     printf("%s     xadd   ah,al\n", __func__);fflush(stdout);
@@ -20977,7 +23985,7 @@ static int testcase788() {
     return passed;
 }
 
-static int testcase789() {
+static int testcase901() {
     int passed = 1;
 
     printf("%s     xadd   ah,ch\n", __func__);fflush(stdout);
@@ -21005,7 +24013,7 @@ static int testcase789() {
     return passed;
 }
 
-static int testcase790() {
+static int testcase902() {
     int passed = 1;
 
     printf("%s     xadd   al,al\n", __func__);fflush(stdout);
@@ -21027,7 +24035,7 @@ static int testcase790() {
     return passed;
 }
 
-static int testcase791() {
+static int testcase903() {
     int passed = 1;
 
     printf("%s     xadd   al,cl\n", __func__);fflush(stdout);
@@ -21055,7 +24063,7 @@ static int testcase791() {
     return passed;
 }
 
-static int testcase792() {
+static int testcase904() {
     int passed = 1;
 
     printf("%s     xadd   ax,ax\n", __func__);fflush(stdout);
@@ -21078,7 +24086,7 @@ static int testcase792() {
     return passed;
 }
 
-static int testcase793() {
+static int testcase905() {
     int passed = 1;
 
     printf("%s     xadd   ax,cx\n", __func__);fflush(stdout);
@@ -21108,7 +24116,7 @@ static int testcase793() {
     return passed;
 }
 
-static int testcase794() {
+static int testcase906() {
     int passed = 1;
 
     printf("%s     xadd   ch,al\n", __func__);fflush(stdout);
@@ -21136,7 +24144,7 @@ static int testcase794() {
     return passed;
 }
 
-static int testcase795() {
+static int testcase907() {
     int passed = 1;
 
     printf("%s     xadd   eax,eax\n", __func__);fflush(stdout);
@@ -21165,7 +24173,7 @@ static int testcase795() {
     return passed;
 }
 
-static int testcase796() {
+static int testcase908() {
     int passed = 1;
 
     printf("%s     xadd   eax,ecx\n", __func__);fflush(stdout);
@@ -21207,7 +24215,7 @@ static int testcase796() {
     return passed;
 }
 
-static int testcase797() {
+static int testcase909() {
     int passed = 1;
 
     printf("%s     xadd   rax,rax\n", __func__);fflush(stdout);
@@ -21236,7 +24244,7 @@ static int testcase797() {
     return passed;
 }
 
-static int testcase798() {
+static int testcase910() {
     int passed = 1;
 
     printf("%s     xadd   rax,rcx\n", __func__);fflush(stdout);
@@ -21278,7 +24286,7 @@ static int testcase798() {
     return passed;
 }
 
-static int testcase799() {
+static int testcase911() {
     int passed = 1;
 
     printf("%s     xchg   ah,ah\n", __func__);fflush(stdout);
@@ -21300,7 +24308,7 @@ static int testcase799() {
     return passed;
 }
 
-static int testcase800() {
+static int testcase912() {
     int passed = 1;
 
     printf("%s     xchg   ah,al\n", __func__);fflush(stdout);
@@ -21323,7 +24331,7 @@ static int testcase800() {
     return passed;
 }
 
-static int testcase801() {
+static int testcase913() {
     int passed = 1;
 
     printf("%s     xchg   ah,ch\n", __func__);fflush(stdout);
@@ -21351,7 +24359,7 @@ static int testcase801() {
     return passed;
 }
 
-static int testcase802() {
+static int testcase914() {
     int passed = 1;
 
     printf("%s     xchg   al,al\n", __func__);fflush(stdout);
@@ -21373,7 +24381,7 @@ static int testcase802() {
     return passed;
 }
 
-static int testcase803() {
+static int testcase915() {
     int passed = 1;
 
     printf("%s     xchg   al,cl\n", __func__);fflush(stdout);
@@ -21401,7 +24409,7 @@ static int testcase803() {
     return passed;
 }
 
-static int testcase804() {
+static int testcase916() {
     int passed = 1;
 
     printf("%s     xchg   ax,ax\n", __func__);fflush(stdout);
@@ -21424,7 +24432,7 @@ static int testcase804() {
     return passed;
 }
 
-static int testcase805() {
+static int testcase917() {
     int passed = 1;
 
     printf("%s     xchg   ax,cx\n", __func__);fflush(stdout);
@@ -21454,7 +24462,7 @@ static int testcase805() {
     return passed;
 }
 
-static int testcase806() {
+static int testcase918() {
     int passed = 1;
 
     printf("%s     xchg   ch,al\n", __func__);fflush(stdout);
@@ -21482,7 +24490,7 @@ static int testcase806() {
     return passed;
 }
 
-static int testcase807() {
+static int testcase919() {
     int passed = 1;
 
     printf("%s     xchg   cx,ax\n", __func__);fflush(stdout);
@@ -21512,7 +24520,7 @@ static int testcase807() {
     return passed;
 }
 
-static int testcase808() {
+static int testcase920() {
     int passed = 1;
 
     printf("%s     xchg   eax,eax\n", __func__);fflush(stdout);
@@ -21541,7 +24549,7 @@ static int testcase808() {
     return passed;
 }
 
-static int testcase809() {
+static int testcase921() {
     int passed = 1;
 
     printf("%s     xchg   eax,ecx\n", __func__);fflush(stdout);
@@ -21583,7 +24591,7 @@ static int testcase809() {
     return passed;
 }
 
-static int testcase810() {
+static int testcase922() {
     int passed = 1;
 
     printf("%s     xchg   ecx,eax\n", __func__);fflush(stdout);
@@ -21625,7 +24633,7 @@ static int testcase810() {
     return passed;
 }
 
-static int testcase811() {
+static int testcase923() {
     int passed = 1;
 
     printf("%s     xchg   rax,rax\n", __func__);fflush(stdout);
@@ -21654,7 +24662,7 @@ static int testcase811() {
     return passed;
 }
 
-static int testcase812() {
+static int testcase924() {
     int passed = 1;
 
     printf("%s     xchg   rax,rcx\n", __func__);fflush(stdout);
@@ -21696,7 +24704,7 @@ static int testcase812() {
     return passed;
 }
 
-static int testcase813() {
+static int testcase925() {
     int passed = 1;
 
     printf("%s     xchg   rcx,rax\n", __func__);fflush(stdout);
@@ -21738,7 +24746,7 @@ static int testcase813() {
     return passed;
 }
 
-static int testcase814() {
+static int testcase926() {
     int passed = 1;
 
     printf("%s     xor    ah,0x0\n", __func__);fflush(stdout);
@@ -21760,7 +24768,7 @@ static int testcase814() {
     return passed;
 }
 
-static int testcase815() {
+static int testcase927() {
     int passed = 1;
 
     printf("%s     xor    ah,0xf\n", __func__);fflush(stdout);
@@ -21782,7 +24790,7 @@ static int testcase815() {
     return passed;
 }
 
-static int testcase816() {
+static int testcase928() {
     int passed = 1;
 
     printf("%s     xor    ah,ah\n", __func__);fflush(stdout);
@@ -21804,7 +24812,7 @@ static int testcase816() {
     return passed;
 }
 
-static int testcase817() {
+static int testcase929() {
     int passed = 1;
 
     printf("%s     xor    ah,al\n", __func__);fflush(stdout);
@@ -21826,7 +24834,7 @@ static int testcase817() {
     return passed;
 }
 
-static int testcase818() {
+static int testcase930() {
     int passed = 1;
 
     printf("%s     xor    ah,ch\n", __func__);fflush(stdout);
@@ -21851,7 +24859,7 @@ static int testcase818() {
     return passed;
 }
 
-static int testcase819() {
+static int testcase931() {
     int passed = 1;
 
     printf("%s     xor    al,0x0\n", __func__);fflush(stdout);
@@ -21873,7 +24881,7 @@ static int testcase819() {
     return passed;
 }
 
-static int testcase820() {
+static int testcase932() {
     int passed = 1;
 
     printf("%s     xor    al,0xf\n", __func__);fflush(stdout);
@@ -21895,7 +24903,7 @@ static int testcase820() {
     return passed;
 }
 
-static int testcase821() {
+static int testcase933() {
     int passed = 1;
 
     printf("%s     xor    al,al\n", __func__);fflush(stdout);
@@ -21917,7 +24925,7 @@ static int testcase821() {
     return passed;
 }
 
-static int testcase822() {
+static int testcase934() {
     int passed = 1;
 
     printf("%s     xor    al,cl\n", __func__);fflush(stdout);
@@ -21942,7 +24950,7 @@ static int testcase822() {
     return passed;
 }
 
-static int testcase823() {
+static int testcase935() {
     int passed = 1;
 
     printf("%s     xor    ax,0x0\n", __func__);fflush(stdout);
@@ -21965,7 +24973,7 @@ static int testcase823() {
     return passed;
 }
 
-static int testcase824() {
+static int testcase936() {
     int passed = 1;
 
     printf("%s     xor    ax,0xff\n", __func__);fflush(stdout);
@@ -21988,7 +24996,7 @@ static int testcase824() {
     return passed;
 }
 
-static int testcase825() {
+static int testcase937() {
     int passed = 1;
 
     printf("%s     xor    ax,ax\n", __func__);fflush(stdout);
@@ -22011,7 +25019,7 @@ static int testcase825() {
     return passed;
 }
 
-static int testcase826() {
+static int testcase938() {
     int passed = 1;
 
     printf("%s     xor    ax,cx\n", __func__);fflush(stdout);
@@ -22037,7 +25045,7 @@ static int testcase826() {
     return passed;
 }
 
-static int testcase827() {
+static int testcase939() {
     int passed = 1;
 
     printf("%s     xor    ch,al\n", __func__);fflush(stdout);
@@ -22062,7 +25070,7 @@ static int testcase827() {
     return passed;
 }
 
-static int testcase828() {
+static int testcase940() {
     int passed = 1;
 
     printf("%s     xor    eax,0x0\n", __func__);fflush(stdout);
@@ -22091,7 +25099,7 @@ static int testcase828() {
     return passed;
 }
 
-static int testcase829() {
+static int testcase941() {
     int passed = 1;
 
     printf("%s     xor    eax,0xffff\n", __func__);fflush(stdout);
@@ -22120,7 +25128,7 @@ static int testcase829() {
     return passed;
 }
 
-static int testcase830() {
+static int testcase942() {
     int passed = 1;
 
     printf("%s     xor    eax,eax\n", __func__);fflush(stdout);
@@ -22149,7 +25157,7 @@ static int testcase830() {
     return passed;
 }
 
-static int testcase831() {
+static int testcase943() {
     int passed = 1;
 
     printf("%s     xor    eax,ecx\n", __func__);fflush(stdout);
@@ -22181,7 +25189,7 @@ static int testcase831() {
     return passed;
 }
 
-static int testcase832() {
+static int testcase944() {
     int passed = 1;
 
     printf("%s     xor    rax,0x0\n", __func__);fflush(stdout);
@@ -22210,7 +25218,7 @@ static int testcase832() {
     return passed;
 }
 
-static int testcase833() {
+static int testcase945() {
     int passed = 1;
 
     printf("%s     xor    rax,0x1\n", __func__);fflush(stdout);
@@ -22239,7 +25247,7 @@ static int testcase833() {
     return passed;
 }
 
-static int testcase834() {
+static int testcase946() {
     int passed = 1;
 
     printf("%s     xor    rax,0xffffffffffffffff\n", __func__);fflush(stdout);
@@ -22268,7 +25276,7 @@ static int testcase834() {
     return passed;
 }
 
-static int testcase835() {
+static int testcase947() {
     int passed = 1;
 
     printf("%s     xor    rax,rax\n", __func__);fflush(stdout);
@@ -22297,7 +25305,7 @@ static int testcase835() {
     return passed;
 }
 
-static int testcase836() {
+static int testcase948() {
     int passed = 1;
 
     printf("%s     xor    rax,rcx\n", __func__);fflush(stdout);
@@ -23167,5 +26175,117 @@ static void __attribute__((noinline, constructor)) init() {
     add_testcase(testcase834);
     add_testcase(testcase835);
     add_testcase(testcase836);
+    add_testcase(testcase837);
+    add_testcase(testcase838);
+    add_testcase(testcase839);
+    add_testcase(testcase840);
+    add_testcase(testcase841);
+    add_testcase(testcase842);
+    add_testcase(testcase843);
+    add_testcase(testcase844);
+    add_testcase(testcase845);
+    add_testcase(testcase846);
+    add_testcase(testcase847);
+    add_testcase(testcase848);
+    add_testcase(testcase849);
+    add_testcase(testcase850);
+    add_testcase(testcase851);
+    add_testcase(testcase852);
+    add_testcase(testcase853);
+    add_testcase(testcase854);
+    add_testcase(testcase855);
+    add_testcase(testcase856);
+    add_testcase(testcase857);
+    add_testcase(testcase858);
+    add_testcase(testcase859);
+    add_testcase(testcase860);
+    add_testcase(testcase861);
+    add_testcase(testcase862);
+    add_testcase(testcase863);
+    add_testcase(testcase864);
+    add_testcase(testcase865);
+    add_testcase(testcase866);
+    add_testcase(testcase867);
+    add_testcase(testcase868);
+    add_testcase(testcase869);
+    add_testcase(testcase870);
+    add_testcase(testcase871);
+    add_testcase(testcase872);
+    add_testcase(testcase873);
+    add_testcase(testcase874);
+    add_testcase(testcase875);
+    add_testcase(testcase876);
+    add_testcase(testcase877);
+    add_testcase(testcase878);
+    add_testcase(testcase879);
+    add_testcase(testcase880);
+    add_testcase(testcase881);
+    add_testcase(testcase882);
+    add_testcase(testcase883);
+    add_testcase(testcase884);
+    add_testcase(testcase885);
+    add_testcase(testcase886);
+    add_testcase(testcase887);
+    add_testcase(testcase888);
+    add_testcase(testcase889);
+    add_testcase(testcase890);
+    add_testcase(testcase891);
+    add_testcase(testcase892);
+    add_testcase(testcase893);
+    add_testcase(testcase894);
+    add_testcase(testcase895);
+    add_testcase(testcase896);
+    add_testcase(testcase897);
+    add_testcase(testcase898);
+    add_testcase(testcase899);
+    add_testcase(testcase900);
+    add_testcase(testcase901);
+    add_testcase(testcase902);
+    add_testcase(testcase903);
+    add_testcase(testcase904);
+    add_testcase(testcase905);
+    add_testcase(testcase906);
+    add_testcase(testcase907);
+    add_testcase(testcase908);
+    add_testcase(testcase909);
+    add_testcase(testcase910);
+    add_testcase(testcase911);
+    add_testcase(testcase912);
+    add_testcase(testcase913);
+    add_testcase(testcase914);
+    add_testcase(testcase915);
+    add_testcase(testcase916);
+    add_testcase(testcase917);
+    add_testcase(testcase918);
+    add_testcase(testcase919);
+    add_testcase(testcase920);
+    add_testcase(testcase921);
+    add_testcase(testcase922);
+    add_testcase(testcase923);
+    add_testcase(testcase924);
+    add_testcase(testcase925);
+    add_testcase(testcase926);
+    add_testcase(testcase927);
+    add_testcase(testcase928);
+    add_testcase(testcase929);
+    add_testcase(testcase930);
+    add_testcase(testcase931);
+    add_testcase(testcase932);
+    add_testcase(testcase933);
+    add_testcase(testcase934);
+    add_testcase(testcase935);
+    add_testcase(testcase936);
+    add_testcase(testcase937);
+    add_testcase(testcase938);
+    add_testcase(testcase939);
+    add_testcase(testcase940);
+    add_testcase(testcase941);
+    add_testcase(testcase942);
+    add_testcase(testcase943);
+    add_testcase(testcase944);
+    add_testcase(testcase945);
+    add_testcase(testcase946);
+    add_testcase(testcase947);
+    add_testcase(testcase948);
 }
 
