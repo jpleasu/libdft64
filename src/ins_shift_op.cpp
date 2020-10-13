@@ -208,7 +208,6 @@ namespace {
             TagsetCopy<sz> src_tags(Tagset<scode>(tid, src));
             Tagset<shftcode> shft_tags(tid, shft);
 
-            // XXX
             tag_t t = shft_tags.get(0);
             for (size_t i = 0; i < sz; ++i)
                 t = tag_combine(t, src_tags.get(i));
@@ -311,13 +310,15 @@ namespace {
         template <char dcode, char shftcode, size_t sz>
         static void HOOK_DECL binary(THREADID tid, typename Tagset<dcode>::arg_type dst,
                                      typename Tagset<shftcode>::arg_type shft) {
+            // ternary<dcode, dcode, shftcode, sz>(tid, dst, dst, shft);
             Tagset<dcode> dst_tags(tid, dst);
+
             Tagset<shftcode> shft_tags(tid, shft);
             tag_t t = shft_tags.get(0);
-            for (size_t i = 0; i < sz; ++i)
+            for (int i = sz - 1; i >= 0; --i) {
                 t = tag_combine(t, dst_tags.get(i));
-            for (size_t i = 0; i < sz; ++i)
                 dst_tags.set(i, t);
+            }
             dst_tags.template zext<sz>();
         }
 
@@ -345,11 +346,20 @@ namespace {
             SWITCH8(shft / 8);
         }
 #endif
-        // shrx
+        // shrx only (shrd's OP_2 is implicit)
         template <char dcode, char scode, char shftcode, size_t sz>
         static void HOOK_DECL ternary(THREADID tid, typename Tagset<dcode>::arg_type dst,
                                       typename Tagset<scode>::arg_type src, typename Tagset<shftcode>::arg_type shft) {
-            // XXX
+            Tagset<dcode> dst_tags(tid, dst);
+            Tagset<scode> src_tags(tid, src);
+            Tagset<shftcode> shft_tags(tid, shft);
+
+            tag_t t = shft_tags.get(0);
+            for (int i = sz - 1; i >= 0; --i) {
+                t = tag_combine(t, src_tags.get(i));
+                dst_tags.set(i, t);
+            }
+            dst_tags.template zext<sz>();
         }
     };
 

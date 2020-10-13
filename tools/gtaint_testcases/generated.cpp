@@ -2188,7 +2188,7 @@ static int testcase83() {
     ASSERT_TAGGED((char *)&outRAX + 0, {0,1,2,3});
     ASSERT_TAGGED((char *)&outRAX + 1, {0,1,2,3});
     ASSERT_TAGGED((char *)&outRAX + 2, {0,1,2,3});
-    ASSERT_TAGGED((char *)&outRAX + 3, {0,1,2,3});
+    ASSERT_TAGGED((char *)&outRAX + 3, {0,1,3});
     ASSERT_TAGGED((char *)&outRAX + 4, { });
     ASSERT_TAGGED((char *)&outRAX + 5, { });
     ASSERT_TAGGED((char *)&outRAX + 6, { });
@@ -2218,9 +2218,9 @@ static int testcase84() {
     );
 
     ASSERT_TAGGED((char *)&outRAX + 0, {0,1,2,3,4,5});
-    ASSERT_TAGGED((char *)&outRAX + 1, {0,1,2,3,4,5});
-    ASSERT_TAGGED((char *)&outRAX + 2, {0,1,2,3,4,5});
-    ASSERT_TAGGED((char *)&outRAX + 3, {0,1,2,3,4,5});
+    ASSERT_TAGGED((char *)&outRAX + 1, {1,2,3,4,5});
+    ASSERT_TAGGED((char *)&outRAX + 2, {2,3,4,5});
+    ASSERT_TAGGED((char *)&outRAX + 3, {3,4,5});
     ASSERT_TAGGED((char *)&outRAX + 4, { });
     ASSERT_TAGGED((char *)&outRAX + 5, { });
     ASSERT_TAGGED((char *)&outRAX + 6, { });
@@ -2249,7 +2249,7 @@ static int testcase85() {
     ASSERT_TAGGED((char *)&outRAX + 0, {0,1,2,3});
     ASSERT_TAGGED((char *)&outRAX + 1, {0,1,2,3});
     ASSERT_TAGGED((char *)&outRAX + 2, {0,1,2,3});
-    ASSERT_TAGGED((char *)&outRAX + 3, {0,1,2,3});
+    ASSERT_TAGGED((char *)&outRAX + 3, {0,1,3});
     ASSERT_TAGGED((char *)&outRAX + 4, { });
     ASSERT_TAGGED((char *)&outRAX + 5, { });
     ASSERT_TAGGED((char *)&outRAX + 6, { });
@@ -2279,9 +2279,9 @@ static int testcase86() {
     );
 
     ASSERT_TAGGED((char *)&outRAX + 0, {0,1,2,3,4,5});
-    ASSERT_TAGGED((char *)&outRAX + 1, {0,1,2,3,4,5});
-    ASSERT_TAGGED((char *)&outRAX + 2, {0,1,2,3,4,5});
-    ASSERT_TAGGED((char *)&outRAX + 3, {0,1,2,3,4,5});
+    ASSERT_TAGGED((char *)&outRAX + 1, {1,2,3,4,5});
+    ASSERT_TAGGED((char *)&outRAX + 2, {2,3,4,5});
+    ASSERT_TAGGED((char *)&outRAX + 3, {3,4,5});
     ASSERT_TAGGED((char *)&outRAX + 4, { });
     ASSERT_TAGGED((char *)&outRAX + 5, { });
     ASSERT_TAGGED((char *)&outRAX + 6, { });
@@ -2310,11 +2310,11 @@ static int testcase87() {
     ASSERT_TAGGED((char *)&outRAX + 0, {0,1,2,3,4,5,6,7});
     ASSERT_TAGGED((char *)&outRAX + 1, {0,1,2,3,4,5,6,7});
     ASSERT_TAGGED((char *)&outRAX + 2, {0,1,2,3,4,5,6,7});
-    ASSERT_TAGGED((char *)&outRAX + 3, {0,1,2,3,4,5,6,7});
-    ASSERT_TAGGED((char *)&outRAX + 4, {0,1,2,3,4,5,6,7});
-    ASSERT_TAGGED((char *)&outRAX + 5, {0,1,2,3,4,5,6,7});
-    ASSERT_TAGGED((char *)&outRAX + 6, {0,1,2,3,4,5,6,7});
-    ASSERT_TAGGED((char *)&outRAX + 7, {0,1,2,3,4,5,6,7});
+    ASSERT_TAGGED((char *)&outRAX + 3, {0,1,3,4,5,6,7});
+    ASSERT_TAGGED((char *)&outRAX + 4, {0,1,4,5,6,7});
+    ASSERT_TAGGED((char *)&outRAX + 5, {0,1,5,6,7});
+    ASSERT_TAGGED((char *)&outRAX + 6, {0,1,6,7});
+    ASSERT_TAGGED((char *)&outRAX + 7, {0,1,7});
     return passed;
 }
 
@@ -2340,13 +2340,13 @@ static int testcase88() {
     );
 
     ASSERT_TAGGED((char *)&outRAX + 0, {0,1,2,3,4,5,6,7,8,9});
-    ASSERT_TAGGED((char *)&outRAX + 1, {0,1,2,3,4,5,6,7,8,9});
-    ASSERT_TAGGED((char *)&outRAX + 2, {0,1,2,3,4,5,6,7,8,9});
-    ASSERT_TAGGED((char *)&outRAX + 3, {0,1,2,3,4,5,6,7,8,9});
-    ASSERT_TAGGED((char *)&outRAX + 4, {0,1,2,3,4,5,6,7,8,9});
-    ASSERT_TAGGED((char *)&outRAX + 5, {0,1,2,3,4,5,6,7,8,9});
-    ASSERT_TAGGED((char *)&outRAX + 6, {0,1,2,3,4,5,6,7,8,9});
-    ASSERT_TAGGED((char *)&outRAX + 7, {0,1,2,3,4,5,6,7,8,9});
+    ASSERT_TAGGED((char *)&outRAX + 1, {1,2,3,4,5,6,7,8,9});
+    ASSERT_TAGGED((char *)&outRAX + 2, {2,3,4,5,6,7,8,9});
+    ASSERT_TAGGED((char *)&outRAX + 3, {3,4,5,6,7,8,9});
+    ASSERT_TAGGED((char *)&outRAX + 4, {4,5,6,7,8,9});
+    ASSERT_TAGGED((char *)&outRAX + 5, {5,6,7,8,9});
+    ASSERT_TAGGED((char *)&outRAX + 6, {6,7,8,9});
+    ASSERT_TAGGED((char *)&outRAX + 7, {7,8,9});
     return passed;
 }
 
@@ -2371,11 +2371,11 @@ static int testcase89() {
     ASSERT_TAGGED((char *)&outRAX + 0, {0,1,2,3,4,5,6,7});
     ASSERT_TAGGED((char *)&outRAX + 1, {0,1,2,3,4,5,6,7});
     ASSERT_TAGGED((char *)&outRAX + 2, {0,1,2,3,4,5,6,7});
-    ASSERT_TAGGED((char *)&outRAX + 3, {0,1,2,3,4,5,6,7});
-    ASSERT_TAGGED((char *)&outRAX + 4, {0,1,2,3,4,5,6,7});
-    ASSERT_TAGGED((char *)&outRAX + 5, {0,1,2,3,4,5,6,7});
-    ASSERT_TAGGED((char *)&outRAX + 6, {0,1,2,3,4,5,6,7});
-    ASSERT_TAGGED((char *)&outRAX + 7, {0,1,2,3,4,5,6,7});
+    ASSERT_TAGGED((char *)&outRAX + 3, {0,1,3,4,5,6,7});
+    ASSERT_TAGGED((char *)&outRAX + 4, {0,1,4,5,6,7});
+    ASSERT_TAGGED((char *)&outRAX + 5, {0,1,5,6,7});
+    ASSERT_TAGGED((char *)&outRAX + 6, {0,1,6,7});
+    ASSERT_TAGGED((char *)&outRAX + 7, {0,1,7});
     return passed;
 }
 
@@ -2401,13 +2401,13 @@ static int testcase90() {
     );
 
     ASSERT_TAGGED((char *)&outRAX + 0, {0,1,2,3,4,5,6,7,8,9});
-    ASSERT_TAGGED((char *)&outRAX + 1, {0,1,2,3,4,5,6,7,8,9});
-    ASSERT_TAGGED((char *)&outRAX + 2, {0,1,2,3,4,5,6,7,8,9});
-    ASSERT_TAGGED((char *)&outRAX + 3, {0,1,2,3,4,5,6,7,8,9});
-    ASSERT_TAGGED((char *)&outRAX + 4, {0,1,2,3,4,5,6,7,8,9});
-    ASSERT_TAGGED((char *)&outRAX + 5, {0,1,2,3,4,5,6,7,8,9});
-    ASSERT_TAGGED((char *)&outRAX + 6, {0,1,2,3,4,5,6,7,8,9});
-    ASSERT_TAGGED((char *)&outRAX + 7, {0,1,2,3,4,5,6,7,8,9});
+    ASSERT_TAGGED((char *)&outRAX + 1, {1,2,3,4,5,6,7,8,9});
+    ASSERT_TAGGED((char *)&outRAX + 2, {2,3,4,5,6,7,8,9});
+    ASSERT_TAGGED((char *)&outRAX + 3, {3,4,5,6,7,8,9});
+    ASSERT_TAGGED((char *)&outRAX + 4, {4,5,6,7,8,9});
+    ASSERT_TAGGED((char *)&outRAX + 5, {5,6,7,8,9});
+    ASSERT_TAGGED((char *)&outRAX + 6, {6,7,8,9});
+    ASSERT_TAGGED((char *)&outRAX + 7, {7,8,9});
     return passed;
 }
 
@@ -16876,7 +16876,7 @@ static int testcase638() {
     );
 
     ASSERT_TAGGED((char *)&outAX + 0, {0,1,2});
-    ASSERT_TAGGED((char *)&outAX + 1, {0,1,2});
+    ASSERT_TAGGED((char *)&outAX + 1, {1,2});
     return passed;
 }
 
@@ -17018,9 +17018,9 @@ static int testcase643() {
     );
 
     ASSERT_TAGGED((char *)&outRAX + 0, {0,1,2,3,4});
-    ASSERT_TAGGED((char *)&outRAX + 1, {0,1,2,3,4});
-    ASSERT_TAGGED((char *)&outRAX + 2, {0,1,2,3,4});
-    ASSERT_TAGGED((char *)&outRAX + 3, {0,1,2,3,4});
+    ASSERT_TAGGED((char *)&outRAX + 1, {1,2,3,4});
+    ASSERT_TAGGED((char *)&outRAX + 2, {2,3,4});
+    ASSERT_TAGGED((char *)&outRAX + 3, {3,4});
     ASSERT_TAGGED((char *)&outRAX + 4, { });
     ASSERT_TAGGED((char *)&outRAX + 5, { });
     ASSERT_TAGGED((char *)&outRAX + 6, { });
@@ -17166,13 +17166,13 @@ static int testcase648() {
     );
 
     ASSERT_TAGGED((char *)&outRAX + 0, {0,1,2,3,4,5,6,7,8});
-    ASSERT_TAGGED((char *)&outRAX + 1, {0,1,2,3,4,5,6,7,8});
-    ASSERT_TAGGED((char *)&outRAX + 2, {0,1,2,3,4,5,6,7,8});
-    ASSERT_TAGGED((char *)&outRAX + 3, {0,1,2,3,4,5,6,7,8});
-    ASSERT_TAGGED((char *)&outRAX + 4, {0,1,2,3,4,5,6,7,8});
-    ASSERT_TAGGED((char *)&outRAX + 5, {0,1,2,3,4,5,6,7,8});
-    ASSERT_TAGGED((char *)&outRAX + 6, {0,1,2,3,4,5,6,7,8});
-    ASSERT_TAGGED((char *)&outRAX + 7, {0,1,2,3,4,5,6,7,8});
+    ASSERT_TAGGED((char *)&outRAX + 1, {1,2,3,4,5,6,7,8});
+    ASSERT_TAGGED((char *)&outRAX + 2, {2,3,4,5,6,7,8});
+    ASSERT_TAGGED((char *)&outRAX + 3, {3,4,5,6,7,8});
+    ASSERT_TAGGED((char *)&outRAX + 4, {4,5,6,7,8});
+    ASSERT_TAGGED((char *)&outRAX + 5, {5,6,7,8});
+    ASSERT_TAGGED((char *)&outRAX + 6, {6,7,8});
+    ASSERT_TAGGED((char *)&outRAX + 7, {7,8});
     return passed;
 }
 
@@ -17196,8 +17196,8 @@ static int testcase649() {
 
     ASSERT_TAGGED((char *)&outRAX + 0, {0,1,2,3});
     ASSERT_TAGGED((char *)&outRAX + 1, {0,1,2,3});
-    ASSERT_TAGGED((char *)&outRAX + 2, {0,1,2,3});
-    ASSERT_TAGGED((char *)&outRAX + 3, {0,1,2,3});
+    ASSERT_TAGGED((char *)&outRAX + 2, {0,2,3});
+    ASSERT_TAGGED((char *)&outRAX + 3, {0,3});
     ASSERT_TAGGED((char *)&outRAX + 4, { });
     ASSERT_TAGGED((char *)&outRAX + 5, { });
     ASSERT_TAGGED((char *)&outRAX + 6, { });
@@ -17227,9 +17227,9 @@ static int testcase650() {
     );
 
     ASSERT_TAGGED((char *)&outRAX + 0, {0,1,2,3,4});
-    ASSERT_TAGGED((char *)&outRAX + 1, {0,1,2,3,4});
-    ASSERT_TAGGED((char *)&outRAX + 2, {0,1,2,3,4});
-    ASSERT_TAGGED((char *)&outRAX + 3, {0,1,2,3,4});
+    ASSERT_TAGGED((char *)&outRAX + 1, {1,2,3,4});
+    ASSERT_TAGGED((char *)&outRAX + 2, {2,3,4});
+    ASSERT_TAGGED((char *)&outRAX + 3, {3,4});
     ASSERT_TAGGED((char *)&outRAX + 4, { });
     ASSERT_TAGGED((char *)&outRAX + 5, { });
     ASSERT_TAGGED((char *)&outRAX + 6, { });
@@ -17257,8 +17257,8 @@ static int testcase651() {
 
     ASSERT_TAGGED((char *)&outRAX + 0, {0,1,2,3});
     ASSERT_TAGGED((char *)&outRAX + 1, {0,1,2,3});
-    ASSERT_TAGGED((char *)&outRAX + 2, {0,1,2,3});
-    ASSERT_TAGGED((char *)&outRAX + 3, {0,1,2,3});
+    ASSERT_TAGGED((char *)&outRAX + 2, {0,2,3});
+    ASSERT_TAGGED((char *)&outRAX + 3, {0,3});
     ASSERT_TAGGED((char *)&outRAX + 4, { });
     ASSERT_TAGGED((char *)&outRAX + 5, { });
     ASSERT_TAGGED((char *)&outRAX + 6, { });
@@ -17288,9 +17288,9 @@ static int testcase652() {
     );
 
     ASSERT_TAGGED((char *)&outRAX + 0, {0,1,2,3,4});
-    ASSERT_TAGGED((char *)&outRAX + 1, {0,1,2,3,4});
-    ASSERT_TAGGED((char *)&outRAX + 2, {0,1,2,3,4});
-    ASSERT_TAGGED((char *)&outRAX + 3, {0,1,2,3,4});
+    ASSERT_TAGGED((char *)&outRAX + 1, {1,2,3,4});
+    ASSERT_TAGGED((char *)&outRAX + 2, {2,3,4});
+    ASSERT_TAGGED((char *)&outRAX + 3, {3,4});
     ASSERT_TAGGED((char *)&outRAX + 4, { });
     ASSERT_TAGGED((char *)&outRAX + 5, { });
     ASSERT_TAGGED((char *)&outRAX + 6, { });
@@ -17318,12 +17318,12 @@ static int testcase653() {
 
     ASSERT_TAGGED((char *)&outRAX + 0, {0,1,2,3,4,5,6,7});
     ASSERT_TAGGED((char *)&outRAX + 1, {0,1,2,3,4,5,6,7});
-    ASSERT_TAGGED((char *)&outRAX + 2, {0,1,2,3,4,5,6,7});
-    ASSERT_TAGGED((char *)&outRAX + 3, {0,1,2,3,4,5,6,7});
-    ASSERT_TAGGED((char *)&outRAX + 4, {0,1,2,3,4,5,6,7});
-    ASSERT_TAGGED((char *)&outRAX + 5, {0,1,2,3,4,5,6,7});
-    ASSERT_TAGGED((char *)&outRAX + 6, {0,1,2,3,4,5,6,7});
-    ASSERT_TAGGED((char *)&outRAX + 7, {0,1,2,3,4,5,6,7});
+    ASSERT_TAGGED((char *)&outRAX + 2, {0,2,3,4,5,6,7});
+    ASSERT_TAGGED((char *)&outRAX + 3, {0,3,4,5,6,7});
+    ASSERT_TAGGED((char *)&outRAX + 4, {0,4,5,6,7});
+    ASSERT_TAGGED((char *)&outRAX + 5, {0,5,6,7});
+    ASSERT_TAGGED((char *)&outRAX + 6, {0,6,7});
+    ASSERT_TAGGED((char *)&outRAX + 7, {0,7});
     return passed;
 }
 
@@ -17349,13 +17349,13 @@ static int testcase654() {
     );
 
     ASSERT_TAGGED((char *)&outRAX + 0, {0,1,2,3,4,5,6,7,8});
-    ASSERT_TAGGED((char *)&outRAX + 1, {0,1,2,3,4,5,6,7,8});
-    ASSERT_TAGGED((char *)&outRAX + 2, {0,1,2,3,4,5,6,7,8});
-    ASSERT_TAGGED((char *)&outRAX + 3, {0,1,2,3,4,5,6,7,8});
-    ASSERT_TAGGED((char *)&outRAX + 4, {0,1,2,3,4,5,6,7,8});
-    ASSERT_TAGGED((char *)&outRAX + 5, {0,1,2,3,4,5,6,7,8});
-    ASSERT_TAGGED((char *)&outRAX + 6, {0,1,2,3,4,5,6,7,8});
-    ASSERT_TAGGED((char *)&outRAX + 7, {0,1,2,3,4,5,6,7,8});
+    ASSERT_TAGGED((char *)&outRAX + 1, {1,2,3,4,5,6,7,8});
+    ASSERT_TAGGED((char *)&outRAX + 2, {2,3,4,5,6,7,8});
+    ASSERT_TAGGED((char *)&outRAX + 3, {3,4,5,6,7,8});
+    ASSERT_TAGGED((char *)&outRAX + 4, {4,5,6,7,8});
+    ASSERT_TAGGED((char *)&outRAX + 5, {5,6,7,8});
+    ASSERT_TAGGED((char *)&outRAX + 6, {6,7,8});
+    ASSERT_TAGGED((char *)&outRAX + 7, {7,8});
     return passed;
 }
 
@@ -17379,12 +17379,12 @@ static int testcase655() {
 
     ASSERT_TAGGED((char *)&outRAX + 0, {0,1,2,3,4,5,6,7});
     ASSERT_TAGGED((char *)&outRAX + 1, {0,1,2,3,4,5,6,7});
-    ASSERT_TAGGED((char *)&outRAX + 2, {0,1,2,3,4,5,6,7});
-    ASSERT_TAGGED((char *)&outRAX + 3, {0,1,2,3,4,5,6,7});
-    ASSERT_TAGGED((char *)&outRAX + 4, {0,1,2,3,4,5,6,7});
-    ASSERT_TAGGED((char *)&outRAX + 5, {0,1,2,3,4,5,6,7});
-    ASSERT_TAGGED((char *)&outRAX + 6, {0,1,2,3,4,5,6,7});
-    ASSERT_TAGGED((char *)&outRAX + 7, {0,1,2,3,4,5,6,7});
+    ASSERT_TAGGED((char *)&outRAX + 2, {0,2,3,4,5,6,7});
+    ASSERT_TAGGED((char *)&outRAX + 3, {0,3,4,5,6,7});
+    ASSERT_TAGGED((char *)&outRAX + 4, {0,4,5,6,7});
+    ASSERT_TAGGED((char *)&outRAX + 5, {0,5,6,7});
+    ASSERT_TAGGED((char *)&outRAX + 6, {0,6,7});
+    ASSERT_TAGGED((char *)&outRAX + 7, {0,7});
     return passed;
 }
 
@@ -17410,13 +17410,13 @@ static int testcase656() {
     );
 
     ASSERT_TAGGED((char *)&outRAX + 0, {0,1,2,3,4,5,6,7,8});
-    ASSERT_TAGGED((char *)&outRAX + 1, {0,1,2,3,4,5,6,7,8});
-    ASSERT_TAGGED((char *)&outRAX + 2, {0,1,2,3,4,5,6,7,8});
-    ASSERT_TAGGED((char *)&outRAX + 3, {0,1,2,3,4,5,6,7,8});
-    ASSERT_TAGGED((char *)&outRAX + 4, {0,1,2,3,4,5,6,7,8});
-    ASSERT_TAGGED((char *)&outRAX + 5, {0,1,2,3,4,5,6,7,8});
-    ASSERT_TAGGED((char *)&outRAX + 6, {0,1,2,3,4,5,6,7,8});
-    ASSERT_TAGGED((char *)&outRAX + 7, {0,1,2,3,4,5,6,7,8});
+    ASSERT_TAGGED((char *)&outRAX + 1, {1,2,3,4,5,6,7,8});
+    ASSERT_TAGGED((char *)&outRAX + 2, {2,3,4,5,6,7,8});
+    ASSERT_TAGGED((char *)&outRAX + 3, {3,4,5,6,7,8});
+    ASSERT_TAGGED((char *)&outRAX + 4, {4,5,6,7,8});
+    ASSERT_TAGGED((char *)&outRAX + 5, {5,6,7,8});
+    ASSERT_TAGGED((char *)&outRAX + 6, {6,7,8});
+    ASSERT_TAGGED((char *)&outRAX + 7, {7,8});
     return passed;
 }
 
@@ -20026,8 +20026,8 @@ static int testcase756() {
 
     ASSERT_TAGGED((char *)&outRAX + 0, {0,4,5,6,7});
     ASSERT_TAGGED((char *)&outRAX + 1, {0,1,4,5,6,7});
-    ASSERT_TAGGED((char *)&outRAX + 2, {0,1,2,4,5,6,7});
-    ASSERT_TAGGED((char *)&outRAX + 3, {0,1,2,3,4,5,6,7});
+    ASSERT_TAGGED((char *)&outRAX + 2, {0,1,2,4,6,7});
+    ASSERT_TAGGED((char *)&outRAX + 3, {0,1,2,3,4,7});
     ASSERT_TAGGED((char *)&outRAX + 4, { });
     ASSERT_TAGGED((char *)&outRAX + 5, { });
     ASSERT_TAGGED((char *)&outRAX + 6, { });
@@ -20456,12 +20456,12 @@ static int testcase770() {
 
     ASSERT_TAGGED((char *)&outRAX + 0, {0,8,9,10,11,12,13,14,15});
     ASSERT_TAGGED((char *)&outRAX + 1, {0,1,8,9,10,11,12,13,14,15});
-    ASSERT_TAGGED((char *)&outRAX + 2, {0,1,2,8,9,10,11,12,13,14,15});
-    ASSERT_TAGGED((char *)&outRAX + 3, {0,1,2,3,8,9,10,11,12,13,14,15});
-    ASSERT_TAGGED((char *)&outRAX + 4, {0,1,2,3,4,8,9,10,11,12,13,14,15});
-    ASSERT_TAGGED((char *)&outRAX + 5, {0,1,2,3,4,5,8,9,10,11,12,13,14,15});
-    ASSERT_TAGGED((char *)&outRAX + 6, {0,1,2,3,4,5,6,8,9,10,11,12,13,14,15});
-    ASSERT_TAGGED((char *)&outRAX + 7, {0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15});
+    ASSERT_TAGGED((char *)&outRAX + 2, {0,1,2,8,10,11,12,13,14,15});
+    ASSERT_TAGGED((char *)&outRAX + 3, {0,1,2,3,8,11,12,13,14,15});
+    ASSERT_TAGGED((char *)&outRAX + 4, {0,1,2,3,4,8,12,13,14,15});
+    ASSERT_TAGGED((char *)&outRAX + 5, {0,1,2,3,4,5,8,13,14,15});
+    ASSERT_TAGGED((char *)&outRAX + 6, {0,1,2,3,4,5,6,8,14,15});
+    ASSERT_TAGGED((char *)&outRAX + 7, {0,1,2,3,4,5,6,7,8,15});
     return passed;
 }
 
@@ -21292,7 +21292,7 @@ static int testcase804() {
     );
 
     ASSERT_TAGGED((char *)&outAX + 0, {0,1,2});
-    ASSERT_TAGGED((char *)&outAX + 1, {0,1,2});
+    ASSERT_TAGGED((char *)&outAX + 1, {1,2});
     return passed;
 }
 
@@ -21550,9 +21550,9 @@ static int testcase813() {
     );
 
     ASSERT_TAGGED((char *)&outRAX + 0, {0,1,2,3,4});
-    ASSERT_TAGGED((char *)&outRAX + 1, {0,1,2,3,4});
-    ASSERT_TAGGED((char *)&outRAX + 2, {0,1,2,3,4});
-    ASSERT_TAGGED((char *)&outRAX + 3, {0,1,2,3,4});
+    ASSERT_TAGGED((char *)&outRAX + 1, {1,2,3,4});
+    ASSERT_TAGGED((char *)&outRAX + 2, {2,3,4});
+    ASSERT_TAGGED((char *)&outRAX + 3, {3,4});
     ASSERT_TAGGED((char *)&outRAX + 4, { });
     ASSERT_TAGGED((char *)&outRAX + 5, { });
     ASSERT_TAGGED((char *)&outRAX + 6, { });
@@ -21814,13 +21814,13 @@ static int testcase822() {
     );
 
     ASSERT_TAGGED((char *)&outRAX + 0, {0,1,2,3,4,5,6,7,8});
-    ASSERT_TAGGED((char *)&outRAX + 1, {0,1,2,3,4,5,6,7,8});
-    ASSERT_TAGGED((char *)&outRAX + 2, {0,1,2,3,4,5,6,7,8});
-    ASSERT_TAGGED((char *)&outRAX + 3, {0,1,2,3,4,5,6,7,8});
-    ASSERT_TAGGED((char *)&outRAX + 4, {0,1,2,3,4,5,6,7,8});
-    ASSERT_TAGGED((char *)&outRAX + 5, {0,1,2,3,4,5,6,7,8});
-    ASSERT_TAGGED((char *)&outRAX + 6, {0,1,2,3,4,5,6,7,8});
-    ASSERT_TAGGED((char *)&outRAX + 7, {0,1,2,3,4,5,6,7,8});
+    ASSERT_TAGGED((char *)&outRAX + 1, {1,2,3,4,5,6,7,8});
+    ASSERT_TAGGED((char *)&outRAX + 2, {2,3,4,5,6,7,8});
+    ASSERT_TAGGED((char *)&outRAX + 3, {3,4,5,6,7,8});
+    ASSERT_TAGGED((char *)&outRAX + 4, {4,5,6,7,8});
+    ASSERT_TAGGED((char *)&outRAX + 5, {5,6,7,8});
+    ASSERT_TAGGED((char *)&outRAX + 6, {6,7,8});
+    ASSERT_TAGGED((char *)&outRAX + 7, {7,8});
     return passed;
 }
 
@@ -22166,7 +22166,7 @@ static int testcase836() {
     );
 
     ASSERT_TAGGED((char *)&outAX + 0, {0,1,2});
-    ASSERT_TAGGED((char *)&outAX + 1, {0,1,2,3});
+    ASSERT_TAGGED((char *)&outAX + 1, {1,2,3});
     return passed;
 }
 
@@ -22590,9 +22590,9 @@ static int testcase850() {
     );
 
     ASSERT_TAGGED((char *)&outRAX + 0, {0,1,2,3,4});
-    ASSERT_TAGGED((char *)&outRAX + 1, {0,1,2,3,4,5});
-    ASSERT_TAGGED((char *)&outRAX + 2, {0,1,2,3,4,5,6});
-    ASSERT_TAGGED((char *)&outRAX + 3, {0,1,2,3,4,5,6,7});
+    ASSERT_TAGGED((char *)&outRAX + 1, {1,2,3,4,5});
+    ASSERT_TAGGED((char *)&outRAX + 2, {2,3,4,5,6});
+    ASSERT_TAGGED((char *)&outRAX + 3, {3,4,5,6,7});
     ASSERT_TAGGED((char *)&outRAX + 4, { });
     ASSERT_TAGGED((char *)&outRAX + 5, { });
     ASSERT_TAGGED((char *)&outRAX + 6, { });
@@ -23020,13 +23020,13 @@ static int testcase864() {
     );
 
     ASSERT_TAGGED((char *)&outRAX + 0, {0,1,2,3,4,5,6,7,8});
-    ASSERT_TAGGED((char *)&outRAX + 1, {0,1,2,3,4,5,6,7,8,9});
-    ASSERT_TAGGED((char *)&outRAX + 2, {0,1,2,3,4,5,6,7,8,9,10});
-    ASSERT_TAGGED((char *)&outRAX + 3, {0,1,2,3,4,5,6,7,8,9,10,11});
-    ASSERT_TAGGED((char *)&outRAX + 4, {0,1,2,3,4,5,6,7,8,9,10,11,12});
-    ASSERT_TAGGED((char *)&outRAX + 5, {0,1,2,3,4,5,6,7,8,9,10,11,12,13});
-    ASSERT_TAGGED((char *)&outRAX + 6, {0,1,2,3,4,5,6,7,8,9,10,11,12,13,14});
-    ASSERT_TAGGED((char *)&outRAX + 7, {0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15});
+    ASSERT_TAGGED((char *)&outRAX + 1, {1,2,3,4,5,6,7,8,9});
+    ASSERT_TAGGED((char *)&outRAX + 2, {2,3,4,5,6,7,8,9,10});
+    ASSERT_TAGGED((char *)&outRAX + 3, {3,4,5,6,7,8,9,10,11});
+    ASSERT_TAGGED((char *)&outRAX + 4, {4,5,6,7,8,9,10,11,12});
+    ASSERT_TAGGED((char *)&outRAX + 5, {5,6,7,8,9,10,11,12,13});
+    ASSERT_TAGGED((char *)&outRAX + 6, {6,7,8,9,10,11,12,13,14});
+    ASSERT_TAGGED((char *)&outRAX + 7, {7,8,9,10,11,12,13,14,15});
     return passed;
 }
 
@@ -23050,8 +23050,8 @@ static int testcase865() {
 
     ASSERT_TAGGED((char *)&outRAX + 0, {0,1,2,3});
     ASSERT_TAGGED((char *)&outRAX + 1, {0,1,2,3});
-    ASSERT_TAGGED((char *)&outRAX + 2, {0,1,2,3});
-    ASSERT_TAGGED((char *)&outRAX + 3, {0,1,2,3});
+    ASSERT_TAGGED((char *)&outRAX + 2, {0,2,3});
+    ASSERT_TAGGED((char *)&outRAX + 3, {0,3});
     ASSERT_TAGGED((char *)&outRAX + 4, { });
     ASSERT_TAGGED((char *)&outRAX + 5, { });
     ASSERT_TAGGED((char *)&outRAX + 6, { });
@@ -23081,9 +23081,9 @@ static int testcase866() {
     );
 
     ASSERT_TAGGED((char *)&outRAX + 0, {0,1,2,3,4});
-    ASSERT_TAGGED((char *)&outRAX + 1, {0,1,2,3,4});
-    ASSERT_TAGGED((char *)&outRAX + 2, {0,1,2,3,4});
-    ASSERT_TAGGED((char *)&outRAX + 3, {0,1,2,3,4});
+    ASSERT_TAGGED((char *)&outRAX + 1, {1,2,3,4});
+    ASSERT_TAGGED((char *)&outRAX + 2, {2,3,4});
+    ASSERT_TAGGED((char *)&outRAX + 3, {3,4});
     ASSERT_TAGGED((char *)&outRAX + 4, { });
     ASSERT_TAGGED((char *)&outRAX + 5, { });
     ASSERT_TAGGED((char *)&outRAX + 6, { });
@@ -23111,8 +23111,8 @@ static int testcase867() {
 
     ASSERT_TAGGED((char *)&outRAX + 0, {0,1,2,3});
     ASSERT_TAGGED((char *)&outRAX + 1, {0,1,2,3});
-    ASSERT_TAGGED((char *)&outRAX + 2, {0,1,2,3});
-    ASSERT_TAGGED((char *)&outRAX + 3, {0,1,2,3});
+    ASSERT_TAGGED((char *)&outRAX + 2, {0,2,3});
+    ASSERT_TAGGED((char *)&outRAX + 3, {0,3});
     ASSERT_TAGGED((char *)&outRAX + 4, { });
     ASSERT_TAGGED((char *)&outRAX + 5, { });
     ASSERT_TAGGED((char *)&outRAX + 6, { });
@@ -23142,9 +23142,9 @@ static int testcase868() {
     );
 
     ASSERT_TAGGED((char *)&outRAX + 0, {0,1,2,3,4});
-    ASSERT_TAGGED((char *)&outRAX + 1, {0,1,2,3,4});
-    ASSERT_TAGGED((char *)&outRAX + 2, {0,1,2,3,4});
-    ASSERT_TAGGED((char *)&outRAX + 3, {0,1,2,3,4});
+    ASSERT_TAGGED((char *)&outRAX + 1, {1,2,3,4});
+    ASSERT_TAGGED((char *)&outRAX + 2, {2,3,4});
+    ASSERT_TAGGED((char *)&outRAX + 3, {3,4});
     ASSERT_TAGGED((char *)&outRAX + 4, { });
     ASSERT_TAGGED((char *)&outRAX + 5, { });
     ASSERT_TAGGED((char *)&outRAX + 6, { });
@@ -23172,12 +23172,12 @@ static int testcase869() {
 
     ASSERT_TAGGED((char *)&outRAX + 0, {0,1,2,3,4,5,6,7});
     ASSERT_TAGGED((char *)&outRAX + 1, {0,1,2,3,4,5,6,7});
-    ASSERT_TAGGED((char *)&outRAX + 2, {0,1,2,3,4,5,6,7});
-    ASSERT_TAGGED((char *)&outRAX + 3, {0,1,2,3,4,5,6,7});
-    ASSERT_TAGGED((char *)&outRAX + 4, {0,1,2,3,4,5,6,7});
-    ASSERT_TAGGED((char *)&outRAX + 5, {0,1,2,3,4,5,6,7});
-    ASSERT_TAGGED((char *)&outRAX + 6, {0,1,2,3,4,5,6,7});
-    ASSERT_TAGGED((char *)&outRAX + 7, {0,1,2,3,4,5,6,7});
+    ASSERT_TAGGED((char *)&outRAX + 2, {0,2,3,4,5,6,7});
+    ASSERT_TAGGED((char *)&outRAX + 3, {0,3,4,5,6,7});
+    ASSERT_TAGGED((char *)&outRAX + 4, {0,4,5,6,7});
+    ASSERT_TAGGED((char *)&outRAX + 5, {0,5,6,7});
+    ASSERT_TAGGED((char *)&outRAX + 6, {0,6,7});
+    ASSERT_TAGGED((char *)&outRAX + 7, {0,7});
     return passed;
 }
 
@@ -23203,13 +23203,13 @@ static int testcase870() {
     );
 
     ASSERT_TAGGED((char *)&outRAX + 0, {0,1,2,3,4,5,6,7,8});
-    ASSERT_TAGGED((char *)&outRAX + 1, {0,1,2,3,4,5,6,7,8});
-    ASSERT_TAGGED((char *)&outRAX + 2, {0,1,2,3,4,5,6,7,8});
-    ASSERT_TAGGED((char *)&outRAX + 3, {0,1,2,3,4,5,6,7,8});
-    ASSERT_TAGGED((char *)&outRAX + 4, {0,1,2,3,4,5,6,7,8});
-    ASSERT_TAGGED((char *)&outRAX + 5, {0,1,2,3,4,5,6,7,8});
-    ASSERT_TAGGED((char *)&outRAX + 6, {0,1,2,3,4,5,6,7,8});
-    ASSERT_TAGGED((char *)&outRAX + 7, {0,1,2,3,4,5,6,7,8});
+    ASSERT_TAGGED((char *)&outRAX + 1, {1,2,3,4,5,6,7,8});
+    ASSERT_TAGGED((char *)&outRAX + 2, {2,3,4,5,6,7,8});
+    ASSERT_TAGGED((char *)&outRAX + 3, {3,4,5,6,7,8});
+    ASSERT_TAGGED((char *)&outRAX + 4, {4,5,6,7,8});
+    ASSERT_TAGGED((char *)&outRAX + 5, {5,6,7,8});
+    ASSERT_TAGGED((char *)&outRAX + 6, {6,7,8});
+    ASSERT_TAGGED((char *)&outRAX + 7, {7,8});
     return passed;
 }
 
@@ -23233,12 +23233,12 @@ static int testcase871() {
 
     ASSERT_TAGGED((char *)&outRAX + 0, {0,1,2,3,4,5,6,7});
     ASSERT_TAGGED((char *)&outRAX + 1, {0,1,2,3,4,5,6,7});
-    ASSERT_TAGGED((char *)&outRAX + 2, {0,1,2,3,4,5,6,7});
-    ASSERT_TAGGED((char *)&outRAX + 3, {0,1,2,3,4,5,6,7});
-    ASSERT_TAGGED((char *)&outRAX + 4, {0,1,2,3,4,5,6,7});
-    ASSERT_TAGGED((char *)&outRAX + 5, {0,1,2,3,4,5,6,7});
-    ASSERT_TAGGED((char *)&outRAX + 6, {0,1,2,3,4,5,6,7});
-    ASSERT_TAGGED((char *)&outRAX + 7, {0,1,2,3,4,5,6,7});
+    ASSERT_TAGGED((char *)&outRAX + 2, {0,2,3,4,5,6,7});
+    ASSERT_TAGGED((char *)&outRAX + 3, {0,3,4,5,6,7});
+    ASSERT_TAGGED((char *)&outRAX + 4, {0,4,5,6,7});
+    ASSERT_TAGGED((char *)&outRAX + 5, {0,5,6,7});
+    ASSERT_TAGGED((char *)&outRAX + 6, {0,6,7});
+    ASSERT_TAGGED((char *)&outRAX + 7, {0,7});
     return passed;
 }
 
@@ -23264,13 +23264,13 @@ static int testcase872() {
     );
 
     ASSERT_TAGGED((char *)&outRAX + 0, {0,1,2,3,4,5,6,7,8});
-    ASSERT_TAGGED((char *)&outRAX + 1, {0,1,2,3,4,5,6,7,8});
-    ASSERT_TAGGED((char *)&outRAX + 2, {0,1,2,3,4,5,6,7,8});
-    ASSERT_TAGGED((char *)&outRAX + 3, {0,1,2,3,4,5,6,7,8});
-    ASSERT_TAGGED((char *)&outRAX + 4, {0,1,2,3,4,5,6,7,8});
-    ASSERT_TAGGED((char *)&outRAX + 5, {0,1,2,3,4,5,6,7,8});
-    ASSERT_TAGGED((char *)&outRAX + 6, {0,1,2,3,4,5,6,7,8});
-    ASSERT_TAGGED((char *)&outRAX + 7, {0,1,2,3,4,5,6,7,8});
+    ASSERT_TAGGED((char *)&outRAX + 1, {1,2,3,4,5,6,7,8});
+    ASSERT_TAGGED((char *)&outRAX + 2, {2,3,4,5,6,7,8});
+    ASSERT_TAGGED((char *)&outRAX + 3, {3,4,5,6,7,8});
+    ASSERT_TAGGED((char *)&outRAX + 4, {4,5,6,7,8});
+    ASSERT_TAGGED((char *)&outRAX + 5, {5,6,7,8});
+    ASSERT_TAGGED((char *)&outRAX + 6, {6,7,8});
+    ASSERT_TAGGED((char *)&outRAX + 7, {7,8});
     return passed;
 }
 
