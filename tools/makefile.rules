@@ -94,15 +94,15 @@ LOGGING_FLAGS = -DNO_PINTOOL_LOG
 TOOL_CXXFLAGS += $(LOGGING_FLAGS) -I$(LIBDFT_INC_PATH) -L$(LIBDFT_PATH)
 TOOL_LIBS += -L$(LIBDFT_PATH) -ldft
 
-$(OBJDIR)/gtaint$(PINTOOL_SUFFIX): $(OBJDIR)/gtaint$(OBJ_SUFFIX) $(LIBDFT_PATH)/libdft.a
+$(OBJDIR)gtaint$(PINTOOL_SUFFIX): $(OBJDIR)gtaint$(OBJ_SUFFIX) $(LIBDFT_PATH)/libdft.a
 	$(LINKER) $(TOOL_LDFLAGS) $(LINK_EXE)$@ $< $(TOOL_LPATHS) $(TOOL_LIBS)
 
 
 INPUT_FILE=cur_input
-test_mini: $(OBJDIR)/track$(PINTOOL_SUFFIX) ${OBJDIR}/mini_test$(EXE_SUFFIX)
+test_mini: $(OBJDIR)track$(PINTOOL_SUFFIX) ${OBJDIR}/mini_test$(EXE_SUFFIX)
 	$(PIN) -t $< -- $(OBJDIR)mini_test$(EXE_SUFFIX)  ${INPUT_FILE}
 
-test_gtaint: $(OBJDIR)/gtaint$(PINTOOL_SUFFIX) ${OBJDIR}/gtaint_test$(EXE_SUFFIX)
+test_gtaint: $(OBJDIR)gtaint$(PINTOOL_SUFFIX) ${OBJDIR}/gtaint_test$(EXE_SUFFIX)
 	$(PIN) -t $< -filter_no_shared_libs -- $(OBJDIR)gtaint_test$(EXE_SUFFIX)  ${INPUT_FILE}
 
 
@@ -118,7 +118,7 @@ $(OBJDIR)gtaint_testcases$(EXE_SUFFIX): gtaint_testcases.cpp $(GTAINT_TESTCASES_
         -Wl,--whole-archive $(GTAINT_TESTCASES_AR) -Wl,--no-whole-archive \
         $(CXX_LPATHS) $(CXX_LIBS)
 
-testcases_gtaint: $(OBJDIR)/gtaint$(PINTOOL_SUFFIX) $(OBJDIR)gtaint_testcases$(EXE_SUFFIX)
+testcases_gtaint: $(OBJDIR)gtaint$(PINTOOL_SUFFIX) $(OBJDIR)gtaint_testcases$(EXE_SUFFIX)
 	setarch x86_64 -R $(PIN) -t $< -filter_no_shared_libs -- $(OBJDIR)gtaint_testcases$(EXE_SUFFIX)  ${INPUT_FILE}
 
 clean_testcases: clean

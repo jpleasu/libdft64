@@ -5,7 +5,6 @@
 
 #include "ins_clear_op.h"
 #include "ins_generic_op.h"
-#include "ins_movsx_op.h"
 #include "ins_punpck_op.h"
 #include "ins_shift_op.h"
 #include "ins_xchg_op.h"
@@ -166,7 +165,49 @@ namespace {
         }
     };
 
+    template <bool sign_extend, size_t src_sz>
+    struct movx_instrumentation : public instrumentation_base<movx_instrumentation<sign_extend, src_sz>> {
+        static void ins_unary_op(INS ins) {
+            uninstrumented(ins, "movx unary");
+        }
+
+        template <char dcode, char scode, size_t sz>
+        static void HOOK_DECL binary(THREADID tid, typename Tagset<dcode>::arg_type dst,
+                                     typename Tagset<scode>::arg_type src) {
+            Tagset<dcode> dst_tags(tid, dst);
+            TagsetCopy<src_sz> src_tags(Tagset<scode>(tid, src));
+
+            for (size_t i = 0; i < src_sz; i++)
+                dst_tags.set(i, src_tags.get(i));
+            if (sign_extend)
+                for (size_t i = src_sz; i < sz; i++)
+                    dst_tags.set(i, src_tags.get(src_sz - 1));
+
+            dst_tags.template zext<sz>();
+        }
+        static void ins_ternary_op(INS ins) {
+            uninstrumented(ins, "movx ternary");
+        }
+    };
 } // namespace
+
+#define INS_MOVX(SIGN_EXTEND)                                                                                          \
+    switch (INS_OperandWidth(ins, OP_1) / 8) {                                                                         \
+    case 1:                                                                                                            \
+        movx_instrumentation<SIGN_EXTEND, 1>::ins_op(ins);                                                             \
+        break;                                                                                                         \
+    case 2:                                                                                                            \
+        movx_instrumentation<SIGN_EXTEND, 2>::ins_op(ins);                                                             \
+        break;                                                                                                         \
+    case 4:                                                                                                            \
+        movx_instrumentation<SIGN_EXTEND, 4>::ins_op(ins);                                                             \
+        break;                                                                                                         \
+    case 8:                                                                                                            \
+        movx_instrumentation<SIGN_EXTEND, 8>::ins_op(ins);                                                             \
+        break;                                                                                                         \
+    default:                                                                                                           \
+        uninstrumented(ins, "movx size");                                                                              \
+    }
 
 /*
  * instruction inspection (instrumentation function)
@@ -359,12 +400,12 @@ void ins_inspect(INS ins) {
     case XED_ICLASS_MOVBE:
         ins_movbe_op(ins);
         break;
-    case XED_ICLASS_MOVSX:
     case XED_ICLASS_MOVZX:
-        ins_movsx_op(ins);
+        INS_MOVX(false);
         break;
+    case XED_ICLASS_MOVSX:
     case XED_ICLASS_MOVSXD:
-        ins_movsxd_op(ins);
+        INS_MOVX(true);
         break;
     case XED_ICLASS_CBW:
         CALL((sext_a<1>));
