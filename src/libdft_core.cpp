@@ -109,24 +109,11 @@ namespace {
 
     struct bextr_instrumentation : public instrumentation_base<bextr_instrumentation> {
         static void ins_op(INS ins) {
-            UINT32 operand_cnt = INS_ExplicitOperandCount(ins);
-            if (operand_cnt == 3) {
-                UINT32 n;
-                for (n = 0; n < 3; ++n) {
-                    if (INS_OperandIsImmediate(ins, n))
-                        break;
-                }
-                if (n == 3)
-                    base_t::ins_ternary_op(ins);
-                else
-                    uninstrumented(ins, "bextr ternary imm");
+            if (INS_ExplicitOperandCount(ins) == 3 && !INS_OperandIsImmediate(ins, OP_2)) {
+                base_t::ins_ternary_op(ins);
             } else {
                 uninstrumented(ins, "bextr non ternary");
             }
-        }
-
-        static void ins_ternary_imm(INS ins) {
-            uninstrumented(ins, "bextr ternary imm");
         }
         template <char dcode, char scode1, char scode2, size_t sz>
         static void HOOK_DECL ternary(THREADID tid, typename Tagset<dcode>::arg_type dst,
@@ -134,13 +121,32 @@ namespace {
             Tagset<scode1> src1_tags(tid, src1);
             Tagset<scode2> src2_tags(tid, src2);
             Tagset<dcode> dst_tags(tid, dst);
-            tag_t t = src1_tags.get(0);
-            for (size_t i = 1; i < sz; ++i)
+            tag_t t = tag_combine(src2_tags.get(0), src2_tags.get(1));
+            for (int i = sz - 1; i >= 0; --i) {
                 t = tag_combine(t, src1_tags.get(i));
-            for (size_t i = 0; i < 2; ++i)
-                t = tag_combine(t, src2_tags.get(i));
-            for (size_t i = 0; i < sz; ++i)
                 dst_tags.set(i, t);
+            }
+
+            dst_tags.template zext<sz>();
+        }
+    };
+    struct bzhi_instrumentation : public instrumentation_base<bzhi_instrumentation> {
+        static void ins_op(INS ins) {
+            if (INS_ExplicitOperandCount(ins) == 3 && !INS_OperandIsImmediate(ins, OP_2)) {
+                base_t::ins_ternary_op(ins);
+            } else {
+                uninstrumented(ins, "bzhi non ternary");
+            }
+        }
+        template <char dcode, char scode1, char scode2, size_t sz>
+        static void HOOK_DECL ternary(THREADID tid, typename Tagset<dcode>::arg_type dst,
+                                      typename Tagset<scode1>::arg_type src1, typename Tagset<scode2>::arg_type src2) {
+            Tagset<scode1> src1_tags(tid, src1);
+            Tagset<scode2> src2_tags(tid, src2);
+            Tagset<dcode> dst_tags(tid, dst);
+            tag_t t = src2_tags.get(0);
+            for (size_t i = 0; i < sz; ++i)
+                dst_tags.set(i, tag_combine(t, src1_tags.get(i)));
 
             dst_tags.template zext<sz>();
         }
@@ -189,6 +195,34 @@ namespace {
             uninstrumented(ins, "movx ternary");
         }
     };
+
+    struct xadd_instrumentation : public instrumentation_base<xadd_instrumentation> {
+
+        static void ins_op(INS ins) {
+            if (INS_ExplicitOperandCount(ins) == 2 && !INS_OperandIsImmediate(ins, OP_1)) {
+                instrumentation_t::ins_binary_op(ins);
+            } else
+                uninstrumented(ins, "xadd non binary");
+        }
+
+        template <char dcode, char scode, size_t sz>
+        static void HOOK_DECL binary(THREADID tid, typename Tagset<dcode>::arg_type dst,
+                                     typename Tagset<scode>::arg_type src) {
+            Tagset<dcode> dst_tags(tid, dst);
+            Tagset<scode> src_tags(tid, src);
+
+            tag_t t = tag_traits<tag_t>::cleared_val;
+            for (size_t i = 0; i < sz; i++) {
+                tag_t dt = dst_tags.get(i);
+                t = tag_combine(t, dt, src_tags.get(i));
+                src_tags.set(i, dt); // src gets the original dst
+                dst_tags.set(i, t);  // dst gets the sum of src and dst
+            }
+            dst_tags.template zext<sz>();
+            src_tags.template zext<sz>();
+        }
+    };
+
 } // namespace
 
 #define INS_MOVX(SIGN_EXTEND)                                                                                          \
@@ -263,6 +297,9 @@ void ins_inspect(INS ins) {
         break;
 
     // **** arithmetic ****
+    case XED_ICLASS_BZHI:
+        bzhi_instrumentation::ins_op(ins);
+        break;
     case XED_ICLASS_BEXTR:
         bextr_instrumentation::ins_op(ins);
         break;
@@ -483,9 +520,8 @@ void ins_inspect(INS ins) {
         break;
     case XED_ICLASS_XADD:
     case XED_ICLASS_XADD_LOCK:
-        ins_xadd_op(ins);
+        xadd_instrumentation::ins_op(ins);
         break;
-
     case XED_ICLASS_POP:
         ins_pop_op(ins);
         break;

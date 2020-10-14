@@ -3819,250 +3819,6 @@ static int testcase140() {
 static int testcase141() {
     int passed = 1;
 
-    printf("%s     bzhi   eax,eax,eax\n", __func__);fflush(stdout);
-
-    __gtaint_reset();
-    uint32_t inEAX = 1;
-    uint64_t outRAX = 1;
-    __gtaint_setn(&inEAX, 4);
-    asm volatile (
-        "mov EAX,%1;\n"
-        "bzhi   eax,eax,eax;\n" // <--
-        "mov %0,RAX;\n"
-        :"=m"(outRAX)
-        :"m"(inEAX)
-        :"rax"
-    );
-
-    ASSERT_TAGGED((char *)&outRAX + 0, {0,1,2,3});
-    ASSERT_TAGGED((char *)&outRAX + 1, {0,1,2,3});
-    ASSERT_TAGGED((char *)&outRAX + 2, {0,1,2,3});
-    ASSERT_TAGGED((char *)&outRAX + 3, {0,1,2,3});
-    ASSERT_TAGGED((char *)&outRAX + 4, { });
-    ASSERT_TAGGED((char *)&outRAX + 5, { });
-    ASSERT_TAGGED((char *)&outRAX + 6, { });
-    ASSERT_TAGGED((char *)&outRAX + 7, { });
-    return passed;
-}
-
-static int testcase142() {
-    int passed = 1;
-
-    printf("%s     bzhi   eax,eax,ecx\n", __func__);fflush(stdout);
-
-    __gtaint_reset();
-    uint32_t inEAX = 1;
-    uint8_t inCL = 1;
-    uint64_t outRAX = 1;
-    __gtaint_setn(&inEAX, 4);
-    __gtaint_setn(&inCL, 1);
-    asm volatile (
-        "mov EAX,%1;\n"
-        "mov CL,%2;\n"
-        "bzhi   eax,eax,ecx;\n" // <--
-        "mov %0,RAX;\n"
-        :"=m"(outRAX)
-        :"m"(inEAX),"m"(inCL)
-        :"rax","cl"
-    );
-
-    ASSERT_TAGGED((char *)&outRAX + 0, {0,1,2,3,4});
-    ASSERT_TAGGED((char *)&outRAX + 1, {0,1,2,3,4});
-    ASSERT_TAGGED((char *)&outRAX + 2, {0,1,2,3,4});
-    ASSERT_TAGGED((char *)&outRAX + 3, {0,1,2,3,4});
-    ASSERT_TAGGED((char *)&outRAX + 4, { });
-    ASSERT_TAGGED((char *)&outRAX + 5, { });
-    ASSERT_TAGGED((char *)&outRAX + 6, { });
-    ASSERT_TAGGED((char *)&outRAX + 7, { });
-    return passed;
-}
-
-static int testcase143() {
-    int passed = 1;
-
-    printf("%s     bzhi   eax,ecx,ecx\n", __func__);fflush(stdout);
-
-    __gtaint_reset();
-    uint32_t inECX = 1;
-    uint64_t outRAX = 1;
-    __gtaint_setn(&inECX, 4);
-    asm volatile (
-        "mov ECX,%1;\n"
-        "bzhi   eax,ecx,ecx;\n" // <--
-        "mov %0,RAX;\n"
-        :"=m"(outRAX)
-        :"m"(inECX)
-        :"rax","ecx"
-    );
-
-    ASSERT_TAGGED((char *)&outRAX + 0, {0,1,2,3});
-    ASSERT_TAGGED((char *)&outRAX + 1, {0,1,2,3});
-    ASSERT_TAGGED((char *)&outRAX + 2, {0,1,2,3});
-    ASSERT_TAGGED((char *)&outRAX + 3, {0,1,2,3});
-    ASSERT_TAGGED((char *)&outRAX + 4, { });
-    ASSERT_TAGGED((char *)&outRAX + 5, { });
-    ASSERT_TAGGED((char *)&outRAX + 6, { });
-    ASSERT_TAGGED((char *)&outRAX + 7, { });
-    return passed;
-}
-
-static int testcase144() {
-    int passed = 1;
-
-    printf("%s     bzhi   eax,ecx,edx\n", __func__);fflush(stdout);
-
-    __gtaint_reset();
-    uint32_t inECX = 1;
-    uint8_t inDL = 0;
-    uint64_t outRAX = 1;
-    __gtaint_setn(&inECX, 4);
-    __gtaint_setn(&inDL, 1);
-    asm volatile (
-        "mov ECX,%1;\n"
-        "mov DL,%2;\n"
-        "bzhi   eax,ecx,edx;\n" // <--
-        "mov %0,RAX;\n"
-        :"=m"(outRAX)
-        :"m"(inECX),"m"(inDL)
-        :"rax","ecx","dl"
-    );
-
-    ASSERT_TAGGED((char *)&outRAX + 0, {0,1,2,3,4});
-    ASSERT_TAGGED((char *)&outRAX + 1, {0,1,2,3,4});
-    ASSERT_TAGGED((char *)&outRAX + 2, {0,1,2,3,4});
-    ASSERT_TAGGED((char *)&outRAX + 3, {0,1,2,3,4});
-    ASSERT_TAGGED((char *)&outRAX + 4, { });
-    ASSERT_TAGGED((char *)&outRAX + 5, { });
-    ASSERT_TAGGED((char *)&outRAX + 6, { });
-    ASSERT_TAGGED((char *)&outRAX + 7, { });
-    return passed;
-}
-
-static int testcase145() {
-    int passed = 1;
-
-    printf("%s     bzhi   rax,rax,rax\n", __func__);fflush(stdout);
-
-    __gtaint_reset();
-    uint64_t inRAX = 1;
-    uint64_t outRAX = 1;
-    __gtaint_setn(&inRAX, 8);
-    asm volatile (
-        "mov RAX,%1;\n"
-        "bzhi   rax,rax,rax;\n" // <--
-        "mov %0,RAX;\n"
-        :"=m"(outRAX)
-        :"m"(inRAX)
-        :"rax"
-    );
-
-    ASSERT_TAGGED((char *)&outRAX + 0, {0,1,2,3,4,5,6,7});
-    ASSERT_TAGGED((char *)&outRAX + 1, {0,1,2,3,4,5,6,7});
-    ASSERT_TAGGED((char *)&outRAX + 2, {0,1,2,3,4,5,6,7});
-    ASSERT_TAGGED((char *)&outRAX + 3, {0,1,2,3,4,5,6,7});
-    ASSERT_TAGGED((char *)&outRAX + 4, {0,1,2,3,4,5,6,7});
-    ASSERT_TAGGED((char *)&outRAX + 5, {0,1,2,3,4,5,6,7});
-    ASSERT_TAGGED((char *)&outRAX + 6, {0,1,2,3,4,5,6,7});
-    ASSERT_TAGGED((char *)&outRAX + 7, {0,1,2,3,4,5,6,7});
-    return passed;
-}
-
-static int testcase146() {
-    int passed = 1;
-
-    printf("%s     bzhi   rax,rax,rcx\n", __func__);fflush(stdout);
-
-    __gtaint_reset();
-    uint64_t inRAX = 1;
-    uint8_t inCL = 1;
-    uint64_t outRAX = 1;
-    __gtaint_setn(&inRAX, 8);
-    __gtaint_setn(&inCL, 1);
-    asm volatile (
-        "mov RAX,%1;\n"
-        "mov CL,%2;\n"
-        "bzhi   rax,rax,rcx;\n" // <--
-        "mov %0,RAX;\n"
-        :"=m"(outRAX)
-        :"m"(inRAX),"m"(inCL)
-        :"rax","cl"
-    );
-
-    ASSERT_TAGGED((char *)&outRAX + 0, {0,1,2,3,4,5,6,7,8});
-    ASSERT_TAGGED((char *)&outRAX + 1, {0,1,2,3,4,5,6,7,8});
-    ASSERT_TAGGED((char *)&outRAX + 2, {0,1,2,3,4,5,6,7,8});
-    ASSERT_TAGGED((char *)&outRAX + 3, {0,1,2,3,4,5,6,7,8});
-    ASSERT_TAGGED((char *)&outRAX + 4, {0,1,2,3,4,5,6,7,8});
-    ASSERT_TAGGED((char *)&outRAX + 5, {0,1,2,3,4,5,6,7,8});
-    ASSERT_TAGGED((char *)&outRAX + 6, {0,1,2,3,4,5,6,7,8});
-    ASSERT_TAGGED((char *)&outRAX + 7, {0,1,2,3,4,5,6,7,8});
-    return passed;
-}
-
-static int testcase147() {
-    int passed = 1;
-
-    printf("%s     bzhi   rax,rcx,rcx\n", __func__);fflush(stdout);
-
-    __gtaint_reset();
-    uint64_t inRCX = 1;
-    uint64_t outRAX = 1;
-    __gtaint_setn(&inRCX, 8);
-    asm volatile (
-        "mov RCX,%1;\n"
-        "bzhi   rax,rcx,rcx;\n" // <--
-        "mov %0,RAX;\n"
-        :"=m"(outRAX)
-        :"m"(inRCX)
-        :"rax","rcx"
-    );
-
-    ASSERT_TAGGED((char *)&outRAX + 0, {0,1,2,3,4,5,6,7});
-    ASSERT_TAGGED((char *)&outRAX + 1, {0,1,2,3,4,5,6,7});
-    ASSERT_TAGGED((char *)&outRAX + 2, {0,1,2,3,4,5,6,7});
-    ASSERT_TAGGED((char *)&outRAX + 3, {0,1,2,3,4,5,6,7});
-    ASSERT_TAGGED((char *)&outRAX + 4, {0,1,2,3,4,5,6,7});
-    ASSERT_TAGGED((char *)&outRAX + 5, {0,1,2,3,4,5,6,7});
-    ASSERT_TAGGED((char *)&outRAX + 6, {0,1,2,3,4,5,6,7});
-    ASSERT_TAGGED((char *)&outRAX + 7, {0,1,2,3,4,5,6,7});
-    return passed;
-}
-
-static int testcase148() {
-    int passed = 1;
-
-    printf("%s     bzhi   rax,rcx,rdx\n", __func__);fflush(stdout);
-
-    __gtaint_reset();
-    uint64_t inRCX = 1;
-    uint8_t inDL = 0;
-    uint64_t outRAX = 1;
-    __gtaint_setn(&inRCX, 8);
-    __gtaint_setn(&inDL, 1);
-    asm volatile (
-        "mov RCX,%1;\n"
-        "mov DL,%2;\n"
-        "bzhi   rax,rcx,rdx;\n" // <--
-        "mov %0,RAX;\n"
-        :"=m"(outRAX)
-        :"m"(inRCX),"m"(inDL)
-        :"rax","rcx","dl"
-    );
-
-    ASSERT_TAGGED((char *)&outRAX + 0, {0,1,2,3,4,5,6,7,8});
-    ASSERT_TAGGED((char *)&outRAX + 1, {0,1,2,3,4,5,6,7,8});
-    ASSERT_TAGGED((char *)&outRAX + 2, {0,1,2,3,4,5,6,7,8});
-    ASSERT_TAGGED((char *)&outRAX + 3, {0,1,2,3,4,5,6,7,8});
-    ASSERT_TAGGED((char *)&outRAX + 4, {0,1,2,3,4,5,6,7,8});
-    ASSERT_TAGGED((char *)&outRAX + 5, {0,1,2,3,4,5,6,7,8});
-    ASSERT_TAGGED((char *)&outRAX + 6, {0,1,2,3,4,5,6,7,8});
-    ASSERT_TAGGED((char *)&outRAX + 7, {0,1,2,3,4,5,6,7,8});
-    return passed;
-}
-
-static int testcase149() {
-    int passed = 1;
-
     printf("%s     dec    ah\n", __func__);fflush(stdout);
 
     __gtaint_reset();
@@ -4082,7 +3838,7 @@ static int testcase149() {
     return passed;
 }
 
-static int testcase150() {
+static int testcase142() {
     int passed = 1;
 
     printf("%s     dec    al\n", __func__);fflush(stdout);
@@ -4104,7 +3860,7 @@ static int testcase150() {
     return passed;
 }
 
-static int testcase151() {
+static int testcase143() {
     int passed = 1;
 
     printf("%s     dec    ax\n", __func__);fflush(stdout);
@@ -4127,7 +3883,7 @@ static int testcase151() {
     return passed;
 }
 
-static int testcase152() {
+static int testcase144() {
     int passed = 1;
 
     printf("%s     dec    eax\n", __func__);fflush(stdout);
@@ -4156,7 +3912,7 @@ static int testcase152() {
     return passed;
 }
 
-static int testcase153() {
+static int testcase145() {
     int passed = 1;
 
     printf("%s     dec    rax\n", __func__);fflush(stdout);
@@ -4185,7 +3941,7 @@ static int testcase153() {
     return passed;
 }
 
-static int testcase154() {
+static int testcase146() {
     int passed = 1;
 
     printf("%s     div    al\n", __func__);fflush(stdout);
@@ -4208,7 +3964,7 @@ static int testcase154() {
     return passed;
 }
 
-static int testcase155() {
+static int testcase147() {
     int passed = 1;
 
     printf("%s     div    ax\n", __func__);fflush(stdout);
@@ -4238,7 +3994,7 @@ static int testcase155() {
     return passed;
 }
 
-static int testcase156() {
+static int testcase148() {
     int passed = 1;
 
     printf("%s     div    cl\n", __func__);fflush(stdout);
@@ -4264,7 +4020,7 @@ static int testcase156() {
     return passed;
 }
 
-static int testcase157() {
+static int testcase149() {
     int passed = 1;
 
     printf("%s     div    cx\n", __func__);fflush(stdout);
@@ -4297,7 +4053,7 @@ static int testcase157() {
     return passed;
 }
 
-static int testcase158() {
+static int testcase150() {
     int passed = 1;
 
     printf("%s     div    eax\n", __func__);fflush(stdout);
@@ -4339,7 +4095,7 @@ static int testcase158() {
     return passed;
 }
 
-static int testcase159() {
+static int testcase151() {
     int passed = 1;
 
     printf("%s     div    ecx\n", __func__);fflush(stdout);
@@ -4384,7 +4140,7 @@ static int testcase159() {
     return passed;
 }
 
-static int testcase160() {
+static int testcase152() {
     int passed = 1;
 
     printf("%s     div    rax\n", __func__);fflush(stdout);
@@ -4426,7 +4182,7 @@ static int testcase160() {
     return passed;
 }
 
-static int testcase161() {
+static int testcase153() {
     int passed = 1;
 
     printf("%s     div    rcx\n", __func__);fflush(stdout);
@@ -4471,7 +4227,7 @@ static int testcase161() {
     return passed;
 }
 
-static int testcase162() {
+static int testcase154() {
     int passed = 1;
 
     printf("%s     idiv   al\n", __func__);fflush(stdout);
@@ -4494,7 +4250,7 @@ static int testcase162() {
     return passed;
 }
 
-static int testcase163() {
+static int testcase155() {
     int passed = 1;
 
     printf("%s     idiv   ax\n", __func__);fflush(stdout);
@@ -4524,7 +4280,7 @@ static int testcase163() {
     return passed;
 }
 
-static int testcase164() {
+static int testcase156() {
     int passed = 1;
 
     printf("%s     idiv   cl\n", __func__);fflush(stdout);
@@ -4550,7 +4306,7 @@ static int testcase164() {
     return passed;
 }
 
-static int testcase165() {
+static int testcase157() {
     int passed = 1;
 
     printf("%s     idiv   cx\n", __func__);fflush(stdout);
@@ -4583,7 +4339,7 @@ static int testcase165() {
     return passed;
 }
 
-static int testcase166() {
+static int testcase158() {
     int passed = 1;
 
     printf("%s     idiv   eax\n", __func__);fflush(stdout);
@@ -4625,7 +4381,7 @@ static int testcase166() {
     return passed;
 }
 
-static int testcase167() {
+static int testcase159() {
     int passed = 1;
 
     printf("%s     idiv   ecx\n", __func__);fflush(stdout);
@@ -4670,7 +4426,7 @@ static int testcase167() {
     return passed;
 }
 
-static int testcase168() {
+static int testcase160() {
     int passed = 1;
 
     printf("%s     idiv   rax\n", __func__);fflush(stdout);
@@ -4712,7 +4468,7 @@ static int testcase168() {
     return passed;
 }
 
-static int testcase169() {
+static int testcase161() {
     int passed = 1;
 
     printf("%s     idiv   rcx\n", __func__);fflush(stdout);
@@ -4757,7 +4513,7 @@ static int testcase169() {
     return passed;
 }
 
-static int testcase170() {
+static int testcase162() {
     int passed = 1;
 
     printf("%s     imul   ah\n", __func__);fflush(stdout);
@@ -4780,7 +4536,7 @@ static int testcase170() {
     return passed;
 }
 
-static int testcase171() {
+static int testcase163() {
     int passed = 1;
 
     printf("%s     imul   al\n", __func__);fflush(stdout);
@@ -4803,7 +4559,7 @@ static int testcase171() {
     return passed;
 }
 
-static int testcase172() {
+static int testcase164() {
     int passed = 1;
 
     printf("%s     imul   ax\n", __func__);fflush(stdout);
@@ -4830,7 +4586,7 @@ static int testcase172() {
     return passed;
 }
 
-static int testcase173() {
+static int testcase165() {
     int passed = 1;
 
     printf("%s     imul   ax,ax\n", __func__);fflush(stdout);
@@ -4853,7 +4609,7 @@ static int testcase173() {
     return passed;
 }
 
-static int testcase174() {
+static int testcase166() {
     int passed = 1;
 
     printf("%s     imul   ax,ax,0x1\n", __func__);fflush(stdout);
@@ -4876,7 +4632,7 @@ static int testcase174() {
     return passed;
 }
 
-static int testcase175() {
+static int testcase167() {
     int passed = 1;
 
     printf("%s     imul   ax,ax,0xffff\n", __func__);fflush(stdout);
@@ -4899,7 +4655,7 @@ static int testcase175() {
     return passed;
 }
 
-static int testcase176() {
+static int testcase168() {
     int passed = 1;
 
     printf("%s     imul   ax,cx\n", __func__);fflush(stdout);
@@ -4925,7 +4681,7 @@ static int testcase176() {
     return passed;
 }
 
-static int testcase177() {
+static int testcase169() {
     int passed = 1;
 
     printf("%s     imul   ax,cx,0x1\n", __func__);fflush(stdout);
@@ -4948,7 +4704,7 @@ static int testcase177() {
     return passed;
 }
 
-static int testcase178() {
+static int testcase170() {
     int passed = 1;
 
     printf("%s     imul   ax,cx,0xffff\n", __func__);fflush(stdout);
@@ -4971,7 +4727,7 @@ static int testcase178() {
     return passed;
 }
 
-static int testcase179() {
+static int testcase171() {
     int passed = 1;
 
     printf("%s     imul   ch\n", __func__);fflush(stdout);
@@ -4997,7 +4753,7 @@ static int testcase179() {
     return passed;
 }
 
-static int testcase180() {
+static int testcase172() {
     int passed = 1;
 
     printf("%s     imul   cl\n", __func__);fflush(stdout);
@@ -5023,7 +4779,7 @@ static int testcase180() {
     return passed;
 }
 
-static int testcase181() {
+static int testcase173() {
     int passed = 1;
 
     printf("%s     imul   cx\n", __func__);fflush(stdout);
@@ -5053,7 +4809,7 @@ static int testcase181() {
     return passed;
 }
 
-static int testcase182() {
+static int testcase174() {
     int passed = 1;
 
     printf("%s     imul   cx,ax\n", __func__);fflush(stdout);
@@ -5079,7 +4835,7 @@ static int testcase182() {
     return passed;
 }
 
-static int testcase183() {
+static int testcase175() {
     int passed = 1;
 
     printf("%s     imul   cx,ax,0x1\n", __func__);fflush(stdout);
@@ -5102,7 +4858,7 @@ static int testcase183() {
     return passed;
 }
 
-static int testcase184() {
+static int testcase176() {
     int passed = 1;
 
     printf("%s     imul   cx,ax,0xffff\n", __func__);fflush(stdout);
@@ -5125,7 +4881,7 @@ static int testcase184() {
     return passed;
 }
 
-static int testcase185() {
+static int testcase177() {
     int passed = 1;
 
     printf("%s     imul   cx,cx\n", __func__);fflush(stdout);
@@ -5148,7 +4904,7 @@ static int testcase185() {
     return passed;
 }
 
-static int testcase186() {
+static int testcase178() {
     int passed = 1;
 
     printf("%s     imul   cx,cx,0x1\n", __func__);fflush(stdout);
@@ -5171,7 +4927,7 @@ static int testcase186() {
     return passed;
 }
 
-static int testcase187() {
+static int testcase179() {
     int passed = 1;
 
     printf("%s     imul   cx,cx,0xffff\n", __func__);fflush(stdout);
@@ -5194,7 +4950,7 @@ static int testcase187() {
     return passed;
 }
 
-static int testcase188() {
+static int testcase180() {
     int passed = 1;
 
     printf("%s     imul   eax\n", __func__);fflush(stdout);
@@ -5233,7 +4989,7 @@ static int testcase188() {
     return passed;
 }
 
-static int testcase189() {
+static int testcase181() {
     int passed = 1;
 
     printf("%s     imul   eax,eax\n", __func__);fflush(stdout);
@@ -5262,7 +5018,7 @@ static int testcase189() {
     return passed;
 }
 
-static int testcase190() {
+static int testcase182() {
     int passed = 1;
 
     printf("%s     imul   eax,eax,0x1\n", __func__);fflush(stdout);
@@ -5291,7 +5047,7 @@ static int testcase190() {
     return passed;
 }
 
-static int testcase191() {
+static int testcase183() {
     int passed = 1;
 
     printf("%s     imul   eax,eax,0xffffffff\n", __func__);fflush(stdout);
@@ -5320,7 +5076,7 @@ static int testcase191() {
     return passed;
 }
 
-static int testcase192() {
+static int testcase184() {
     int passed = 1;
 
     printf("%s     imul   eax,ecx\n", __func__);fflush(stdout);
@@ -5352,7 +5108,7 @@ static int testcase192() {
     return passed;
 }
 
-static int testcase193() {
+static int testcase185() {
     int passed = 1;
 
     printf("%s     imul   eax,ecx,0x1\n", __func__);fflush(stdout);
@@ -5381,7 +5137,7 @@ static int testcase193() {
     return passed;
 }
 
-static int testcase194() {
+static int testcase186() {
     int passed = 1;
 
     printf("%s     imul   eax,ecx,0xffffffff\n", __func__);fflush(stdout);
@@ -5410,7 +5166,7 @@ static int testcase194() {
     return passed;
 }
 
-static int testcase195() {
+static int testcase187() {
     int passed = 1;
 
     printf("%s     imul   ecx\n", __func__);fflush(stdout);
@@ -5452,7 +5208,7 @@ static int testcase195() {
     return passed;
 }
 
-static int testcase196() {
+static int testcase188() {
     int passed = 1;
 
     printf("%s     imul   ecx,eax\n", __func__);fflush(stdout);
@@ -5484,7 +5240,7 @@ static int testcase196() {
     return passed;
 }
 
-static int testcase197() {
+static int testcase189() {
     int passed = 1;
 
     printf("%s     imul   ecx,eax,0x1\n", __func__);fflush(stdout);
@@ -5513,7 +5269,7 @@ static int testcase197() {
     return passed;
 }
 
-static int testcase198() {
+static int testcase190() {
     int passed = 1;
 
     printf("%s     imul   ecx,eax,0xffffffff\n", __func__);fflush(stdout);
@@ -5542,7 +5298,7 @@ static int testcase198() {
     return passed;
 }
 
-static int testcase199() {
+static int testcase191() {
     int passed = 1;
 
     printf("%s     imul   ecx,ecx\n", __func__);fflush(stdout);
@@ -5571,7 +5327,7 @@ static int testcase199() {
     return passed;
 }
 
-static int testcase200() {
+static int testcase192() {
     int passed = 1;
 
     printf("%s     imul   ecx,ecx,0x1\n", __func__);fflush(stdout);
@@ -5600,7 +5356,7 @@ static int testcase200() {
     return passed;
 }
 
-static int testcase201() {
+static int testcase193() {
     int passed = 1;
 
     printf("%s     imul   ecx,ecx,0xffffffff\n", __func__);fflush(stdout);
@@ -5629,7 +5385,7 @@ static int testcase201() {
     return passed;
 }
 
-static int testcase202() {
+static int testcase194() {
     int passed = 1;
 
     printf("%s     imul   rax\n", __func__);fflush(stdout);
@@ -5668,7 +5424,7 @@ static int testcase202() {
     return passed;
 }
 
-static int testcase203() {
+static int testcase195() {
     int passed = 1;
 
     printf("%s     imul   rax,rax\n", __func__);fflush(stdout);
@@ -5697,7 +5453,7 @@ static int testcase203() {
     return passed;
 }
 
-static int testcase204() {
+static int testcase196() {
     int passed = 1;
 
     printf("%s     imul   rax,rax,0x1\n", __func__);fflush(stdout);
@@ -5726,7 +5482,7 @@ static int testcase204() {
     return passed;
 }
 
-static int testcase205() {
+static int testcase197() {
     int passed = 1;
 
     printf("%s     imul   rax,rax,0xffffffffffffffff\n", __func__);fflush(stdout);
@@ -5755,7 +5511,7 @@ static int testcase205() {
     return passed;
 }
 
-static int testcase206() {
+static int testcase198() {
     int passed = 1;
 
     printf("%s     imul   rax,rcx\n", __func__);fflush(stdout);
@@ -5787,7 +5543,7 @@ static int testcase206() {
     return passed;
 }
 
-static int testcase207() {
+static int testcase199() {
     int passed = 1;
 
     printf("%s     imul   rax,rcx,0x1\n", __func__);fflush(stdout);
@@ -5816,7 +5572,7 @@ static int testcase207() {
     return passed;
 }
 
-static int testcase208() {
+static int testcase200() {
     int passed = 1;
 
     printf("%s     imul   rax,rcx,0xffffffffffffffff\n", __func__);fflush(stdout);
@@ -5845,7 +5601,7 @@ static int testcase208() {
     return passed;
 }
 
-static int testcase209() {
+static int testcase201() {
     int passed = 1;
 
     printf("%s     imul   rcx\n", __func__);fflush(stdout);
@@ -5887,7 +5643,7 @@ static int testcase209() {
     return passed;
 }
 
-static int testcase210() {
+static int testcase202() {
     int passed = 1;
 
     printf("%s     imul   rcx,rax\n", __func__);fflush(stdout);
@@ -5919,7 +5675,7 @@ static int testcase210() {
     return passed;
 }
 
-static int testcase211() {
+static int testcase203() {
     int passed = 1;
 
     printf("%s     imul   rcx,rax,0x1\n", __func__);fflush(stdout);
@@ -5948,7 +5704,7 @@ static int testcase211() {
     return passed;
 }
 
-static int testcase212() {
+static int testcase204() {
     int passed = 1;
 
     printf("%s     imul   rcx,rax,0xffffffffffffffff\n", __func__);fflush(stdout);
@@ -5977,7 +5733,7 @@ static int testcase212() {
     return passed;
 }
 
-static int testcase213() {
+static int testcase205() {
     int passed = 1;
 
     printf("%s     imul   rcx,rcx\n", __func__);fflush(stdout);
@@ -6006,7 +5762,7 @@ static int testcase213() {
     return passed;
 }
 
-static int testcase214() {
+static int testcase206() {
     int passed = 1;
 
     printf("%s     imul   rcx,rcx,0x1\n", __func__);fflush(stdout);
@@ -6035,7 +5791,7 @@ static int testcase214() {
     return passed;
 }
 
-static int testcase215() {
+static int testcase207() {
     int passed = 1;
 
     printf("%s     imul   rcx,rcx,0xffffffffffffffff\n", __func__);fflush(stdout);
@@ -6064,7 +5820,7 @@ static int testcase215() {
     return passed;
 }
 
-static int testcase216() {
+static int testcase208() {
     int passed = 1;
 
     printf("%s     inc    ah\n", __func__);fflush(stdout);
@@ -6086,7 +5842,7 @@ static int testcase216() {
     return passed;
 }
 
-static int testcase217() {
+static int testcase209() {
     int passed = 1;
 
     printf("%s     inc    al\n", __func__);fflush(stdout);
@@ -6108,7 +5864,7 @@ static int testcase217() {
     return passed;
 }
 
-static int testcase218() {
+static int testcase210() {
     int passed = 1;
 
     printf("%s     inc    ax\n", __func__);fflush(stdout);
@@ -6131,7 +5887,7 @@ static int testcase218() {
     return passed;
 }
 
-static int testcase219() {
+static int testcase211() {
     int passed = 1;
 
     printf("%s     inc    eax\n", __func__);fflush(stdout);
@@ -6160,7 +5916,7 @@ static int testcase219() {
     return passed;
 }
 
-static int testcase220() {
+static int testcase212() {
     int passed = 1;
 
     printf("%s     inc    rax\n", __func__);fflush(stdout);
@@ -6189,7 +5945,7 @@ static int testcase220() {
     return passed;
 }
 
-static int testcase221() {
+static int testcase213() {
     int passed = 1;
 
     printf("%s     mov    ah,ah\n", __func__);fflush(stdout);
@@ -6211,7 +5967,7 @@ static int testcase221() {
     return passed;
 }
 
-static int testcase222() {
+static int testcase214() {
     int passed = 1;
 
     printf("%s     mov    ah,al\n", __func__);fflush(stdout);
@@ -6233,7 +5989,7 @@ static int testcase222() {
     return passed;
 }
 
-static int testcase223() {
+static int testcase215() {
     int passed = 1;
 
     printf("%s     mov    ah,ch\n", __func__);fflush(stdout);
@@ -6255,7 +6011,7 @@ static int testcase223() {
     return passed;
 }
 
-static int testcase224() {
+static int testcase216() {
     int passed = 1;
 
     printf("%s     mov    al,al\n", __func__);fflush(stdout);
@@ -6277,7 +6033,7 @@ static int testcase224() {
     return passed;
 }
 
-static int testcase225() {
+static int testcase217() {
     int passed = 1;
 
     printf("%s     mov    al,cl\n", __func__);fflush(stdout);
@@ -6299,7 +6055,7 @@ static int testcase225() {
     return passed;
 }
 
-static int testcase226() {
+static int testcase218() {
     int passed = 1;
 
     printf("%s     mov    ax,ax\n", __func__);fflush(stdout);
@@ -6322,7 +6078,7 @@ static int testcase226() {
     return passed;
 }
 
-static int testcase227() {
+static int testcase219() {
     int passed = 1;
 
     printf("%s     mov    ax,cx\n", __func__);fflush(stdout);
@@ -6345,7 +6101,7 @@ static int testcase227() {
     return passed;
 }
 
-static int testcase228() {
+static int testcase220() {
     int passed = 1;
 
     printf("%s     mov    ch,al\n", __func__);fflush(stdout);
@@ -6367,7 +6123,7 @@ static int testcase228() {
     return passed;
 }
 
-static int testcase229() {
+static int testcase221() {
     int passed = 1;
 
     printf("%s     mov    eax,eax\n", __func__);fflush(stdout);
@@ -6396,7 +6152,7 @@ static int testcase229() {
     return passed;
 }
 
-static int testcase230() {
+static int testcase222() {
     int passed = 1;
 
     printf("%s     mov    eax,ecx\n", __func__);fflush(stdout);
@@ -6425,7 +6181,7 @@ static int testcase230() {
     return passed;
 }
 
-static int testcase231() {
+static int testcase223() {
     int passed = 1;
 
     printf("%s     mov    rax,rax\n", __func__);fflush(stdout);
@@ -6454,7 +6210,7 @@ static int testcase231() {
     return passed;
 }
 
-static int testcase232() {
+static int testcase224() {
     int passed = 1;
 
     printf("%s     mov    rax,rcx\n", __func__);fflush(stdout);
@@ -6483,7 +6239,7 @@ static int testcase232() {
     return passed;
 }
 
-static int testcase233() {
+static int testcase225() {
     int passed = 1;
 
     printf("%s     movd   eax,mm0\n", __func__);fflush(stdout);
@@ -6512,7 +6268,7 @@ static int testcase233() {
     return passed;
 }
 
-static int testcase234() {
+static int testcase226() {
     int passed = 1;
 
     printf("%s     movd   eax,mm4\n", __func__);fflush(stdout);
@@ -6541,7 +6297,7 @@ static int testcase234() {
     return passed;
 }
 
-static int testcase235() {
+static int testcase227() {
     int passed = 1;
 
     printf("%s     movd   mm0,eax\n", __func__);fflush(stdout);
@@ -6570,7 +6326,7 @@ static int testcase235() {
     return passed;
 }
 
-static int testcase236() {
+static int testcase228() {
     int passed = 1;
 
     printf("%s     movd   mm2,eax\n", __func__);fflush(stdout);
@@ -6599,7 +6355,7 @@ static int testcase236() {
     return passed;
 }
 
-static int testcase237() {
+static int testcase229() {
     int passed = 1;
 
     printf("%s     movq   mm0,rax\n", __func__);fflush(stdout);
@@ -6628,7 +6384,7 @@ static int testcase237() {
     return passed;
 }
 
-static int testcase238() {
+static int testcase230() {
     int passed = 1;
 
     printf("%s     movq   mm4,rax\n", __func__);fflush(stdout);
@@ -6657,7 +6413,7 @@ static int testcase238() {
     return passed;
 }
 
-static int testcase239() {
+static int testcase231() {
     int passed = 1;
 
     printf("%s     movq   rax,mm0\n", __func__);fflush(stdout);
@@ -6686,7 +6442,7 @@ static int testcase239() {
     return passed;
 }
 
-static int testcase240() {
+static int testcase232() {
     int passed = 1;
 
     printf("%s     movq   rax,mm5\n", __func__);fflush(stdout);
@@ -6715,7 +6471,7 @@ static int testcase240() {
     return passed;
 }
 
-static int testcase241() {
+static int testcase233() {
     int passed = 1;
 
     printf("%s     movsx  ax,al\n", __func__);fflush(stdout);
@@ -6738,7 +6494,7 @@ static int testcase241() {
     return passed;
 }
 
-static int testcase242() {
+static int testcase234() {
     int passed = 1;
 
     printf("%s     movsx  ax,cl\n", __func__);fflush(stdout);
@@ -6761,7 +6517,7 @@ static int testcase242() {
     return passed;
 }
 
-static int testcase243() {
+static int testcase235() {
     int passed = 1;
 
     printf("%s     movsx  eax,al\n", __func__);fflush(stdout);
@@ -6790,7 +6546,7 @@ static int testcase243() {
     return passed;
 }
 
-static int testcase244() {
+static int testcase236() {
     int passed = 1;
 
     printf("%s     movsx  eax,ax\n", __func__);fflush(stdout);
@@ -6819,7 +6575,7 @@ static int testcase244() {
     return passed;
 }
 
-static int testcase245() {
+static int testcase237() {
     int passed = 1;
 
     printf("%s     movsx  eax,cl\n", __func__);fflush(stdout);
@@ -6848,7 +6604,7 @@ static int testcase245() {
     return passed;
 }
 
-static int testcase246() {
+static int testcase238() {
     int passed = 1;
 
     printf("%s     movsx  eax,cx\n", __func__);fflush(stdout);
@@ -6877,7 +6633,7 @@ static int testcase246() {
     return passed;
 }
 
-static int testcase247() {
+static int testcase239() {
     int passed = 1;
 
     printf("%s     movsx  rax,al\n", __func__);fflush(stdout);
@@ -6906,7 +6662,7 @@ static int testcase247() {
     return passed;
 }
 
-static int testcase248() {
+static int testcase240() {
     int passed = 1;
 
     printf("%s     movsx  rax,ax\n", __func__);fflush(stdout);
@@ -6935,7 +6691,7 @@ static int testcase248() {
     return passed;
 }
 
-static int testcase249() {
+static int testcase241() {
     int passed = 1;
 
     printf("%s     movsx  rax,cl\n", __func__);fflush(stdout);
@@ -6964,7 +6720,7 @@ static int testcase249() {
     return passed;
 }
 
-static int testcase250() {
+static int testcase242() {
     int passed = 1;
 
     printf("%s     movsx  rax,cx\n", __func__);fflush(stdout);
@@ -6993,7 +6749,7 @@ static int testcase250() {
     return passed;
 }
 
-static int testcase251() {
+static int testcase243() {
     int passed = 1;
 
     printf("%s     movzx  ax,al\n", __func__);fflush(stdout);
@@ -7016,7 +6772,7 @@ static int testcase251() {
     return passed;
 }
 
-static int testcase252() {
+static int testcase244() {
     int passed = 1;
 
     printf("%s     movzx  ax,cl\n", __func__);fflush(stdout);
@@ -7039,7 +6795,7 @@ static int testcase252() {
     return passed;
 }
 
-static int testcase253() {
+static int testcase245() {
     int passed = 1;
 
     printf("%s     movzx  eax,al\n", __func__);fflush(stdout);
@@ -7068,7 +6824,7 @@ static int testcase253() {
     return passed;
 }
 
-static int testcase254() {
+static int testcase246() {
     int passed = 1;
 
     printf("%s     movzx  eax,ax\n", __func__);fflush(stdout);
@@ -7097,7 +6853,7 @@ static int testcase254() {
     return passed;
 }
 
-static int testcase255() {
+static int testcase247() {
     int passed = 1;
 
     printf("%s     movzx  eax,cl\n", __func__);fflush(stdout);
@@ -7126,7 +6882,7 @@ static int testcase255() {
     return passed;
 }
 
-static int testcase256() {
+static int testcase248() {
     int passed = 1;
 
     printf("%s     movzx  eax,cx\n", __func__);fflush(stdout);
@@ -7155,7 +6911,7 @@ static int testcase256() {
     return passed;
 }
 
-static int testcase257() {
+static int testcase249() {
     int passed = 1;
 
     printf("%s     movzx  rax,al\n", __func__);fflush(stdout);
@@ -7184,7 +6940,7 @@ static int testcase257() {
     return passed;
 }
 
-static int testcase258() {
+static int testcase250() {
     int passed = 1;
 
     printf("%s     movzx  rax,ax\n", __func__);fflush(stdout);
@@ -7213,7 +6969,7 @@ static int testcase258() {
     return passed;
 }
 
-static int testcase259() {
+static int testcase251() {
     int passed = 1;
 
     printf("%s     movzx  rax,cl\n", __func__);fflush(stdout);
@@ -7242,7 +6998,7 @@ static int testcase259() {
     return passed;
 }
 
-static int testcase260() {
+static int testcase252() {
     int passed = 1;
 
     printf("%s     movzx  rax,cx\n", __func__);fflush(stdout);
@@ -7271,7 +7027,7 @@ static int testcase260() {
     return passed;
 }
 
-static int testcase261() {
+static int testcase253() {
     int passed = 1;
 
     printf("%s     mul    ah\n", __func__);fflush(stdout);
@@ -7294,7 +7050,7 @@ static int testcase261() {
     return passed;
 }
 
-static int testcase262() {
+static int testcase254() {
     int passed = 1;
 
     printf("%s     mul    al\n", __func__);fflush(stdout);
@@ -7317,7 +7073,7 @@ static int testcase262() {
     return passed;
 }
 
-static int testcase263() {
+static int testcase255() {
     int passed = 1;
 
     printf("%s     mul    ax\n", __func__);fflush(stdout);
@@ -7344,7 +7100,7 @@ static int testcase263() {
     return passed;
 }
 
-static int testcase264() {
+static int testcase256() {
     int passed = 1;
 
     printf("%s     mul    ch\n", __func__);fflush(stdout);
@@ -7370,7 +7126,7 @@ static int testcase264() {
     return passed;
 }
 
-static int testcase265() {
+static int testcase257() {
     int passed = 1;
 
     printf("%s     mul    cl\n", __func__);fflush(stdout);
@@ -7396,7 +7152,7 @@ static int testcase265() {
     return passed;
 }
 
-static int testcase266() {
+static int testcase258() {
     int passed = 1;
 
     printf("%s     mul    cx\n", __func__);fflush(stdout);
@@ -7426,7 +7182,7 @@ static int testcase266() {
     return passed;
 }
 
-static int testcase267() {
+static int testcase259() {
     int passed = 1;
 
     printf("%s     mul    eax\n", __func__);fflush(stdout);
@@ -7465,7 +7221,7 @@ static int testcase267() {
     return passed;
 }
 
-static int testcase268() {
+static int testcase260() {
     int passed = 1;
 
     printf("%s     mul    ecx\n", __func__);fflush(stdout);
@@ -7507,7 +7263,7 @@ static int testcase268() {
     return passed;
 }
 
-static int testcase269() {
+static int testcase261() {
     int passed = 1;
 
     printf("%s     mul    rax\n", __func__);fflush(stdout);
@@ -7546,7 +7302,7 @@ static int testcase269() {
     return passed;
 }
 
-static int testcase270() {
+static int testcase262() {
     int passed = 1;
 
     printf("%s     mul    rcx\n", __func__);fflush(stdout);
@@ -7588,7 +7344,7 @@ static int testcase270() {
     return passed;
 }
 
-static int testcase271() {
+static int testcase263() {
     int passed = 1;
 
     printf("%s     mulx   eax,eax,eax\n", __func__);fflush(stdout);
@@ -7620,7 +7376,7 @@ static int testcase271() {
     return passed;
 }
 
-static int testcase272() {
+static int testcase264() {
     int passed = 1;
 
     printf("%s     mulx   eax,eax,ecx\n", __func__);fflush(stdout);
@@ -7652,7 +7408,7 @@ static int testcase272() {
     return passed;
 }
 
-static int testcase273() {
+static int testcase265() {
     int passed = 1;
 
     printf("%s     mulx   eax,ecx,eax\n", __func__);fflush(stdout);
@@ -7694,7 +7450,7 @@ static int testcase273() {
     return passed;
 }
 
-static int testcase274() {
+static int testcase266() {
     int passed = 1;
 
     printf("%s     mulx   eax,ecx,ecx\n", __func__);fflush(stdout);
@@ -7736,7 +7492,7 @@ static int testcase274() {
     return passed;
 }
 
-static int testcase275() {
+static int testcase267() {
     int passed = 1;
 
     printf("%s     mulx   ecx,eax,eax\n", __func__);fflush(stdout);
@@ -7778,7 +7534,7 @@ static int testcase275() {
     return passed;
 }
 
-static int testcase276() {
+static int testcase268() {
     int passed = 1;
 
     printf("%s     mulx   ecx,eax,ecx\n", __func__);fflush(stdout);
@@ -7820,7 +7576,7 @@ static int testcase276() {
     return passed;
 }
 
-static int testcase277() {
+static int testcase269() {
     int passed = 1;
 
     printf("%s     mulx   ecx,ecx,eax\n", __func__);fflush(stdout);
@@ -7852,7 +7608,7 @@ static int testcase277() {
     return passed;
 }
 
-static int testcase278() {
+static int testcase270() {
     int passed = 1;
 
     printf("%s     mulx   ecx,ecx,ecx\n", __func__);fflush(stdout);
@@ -7884,7 +7640,7 @@ static int testcase278() {
     return passed;
 }
 
-static int testcase279() {
+static int testcase271() {
     int passed = 1;
 
     printf("%s     mulx   rax,rax,rax\n", __func__);fflush(stdout);
@@ -7916,7 +7672,7 @@ static int testcase279() {
     return passed;
 }
 
-static int testcase280() {
+static int testcase272() {
     int passed = 1;
 
     printf("%s     mulx   rax,rax,rcx\n", __func__);fflush(stdout);
@@ -7948,7 +7704,7 @@ static int testcase280() {
     return passed;
 }
 
-static int testcase281() {
+static int testcase273() {
     int passed = 1;
 
     printf("%s     mulx   rax,rcx,rax\n", __func__);fflush(stdout);
@@ -7990,7 +7746,7 @@ static int testcase281() {
     return passed;
 }
 
-static int testcase282() {
+static int testcase274() {
     int passed = 1;
 
     printf("%s     mulx   rax,rcx,rcx\n", __func__);fflush(stdout);
@@ -8032,7 +7788,7 @@ static int testcase282() {
     return passed;
 }
 
-static int testcase283() {
+static int testcase275() {
     int passed = 1;
 
     printf("%s     mulx   rcx,rax,rax\n", __func__);fflush(stdout);
@@ -8074,7 +7830,7 @@ static int testcase283() {
     return passed;
 }
 
-static int testcase284() {
+static int testcase276() {
     int passed = 1;
 
     printf("%s     mulx   rcx,rax,rcx\n", __func__);fflush(stdout);
@@ -8116,7 +7872,7 @@ static int testcase284() {
     return passed;
 }
 
-static int testcase285() {
+static int testcase277() {
     int passed = 1;
 
     printf("%s     mulx   rcx,rcx,rax\n", __func__);fflush(stdout);
@@ -8148,7 +7904,7 @@ static int testcase285() {
     return passed;
 }
 
-static int testcase286() {
+static int testcase278() {
     int passed = 1;
 
     printf("%s     mulx   rcx,rcx,rcx\n", __func__);fflush(stdout);
@@ -8180,7 +7936,7 @@ static int testcase286() {
     return passed;
 }
 
-static int testcase287() {
+static int testcase279() {
     int passed = 1;
 
     printf("%s     neg    ah\n", __func__);fflush(stdout);
@@ -8202,7 +7958,7 @@ static int testcase287() {
     return passed;
 }
 
-static int testcase288() {
+static int testcase280() {
     int passed = 1;
 
     printf("%s     neg    al\n", __func__);fflush(stdout);
@@ -8224,7 +7980,7 @@ static int testcase288() {
     return passed;
 }
 
-static int testcase289() {
+static int testcase281() {
     int passed = 1;
 
     printf("%s     neg    ax\n", __func__);fflush(stdout);
@@ -8247,7 +8003,7 @@ static int testcase289() {
     return passed;
 }
 
-static int testcase290() {
+static int testcase282() {
     int passed = 1;
 
     printf("%s     neg    eax\n", __func__);fflush(stdout);
@@ -8276,7 +8032,7 @@ static int testcase290() {
     return passed;
 }
 
-static int testcase291() {
+static int testcase283() {
     int passed = 1;
 
     printf("%s     neg    rax\n", __func__);fflush(stdout);
@@ -8305,7 +8061,7 @@ static int testcase291() {
     return passed;
 }
 
-static int testcase292() {
+static int testcase284() {
     int passed = 1;
 
     printf("%s     not    ah\n", __func__);fflush(stdout);
@@ -8327,7 +8083,7 @@ static int testcase292() {
     return passed;
 }
 
-static int testcase293() {
+static int testcase285() {
     int passed = 1;
 
     printf("%s     not    al\n", __func__);fflush(stdout);
@@ -8349,7 +8105,7 @@ static int testcase293() {
     return passed;
 }
 
-static int testcase294() {
+static int testcase286() {
     int passed = 1;
 
     printf("%s     not    ax\n", __func__);fflush(stdout);
@@ -8372,7 +8128,7 @@ static int testcase294() {
     return passed;
 }
 
-static int testcase295() {
+static int testcase287() {
     int passed = 1;
 
     printf("%s     not    eax\n", __func__);fflush(stdout);
@@ -8401,7 +8157,7 @@ static int testcase295() {
     return passed;
 }
 
-static int testcase296() {
+static int testcase288() {
     int passed = 1;
 
     printf("%s     not    rax\n", __func__);fflush(stdout);
@@ -8430,7 +8186,7 @@ static int testcase296() {
     return passed;
 }
 
-static int testcase297() {
+static int testcase289() {
     int passed = 1;
 
     printf("%s     or     ah,0x0\n", __func__);fflush(stdout);
@@ -8452,7 +8208,7 @@ static int testcase297() {
     return passed;
 }
 
-static int testcase298() {
+static int testcase290() {
     int passed = 1;
 
     printf("%s     or     ah,0xf\n", __func__);fflush(stdout);
@@ -8474,7 +8230,7 @@ static int testcase298() {
     return passed;
 }
 
-static int testcase299() {
+static int testcase291() {
     int passed = 1;
 
     printf("%s     or     ah,ah\n", __func__);fflush(stdout);
@@ -8496,7 +8252,7 @@ static int testcase299() {
     return passed;
 }
 
-static int testcase300() {
+static int testcase292() {
     int passed = 1;
 
     printf("%s     or     ah,al\n", __func__);fflush(stdout);
@@ -8518,7 +8274,7 @@ static int testcase300() {
     return passed;
 }
 
-static int testcase301() {
+static int testcase293() {
     int passed = 1;
 
     printf("%s     or     ah,ch\n", __func__);fflush(stdout);
@@ -8543,7 +8299,7 @@ static int testcase301() {
     return passed;
 }
 
-static int testcase302() {
+static int testcase294() {
     int passed = 1;
 
     printf("%s     or     al,0x0\n", __func__);fflush(stdout);
@@ -8565,7 +8321,7 @@ static int testcase302() {
     return passed;
 }
 
-static int testcase303() {
+static int testcase295() {
     int passed = 1;
 
     printf("%s     or     al,0xf\n", __func__);fflush(stdout);
@@ -8587,7 +8343,7 @@ static int testcase303() {
     return passed;
 }
 
-static int testcase304() {
+static int testcase296() {
     int passed = 1;
 
     printf("%s     or     al,al\n", __func__);fflush(stdout);
@@ -8609,7 +8365,7 @@ static int testcase304() {
     return passed;
 }
 
-static int testcase305() {
+static int testcase297() {
     int passed = 1;
 
     printf("%s     or     al,cl\n", __func__);fflush(stdout);
@@ -8634,7 +8390,7 @@ static int testcase305() {
     return passed;
 }
 
-static int testcase306() {
+static int testcase298() {
     int passed = 1;
 
     printf("%s     or     ax,0x0\n", __func__);fflush(stdout);
@@ -8657,7 +8413,7 @@ static int testcase306() {
     return passed;
 }
 
-static int testcase307() {
+static int testcase299() {
     int passed = 1;
 
     printf("%s     or     ax,0xff\n", __func__);fflush(stdout);
@@ -8680,7 +8436,7 @@ static int testcase307() {
     return passed;
 }
 
-static int testcase308() {
+static int testcase300() {
     int passed = 1;
 
     printf("%s     or     ax,ax\n", __func__);fflush(stdout);
@@ -8703,7 +8459,7 @@ static int testcase308() {
     return passed;
 }
 
-static int testcase309() {
+static int testcase301() {
     int passed = 1;
 
     printf("%s     or     ax,cx\n", __func__);fflush(stdout);
@@ -8729,7 +8485,7 @@ static int testcase309() {
     return passed;
 }
 
-static int testcase310() {
+static int testcase302() {
     int passed = 1;
 
     printf("%s     or     ch,al\n", __func__);fflush(stdout);
@@ -8754,7 +8510,7 @@ static int testcase310() {
     return passed;
 }
 
-static int testcase311() {
+static int testcase303() {
     int passed = 1;
 
     printf("%s     or     eax,0x0\n", __func__);fflush(stdout);
@@ -8783,7 +8539,7 @@ static int testcase311() {
     return passed;
 }
 
-static int testcase312() {
+static int testcase304() {
     int passed = 1;
 
     printf("%s     or     eax,0xffff\n", __func__);fflush(stdout);
@@ -8812,7 +8568,7 @@ static int testcase312() {
     return passed;
 }
 
-static int testcase313() {
+static int testcase305() {
     int passed = 1;
 
     printf("%s     or     eax,eax\n", __func__);fflush(stdout);
@@ -8841,7 +8597,7 @@ static int testcase313() {
     return passed;
 }
 
-static int testcase314() {
+static int testcase306() {
     int passed = 1;
 
     printf("%s     or     eax,ecx\n", __func__);fflush(stdout);
@@ -8873,7 +8629,7 @@ static int testcase314() {
     return passed;
 }
 
-static int testcase315() {
+static int testcase307() {
     int passed = 1;
 
     printf("%s     or     rax,0x0\n", __func__);fflush(stdout);
@@ -8902,7 +8658,7 @@ static int testcase315() {
     return passed;
 }
 
-static int testcase316() {
+static int testcase308() {
     int passed = 1;
 
     printf("%s     or     rax,0x1\n", __func__);fflush(stdout);
@@ -8931,7 +8687,7 @@ static int testcase316() {
     return passed;
 }
 
-static int testcase317() {
+static int testcase309() {
     int passed = 1;
 
     printf("%s     or     rax,0xffffffffffffffff\n", __func__);fflush(stdout);
@@ -8960,7 +8716,7 @@ static int testcase317() {
     return passed;
 }
 
-static int testcase318() {
+static int testcase310() {
     int passed = 1;
 
     printf("%s     or     rax,rax\n", __func__);fflush(stdout);
@@ -8989,7 +8745,7 @@ static int testcase318() {
     return passed;
 }
 
-static int testcase319() {
+static int testcase311() {
     int passed = 1;
 
     printf("%s     or     rax,rcx\n", __func__);fflush(stdout);
@@ -9021,7 +8777,7 @@ static int testcase319() {
     return passed;
 }
 
-static int testcase320() {
+static int testcase312() {
     int passed = 1;
 
     printf("%s     rcl    ah,0x0\n", __func__);fflush(stdout);
@@ -9043,7 +8799,7 @@ static int testcase320() {
     return passed;
 }
 
-static int testcase321() {
+static int testcase313() {
     int passed = 1;
 
     printf("%s     rcl    ah,0x1\n", __func__);fflush(stdout);
@@ -9065,7 +8821,7 @@ static int testcase321() {
     return passed;
 }
 
-static int testcase322() {
+static int testcase314() {
     int passed = 1;
 
     printf("%s     rcl    ah,0x2\n", __func__);fflush(stdout);
@@ -9087,7 +8843,7 @@ static int testcase322() {
     return passed;
 }
 
-static int testcase323() {
+static int testcase315() {
     int passed = 1;
 
     printf("%s     rcl    ah,0x4\n", __func__);fflush(stdout);
@@ -9109,7 +8865,7 @@ static int testcase323() {
     return passed;
 }
 
-static int testcase324() {
+static int testcase316() {
     int passed = 1;
 
     printf("%s     rcl    ah,0x5\n", __func__);fflush(stdout);
@@ -9131,7 +8887,7 @@ static int testcase324() {
     return passed;
 }
 
-static int testcase325() {
+static int testcase317() {
     int passed = 1;
 
     printf("%s     rcl    ah,0x6\n", __func__);fflush(stdout);
@@ -9153,7 +8909,7 @@ static int testcase325() {
     return passed;
 }
 
-static int testcase326() {
+static int testcase318() {
     int passed = 1;
 
     printf("%s     rcl    ah,0x8\n", __func__);fflush(stdout);
@@ -9175,7 +8931,7 @@ static int testcase326() {
     return passed;
 }
 
-static int testcase327() {
+static int testcase319() {
     int passed = 1;
 
     printf("%s     rcl    ah,1\n", __func__);fflush(stdout);
@@ -9197,7 +8953,7 @@ static int testcase327() {
     return passed;
 }
 
-static int testcase328() {
+static int testcase320() {
     int passed = 1;
 
     printf("%s     rcl    al,0x0\n", __func__);fflush(stdout);
@@ -9219,7 +8975,7 @@ static int testcase328() {
     return passed;
 }
 
-static int testcase329() {
+static int testcase321() {
     int passed = 1;
 
     printf("%s     rcl    al,0x1\n", __func__);fflush(stdout);
@@ -9241,7 +8997,7 @@ static int testcase329() {
     return passed;
 }
 
-static int testcase330() {
+static int testcase322() {
     int passed = 1;
 
     printf("%s     rcl    al,0x2\n", __func__);fflush(stdout);
@@ -9263,7 +9019,7 @@ static int testcase330() {
     return passed;
 }
 
-static int testcase331() {
+static int testcase323() {
     int passed = 1;
 
     printf("%s     rcl    al,0x4\n", __func__);fflush(stdout);
@@ -9285,7 +9041,7 @@ static int testcase331() {
     return passed;
 }
 
-static int testcase332() {
+static int testcase324() {
     int passed = 1;
 
     printf("%s     rcl    al,0x5\n", __func__);fflush(stdout);
@@ -9307,7 +9063,7 @@ static int testcase332() {
     return passed;
 }
 
-static int testcase333() {
+static int testcase325() {
     int passed = 1;
 
     printf("%s     rcl    al,0x6\n", __func__);fflush(stdout);
@@ -9329,7 +9085,7 @@ static int testcase333() {
     return passed;
 }
 
-static int testcase334() {
+static int testcase326() {
     int passed = 1;
 
     printf("%s     rcl    al,0x8\n", __func__);fflush(stdout);
@@ -9351,7 +9107,7 @@ static int testcase334() {
     return passed;
 }
 
-static int testcase335() {
+static int testcase327() {
     int passed = 1;
 
     printf("%s     rcl    al,1\n", __func__);fflush(stdout);
@@ -9373,7 +9129,7 @@ static int testcase335() {
     return passed;
 }
 
-static int testcase336() {
+static int testcase328() {
     int passed = 1;
 
     printf("%s     rcl    al,cl\n", __func__);fflush(stdout);
@@ -9398,7 +9154,7 @@ static int testcase336() {
     return passed;
 }
 
-static int testcase337() {
+static int testcase329() {
     int passed = 1;
 
     printf("%s     rcl    ax,0x0\n", __func__);fflush(stdout);
@@ -9421,7 +9177,7 @@ static int testcase337() {
     return passed;
 }
 
-static int testcase338() {
+static int testcase330() {
     int passed = 1;
 
     printf("%s     rcl    ax,0x1\n", __func__);fflush(stdout);
@@ -9444,7 +9200,7 @@ static int testcase338() {
     return passed;
 }
 
-static int testcase339() {
+static int testcase331() {
     int passed = 1;
 
     printf("%s     rcl    ax,0x10\n", __func__);fflush(stdout);
@@ -9467,7 +9223,7 @@ static int testcase339() {
     return passed;
 }
 
-static int testcase340() {
+static int testcase332() {
     int passed = 1;
 
     printf("%s     rcl    ax,0x2\n", __func__);fflush(stdout);
@@ -9490,7 +9246,7 @@ static int testcase340() {
     return passed;
 }
 
-static int testcase341() {
+static int testcase333() {
     int passed = 1;
 
     printf("%s     rcl    ax,0x8\n", __func__);fflush(stdout);
@@ -9513,7 +9269,7 @@ static int testcase341() {
     return passed;
 }
 
-static int testcase342() {
+static int testcase334() {
     int passed = 1;
 
     printf("%s     rcl    ax,0x9\n", __func__);fflush(stdout);
@@ -9536,7 +9292,7 @@ static int testcase342() {
     return passed;
 }
 
-static int testcase343() {
+static int testcase335() {
     int passed = 1;
 
     printf("%s     rcl    ax,0xa\n", __func__);fflush(stdout);
@@ -9559,7 +9315,7 @@ static int testcase343() {
     return passed;
 }
 
-static int testcase344() {
+static int testcase336() {
     int passed = 1;
 
     printf("%s     rcl    ax,1\n", __func__);fflush(stdout);
@@ -9582,7 +9338,7 @@ static int testcase344() {
     return passed;
 }
 
-static int testcase345() {
+static int testcase337() {
     int passed = 1;
 
     printf("%s     rcl    ax,cl\n", __func__);fflush(stdout);
@@ -9608,7 +9364,7 @@ static int testcase345() {
     return passed;
 }
 
-static int testcase346() {
+static int testcase338() {
     int passed = 1;
 
     printf("%s     rcl    eax,0x0\n", __func__);fflush(stdout);
@@ -9637,7 +9393,7 @@ static int testcase346() {
     return passed;
 }
 
-static int testcase347() {
+static int testcase339() {
     int passed = 1;
 
     printf("%s     rcl    eax,0x1\n", __func__);fflush(stdout);
@@ -9666,7 +9422,7 @@ static int testcase347() {
     return passed;
 }
 
-static int testcase348() {
+static int testcase340() {
     int passed = 1;
 
     printf("%s     rcl    eax,0x10\n", __func__);fflush(stdout);
@@ -9695,7 +9451,7 @@ static int testcase348() {
     return passed;
 }
 
-static int testcase349() {
+static int testcase341() {
     int passed = 1;
 
     printf("%s     rcl    eax,0x11\n", __func__);fflush(stdout);
@@ -9724,7 +9480,7 @@ static int testcase349() {
     return passed;
 }
 
-static int testcase350() {
+static int testcase342() {
     int passed = 1;
 
     printf("%s     rcl    eax,0x12\n", __func__);fflush(stdout);
@@ -9753,7 +9509,7 @@ static int testcase350() {
     return passed;
 }
 
-static int testcase351() {
+static int testcase343() {
     int passed = 1;
 
     printf("%s     rcl    eax,0x2\n", __func__);fflush(stdout);
@@ -9782,7 +9538,7 @@ static int testcase351() {
     return passed;
 }
 
-static int testcase352() {
+static int testcase344() {
     int passed = 1;
 
     printf("%s     rcl    eax,0x20\n", __func__);fflush(stdout);
@@ -9811,7 +9567,7 @@ static int testcase352() {
     return passed;
 }
 
-static int testcase353() {
+static int testcase345() {
     int passed = 1;
 
     printf("%s     rcl    eax,1\n", __func__);fflush(stdout);
@@ -9840,7 +9596,7 @@ static int testcase353() {
     return passed;
 }
 
-static int testcase354() {
+static int testcase346() {
     int passed = 1;
 
     printf("%s     rcl    eax,cl\n", __func__);fflush(stdout);
@@ -9872,7 +9628,7 @@ static int testcase354() {
     return passed;
 }
 
-static int testcase355() {
+static int testcase347() {
     int passed = 1;
 
     printf("%s     rcl    rax,0x0\n", __func__);fflush(stdout);
@@ -9901,7 +9657,7 @@ static int testcase355() {
     return passed;
 }
 
-static int testcase356() {
+static int testcase348() {
     int passed = 1;
 
     printf("%s     rcl    rax,0x1\n", __func__);fflush(stdout);
@@ -9930,7 +9686,7 @@ static int testcase356() {
     return passed;
 }
 
-static int testcase357() {
+static int testcase349() {
     int passed = 1;
 
     printf("%s     rcl    rax,0x2\n", __func__);fflush(stdout);
@@ -9959,7 +9715,7 @@ static int testcase357() {
     return passed;
 }
 
-static int testcase358() {
+static int testcase350() {
     int passed = 1;
 
     printf("%s     rcl    rax,0x20\n", __func__);fflush(stdout);
@@ -9988,7 +9744,7 @@ static int testcase358() {
     return passed;
 }
 
-static int testcase359() {
+static int testcase351() {
     int passed = 1;
 
     printf("%s     rcl    rax,0x21\n", __func__);fflush(stdout);
@@ -10017,7 +9773,7 @@ static int testcase359() {
     return passed;
 }
 
-static int testcase360() {
+static int testcase352() {
     int passed = 1;
 
     printf("%s     rcl    rax,0x22\n", __func__);fflush(stdout);
@@ -10046,7 +9802,7 @@ static int testcase360() {
     return passed;
 }
 
-static int testcase361() {
+static int testcase353() {
     int passed = 1;
 
     printf("%s     rcl    rax,0x40\n", __func__);fflush(stdout);
@@ -10075,7 +9831,7 @@ static int testcase361() {
     return passed;
 }
 
-static int testcase362() {
+static int testcase354() {
     int passed = 1;
 
     printf("%s     rcl    rax,1\n", __func__);fflush(stdout);
@@ -10104,7 +9860,7 @@ static int testcase362() {
     return passed;
 }
 
-static int testcase363() {
+static int testcase355() {
     int passed = 1;
 
     printf("%s     rcl    rax,cl\n", __func__);fflush(stdout);
@@ -10136,7 +9892,7 @@ static int testcase363() {
     return passed;
 }
 
-static int testcase364() {
+static int testcase356() {
     int passed = 1;
 
     printf("%s     rcr    ah,0x0\n", __func__);fflush(stdout);
@@ -10158,7 +9914,7 @@ static int testcase364() {
     return passed;
 }
 
-static int testcase365() {
+static int testcase357() {
     int passed = 1;
 
     printf("%s     rcr    ah,0x1\n", __func__);fflush(stdout);
@@ -10180,7 +9936,7 @@ static int testcase365() {
     return passed;
 }
 
-static int testcase366() {
+static int testcase358() {
     int passed = 1;
 
     printf("%s     rcr    ah,0x2\n", __func__);fflush(stdout);
@@ -10202,7 +9958,7 @@ static int testcase366() {
     return passed;
 }
 
-static int testcase367() {
+static int testcase359() {
     int passed = 1;
 
     printf("%s     rcr    ah,0x4\n", __func__);fflush(stdout);
@@ -10224,7 +9980,7 @@ static int testcase367() {
     return passed;
 }
 
-static int testcase368() {
+static int testcase360() {
     int passed = 1;
 
     printf("%s     rcr    ah,0x5\n", __func__);fflush(stdout);
@@ -10246,7 +10002,7 @@ static int testcase368() {
     return passed;
 }
 
-static int testcase369() {
+static int testcase361() {
     int passed = 1;
 
     printf("%s     rcr    ah,0x6\n", __func__);fflush(stdout);
@@ -10268,7 +10024,7 @@ static int testcase369() {
     return passed;
 }
 
-static int testcase370() {
+static int testcase362() {
     int passed = 1;
 
     printf("%s     rcr    ah,0x8\n", __func__);fflush(stdout);
@@ -10290,7 +10046,7 @@ static int testcase370() {
     return passed;
 }
 
-static int testcase371() {
+static int testcase363() {
     int passed = 1;
 
     printf("%s     rcr    ah,1\n", __func__);fflush(stdout);
@@ -10312,7 +10068,7 @@ static int testcase371() {
     return passed;
 }
 
-static int testcase372() {
+static int testcase364() {
     int passed = 1;
 
     printf("%s     rcr    al,0x0\n", __func__);fflush(stdout);
@@ -10334,7 +10090,7 @@ static int testcase372() {
     return passed;
 }
 
-static int testcase373() {
+static int testcase365() {
     int passed = 1;
 
     printf("%s     rcr    al,0x1\n", __func__);fflush(stdout);
@@ -10356,7 +10112,7 @@ static int testcase373() {
     return passed;
 }
 
-static int testcase374() {
+static int testcase366() {
     int passed = 1;
 
     printf("%s     rcr    al,0x2\n", __func__);fflush(stdout);
@@ -10378,7 +10134,7 @@ static int testcase374() {
     return passed;
 }
 
-static int testcase375() {
+static int testcase367() {
     int passed = 1;
 
     printf("%s     rcr    al,0x4\n", __func__);fflush(stdout);
@@ -10400,7 +10156,7 @@ static int testcase375() {
     return passed;
 }
 
-static int testcase376() {
+static int testcase368() {
     int passed = 1;
 
     printf("%s     rcr    al,0x5\n", __func__);fflush(stdout);
@@ -10422,7 +10178,7 @@ static int testcase376() {
     return passed;
 }
 
-static int testcase377() {
+static int testcase369() {
     int passed = 1;
 
     printf("%s     rcr    al,0x6\n", __func__);fflush(stdout);
@@ -10444,7 +10200,7 @@ static int testcase377() {
     return passed;
 }
 
-static int testcase378() {
+static int testcase370() {
     int passed = 1;
 
     printf("%s     rcr    al,0x8\n", __func__);fflush(stdout);
@@ -10466,7 +10222,7 @@ static int testcase378() {
     return passed;
 }
 
-static int testcase379() {
+static int testcase371() {
     int passed = 1;
 
     printf("%s     rcr    al,1\n", __func__);fflush(stdout);
@@ -10488,7 +10244,7 @@ static int testcase379() {
     return passed;
 }
 
-static int testcase380() {
+static int testcase372() {
     int passed = 1;
 
     printf("%s     rcr    al,cl\n", __func__);fflush(stdout);
@@ -10513,7 +10269,7 @@ static int testcase380() {
     return passed;
 }
 
-static int testcase381() {
+static int testcase373() {
     int passed = 1;
 
     printf("%s     rcr    ax,0x0\n", __func__);fflush(stdout);
@@ -10536,7 +10292,7 @@ static int testcase381() {
     return passed;
 }
 
-static int testcase382() {
+static int testcase374() {
     int passed = 1;
 
     printf("%s     rcr    ax,0x1\n", __func__);fflush(stdout);
@@ -10559,7 +10315,7 @@ static int testcase382() {
     return passed;
 }
 
-static int testcase383() {
+static int testcase375() {
     int passed = 1;
 
     printf("%s     rcr    ax,0x10\n", __func__);fflush(stdout);
@@ -10582,7 +10338,7 @@ static int testcase383() {
     return passed;
 }
 
-static int testcase384() {
+static int testcase376() {
     int passed = 1;
 
     printf("%s     rcr    ax,0x2\n", __func__);fflush(stdout);
@@ -10605,7 +10361,7 @@ static int testcase384() {
     return passed;
 }
 
-static int testcase385() {
+static int testcase377() {
     int passed = 1;
 
     printf("%s     rcr    ax,0x8\n", __func__);fflush(stdout);
@@ -10628,7 +10384,7 @@ static int testcase385() {
     return passed;
 }
 
-static int testcase386() {
+static int testcase378() {
     int passed = 1;
 
     printf("%s     rcr    ax,0x9\n", __func__);fflush(stdout);
@@ -10651,7 +10407,7 @@ static int testcase386() {
     return passed;
 }
 
-static int testcase387() {
+static int testcase379() {
     int passed = 1;
 
     printf("%s     rcr    ax,0xa\n", __func__);fflush(stdout);
@@ -10674,7 +10430,7 @@ static int testcase387() {
     return passed;
 }
 
-static int testcase388() {
+static int testcase380() {
     int passed = 1;
 
     printf("%s     rcr    ax,1\n", __func__);fflush(stdout);
@@ -10697,7 +10453,7 @@ static int testcase388() {
     return passed;
 }
 
-static int testcase389() {
+static int testcase381() {
     int passed = 1;
 
     printf("%s     rcr    ax,cl\n", __func__);fflush(stdout);
@@ -10723,7 +10479,7 @@ static int testcase389() {
     return passed;
 }
 
-static int testcase390() {
+static int testcase382() {
     int passed = 1;
 
     printf("%s     rcr    eax,0x0\n", __func__);fflush(stdout);
@@ -10752,7 +10508,7 @@ static int testcase390() {
     return passed;
 }
 
-static int testcase391() {
+static int testcase383() {
     int passed = 1;
 
     printf("%s     rcr    eax,0x1\n", __func__);fflush(stdout);
@@ -10781,7 +10537,7 @@ static int testcase391() {
     return passed;
 }
 
-static int testcase392() {
+static int testcase384() {
     int passed = 1;
 
     printf("%s     rcr    eax,0x10\n", __func__);fflush(stdout);
@@ -10810,7 +10566,7 @@ static int testcase392() {
     return passed;
 }
 
-static int testcase393() {
+static int testcase385() {
     int passed = 1;
 
     printf("%s     rcr    eax,0x11\n", __func__);fflush(stdout);
@@ -10839,7 +10595,7 @@ static int testcase393() {
     return passed;
 }
 
-static int testcase394() {
+static int testcase386() {
     int passed = 1;
 
     printf("%s     rcr    eax,0x12\n", __func__);fflush(stdout);
@@ -10868,7 +10624,7 @@ static int testcase394() {
     return passed;
 }
 
-static int testcase395() {
+static int testcase387() {
     int passed = 1;
 
     printf("%s     rcr    eax,0x2\n", __func__);fflush(stdout);
@@ -10897,7 +10653,7 @@ static int testcase395() {
     return passed;
 }
 
-static int testcase396() {
+static int testcase388() {
     int passed = 1;
 
     printf("%s     rcr    eax,0x20\n", __func__);fflush(stdout);
@@ -10926,7 +10682,7 @@ static int testcase396() {
     return passed;
 }
 
-static int testcase397() {
+static int testcase389() {
     int passed = 1;
 
     printf("%s     rcr    eax,1\n", __func__);fflush(stdout);
@@ -10955,7 +10711,7 @@ static int testcase397() {
     return passed;
 }
 
-static int testcase398() {
+static int testcase390() {
     int passed = 1;
 
     printf("%s     rcr    eax,cl\n", __func__);fflush(stdout);
@@ -10987,7 +10743,7 @@ static int testcase398() {
     return passed;
 }
 
-static int testcase399() {
+static int testcase391() {
     int passed = 1;
 
     printf("%s     rcr    rax,0x0\n", __func__);fflush(stdout);
@@ -11016,7 +10772,7 @@ static int testcase399() {
     return passed;
 }
 
-static int testcase400() {
+static int testcase392() {
     int passed = 1;
 
     printf("%s     rcr    rax,0x1\n", __func__);fflush(stdout);
@@ -11045,7 +10801,7 @@ static int testcase400() {
     return passed;
 }
 
-static int testcase401() {
+static int testcase393() {
     int passed = 1;
 
     printf("%s     rcr    rax,0x2\n", __func__);fflush(stdout);
@@ -11074,7 +10830,7 @@ static int testcase401() {
     return passed;
 }
 
-static int testcase402() {
+static int testcase394() {
     int passed = 1;
 
     printf("%s     rcr    rax,0x20\n", __func__);fflush(stdout);
@@ -11103,7 +10859,7 @@ static int testcase402() {
     return passed;
 }
 
-static int testcase403() {
+static int testcase395() {
     int passed = 1;
 
     printf("%s     rcr    rax,0x21\n", __func__);fflush(stdout);
@@ -11132,7 +10888,7 @@ static int testcase403() {
     return passed;
 }
 
-static int testcase404() {
+static int testcase396() {
     int passed = 1;
 
     printf("%s     rcr    rax,0x22\n", __func__);fflush(stdout);
@@ -11161,7 +10917,7 @@ static int testcase404() {
     return passed;
 }
 
-static int testcase405() {
+static int testcase397() {
     int passed = 1;
 
     printf("%s     rcr    rax,0x40\n", __func__);fflush(stdout);
@@ -11190,7 +10946,7 @@ static int testcase405() {
     return passed;
 }
 
-static int testcase406() {
+static int testcase398() {
     int passed = 1;
 
     printf("%s     rcr    rax,1\n", __func__);fflush(stdout);
@@ -11219,7 +10975,7 @@ static int testcase406() {
     return passed;
 }
 
-static int testcase407() {
+static int testcase399() {
     int passed = 1;
 
     printf("%s     rcr    rax,cl\n", __func__);fflush(stdout);
@@ -11251,7 +11007,7 @@ static int testcase407() {
     return passed;
 }
 
-static int testcase408() {
+static int testcase400() {
     int passed = 1;
 
     printf("%s     rex.W adc al,0x0\n", __func__);fflush(stdout);
@@ -11273,7 +11029,7 @@ static int testcase408() {
     return passed;
 }
 
-static int testcase409() {
+static int testcase401() {
     int passed = 1;
 
     printf("%s     rex.W adc al,0xf\n", __func__);fflush(stdout);
@@ -11295,7 +11051,7 @@ static int testcase409() {
     return passed;
 }
 
-static int testcase410() {
+static int testcase402() {
     int passed = 1;
 
     printf("%s     rex.W adc al,al\n", __func__);fflush(stdout);
@@ -11317,7 +11073,7 @@ static int testcase410() {
     return passed;
 }
 
-static int testcase411() {
+static int testcase403() {
     int passed = 1;
 
     printf("%s     rex.W adc al,cl\n", __func__);fflush(stdout);
@@ -11342,7 +11098,7 @@ static int testcase411() {
     return passed;
 }
 
-static int testcase412() {
+static int testcase404() {
     int passed = 1;
 
     printf("%s     rex.W add al,0x0\n", __func__);fflush(stdout);
@@ -11364,7 +11120,7 @@ static int testcase412() {
     return passed;
 }
 
-static int testcase413() {
+static int testcase405() {
     int passed = 1;
 
     printf("%s     rex.W add al,0xf\n", __func__);fflush(stdout);
@@ -11386,7 +11142,7 @@ static int testcase413() {
     return passed;
 }
 
-static int testcase414() {
+static int testcase406() {
     int passed = 1;
 
     printf("%s     rex.W add al,al\n", __func__);fflush(stdout);
@@ -11408,7 +11164,7 @@ static int testcase414() {
     return passed;
 }
 
-static int testcase415() {
+static int testcase407() {
     int passed = 1;
 
     printf("%s     rex.W add al,cl\n", __func__);fflush(stdout);
@@ -11433,7 +11189,7 @@ static int testcase415() {
     return passed;
 }
 
-static int testcase416() {
+static int testcase408() {
     int passed = 1;
 
     printf("%s     rex.W and al,0x0\n", __func__);fflush(stdout);
@@ -11455,7 +11211,7 @@ static int testcase416() {
     return passed;
 }
 
-static int testcase417() {
+static int testcase409() {
     int passed = 1;
 
     printf("%s     rex.W and al,0xf\n", __func__);fflush(stdout);
@@ -11477,7 +11233,7 @@ static int testcase417() {
     return passed;
 }
 
-static int testcase418() {
+static int testcase410() {
     int passed = 1;
 
     printf("%s     rex.W and al,al\n", __func__);fflush(stdout);
@@ -11499,7 +11255,7 @@ static int testcase418() {
     return passed;
 }
 
-static int testcase419() {
+static int testcase411() {
     int passed = 1;
 
     printf("%s     rex.W and al,cl\n", __func__);fflush(stdout);
@@ -11524,7 +11280,7 @@ static int testcase419() {
     return passed;
 }
 
-static int testcase420() {
+static int testcase412() {
     int passed = 1;
 
     printf("%s     rex.W dec al\n", __func__);fflush(stdout);
@@ -11546,7 +11302,7 @@ static int testcase420() {
     return passed;
 }
 
-static int testcase421() {
+static int testcase413() {
     int passed = 1;
 
     printf("%s     rex.W div al\n", __func__);fflush(stdout);
@@ -11569,7 +11325,7 @@ static int testcase421() {
     return passed;
 }
 
-static int testcase422() {
+static int testcase414() {
     int passed = 1;
 
     printf("%s     rex.W div cl\n", __func__);fflush(stdout);
@@ -11595,7 +11351,7 @@ static int testcase422() {
     return passed;
 }
 
-static int testcase423() {
+static int testcase415() {
     int passed = 1;
 
     printf("%s     rex.W idiv al\n", __func__);fflush(stdout);
@@ -11618,7 +11374,7 @@ static int testcase423() {
     return passed;
 }
 
-static int testcase424() {
+static int testcase416() {
     int passed = 1;
 
     printf("%s     rex.W idiv cl\n", __func__);fflush(stdout);
@@ -11644,7 +11400,7 @@ static int testcase424() {
     return passed;
 }
 
-static int testcase425() {
+static int testcase417() {
     int passed = 1;
 
     printf("%s     rex.W imul al\n", __func__);fflush(stdout);
@@ -11667,7 +11423,7 @@ static int testcase425() {
     return passed;
 }
 
-static int testcase426() {
+static int testcase418() {
     int passed = 1;
 
     printf("%s     rex.W imul cl\n", __func__);fflush(stdout);
@@ -11693,7 +11449,7 @@ static int testcase426() {
     return passed;
 }
 
-static int testcase427() {
+static int testcase419() {
     int passed = 1;
 
     printf("%s     rex.W inc al\n", __func__);fflush(stdout);
@@ -11715,7 +11471,7 @@ static int testcase427() {
     return passed;
 }
 
-static int testcase428() {
+static int testcase420() {
     int passed = 1;
 
     printf("%s     rex.W mov al,al\n", __func__);fflush(stdout);
@@ -11737,7 +11493,7 @@ static int testcase428() {
     return passed;
 }
 
-static int testcase429() {
+static int testcase421() {
     int passed = 1;
 
     printf("%s     rex.W mov al,cl\n", __func__);fflush(stdout);
@@ -11759,7 +11515,7 @@ static int testcase429() {
     return passed;
 }
 
-static int testcase430() {
+static int testcase422() {
     int passed = 1;
 
     printf("%s     rex.W mul al\n", __func__);fflush(stdout);
@@ -11782,7 +11538,7 @@ static int testcase430() {
     return passed;
 }
 
-static int testcase431() {
+static int testcase423() {
     int passed = 1;
 
     printf("%s     rex.W mul cl\n", __func__);fflush(stdout);
@@ -11808,7 +11564,7 @@ static int testcase431() {
     return passed;
 }
 
-static int testcase432() {
+static int testcase424() {
     int passed = 1;
 
     printf("%s     rex.W neg al\n", __func__);fflush(stdout);
@@ -11830,7 +11586,7 @@ static int testcase432() {
     return passed;
 }
 
-static int testcase433() {
+static int testcase425() {
     int passed = 1;
 
     printf("%s     rex.W not al\n", __func__);fflush(stdout);
@@ -11852,7 +11608,7 @@ static int testcase433() {
     return passed;
 }
 
-static int testcase434() {
+static int testcase426() {
     int passed = 1;
 
     printf("%s     rex.W or al,0x0\n", __func__);fflush(stdout);
@@ -11874,7 +11630,7 @@ static int testcase434() {
     return passed;
 }
 
-static int testcase435() {
+static int testcase427() {
     int passed = 1;
 
     printf("%s     rex.W or al,0xf\n", __func__);fflush(stdout);
@@ -11896,7 +11652,7 @@ static int testcase435() {
     return passed;
 }
 
-static int testcase436() {
+static int testcase428() {
     int passed = 1;
 
     printf("%s     rex.W or al,al\n", __func__);fflush(stdout);
@@ -11918,7 +11674,7 @@ static int testcase436() {
     return passed;
 }
 
-static int testcase437() {
+static int testcase429() {
     int passed = 1;
 
     printf("%s     rex.W or al,cl\n", __func__);fflush(stdout);
@@ -11943,7 +11699,7 @@ static int testcase437() {
     return passed;
 }
 
-static int testcase438() {
+static int testcase430() {
     int passed = 1;
 
     printf("%s     rex.W rcl al,0x0\n", __func__);fflush(stdout);
@@ -11965,7 +11721,7 @@ static int testcase438() {
     return passed;
 }
 
-static int testcase439() {
+static int testcase431() {
     int passed = 1;
 
     printf("%s     rex.W rcl al,0x1\n", __func__);fflush(stdout);
@@ -11987,7 +11743,7 @@ static int testcase439() {
     return passed;
 }
 
-static int testcase440() {
+static int testcase432() {
     int passed = 1;
 
     printf("%s     rex.W rcl al,0x2\n", __func__);fflush(stdout);
@@ -12009,7 +11765,7 @@ static int testcase440() {
     return passed;
 }
 
-static int testcase441() {
+static int testcase433() {
     int passed = 1;
 
     printf("%s     rex.W rcl al,0x4\n", __func__);fflush(stdout);
@@ -12031,7 +11787,7 @@ static int testcase441() {
     return passed;
 }
 
-static int testcase442() {
+static int testcase434() {
     int passed = 1;
 
     printf("%s     rex.W rcl al,0x5\n", __func__);fflush(stdout);
@@ -12053,7 +11809,7 @@ static int testcase442() {
     return passed;
 }
 
-static int testcase443() {
+static int testcase435() {
     int passed = 1;
 
     printf("%s     rex.W rcl al,0x6\n", __func__);fflush(stdout);
@@ -12075,7 +11831,7 @@ static int testcase443() {
     return passed;
 }
 
-static int testcase444() {
+static int testcase436() {
     int passed = 1;
 
     printf("%s     rex.W rcl al,0x8\n", __func__);fflush(stdout);
@@ -12097,7 +11853,7 @@ static int testcase444() {
     return passed;
 }
 
-static int testcase445() {
+static int testcase437() {
     int passed = 1;
 
     printf("%s     rex.W rcl al,1\n", __func__);fflush(stdout);
@@ -12119,7 +11875,7 @@ static int testcase445() {
     return passed;
 }
 
-static int testcase446() {
+static int testcase438() {
     int passed = 1;
 
     printf("%s     rex.W rcl al,cl\n", __func__);fflush(stdout);
@@ -12144,7 +11900,7 @@ static int testcase446() {
     return passed;
 }
 
-static int testcase447() {
+static int testcase439() {
     int passed = 1;
 
     printf("%s     rex.W rcr al,0x0\n", __func__);fflush(stdout);
@@ -12166,7 +11922,7 @@ static int testcase447() {
     return passed;
 }
 
-static int testcase448() {
+static int testcase440() {
     int passed = 1;
 
     printf("%s     rex.W rcr al,0x1\n", __func__);fflush(stdout);
@@ -12188,7 +11944,7 @@ static int testcase448() {
     return passed;
 }
 
-static int testcase449() {
+static int testcase441() {
     int passed = 1;
 
     printf("%s     rex.W rcr al,0x2\n", __func__);fflush(stdout);
@@ -12210,7 +11966,7 @@ static int testcase449() {
     return passed;
 }
 
-static int testcase450() {
+static int testcase442() {
     int passed = 1;
 
     printf("%s     rex.W rcr al,0x4\n", __func__);fflush(stdout);
@@ -12232,7 +11988,7 @@ static int testcase450() {
     return passed;
 }
 
-static int testcase451() {
+static int testcase443() {
     int passed = 1;
 
     printf("%s     rex.W rcr al,0x5\n", __func__);fflush(stdout);
@@ -12254,7 +12010,7 @@ static int testcase451() {
     return passed;
 }
 
-static int testcase452() {
+static int testcase444() {
     int passed = 1;
 
     printf("%s     rex.W rcr al,0x6\n", __func__);fflush(stdout);
@@ -12276,7 +12032,7 @@ static int testcase452() {
     return passed;
 }
 
-static int testcase453() {
+static int testcase445() {
     int passed = 1;
 
     printf("%s     rex.W rcr al,0x8\n", __func__);fflush(stdout);
@@ -12298,7 +12054,7 @@ static int testcase453() {
     return passed;
 }
 
-static int testcase454() {
+static int testcase446() {
     int passed = 1;
 
     printf("%s     rex.W rcr al,1\n", __func__);fflush(stdout);
@@ -12320,7 +12076,7 @@ static int testcase454() {
     return passed;
 }
 
-static int testcase455() {
+static int testcase447() {
     int passed = 1;
 
     printf("%s     rex.W rcr al,cl\n", __func__);fflush(stdout);
@@ -12345,7 +12101,7 @@ static int testcase455() {
     return passed;
 }
 
-static int testcase456() {
+static int testcase448() {
     int passed = 1;
 
     printf("%s     rex.W rol al,0x0\n", __func__);fflush(stdout);
@@ -12367,7 +12123,7 @@ static int testcase456() {
     return passed;
 }
 
-static int testcase457() {
+static int testcase449() {
     int passed = 1;
 
     printf("%s     rex.W rol al,0x1\n", __func__);fflush(stdout);
@@ -12389,7 +12145,7 @@ static int testcase457() {
     return passed;
 }
 
-static int testcase458() {
+static int testcase450() {
     int passed = 1;
 
     printf("%s     rex.W rol al,0x2\n", __func__);fflush(stdout);
@@ -12411,7 +12167,7 @@ static int testcase458() {
     return passed;
 }
 
-static int testcase459() {
+static int testcase451() {
     int passed = 1;
 
     printf("%s     rex.W rol al,0x4\n", __func__);fflush(stdout);
@@ -12433,7 +12189,7 @@ static int testcase459() {
     return passed;
 }
 
-static int testcase460() {
+static int testcase452() {
     int passed = 1;
 
     printf("%s     rex.W rol al,0x5\n", __func__);fflush(stdout);
@@ -12455,7 +12211,7 @@ static int testcase460() {
     return passed;
 }
 
-static int testcase461() {
+static int testcase453() {
     int passed = 1;
 
     printf("%s     rex.W rol al,0x6\n", __func__);fflush(stdout);
@@ -12477,7 +12233,7 @@ static int testcase461() {
     return passed;
 }
 
-static int testcase462() {
+static int testcase454() {
     int passed = 1;
 
     printf("%s     rex.W rol al,0x8\n", __func__);fflush(stdout);
@@ -12499,7 +12255,7 @@ static int testcase462() {
     return passed;
 }
 
-static int testcase463() {
+static int testcase455() {
     int passed = 1;
 
     printf("%s     rex.W rol al,1\n", __func__);fflush(stdout);
@@ -12521,7 +12277,7 @@ static int testcase463() {
     return passed;
 }
 
-static int testcase464() {
+static int testcase456() {
     int passed = 1;
 
     printf("%s     rex.W rol al,cl\n", __func__);fflush(stdout);
@@ -12546,7 +12302,7 @@ static int testcase464() {
     return passed;
 }
 
-static int testcase465() {
+static int testcase457() {
     int passed = 1;
 
     printf("%s     rex.W ror al,0x0\n", __func__);fflush(stdout);
@@ -12568,7 +12324,7 @@ static int testcase465() {
     return passed;
 }
 
-static int testcase466() {
+static int testcase458() {
     int passed = 1;
 
     printf("%s     rex.W ror al,0x1\n", __func__);fflush(stdout);
@@ -12590,7 +12346,7 @@ static int testcase466() {
     return passed;
 }
 
-static int testcase467() {
+static int testcase459() {
     int passed = 1;
 
     printf("%s     rex.W ror al,0x2\n", __func__);fflush(stdout);
@@ -12612,7 +12368,7 @@ static int testcase467() {
     return passed;
 }
 
-static int testcase468() {
+static int testcase460() {
     int passed = 1;
 
     printf("%s     rex.W ror al,0x4\n", __func__);fflush(stdout);
@@ -12634,7 +12390,7 @@ static int testcase468() {
     return passed;
 }
 
-static int testcase469() {
+static int testcase461() {
     int passed = 1;
 
     printf("%s     rex.W ror al,0x5\n", __func__);fflush(stdout);
@@ -12656,7 +12412,7 @@ static int testcase469() {
     return passed;
 }
 
-static int testcase470() {
+static int testcase462() {
     int passed = 1;
 
     printf("%s     rex.W ror al,0x6\n", __func__);fflush(stdout);
@@ -12678,7 +12434,7 @@ static int testcase470() {
     return passed;
 }
 
-static int testcase471() {
+static int testcase463() {
     int passed = 1;
 
     printf("%s     rex.W ror al,0x8\n", __func__);fflush(stdout);
@@ -12700,7 +12456,7 @@ static int testcase471() {
     return passed;
 }
 
-static int testcase472() {
+static int testcase464() {
     int passed = 1;
 
     printf("%s     rex.W ror al,1\n", __func__);fflush(stdout);
@@ -12722,7 +12478,7 @@ static int testcase472() {
     return passed;
 }
 
-static int testcase473() {
+static int testcase465() {
     int passed = 1;
 
     printf("%s     rex.W ror al,cl\n", __func__);fflush(stdout);
@@ -12747,7 +12503,7 @@ static int testcase473() {
     return passed;
 }
 
-static int testcase474() {
+static int testcase466() {
     int passed = 1;
 
     printf("%s     rex.W sar al,0x0\n", __func__);fflush(stdout);
@@ -12769,7 +12525,7 @@ static int testcase474() {
     return passed;
 }
 
-static int testcase475() {
+static int testcase467() {
     int passed = 1;
 
     printf("%s     rex.W sar al,0x1\n", __func__);fflush(stdout);
@@ -12791,7 +12547,7 @@ static int testcase475() {
     return passed;
 }
 
-static int testcase476() {
+static int testcase468() {
     int passed = 1;
 
     printf("%s     rex.W sar al,0xf\n", __func__);fflush(stdout);
@@ -12813,7 +12569,7 @@ static int testcase476() {
     return passed;
 }
 
-static int testcase477() {
+static int testcase469() {
     int passed = 1;
 
     printf("%s     rex.W sar al,1\n", __func__);fflush(stdout);
@@ -12835,7 +12591,7 @@ static int testcase477() {
     return passed;
 }
 
-static int testcase478() {
+static int testcase470() {
     int passed = 1;
 
     printf("%s     rex.W sar al,cl\n", __func__);fflush(stdout);
@@ -12860,7 +12616,7 @@ static int testcase478() {
     return passed;
 }
 
-static int testcase479() {
+static int testcase471() {
     int passed = 1;
 
     printf("%s     rex.W sbb al,0x0\n", __func__);fflush(stdout);
@@ -12882,7 +12638,7 @@ static int testcase479() {
     return passed;
 }
 
-static int testcase480() {
+static int testcase472() {
     int passed = 1;
 
     printf("%s     rex.W sbb al,0xf\n", __func__);fflush(stdout);
@@ -12904,7 +12660,7 @@ static int testcase480() {
     return passed;
 }
 
-static int testcase481() {
+static int testcase473() {
     int passed = 1;
 
     printf("%s     rex.W sbb al,al\n", __func__);fflush(stdout);
@@ -12926,7 +12682,7 @@ static int testcase481() {
     return passed;
 }
 
-static int testcase482() {
+static int testcase474() {
     int passed = 1;
 
     printf("%s     rex.W sbb al,cl\n", __func__);fflush(stdout);
@@ -12951,7 +12707,7 @@ static int testcase482() {
     return passed;
 }
 
-static int testcase483() {
+static int testcase475() {
     int passed = 1;
 
     printf("%s     rex.W shl al,0x0\n", __func__);fflush(stdout);
@@ -12973,7 +12729,7 @@ static int testcase483() {
     return passed;
 }
 
-static int testcase484() {
+static int testcase476() {
     int passed = 1;
 
     printf("%s     rex.W shl al,0x1\n", __func__);fflush(stdout);
@@ -12995,7 +12751,7 @@ static int testcase484() {
     return passed;
 }
 
-static int testcase485() {
+static int testcase477() {
     int passed = 1;
 
     printf("%s     rex.W shl al,0x2\n", __func__);fflush(stdout);
@@ -13017,7 +12773,7 @@ static int testcase485() {
     return passed;
 }
 
-static int testcase486() {
+static int testcase478() {
     int passed = 1;
 
     printf("%s     rex.W shl al,0x4\n", __func__);fflush(stdout);
@@ -13039,7 +12795,7 @@ static int testcase486() {
     return passed;
 }
 
-static int testcase487() {
+static int testcase479() {
     int passed = 1;
 
     printf("%s     rex.W shl al,0x5\n", __func__);fflush(stdout);
@@ -13061,7 +12817,7 @@ static int testcase487() {
     return passed;
 }
 
-static int testcase488() {
+static int testcase480() {
     int passed = 1;
 
     printf("%s     rex.W shl al,0x6\n", __func__);fflush(stdout);
@@ -13083,7 +12839,7 @@ static int testcase488() {
     return passed;
 }
 
-static int testcase489() {
+static int testcase481() {
     int passed = 1;
 
     printf("%s     rex.W shl al,0x8\n", __func__);fflush(stdout);
@@ -13105,7 +12861,7 @@ static int testcase489() {
     return passed;
 }
 
-static int testcase490() {
+static int testcase482() {
     int passed = 1;
 
     printf("%s     rex.W shl al,1\n", __func__);fflush(stdout);
@@ -13127,7 +12883,7 @@ static int testcase490() {
     return passed;
 }
 
-static int testcase491() {
+static int testcase483() {
     int passed = 1;
 
     printf("%s     rex.W shl al,cl\n", __func__);fflush(stdout);
@@ -13152,7 +12908,7 @@ static int testcase491() {
     return passed;
 }
 
-static int testcase492() {
+static int testcase484() {
     int passed = 1;
 
     printf("%s     rex.W shr al,0x0\n", __func__);fflush(stdout);
@@ -13174,7 +12930,7 @@ static int testcase492() {
     return passed;
 }
 
-static int testcase493() {
+static int testcase485() {
     int passed = 1;
 
     printf("%s     rex.W shr al,0x1\n", __func__);fflush(stdout);
@@ -13196,7 +12952,7 @@ static int testcase493() {
     return passed;
 }
 
-static int testcase494() {
+static int testcase486() {
     int passed = 1;
 
     printf("%s     rex.W shr al,0x2\n", __func__);fflush(stdout);
@@ -13218,7 +12974,7 @@ static int testcase494() {
     return passed;
 }
 
-static int testcase495() {
+static int testcase487() {
     int passed = 1;
 
     printf("%s     rex.W shr al,0x4\n", __func__);fflush(stdout);
@@ -13240,7 +12996,7 @@ static int testcase495() {
     return passed;
 }
 
-static int testcase496() {
+static int testcase488() {
     int passed = 1;
 
     printf("%s     rex.W shr al,0x5\n", __func__);fflush(stdout);
@@ -13262,7 +13018,7 @@ static int testcase496() {
     return passed;
 }
 
-static int testcase497() {
+static int testcase489() {
     int passed = 1;
 
     printf("%s     rex.W shr al,0x6\n", __func__);fflush(stdout);
@@ -13284,7 +13040,7 @@ static int testcase497() {
     return passed;
 }
 
-static int testcase498() {
+static int testcase490() {
     int passed = 1;
 
     printf("%s     rex.W shr al,0x8\n", __func__);fflush(stdout);
@@ -13306,7 +13062,7 @@ static int testcase498() {
     return passed;
 }
 
-static int testcase499() {
+static int testcase491() {
     int passed = 1;
 
     printf("%s     rex.W shr al,1\n", __func__);fflush(stdout);
@@ -13328,7 +13084,7 @@ static int testcase499() {
     return passed;
 }
 
-static int testcase500() {
+static int testcase492() {
     int passed = 1;
 
     printf("%s     rex.W shr al,cl\n", __func__);fflush(stdout);
@@ -13353,7 +13109,7 @@ static int testcase500() {
     return passed;
 }
 
-static int testcase501() {
+static int testcase493() {
     int passed = 1;
 
     printf("%s     rex.W sub al,0x0\n", __func__);fflush(stdout);
@@ -13375,7 +13131,7 @@ static int testcase501() {
     return passed;
 }
 
-static int testcase502() {
+static int testcase494() {
     int passed = 1;
 
     printf("%s     rex.W sub al,0xf\n", __func__);fflush(stdout);
@@ -13397,7 +13153,7 @@ static int testcase502() {
     return passed;
 }
 
-static int testcase503() {
+static int testcase495() {
     int passed = 1;
 
     printf("%s     rex.W sub al,al\n", __func__);fflush(stdout);
@@ -13419,7 +13175,7 @@ static int testcase503() {
     return passed;
 }
 
-static int testcase504() {
+static int testcase496() {
     int passed = 1;
 
     printf("%s     rex.W sub al,cl\n", __func__);fflush(stdout);
@@ -13444,7 +13200,7 @@ static int testcase504() {
     return passed;
 }
 
-static int testcase505() {
+static int testcase497() {
     int passed = 1;
 
     printf("%s     rex.W xadd al,al\n", __func__);fflush(stdout);
@@ -13466,7 +13222,7 @@ static int testcase505() {
     return passed;
 }
 
-static int testcase506() {
+static int testcase498() {
     int passed = 1;
 
     printf("%s     rex.W xadd al,cl\n", __func__);fflush(stdout);
@@ -13494,7 +13250,7 @@ static int testcase506() {
     return passed;
 }
 
-static int testcase507() {
+static int testcase499() {
     int passed = 1;
 
     printf("%s     rex.W xchg al,al\n", __func__);fflush(stdout);
@@ -13516,7 +13272,7 @@ static int testcase507() {
     return passed;
 }
 
-static int testcase508() {
+static int testcase500() {
     int passed = 1;
 
     printf("%s     rex.W xchg al,cl\n", __func__);fflush(stdout);
@@ -13544,7 +13300,7 @@ static int testcase508() {
     return passed;
 }
 
-static int testcase509() {
+static int testcase501() {
     int passed = 1;
 
     printf("%s     rex.W xor al,0x0\n", __func__);fflush(stdout);
@@ -13566,7 +13322,7 @@ static int testcase509() {
     return passed;
 }
 
-static int testcase510() {
+static int testcase502() {
     int passed = 1;
 
     printf("%s     rex.W xor al,0xf\n", __func__);fflush(stdout);
@@ -13588,7 +13344,7 @@ static int testcase510() {
     return passed;
 }
 
-static int testcase511() {
+static int testcase503() {
     int passed = 1;
 
     printf("%s     rex.W xor al,al\n", __func__);fflush(stdout);
@@ -13610,7 +13366,7 @@ static int testcase511() {
     return passed;
 }
 
-static int testcase512() {
+static int testcase504() {
     int passed = 1;
 
     printf("%s     rex.W xor al,cl\n", __func__);fflush(stdout);
@@ -13635,7 +13391,7 @@ static int testcase512() {
     return passed;
 }
 
-static int testcase513() {
+static int testcase505() {
     int passed = 1;
 
     printf("%s     rol    ah,0x0\n", __func__);fflush(stdout);
@@ -13657,7 +13413,7 @@ static int testcase513() {
     return passed;
 }
 
-static int testcase514() {
+static int testcase506() {
     int passed = 1;
 
     printf("%s     rol    ah,0x1\n", __func__);fflush(stdout);
@@ -13679,7 +13435,7 @@ static int testcase514() {
     return passed;
 }
 
-static int testcase515() {
+static int testcase507() {
     int passed = 1;
 
     printf("%s     rol    ah,0x2\n", __func__);fflush(stdout);
@@ -13701,7 +13457,7 @@ static int testcase515() {
     return passed;
 }
 
-static int testcase516() {
+static int testcase508() {
     int passed = 1;
 
     printf("%s     rol    ah,0x4\n", __func__);fflush(stdout);
@@ -13723,7 +13479,7 @@ static int testcase516() {
     return passed;
 }
 
-static int testcase517() {
+static int testcase509() {
     int passed = 1;
 
     printf("%s     rol    ah,0x5\n", __func__);fflush(stdout);
@@ -13745,7 +13501,7 @@ static int testcase517() {
     return passed;
 }
 
-static int testcase518() {
+static int testcase510() {
     int passed = 1;
 
     printf("%s     rol    ah,0x6\n", __func__);fflush(stdout);
@@ -13767,7 +13523,7 @@ static int testcase518() {
     return passed;
 }
 
-static int testcase519() {
+static int testcase511() {
     int passed = 1;
 
     printf("%s     rol    ah,0x8\n", __func__);fflush(stdout);
@@ -13789,7 +13545,7 @@ static int testcase519() {
     return passed;
 }
 
-static int testcase520() {
+static int testcase512() {
     int passed = 1;
 
     printf("%s     rol    ah,1\n", __func__);fflush(stdout);
@@ -13811,7 +13567,7 @@ static int testcase520() {
     return passed;
 }
 
-static int testcase521() {
+static int testcase513() {
     int passed = 1;
 
     printf("%s     rol    al,0x0\n", __func__);fflush(stdout);
@@ -13833,7 +13589,7 @@ static int testcase521() {
     return passed;
 }
 
-static int testcase522() {
+static int testcase514() {
     int passed = 1;
 
     printf("%s     rol    al,0x1\n", __func__);fflush(stdout);
@@ -13855,7 +13611,7 @@ static int testcase522() {
     return passed;
 }
 
-static int testcase523() {
+static int testcase515() {
     int passed = 1;
 
     printf("%s     rol    al,0x2\n", __func__);fflush(stdout);
@@ -13877,7 +13633,7 @@ static int testcase523() {
     return passed;
 }
 
-static int testcase524() {
+static int testcase516() {
     int passed = 1;
 
     printf("%s     rol    al,0x4\n", __func__);fflush(stdout);
@@ -13899,7 +13655,7 @@ static int testcase524() {
     return passed;
 }
 
-static int testcase525() {
+static int testcase517() {
     int passed = 1;
 
     printf("%s     rol    al,0x5\n", __func__);fflush(stdout);
@@ -13921,7 +13677,7 @@ static int testcase525() {
     return passed;
 }
 
-static int testcase526() {
+static int testcase518() {
     int passed = 1;
 
     printf("%s     rol    al,0x6\n", __func__);fflush(stdout);
@@ -13943,7 +13699,7 @@ static int testcase526() {
     return passed;
 }
 
-static int testcase527() {
+static int testcase519() {
     int passed = 1;
 
     printf("%s     rol    al,0x8\n", __func__);fflush(stdout);
@@ -13965,7 +13721,7 @@ static int testcase527() {
     return passed;
 }
 
-static int testcase528() {
+static int testcase520() {
     int passed = 1;
 
     printf("%s     rol    al,1\n", __func__);fflush(stdout);
@@ -13987,7 +13743,7 @@ static int testcase528() {
     return passed;
 }
 
-static int testcase529() {
+static int testcase521() {
     int passed = 1;
 
     printf("%s     rol    al,cl\n", __func__);fflush(stdout);
@@ -14012,7 +13768,7 @@ static int testcase529() {
     return passed;
 }
 
-static int testcase530() {
+static int testcase522() {
     int passed = 1;
 
     printf("%s     rol    ax,0x0\n", __func__);fflush(stdout);
@@ -14035,7 +13791,7 @@ static int testcase530() {
     return passed;
 }
 
-static int testcase531() {
+static int testcase523() {
     int passed = 1;
 
     printf("%s     rol    ax,0x1\n", __func__);fflush(stdout);
@@ -14058,7 +13814,7 @@ static int testcase531() {
     return passed;
 }
 
-static int testcase532() {
+static int testcase524() {
     int passed = 1;
 
     printf("%s     rol    ax,0x10\n", __func__);fflush(stdout);
@@ -14081,7 +13837,7 @@ static int testcase532() {
     return passed;
 }
 
-static int testcase533() {
+static int testcase525() {
     int passed = 1;
 
     printf("%s     rol    ax,0x2\n", __func__);fflush(stdout);
@@ -14104,7 +13860,7 @@ static int testcase533() {
     return passed;
 }
 
-static int testcase534() {
+static int testcase526() {
     int passed = 1;
 
     printf("%s     rol    ax,0x8\n", __func__);fflush(stdout);
@@ -14127,7 +13883,7 @@ static int testcase534() {
     return passed;
 }
 
-static int testcase535() {
+static int testcase527() {
     int passed = 1;
 
     printf("%s     rol    ax,0x9\n", __func__);fflush(stdout);
@@ -14150,7 +13906,7 @@ static int testcase535() {
     return passed;
 }
 
-static int testcase536() {
+static int testcase528() {
     int passed = 1;
 
     printf("%s     rol    ax,0xa\n", __func__);fflush(stdout);
@@ -14173,7 +13929,7 @@ static int testcase536() {
     return passed;
 }
 
-static int testcase537() {
+static int testcase529() {
     int passed = 1;
 
     printf("%s     rol    ax,1\n", __func__);fflush(stdout);
@@ -14196,7 +13952,7 @@ static int testcase537() {
     return passed;
 }
 
-static int testcase538() {
+static int testcase530() {
     int passed = 1;
 
     printf("%s     rol    ax,cl\n", __func__);fflush(stdout);
@@ -14222,7 +13978,7 @@ static int testcase538() {
     return passed;
 }
 
-static int testcase539() {
+static int testcase531() {
     int passed = 1;
 
     printf("%s     rol    eax,0x0\n", __func__);fflush(stdout);
@@ -14251,7 +14007,7 @@ static int testcase539() {
     return passed;
 }
 
-static int testcase540() {
+static int testcase532() {
     int passed = 1;
 
     printf("%s     rol    eax,0x1\n", __func__);fflush(stdout);
@@ -14280,7 +14036,7 @@ static int testcase540() {
     return passed;
 }
 
-static int testcase541() {
+static int testcase533() {
     int passed = 1;
 
     printf("%s     rol    eax,0x10\n", __func__);fflush(stdout);
@@ -14309,7 +14065,7 @@ static int testcase541() {
     return passed;
 }
 
-static int testcase542() {
+static int testcase534() {
     int passed = 1;
 
     printf("%s     rol    eax,0x11\n", __func__);fflush(stdout);
@@ -14338,7 +14094,7 @@ static int testcase542() {
     return passed;
 }
 
-static int testcase543() {
+static int testcase535() {
     int passed = 1;
 
     printf("%s     rol    eax,0x12\n", __func__);fflush(stdout);
@@ -14367,7 +14123,7 @@ static int testcase543() {
     return passed;
 }
 
-static int testcase544() {
+static int testcase536() {
     int passed = 1;
 
     printf("%s     rol    eax,0x2\n", __func__);fflush(stdout);
@@ -14396,7 +14152,7 @@ static int testcase544() {
     return passed;
 }
 
-static int testcase545() {
+static int testcase537() {
     int passed = 1;
 
     printf("%s     rol    eax,0x20\n", __func__);fflush(stdout);
@@ -14425,7 +14181,7 @@ static int testcase545() {
     return passed;
 }
 
-static int testcase546() {
+static int testcase538() {
     int passed = 1;
 
     printf("%s     rol    eax,1\n", __func__);fflush(stdout);
@@ -14454,7 +14210,7 @@ static int testcase546() {
     return passed;
 }
 
-static int testcase547() {
+static int testcase539() {
     int passed = 1;
 
     printf("%s     rol    eax,cl\n", __func__);fflush(stdout);
@@ -14486,7 +14242,7 @@ static int testcase547() {
     return passed;
 }
 
-static int testcase548() {
+static int testcase540() {
     int passed = 1;
 
     printf("%s     rol    rax,0x0\n", __func__);fflush(stdout);
@@ -14515,7 +14271,7 @@ static int testcase548() {
     return passed;
 }
 
-static int testcase549() {
+static int testcase541() {
     int passed = 1;
 
     printf("%s     rol    rax,0x1\n", __func__);fflush(stdout);
@@ -14544,7 +14300,7 @@ static int testcase549() {
     return passed;
 }
 
-static int testcase550() {
+static int testcase542() {
     int passed = 1;
 
     printf("%s     rol    rax,0x2\n", __func__);fflush(stdout);
@@ -14573,7 +14329,7 @@ static int testcase550() {
     return passed;
 }
 
-static int testcase551() {
+static int testcase543() {
     int passed = 1;
 
     printf("%s     rol    rax,0x20\n", __func__);fflush(stdout);
@@ -14602,7 +14358,7 @@ static int testcase551() {
     return passed;
 }
 
-static int testcase552() {
+static int testcase544() {
     int passed = 1;
 
     printf("%s     rol    rax,0x21\n", __func__);fflush(stdout);
@@ -14631,7 +14387,7 @@ static int testcase552() {
     return passed;
 }
 
-static int testcase553() {
+static int testcase545() {
     int passed = 1;
 
     printf("%s     rol    rax,0x22\n", __func__);fflush(stdout);
@@ -14660,7 +14416,7 @@ static int testcase553() {
     return passed;
 }
 
-static int testcase554() {
+static int testcase546() {
     int passed = 1;
 
     printf("%s     rol    rax,0x40\n", __func__);fflush(stdout);
@@ -14689,7 +14445,7 @@ static int testcase554() {
     return passed;
 }
 
-static int testcase555() {
+static int testcase547() {
     int passed = 1;
 
     printf("%s     rol    rax,1\n", __func__);fflush(stdout);
@@ -14718,7 +14474,7 @@ static int testcase555() {
     return passed;
 }
 
-static int testcase556() {
+static int testcase548() {
     int passed = 1;
 
     printf("%s     rol    rax,cl\n", __func__);fflush(stdout);
@@ -14750,7 +14506,7 @@ static int testcase556() {
     return passed;
 }
 
-static int testcase557() {
+static int testcase549() {
     int passed = 1;
 
     printf("%s     ror    ah,0x0\n", __func__);fflush(stdout);
@@ -14772,7 +14528,7 @@ static int testcase557() {
     return passed;
 }
 
-static int testcase558() {
+static int testcase550() {
     int passed = 1;
 
     printf("%s     ror    ah,0x1\n", __func__);fflush(stdout);
@@ -14794,7 +14550,7 @@ static int testcase558() {
     return passed;
 }
 
-static int testcase559() {
+static int testcase551() {
     int passed = 1;
 
     printf("%s     ror    ah,0x2\n", __func__);fflush(stdout);
@@ -14816,7 +14572,7 @@ static int testcase559() {
     return passed;
 }
 
-static int testcase560() {
+static int testcase552() {
     int passed = 1;
 
     printf("%s     ror    ah,0x4\n", __func__);fflush(stdout);
@@ -14838,7 +14594,7 @@ static int testcase560() {
     return passed;
 }
 
-static int testcase561() {
+static int testcase553() {
     int passed = 1;
 
     printf("%s     ror    ah,0x5\n", __func__);fflush(stdout);
@@ -14860,7 +14616,7 @@ static int testcase561() {
     return passed;
 }
 
-static int testcase562() {
+static int testcase554() {
     int passed = 1;
 
     printf("%s     ror    ah,0x6\n", __func__);fflush(stdout);
@@ -14882,7 +14638,7 @@ static int testcase562() {
     return passed;
 }
 
-static int testcase563() {
+static int testcase555() {
     int passed = 1;
 
     printf("%s     ror    ah,0x8\n", __func__);fflush(stdout);
@@ -14904,7 +14660,7 @@ static int testcase563() {
     return passed;
 }
 
-static int testcase564() {
+static int testcase556() {
     int passed = 1;
 
     printf("%s     ror    ah,1\n", __func__);fflush(stdout);
@@ -14926,7 +14682,7 @@ static int testcase564() {
     return passed;
 }
 
-static int testcase565() {
+static int testcase557() {
     int passed = 1;
 
     printf("%s     ror    al,0x0\n", __func__);fflush(stdout);
@@ -14948,7 +14704,7 @@ static int testcase565() {
     return passed;
 }
 
-static int testcase566() {
+static int testcase558() {
     int passed = 1;
 
     printf("%s     ror    al,0x1\n", __func__);fflush(stdout);
@@ -14970,7 +14726,7 @@ static int testcase566() {
     return passed;
 }
 
-static int testcase567() {
+static int testcase559() {
     int passed = 1;
 
     printf("%s     ror    al,0x2\n", __func__);fflush(stdout);
@@ -14992,7 +14748,7 @@ static int testcase567() {
     return passed;
 }
 
-static int testcase568() {
+static int testcase560() {
     int passed = 1;
 
     printf("%s     ror    al,0x4\n", __func__);fflush(stdout);
@@ -15014,7 +14770,7 @@ static int testcase568() {
     return passed;
 }
 
-static int testcase569() {
+static int testcase561() {
     int passed = 1;
 
     printf("%s     ror    al,0x5\n", __func__);fflush(stdout);
@@ -15036,7 +14792,7 @@ static int testcase569() {
     return passed;
 }
 
-static int testcase570() {
+static int testcase562() {
     int passed = 1;
 
     printf("%s     ror    al,0x6\n", __func__);fflush(stdout);
@@ -15058,7 +14814,7 @@ static int testcase570() {
     return passed;
 }
 
-static int testcase571() {
+static int testcase563() {
     int passed = 1;
 
     printf("%s     ror    al,0x8\n", __func__);fflush(stdout);
@@ -15080,7 +14836,7 @@ static int testcase571() {
     return passed;
 }
 
-static int testcase572() {
+static int testcase564() {
     int passed = 1;
 
     printf("%s     ror    al,1\n", __func__);fflush(stdout);
@@ -15102,7 +14858,7 @@ static int testcase572() {
     return passed;
 }
 
-static int testcase573() {
+static int testcase565() {
     int passed = 1;
 
     printf("%s     ror    al,cl\n", __func__);fflush(stdout);
@@ -15127,7 +14883,7 @@ static int testcase573() {
     return passed;
 }
 
-static int testcase574() {
+static int testcase566() {
     int passed = 1;
 
     printf("%s     ror    ax,0x0\n", __func__);fflush(stdout);
@@ -15150,7 +14906,7 @@ static int testcase574() {
     return passed;
 }
 
-static int testcase575() {
+static int testcase567() {
     int passed = 1;
 
     printf("%s     ror    ax,0x1\n", __func__);fflush(stdout);
@@ -15173,7 +14929,7 @@ static int testcase575() {
     return passed;
 }
 
-static int testcase576() {
+static int testcase568() {
     int passed = 1;
 
     printf("%s     ror    ax,0x10\n", __func__);fflush(stdout);
@@ -15196,7 +14952,7 @@ static int testcase576() {
     return passed;
 }
 
-static int testcase577() {
+static int testcase569() {
     int passed = 1;
 
     printf("%s     ror    ax,0x2\n", __func__);fflush(stdout);
@@ -15219,7 +14975,7 @@ static int testcase577() {
     return passed;
 }
 
-static int testcase578() {
+static int testcase570() {
     int passed = 1;
 
     printf("%s     ror    ax,0x8\n", __func__);fflush(stdout);
@@ -15242,7 +14998,7 @@ static int testcase578() {
     return passed;
 }
 
-static int testcase579() {
+static int testcase571() {
     int passed = 1;
 
     printf("%s     ror    ax,0x9\n", __func__);fflush(stdout);
@@ -15265,7 +15021,7 @@ static int testcase579() {
     return passed;
 }
 
-static int testcase580() {
+static int testcase572() {
     int passed = 1;
 
     printf("%s     ror    ax,0xa\n", __func__);fflush(stdout);
@@ -15288,7 +15044,7 @@ static int testcase580() {
     return passed;
 }
 
-static int testcase581() {
+static int testcase573() {
     int passed = 1;
 
     printf("%s     ror    ax,1\n", __func__);fflush(stdout);
@@ -15311,7 +15067,7 @@ static int testcase581() {
     return passed;
 }
 
-static int testcase582() {
+static int testcase574() {
     int passed = 1;
 
     printf("%s     ror    ax,cl\n", __func__);fflush(stdout);
@@ -15337,7 +15093,7 @@ static int testcase582() {
     return passed;
 }
 
-static int testcase583() {
+static int testcase575() {
     int passed = 1;
 
     printf("%s     ror    eax,0x0\n", __func__);fflush(stdout);
@@ -15366,7 +15122,7 @@ static int testcase583() {
     return passed;
 }
 
-static int testcase584() {
+static int testcase576() {
     int passed = 1;
 
     printf("%s     ror    eax,0x1\n", __func__);fflush(stdout);
@@ -15395,7 +15151,7 @@ static int testcase584() {
     return passed;
 }
 
-static int testcase585() {
+static int testcase577() {
     int passed = 1;
 
     printf("%s     ror    eax,0x10\n", __func__);fflush(stdout);
@@ -15424,7 +15180,7 @@ static int testcase585() {
     return passed;
 }
 
-static int testcase586() {
+static int testcase578() {
     int passed = 1;
 
     printf("%s     ror    eax,0x11\n", __func__);fflush(stdout);
@@ -15453,7 +15209,7 @@ static int testcase586() {
     return passed;
 }
 
-static int testcase587() {
+static int testcase579() {
     int passed = 1;
 
     printf("%s     ror    eax,0x12\n", __func__);fflush(stdout);
@@ -15482,7 +15238,7 @@ static int testcase587() {
     return passed;
 }
 
-static int testcase588() {
+static int testcase580() {
     int passed = 1;
 
     printf("%s     ror    eax,0x2\n", __func__);fflush(stdout);
@@ -15511,7 +15267,7 @@ static int testcase588() {
     return passed;
 }
 
-static int testcase589() {
+static int testcase581() {
     int passed = 1;
 
     printf("%s     ror    eax,0x20\n", __func__);fflush(stdout);
@@ -15540,7 +15296,7 @@ static int testcase589() {
     return passed;
 }
 
-static int testcase590() {
+static int testcase582() {
     int passed = 1;
 
     printf("%s     ror    eax,1\n", __func__);fflush(stdout);
@@ -15569,7 +15325,7 @@ static int testcase590() {
     return passed;
 }
 
-static int testcase591() {
+static int testcase583() {
     int passed = 1;
 
     printf("%s     ror    eax,cl\n", __func__);fflush(stdout);
@@ -15601,7 +15357,7 @@ static int testcase591() {
     return passed;
 }
 
-static int testcase592() {
+static int testcase584() {
     int passed = 1;
 
     printf("%s     ror    rax,0x0\n", __func__);fflush(stdout);
@@ -15630,7 +15386,7 @@ static int testcase592() {
     return passed;
 }
 
-static int testcase593() {
+static int testcase585() {
     int passed = 1;
 
     printf("%s     ror    rax,0x1\n", __func__);fflush(stdout);
@@ -15659,7 +15415,7 @@ static int testcase593() {
     return passed;
 }
 
-static int testcase594() {
+static int testcase586() {
     int passed = 1;
 
     printf("%s     ror    rax,0x2\n", __func__);fflush(stdout);
@@ -15688,7 +15444,7 @@ static int testcase594() {
     return passed;
 }
 
-static int testcase595() {
+static int testcase587() {
     int passed = 1;
 
     printf("%s     ror    rax,0x20\n", __func__);fflush(stdout);
@@ -15717,7 +15473,7 @@ static int testcase595() {
     return passed;
 }
 
-static int testcase596() {
+static int testcase588() {
     int passed = 1;
 
     printf("%s     ror    rax,0x21\n", __func__);fflush(stdout);
@@ -15746,7 +15502,7 @@ static int testcase596() {
     return passed;
 }
 
-static int testcase597() {
+static int testcase589() {
     int passed = 1;
 
     printf("%s     ror    rax,0x22\n", __func__);fflush(stdout);
@@ -15775,7 +15531,7 @@ static int testcase597() {
     return passed;
 }
 
-static int testcase598() {
+static int testcase590() {
     int passed = 1;
 
     printf("%s     ror    rax,0x40\n", __func__);fflush(stdout);
@@ -15804,7 +15560,7 @@ static int testcase598() {
     return passed;
 }
 
-static int testcase599() {
+static int testcase591() {
     int passed = 1;
 
     printf("%s     ror    rax,1\n", __func__);fflush(stdout);
@@ -15833,7 +15589,7 @@ static int testcase599() {
     return passed;
 }
 
-static int testcase600() {
+static int testcase592() {
     int passed = 1;
 
     printf("%s     ror    rax,cl\n", __func__);fflush(stdout);
@@ -15865,7 +15621,7 @@ static int testcase600() {
     return passed;
 }
 
-static int testcase601() {
+static int testcase593() {
     int passed = 1;
 
     printf("%s     rorx   eax,eax,0x0\n", __func__);fflush(stdout);
@@ -15894,7 +15650,7 @@ static int testcase601() {
     return passed;
 }
 
-static int testcase602() {
+static int testcase594() {
     int passed = 1;
 
     printf("%s     rorx   eax,eax,0x10\n", __func__);fflush(stdout);
@@ -15923,7 +15679,7 @@ static int testcase602() {
     return passed;
 }
 
-static int testcase603() {
+static int testcase595() {
     int passed = 1;
 
     printf("%s     rorx   eax,eax,0x11\n", __func__);fflush(stdout);
@@ -15952,7 +15708,7 @@ static int testcase603() {
     return passed;
 }
 
-static int testcase604() {
+static int testcase596() {
     int passed = 1;
 
     printf("%s     rorx   eax,eax,0x12\n", __func__);fflush(stdout);
@@ -15981,7 +15737,7 @@ static int testcase604() {
     return passed;
 }
 
-static int testcase605() {
+static int testcase597() {
     int passed = 1;
 
     printf("%s     rorx   eax,eax,0x2\n", __func__);fflush(stdout);
@@ -16010,7 +15766,7 @@ static int testcase605() {
     return passed;
 }
 
-static int testcase606() {
+static int testcase598() {
     int passed = 1;
 
     printf("%s     rorx   eax,eax,0x20\n", __func__);fflush(stdout);
@@ -16039,7 +15795,7 @@ static int testcase606() {
     return passed;
 }
 
-static int testcase607() {
+static int testcase599() {
     int passed = 1;
 
     printf("%s     rorx   eax,ecx,0x0\n", __func__);fflush(stdout);
@@ -16068,7 +15824,7 @@ static int testcase607() {
     return passed;
 }
 
-static int testcase608() {
+static int testcase600() {
     int passed = 1;
 
     printf("%s     rorx   eax,ecx,0x10\n", __func__);fflush(stdout);
@@ -16097,7 +15853,7 @@ static int testcase608() {
     return passed;
 }
 
-static int testcase609() {
+static int testcase601() {
     int passed = 1;
 
     printf("%s     rorx   eax,ecx,0x11\n", __func__);fflush(stdout);
@@ -16126,7 +15882,7 @@ static int testcase609() {
     return passed;
 }
 
-static int testcase610() {
+static int testcase602() {
     int passed = 1;
 
     printf("%s     rorx   eax,ecx,0x12\n", __func__);fflush(stdout);
@@ -16155,7 +15911,7 @@ static int testcase610() {
     return passed;
 }
 
-static int testcase611() {
+static int testcase603() {
     int passed = 1;
 
     printf("%s     rorx   eax,ecx,0x2\n", __func__);fflush(stdout);
@@ -16184,7 +15940,7 @@ static int testcase611() {
     return passed;
 }
 
-static int testcase612() {
+static int testcase604() {
     int passed = 1;
 
     printf("%s     rorx   eax,ecx,0x20\n", __func__);fflush(stdout);
@@ -16213,7 +15969,7 @@ static int testcase612() {
     return passed;
 }
 
-static int testcase613() {
+static int testcase605() {
     int passed = 1;
 
     printf("%s     rorx   rax,rax,0x0\n", __func__);fflush(stdout);
@@ -16242,7 +15998,7 @@ static int testcase613() {
     return passed;
 }
 
-static int testcase614() {
+static int testcase606() {
     int passed = 1;
 
     printf("%s     rorx   rax,rax,0x2\n", __func__);fflush(stdout);
@@ -16271,7 +16027,7 @@ static int testcase614() {
     return passed;
 }
 
-static int testcase615() {
+static int testcase607() {
     int passed = 1;
 
     printf("%s     rorx   rax,rax,0x20\n", __func__);fflush(stdout);
@@ -16300,7 +16056,7 @@ static int testcase615() {
     return passed;
 }
 
-static int testcase616() {
+static int testcase608() {
     int passed = 1;
 
     printf("%s     rorx   rax,rax,0x21\n", __func__);fflush(stdout);
@@ -16329,7 +16085,7 @@ static int testcase616() {
     return passed;
 }
 
-static int testcase617() {
+static int testcase609() {
     int passed = 1;
 
     printf("%s     rorx   rax,rax,0x22\n", __func__);fflush(stdout);
@@ -16358,7 +16114,7 @@ static int testcase617() {
     return passed;
 }
 
-static int testcase618() {
+static int testcase610() {
     int passed = 1;
 
     printf("%s     rorx   rax,rax,0x40\n", __func__);fflush(stdout);
@@ -16387,7 +16143,7 @@ static int testcase618() {
     return passed;
 }
 
-static int testcase619() {
+static int testcase611() {
     int passed = 1;
 
     printf("%s     rorx   rax,rcx,0x0\n", __func__);fflush(stdout);
@@ -16416,7 +16172,7 @@ static int testcase619() {
     return passed;
 }
 
-static int testcase620() {
+static int testcase612() {
     int passed = 1;
 
     printf("%s     rorx   rax,rcx,0x2\n", __func__);fflush(stdout);
@@ -16445,7 +16201,7 @@ static int testcase620() {
     return passed;
 }
 
-static int testcase621() {
+static int testcase613() {
     int passed = 1;
 
     printf("%s     rorx   rax,rcx,0x20\n", __func__);fflush(stdout);
@@ -16474,7 +16230,7 @@ static int testcase621() {
     return passed;
 }
 
-static int testcase622() {
+static int testcase614() {
     int passed = 1;
 
     printf("%s     rorx   rax,rcx,0x21\n", __func__);fflush(stdout);
@@ -16503,7 +16259,7 @@ static int testcase622() {
     return passed;
 }
 
-static int testcase623() {
+static int testcase615() {
     int passed = 1;
 
     printf("%s     rorx   rax,rcx,0x22\n", __func__);fflush(stdout);
@@ -16532,7 +16288,7 @@ static int testcase623() {
     return passed;
 }
 
-static int testcase624() {
+static int testcase616() {
     int passed = 1;
 
     printf("%s     rorx   rax,rcx,0x40\n", __func__);fflush(stdout);
@@ -16561,7 +16317,7 @@ static int testcase624() {
     return passed;
 }
 
-static int testcase625() {
+static int testcase617() {
     int passed = 1;
 
     printf("%s     sar    ah,0x0\n", __func__);fflush(stdout);
@@ -16583,7 +16339,7 @@ static int testcase625() {
     return passed;
 }
 
-static int testcase626() {
+static int testcase618() {
     int passed = 1;
 
     printf("%s     sar    ah,0x1\n", __func__);fflush(stdout);
@@ -16605,7 +16361,7 @@ static int testcase626() {
     return passed;
 }
 
-static int testcase627() {
+static int testcase619() {
     int passed = 1;
 
     printf("%s     sar    ah,0xf\n", __func__);fflush(stdout);
@@ -16627,7 +16383,7 @@ static int testcase627() {
     return passed;
 }
 
-static int testcase628() {
+static int testcase620() {
     int passed = 1;
 
     printf("%s     sar    ah,1\n", __func__);fflush(stdout);
@@ -16649,7 +16405,7 @@ static int testcase628() {
     return passed;
 }
 
-static int testcase629() {
+static int testcase621() {
     int passed = 1;
 
     printf("%s     sar    al,0x0\n", __func__);fflush(stdout);
@@ -16671,7 +16427,7 @@ static int testcase629() {
     return passed;
 }
 
-static int testcase630() {
+static int testcase622() {
     int passed = 1;
 
     printf("%s     sar    al,0x1\n", __func__);fflush(stdout);
@@ -16693,7 +16449,7 @@ static int testcase630() {
     return passed;
 }
 
-static int testcase631() {
+static int testcase623() {
     int passed = 1;
 
     printf("%s     sar    al,0xf\n", __func__);fflush(stdout);
@@ -16715,7 +16471,7 @@ static int testcase631() {
     return passed;
 }
 
-static int testcase632() {
+static int testcase624() {
     int passed = 1;
 
     printf("%s     sar    al,1\n", __func__);fflush(stdout);
@@ -16737,7 +16493,7 @@ static int testcase632() {
     return passed;
 }
 
-static int testcase633() {
+static int testcase625() {
     int passed = 1;
 
     printf("%s     sar    al,cl\n", __func__);fflush(stdout);
@@ -16762,7 +16518,7 @@ static int testcase633() {
     return passed;
 }
 
-static int testcase634() {
+static int testcase626() {
     int passed = 1;
 
     printf("%s     sar    ax,0x0\n", __func__);fflush(stdout);
@@ -16785,7 +16541,7 @@ static int testcase634() {
     return passed;
 }
 
-static int testcase635() {
+static int testcase627() {
     int passed = 1;
 
     printf("%s     sar    ax,0x1\n", __func__);fflush(stdout);
@@ -16808,7 +16564,7 @@ static int testcase635() {
     return passed;
 }
 
-static int testcase636() {
+static int testcase628() {
     int passed = 1;
 
     printf("%s     sar    ax,0xf\n", __func__);fflush(stdout);
@@ -16831,7 +16587,7 @@ static int testcase636() {
     return passed;
 }
 
-static int testcase637() {
+static int testcase629() {
     int passed = 1;
 
     printf("%s     sar    ax,1\n", __func__);fflush(stdout);
@@ -16854,7 +16610,7 @@ static int testcase637() {
     return passed;
 }
 
-static int testcase638() {
+static int testcase630() {
     int passed = 1;
 
     printf("%s     sar    ax,cl\n", __func__);fflush(stdout);
@@ -16880,7 +16636,7 @@ static int testcase638() {
     return passed;
 }
 
-static int testcase639() {
+static int testcase631() {
     int passed = 1;
 
     printf("%s     sar    eax,0x0\n", __func__);fflush(stdout);
@@ -16909,7 +16665,7 @@ static int testcase639() {
     return passed;
 }
 
-static int testcase640() {
+static int testcase632() {
     int passed = 1;
 
     printf("%s     sar    eax,0x1\n", __func__);fflush(stdout);
@@ -16938,7 +16694,7 @@ static int testcase640() {
     return passed;
 }
 
-static int testcase641() {
+static int testcase633() {
     int passed = 1;
 
     printf("%s     sar    eax,0xf\n", __func__);fflush(stdout);
@@ -16967,7 +16723,7 @@ static int testcase641() {
     return passed;
 }
 
-static int testcase642() {
+static int testcase634() {
     int passed = 1;
 
     printf("%s     sar    eax,1\n", __func__);fflush(stdout);
@@ -16996,7 +16752,7 @@ static int testcase642() {
     return passed;
 }
 
-static int testcase643() {
+static int testcase635() {
     int passed = 1;
 
     printf("%s     sar    eax,cl\n", __func__);fflush(stdout);
@@ -17028,7 +16784,7 @@ static int testcase643() {
     return passed;
 }
 
-static int testcase644() {
+static int testcase636() {
     int passed = 1;
 
     printf("%s     sar    rax,0x0\n", __func__);fflush(stdout);
@@ -17057,7 +16813,7 @@ static int testcase644() {
     return passed;
 }
 
-static int testcase645() {
+static int testcase637() {
     int passed = 1;
 
     printf("%s     sar    rax,0x1\n", __func__);fflush(stdout);
@@ -17086,7 +16842,7 @@ static int testcase645() {
     return passed;
 }
 
-static int testcase646() {
+static int testcase638() {
     int passed = 1;
 
     printf("%s     sar    rax,0xf\n", __func__);fflush(stdout);
@@ -17115,7 +16871,7 @@ static int testcase646() {
     return passed;
 }
 
-static int testcase647() {
+static int testcase639() {
     int passed = 1;
 
     printf("%s     sar    rax,1\n", __func__);fflush(stdout);
@@ -17144,7 +16900,7 @@ static int testcase647() {
     return passed;
 }
 
-static int testcase648() {
+static int testcase640() {
     int passed = 1;
 
     printf("%s     sar    rax,cl\n", __func__);fflush(stdout);
@@ -17176,7 +16932,7 @@ static int testcase648() {
     return passed;
 }
 
-static int testcase649() {
+static int testcase641() {
     int passed = 1;
 
     printf("%s     sarx   eax,eax,eax\n", __func__);fflush(stdout);
@@ -17205,7 +16961,7 @@ static int testcase649() {
     return passed;
 }
 
-static int testcase650() {
+static int testcase642() {
     int passed = 1;
 
     printf("%s     sarx   eax,eax,ecx\n", __func__);fflush(stdout);
@@ -17237,7 +16993,7 @@ static int testcase650() {
     return passed;
 }
 
-static int testcase651() {
+static int testcase643() {
     int passed = 1;
 
     printf("%s     sarx   eax,ecx,ecx\n", __func__);fflush(stdout);
@@ -17266,7 +17022,7 @@ static int testcase651() {
     return passed;
 }
 
-static int testcase652() {
+static int testcase644() {
     int passed = 1;
 
     printf("%s     sarx   eax,ecx,edx\n", __func__);fflush(stdout);
@@ -17298,7 +17054,7 @@ static int testcase652() {
     return passed;
 }
 
-static int testcase653() {
+static int testcase645() {
     int passed = 1;
 
     printf("%s     sarx   rax,rax,rax\n", __func__);fflush(stdout);
@@ -17327,7 +17083,7 @@ static int testcase653() {
     return passed;
 }
 
-static int testcase654() {
+static int testcase646() {
     int passed = 1;
 
     printf("%s     sarx   rax,rax,rcx\n", __func__);fflush(stdout);
@@ -17359,7 +17115,7 @@ static int testcase654() {
     return passed;
 }
 
-static int testcase655() {
+static int testcase647() {
     int passed = 1;
 
     printf("%s     sarx   rax,rcx,rcx\n", __func__);fflush(stdout);
@@ -17388,7 +17144,7 @@ static int testcase655() {
     return passed;
 }
 
-static int testcase656() {
+static int testcase648() {
     int passed = 1;
 
     printf("%s     sarx   rax,rcx,rdx\n", __func__);fflush(stdout);
@@ -17420,7 +17176,7 @@ static int testcase656() {
     return passed;
 }
 
-static int testcase657() {
+static int testcase649() {
     int passed = 1;
 
     printf("%s     sbb    ah,0x0\n", __func__);fflush(stdout);
@@ -17442,7 +17198,7 @@ static int testcase657() {
     return passed;
 }
 
-static int testcase658() {
+static int testcase650() {
     int passed = 1;
 
     printf("%s     sbb    ah,0xf\n", __func__);fflush(stdout);
@@ -17464,7 +17220,7 @@ static int testcase658() {
     return passed;
 }
 
-static int testcase659() {
+static int testcase651() {
     int passed = 1;
 
     printf("%s     sbb    ah,ah\n", __func__);fflush(stdout);
@@ -17486,7 +17242,7 @@ static int testcase659() {
     return passed;
 }
 
-static int testcase660() {
+static int testcase652() {
     int passed = 1;
 
     printf("%s     sbb    ah,al\n", __func__);fflush(stdout);
@@ -17508,7 +17264,7 @@ static int testcase660() {
     return passed;
 }
 
-static int testcase661() {
+static int testcase653() {
     int passed = 1;
 
     printf("%s     sbb    ah,ch\n", __func__);fflush(stdout);
@@ -17533,7 +17289,7 @@ static int testcase661() {
     return passed;
 }
 
-static int testcase662() {
+static int testcase654() {
     int passed = 1;
 
     printf("%s     sbb    al,0x0\n", __func__);fflush(stdout);
@@ -17555,7 +17311,7 @@ static int testcase662() {
     return passed;
 }
 
-static int testcase663() {
+static int testcase655() {
     int passed = 1;
 
     printf("%s     sbb    al,0xf\n", __func__);fflush(stdout);
@@ -17577,7 +17333,7 @@ static int testcase663() {
     return passed;
 }
 
-static int testcase664() {
+static int testcase656() {
     int passed = 1;
 
     printf("%s     sbb    al,al\n", __func__);fflush(stdout);
@@ -17599,7 +17355,7 @@ static int testcase664() {
     return passed;
 }
 
-static int testcase665() {
+static int testcase657() {
     int passed = 1;
 
     printf("%s     sbb    al,cl\n", __func__);fflush(stdout);
@@ -17624,7 +17380,7 @@ static int testcase665() {
     return passed;
 }
 
-static int testcase666() {
+static int testcase658() {
     int passed = 1;
 
     printf("%s     sbb    ax,0x0\n", __func__);fflush(stdout);
@@ -17647,7 +17403,7 @@ static int testcase666() {
     return passed;
 }
 
-static int testcase667() {
+static int testcase659() {
     int passed = 1;
 
     printf("%s     sbb    ax,0x1\n", __func__);fflush(stdout);
@@ -17670,7 +17426,7 @@ static int testcase667() {
     return passed;
 }
 
-static int testcase668() {
+static int testcase660() {
     int passed = 1;
 
     printf("%s     sbb    ax,0xff\n", __func__);fflush(stdout);
@@ -17693,7 +17449,7 @@ static int testcase668() {
     return passed;
 }
 
-static int testcase669() {
+static int testcase661() {
     int passed = 1;
 
     printf("%s     sbb    ax,0xffff\n", __func__);fflush(stdout);
@@ -17716,7 +17472,7 @@ static int testcase669() {
     return passed;
 }
 
-static int testcase670() {
+static int testcase662() {
     int passed = 1;
 
     printf("%s     sbb    ax,ax\n", __func__);fflush(stdout);
@@ -17739,7 +17495,7 @@ static int testcase670() {
     return passed;
 }
 
-static int testcase671() {
+static int testcase663() {
     int passed = 1;
 
     printf("%s     sbb    ax,cx\n", __func__);fflush(stdout);
@@ -17765,7 +17521,7 @@ static int testcase671() {
     return passed;
 }
 
-static int testcase672() {
+static int testcase664() {
     int passed = 1;
 
     printf("%s     sbb    ch,al\n", __func__);fflush(stdout);
@@ -17790,7 +17546,7 @@ static int testcase672() {
     return passed;
 }
 
-static int testcase673() {
+static int testcase665() {
     int passed = 1;
 
     printf("%s     sbb    eax,0x0\n", __func__);fflush(stdout);
@@ -17819,7 +17575,7 @@ static int testcase673() {
     return passed;
 }
 
-static int testcase674() {
+static int testcase666() {
     int passed = 1;
 
     printf("%s     sbb    eax,0x1\n", __func__);fflush(stdout);
@@ -17848,7 +17604,7 @@ static int testcase674() {
     return passed;
 }
 
-static int testcase675() {
+static int testcase667() {
     int passed = 1;
 
     printf("%s     sbb    eax,0xffff\n", __func__);fflush(stdout);
@@ -17877,7 +17633,7 @@ static int testcase675() {
     return passed;
 }
 
-static int testcase676() {
+static int testcase668() {
     int passed = 1;
 
     printf("%s     sbb    eax,0xffffffff\n", __func__);fflush(stdout);
@@ -17906,7 +17662,7 @@ static int testcase676() {
     return passed;
 }
 
-static int testcase677() {
+static int testcase669() {
     int passed = 1;
 
     printf("%s     sbb    eax,eax\n", __func__);fflush(stdout);
@@ -17935,7 +17691,7 @@ static int testcase677() {
     return passed;
 }
 
-static int testcase678() {
+static int testcase670() {
     int passed = 1;
 
     printf("%s     sbb    eax,ecx\n", __func__);fflush(stdout);
@@ -17967,7 +17723,7 @@ static int testcase678() {
     return passed;
 }
 
-static int testcase679() {
+static int testcase671() {
     int passed = 1;
 
     printf("%s     sbb    rax,0x0\n", __func__);fflush(stdout);
@@ -17996,7 +17752,7 @@ static int testcase679() {
     return passed;
 }
 
-static int testcase680() {
+static int testcase672() {
     int passed = 1;
 
     printf("%s     sbb    rax,0x1\n", __func__);fflush(stdout);
@@ -18025,7 +17781,7 @@ static int testcase680() {
     return passed;
 }
 
-static int testcase681() {
+static int testcase673() {
     int passed = 1;
 
     printf("%s     sbb    rax,0xffff\n", __func__);fflush(stdout);
@@ -18054,7 +17810,7 @@ static int testcase681() {
     return passed;
 }
 
-static int testcase682() {
+static int testcase674() {
     int passed = 1;
 
     printf("%s     sbb    rax,0xffffffffffffffff\n", __func__);fflush(stdout);
@@ -18083,7 +17839,7 @@ static int testcase682() {
     return passed;
 }
 
-static int testcase683() {
+static int testcase675() {
     int passed = 1;
 
     printf("%s     sbb    rax,rax\n", __func__);fflush(stdout);
@@ -18112,7 +17868,7 @@ static int testcase683() {
     return passed;
 }
 
-static int testcase684() {
+static int testcase676() {
     int passed = 1;
 
     printf("%s     sbb    rax,rcx\n", __func__);fflush(stdout);
@@ -18144,7 +17900,7 @@ static int testcase684() {
     return passed;
 }
 
-static int testcase685() {
+static int testcase677() {
     int passed = 1;
 
     printf("%s     shl    ah,0x0\n", __func__);fflush(stdout);
@@ -18166,7 +17922,7 @@ static int testcase685() {
     return passed;
 }
 
-static int testcase686() {
+static int testcase678() {
     int passed = 1;
 
     printf("%s     shl    ah,0x1\n", __func__);fflush(stdout);
@@ -18188,7 +17944,7 @@ static int testcase686() {
     return passed;
 }
 
-static int testcase687() {
+static int testcase679() {
     int passed = 1;
 
     printf("%s     shl    ah,0x2\n", __func__);fflush(stdout);
@@ -18210,7 +17966,7 @@ static int testcase687() {
     return passed;
 }
 
-static int testcase688() {
+static int testcase680() {
     int passed = 1;
 
     printf("%s     shl    ah,0x4\n", __func__);fflush(stdout);
@@ -18232,7 +17988,7 @@ static int testcase688() {
     return passed;
 }
 
-static int testcase689() {
+static int testcase681() {
     int passed = 1;
 
     printf("%s     shl    ah,0x5\n", __func__);fflush(stdout);
@@ -18254,7 +18010,7 @@ static int testcase689() {
     return passed;
 }
 
-static int testcase690() {
+static int testcase682() {
     int passed = 1;
 
     printf("%s     shl    ah,0x6\n", __func__);fflush(stdout);
@@ -18276,7 +18032,7 @@ static int testcase690() {
     return passed;
 }
 
-static int testcase691() {
+static int testcase683() {
     int passed = 1;
 
     printf("%s     shl    ah,0x8\n", __func__);fflush(stdout);
@@ -18298,7 +18054,7 @@ static int testcase691() {
     return passed;
 }
 
-static int testcase692() {
+static int testcase684() {
     int passed = 1;
 
     printf("%s     shl    ah,1\n", __func__);fflush(stdout);
@@ -18320,7 +18076,7 @@ static int testcase692() {
     return passed;
 }
 
-static int testcase693() {
+static int testcase685() {
     int passed = 1;
 
     printf("%s     shl    al,0x0\n", __func__);fflush(stdout);
@@ -18342,7 +18098,7 @@ static int testcase693() {
     return passed;
 }
 
-static int testcase694() {
+static int testcase686() {
     int passed = 1;
 
     printf("%s     shl    al,0x1\n", __func__);fflush(stdout);
@@ -18364,7 +18120,7 @@ static int testcase694() {
     return passed;
 }
 
-static int testcase695() {
+static int testcase687() {
     int passed = 1;
 
     printf("%s     shl    al,0x2\n", __func__);fflush(stdout);
@@ -18386,7 +18142,7 @@ static int testcase695() {
     return passed;
 }
 
-static int testcase696() {
+static int testcase688() {
     int passed = 1;
 
     printf("%s     shl    al,0x4\n", __func__);fflush(stdout);
@@ -18408,7 +18164,7 @@ static int testcase696() {
     return passed;
 }
 
-static int testcase697() {
+static int testcase689() {
     int passed = 1;
 
     printf("%s     shl    al,0x5\n", __func__);fflush(stdout);
@@ -18430,7 +18186,7 @@ static int testcase697() {
     return passed;
 }
 
-static int testcase698() {
+static int testcase690() {
     int passed = 1;
 
     printf("%s     shl    al,0x6\n", __func__);fflush(stdout);
@@ -18452,7 +18208,7 @@ static int testcase698() {
     return passed;
 }
 
-static int testcase699() {
+static int testcase691() {
     int passed = 1;
 
     printf("%s     shl    al,0x8\n", __func__);fflush(stdout);
@@ -18474,7 +18230,7 @@ static int testcase699() {
     return passed;
 }
 
-static int testcase700() {
+static int testcase692() {
     int passed = 1;
 
     printf("%s     shl    al,1\n", __func__);fflush(stdout);
@@ -18496,7 +18252,7 @@ static int testcase700() {
     return passed;
 }
 
-static int testcase701() {
+static int testcase693() {
     int passed = 1;
 
     printf("%s     shl    al,cl\n", __func__);fflush(stdout);
@@ -18521,7 +18277,7 @@ static int testcase701() {
     return passed;
 }
 
-static int testcase702() {
+static int testcase694() {
     int passed = 1;
 
     printf("%s     shl    ax,0x0\n", __func__);fflush(stdout);
@@ -18544,7 +18300,7 @@ static int testcase702() {
     return passed;
 }
 
-static int testcase703() {
+static int testcase695() {
     int passed = 1;
 
     printf("%s     shl    ax,0x1\n", __func__);fflush(stdout);
@@ -18567,7 +18323,7 @@ static int testcase703() {
     return passed;
 }
 
-static int testcase704() {
+static int testcase696() {
     int passed = 1;
 
     printf("%s     shl    ax,0x10\n", __func__);fflush(stdout);
@@ -18590,7 +18346,7 @@ static int testcase704() {
     return passed;
 }
 
-static int testcase705() {
+static int testcase697() {
     int passed = 1;
 
     printf("%s     shl    ax,0x2\n", __func__);fflush(stdout);
@@ -18613,7 +18369,7 @@ static int testcase705() {
     return passed;
 }
 
-static int testcase706() {
+static int testcase698() {
     int passed = 1;
 
     printf("%s     shl    ax,0x8\n", __func__);fflush(stdout);
@@ -18636,7 +18392,7 @@ static int testcase706() {
     return passed;
 }
 
-static int testcase707() {
+static int testcase699() {
     int passed = 1;
 
     printf("%s     shl    ax,0x9\n", __func__);fflush(stdout);
@@ -18659,7 +18415,7 @@ static int testcase707() {
     return passed;
 }
 
-static int testcase708() {
+static int testcase700() {
     int passed = 1;
 
     printf("%s     shl    ax,0xa\n", __func__);fflush(stdout);
@@ -18682,7 +18438,7 @@ static int testcase708() {
     return passed;
 }
 
-static int testcase709() {
+static int testcase701() {
     int passed = 1;
 
     printf("%s     shl    ax,1\n", __func__);fflush(stdout);
@@ -18705,7 +18461,7 @@ static int testcase709() {
     return passed;
 }
 
-static int testcase710() {
+static int testcase702() {
     int passed = 1;
 
     printf("%s     shl    ax,cl\n", __func__);fflush(stdout);
@@ -18731,7 +18487,7 @@ static int testcase710() {
     return passed;
 }
 
-static int testcase711() {
+static int testcase703() {
     int passed = 1;
 
     printf("%s     shl    eax,0x0\n", __func__);fflush(stdout);
@@ -18760,7 +18516,7 @@ static int testcase711() {
     return passed;
 }
 
-static int testcase712() {
+static int testcase704() {
     int passed = 1;
 
     printf("%s     shl    eax,0x1\n", __func__);fflush(stdout);
@@ -18789,7 +18545,7 @@ static int testcase712() {
     return passed;
 }
 
-static int testcase713() {
+static int testcase705() {
     int passed = 1;
 
     printf("%s     shl    eax,0x10\n", __func__);fflush(stdout);
@@ -18818,7 +18574,7 @@ static int testcase713() {
     return passed;
 }
 
-static int testcase714() {
+static int testcase706() {
     int passed = 1;
 
     printf("%s     shl    eax,0x11\n", __func__);fflush(stdout);
@@ -18847,7 +18603,7 @@ static int testcase714() {
     return passed;
 }
 
-static int testcase715() {
+static int testcase707() {
     int passed = 1;
 
     printf("%s     shl    eax,0x12\n", __func__);fflush(stdout);
@@ -18876,7 +18632,7 @@ static int testcase715() {
     return passed;
 }
 
-static int testcase716() {
+static int testcase708() {
     int passed = 1;
 
     printf("%s     shl    eax,0x2\n", __func__);fflush(stdout);
@@ -18905,7 +18661,7 @@ static int testcase716() {
     return passed;
 }
 
-static int testcase717() {
+static int testcase709() {
     int passed = 1;
 
     printf("%s     shl    eax,0x20\n", __func__);fflush(stdout);
@@ -18934,7 +18690,7 @@ static int testcase717() {
     return passed;
 }
 
-static int testcase718() {
+static int testcase710() {
     int passed = 1;
 
     printf("%s     shl    eax,1\n", __func__);fflush(stdout);
@@ -18963,7 +18719,7 @@ static int testcase718() {
     return passed;
 }
 
-static int testcase719() {
+static int testcase711() {
     int passed = 1;
 
     printf("%s     shl    eax,cl\n", __func__);fflush(stdout);
@@ -18995,7 +18751,7 @@ static int testcase719() {
     return passed;
 }
 
-static int testcase720() {
+static int testcase712() {
     int passed = 1;
 
     printf("%s     shl    rax,0x0\n", __func__);fflush(stdout);
@@ -19024,7 +18780,7 @@ static int testcase720() {
     return passed;
 }
 
-static int testcase721() {
+static int testcase713() {
     int passed = 1;
 
     printf("%s     shl    rax,0x1\n", __func__);fflush(stdout);
@@ -19053,7 +18809,7 @@ static int testcase721() {
     return passed;
 }
 
-static int testcase722() {
+static int testcase714() {
     int passed = 1;
 
     printf("%s     shl    rax,0x2\n", __func__);fflush(stdout);
@@ -19082,7 +18838,7 @@ static int testcase722() {
     return passed;
 }
 
-static int testcase723() {
+static int testcase715() {
     int passed = 1;
 
     printf("%s     shl    rax,0x20\n", __func__);fflush(stdout);
@@ -19111,7 +18867,7 @@ static int testcase723() {
     return passed;
 }
 
-static int testcase724() {
+static int testcase716() {
     int passed = 1;
 
     printf("%s     shl    rax,0x21\n", __func__);fflush(stdout);
@@ -19140,7 +18896,7 @@ static int testcase724() {
     return passed;
 }
 
-static int testcase725() {
+static int testcase717() {
     int passed = 1;
 
     printf("%s     shl    rax,0x22\n", __func__);fflush(stdout);
@@ -19169,7 +18925,7 @@ static int testcase725() {
     return passed;
 }
 
-static int testcase726() {
+static int testcase718() {
     int passed = 1;
 
     printf("%s     shl    rax,0x40\n", __func__);fflush(stdout);
@@ -19198,7 +18954,7 @@ static int testcase726() {
     return passed;
 }
 
-static int testcase727() {
+static int testcase719() {
     int passed = 1;
 
     printf("%s     shl    rax,1\n", __func__);fflush(stdout);
@@ -19227,7 +18983,7 @@ static int testcase727() {
     return passed;
 }
 
-static int testcase728() {
+static int testcase720() {
     int passed = 1;
 
     printf("%s     shl    rax,cl\n", __func__);fflush(stdout);
@@ -19259,7 +19015,7 @@ static int testcase728() {
     return passed;
 }
 
-static int testcase729() {
+static int testcase721() {
     int passed = 1;
 
     printf("%s     shld   ax,ax,0x0\n", __func__);fflush(stdout);
@@ -19282,7 +19038,7 @@ static int testcase729() {
     return passed;
 }
 
-static int testcase730() {
+static int testcase722() {
     int passed = 1;
 
     printf("%s     shld   ax,ax,0x10\n", __func__);fflush(stdout);
@@ -19305,7 +19061,7 @@ static int testcase730() {
     return passed;
 }
 
-static int testcase731() {
+static int testcase723() {
     int passed = 1;
 
     printf("%s     shld   ax,ax,0x2\n", __func__);fflush(stdout);
@@ -19328,7 +19084,7 @@ static int testcase731() {
     return passed;
 }
 
-static int testcase732() {
+static int testcase724() {
     int passed = 1;
 
     printf("%s     shld   ax,ax,0x8\n", __func__);fflush(stdout);
@@ -19351,7 +19107,7 @@ static int testcase732() {
     return passed;
 }
 
-static int testcase733() {
+static int testcase725() {
     int passed = 1;
 
     printf("%s     shld   ax,ax,0x9\n", __func__);fflush(stdout);
@@ -19374,7 +19130,7 @@ static int testcase733() {
     return passed;
 }
 
-static int testcase734() {
+static int testcase726() {
     int passed = 1;
 
     printf("%s     shld   ax,ax,0xa\n", __func__);fflush(stdout);
@@ -19397,7 +19153,7 @@ static int testcase734() {
     return passed;
 }
 
-static int testcase735() {
+static int testcase727() {
     int passed = 1;
 
     printf("%s     shld   ax,ax,cl\n", __func__);fflush(stdout);
@@ -19423,7 +19179,7 @@ static int testcase735() {
     return passed;
 }
 
-static int testcase736() {
+static int testcase728() {
     int passed = 1;
 
     printf("%s     shld   ax,cx,0x0\n", __func__);fflush(stdout);
@@ -19449,7 +19205,7 @@ static int testcase736() {
     return passed;
 }
 
-static int testcase737() {
+static int testcase729() {
     int passed = 1;
 
     printf("%s     shld   ax,cx,0x10\n", __func__);fflush(stdout);
@@ -19475,7 +19231,7 @@ static int testcase737() {
     return passed;
 }
 
-static int testcase738() {
+static int testcase730() {
     int passed = 1;
 
     printf("%s     shld   ax,cx,0x2\n", __func__);fflush(stdout);
@@ -19501,7 +19257,7 @@ static int testcase738() {
     return passed;
 }
 
-static int testcase739() {
+static int testcase731() {
     int passed = 1;
 
     printf("%s     shld   ax,cx,0x8\n", __func__);fflush(stdout);
@@ -19527,7 +19283,7 @@ static int testcase739() {
     return passed;
 }
 
-static int testcase740() {
+static int testcase732() {
     int passed = 1;
 
     printf("%s     shld   ax,cx,0x9\n", __func__);fflush(stdout);
@@ -19553,7 +19309,7 @@ static int testcase740() {
     return passed;
 }
 
-static int testcase741() {
+static int testcase733() {
     int passed = 1;
 
     printf("%s     shld   ax,cx,0xa\n", __func__);fflush(stdout);
@@ -19579,7 +19335,7 @@ static int testcase741() {
     return passed;
 }
 
-static int testcase742() {
+static int testcase734() {
     int passed = 1;
 
     printf("%s     shld   ax,cx,cl\n", __func__);fflush(stdout);
@@ -19605,7 +19361,7 @@ static int testcase742() {
     return passed;
 }
 
-static int testcase743() {
+static int testcase735() {
     int passed = 1;
 
     printf("%s     shld   eax,eax,0x0\n", __func__);fflush(stdout);
@@ -19634,7 +19390,7 @@ static int testcase743() {
     return passed;
 }
 
-static int testcase744() {
+static int testcase736() {
     int passed = 1;
 
     printf("%s     shld   eax,eax,0x10\n", __func__);fflush(stdout);
@@ -19663,7 +19419,7 @@ static int testcase744() {
     return passed;
 }
 
-static int testcase745() {
+static int testcase737() {
     int passed = 1;
 
     printf("%s     shld   eax,eax,0x11\n", __func__);fflush(stdout);
@@ -19692,7 +19448,7 @@ static int testcase745() {
     return passed;
 }
 
-static int testcase746() {
+static int testcase738() {
     int passed = 1;
 
     printf("%s     shld   eax,eax,0x12\n", __func__);fflush(stdout);
@@ -19721,7 +19477,7 @@ static int testcase746() {
     return passed;
 }
 
-static int testcase747() {
+static int testcase739() {
     int passed = 1;
 
     printf("%s     shld   eax,eax,0x2\n", __func__);fflush(stdout);
@@ -19750,7 +19506,7 @@ static int testcase747() {
     return passed;
 }
 
-static int testcase748() {
+static int testcase740() {
     int passed = 1;
 
     printf("%s     shld   eax,eax,0x20\n", __func__);fflush(stdout);
@@ -19779,7 +19535,7 @@ static int testcase748() {
     return passed;
 }
 
-static int testcase749() {
+static int testcase741() {
     int passed = 1;
 
     printf("%s     shld   eax,eax,cl\n", __func__);fflush(stdout);
@@ -19811,7 +19567,7 @@ static int testcase749() {
     return passed;
 }
 
-static int testcase750() {
+static int testcase742() {
     int passed = 1;
 
     printf("%s     shld   eax,ecx,0x0\n", __func__);fflush(stdout);
@@ -19843,7 +19599,7 @@ static int testcase750() {
     return passed;
 }
 
-static int testcase751() {
+static int testcase743() {
     int passed = 1;
 
     printf("%s     shld   eax,ecx,0x10\n", __func__);fflush(stdout);
@@ -19875,7 +19631,7 @@ static int testcase751() {
     return passed;
 }
 
-static int testcase752() {
+static int testcase744() {
     int passed = 1;
 
     printf("%s     shld   eax,ecx,0x11\n", __func__);fflush(stdout);
@@ -19907,7 +19663,7 @@ static int testcase752() {
     return passed;
 }
 
-static int testcase753() {
+static int testcase745() {
     int passed = 1;
 
     printf("%s     shld   eax,ecx,0x12\n", __func__);fflush(stdout);
@@ -19939,7 +19695,7 @@ static int testcase753() {
     return passed;
 }
 
-static int testcase754() {
+static int testcase746() {
     int passed = 1;
 
     printf("%s     shld   eax,ecx,0x2\n", __func__);fflush(stdout);
@@ -19971,7 +19727,7 @@ static int testcase754() {
     return passed;
 }
 
-static int testcase755() {
+static int testcase747() {
     int passed = 1;
 
     printf("%s     shld   eax,ecx,0x20\n", __func__);fflush(stdout);
@@ -20003,7 +19759,7 @@ static int testcase755() {
     return passed;
 }
 
-static int testcase756() {
+static int testcase748() {
     int passed = 1;
 
     printf("%s     shld   eax,ecx,cl\n", __func__);fflush(stdout);
@@ -20035,7 +19791,7 @@ static int testcase756() {
     return passed;
 }
 
-static int testcase757() {
+static int testcase749() {
     int passed = 1;
 
     printf("%s     shld   rax,rax,0x0\n", __func__);fflush(stdout);
@@ -20064,7 +19820,7 @@ static int testcase757() {
     return passed;
 }
 
-static int testcase758() {
+static int testcase750() {
     int passed = 1;
 
     printf("%s     shld   rax,rax,0x2\n", __func__);fflush(stdout);
@@ -20093,7 +19849,7 @@ static int testcase758() {
     return passed;
 }
 
-static int testcase759() {
+static int testcase751() {
     int passed = 1;
 
     printf("%s     shld   rax,rax,0x20\n", __func__);fflush(stdout);
@@ -20122,7 +19878,7 @@ static int testcase759() {
     return passed;
 }
 
-static int testcase760() {
+static int testcase752() {
     int passed = 1;
 
     printf("%s     shld   rax,rax,0x21\n", __func__);fflush(stdout);
@@ -20151,7 +19907,7 @@ static int testcase760() {
     return passed;
 }
 
-static int testcase761() {
+static int testcase753() {
     int passed = 1;
 
     printf("%s     shld   rax,rax,0x22\n", __func__);fflush(stdout);
@@ -20180,7 +19936,7 @@ static int testcase761() {
     return passed;
 }
 
-static int testcase762() {
+static int testcase754() {
     int passed = 1;
 
     printf("%s     shld   rax,rax,0x40\n", __func__);fflush(stdout);
@@ -20209,7 +19965,7 @@ static int testcase762() {
     return passed;
 }
 
-static int testcase763() {
+static int testcase755() {
     int passed = 1;
 
     printf("%s     shld   rax,rax,cl\n", __func__);fflush(stdout);
@@ -20241,7 +19997,7 @@ static int testcase763() {
     return passed;
 }
 
-static int testcase764() {
+static int testcase756() {
     int passed = 1;
 
     printf("%s     shld   rax,rcx,0x0\n", __func__);fflush(stdout);
@@ -20273,7 +20029,7 @@ static int testcase764() {
     return passed;
 }
 
-static int testcase765() {
+static int testcase757() {
     int passed = 1;
 
     printf("%s     shld   rax,rcx,0x2\n", __func__);fflush(stdout);
@@ -20305,7 +20061,7 @@ static int testcase765() {
     return passed;
 }
 
-static int testcase766() {
+static int testcase758() {
     int passed = 1;
 
     printf("%s     shld   rax,rcx,0x20\n", __func__);fflush(stdout);
@@ -20337,7 +20093,7 @@ static int testcase766() {
     return passed;
 }
 
-static int testcase767() {
+static int testcase759() {
     int passed = 1;
 
     printf("%s     shld   rax,rcx,0x21\n", __func__);fflush(stdout);
@@ -20369,7 +20125,7 @@ static int testcase767() {
     return passed;
 }
 
-static int testcase768() {
+static int testcase760() {
     int passed = 1;
 
     printf("%s     shld   rax,rcx,0x22\n", __func__);fflush(stdout);
@@ -20401,7 +20157,7 @@ static int testcase768() {
     return passed;
 }
 
-static int testcase769() {
+static int testcase761() {
     int passed = 1;
 
     printf("%s     shld   rax,rcx,0x40\n", __func__);fflush(stdout);
@@ -20433,7 +20189,7 @@ static int testcase769() {
     return passed;
 }
 
-static int testcase770() {
+static int testcase762() {
     int passed = 1;
 
     printf("%s     shld   rax,rcx,cl\n", __func__);fflush(stdout);
@@ -20465,7 +20221,7 @@ static int testcase770() {
     return passed;
 }
 
-static int testcase771() {
+static int testcase763() {
     int passed = 1;
 
     printf("%s     shlx   eax,eax,eax\n", __func__);fflush(stdout);
@@ -20494,7 +20250,7 @@ static int testcase771() {
     return passed;
 }
 
-static int testcase772() {
+static int testcase764() {
     int passed = 1;
 
     printf("%s     shlx   eax,eax,ecx\n", __func__);fflush(stdout);
@@ -20526,7 +20282,7 @@ static int testcase772() {
     return passed;
 }
 
-static int testcase773() {
+static int testcase765() {
     int passed = 1;
 
     printf("%s     shlx   eax,ecx,ecx\n", __func__);fflush(stdout);
@@ -20555,7 +20311,7 @@ static int testcase773() {
     return passed;
 }
 
-static int testcase774() {
+static int testcase766() {
     int passed = 1;
 
     printf("%s     shlx   eax,ecx,edx\n", __func__);fflush(stdout);
@@ -20587,7 +20343,7 @@ static int testcase774() {
     return passed;
 }
 
-static int testcase775() {
+static int testcase767() {
     int passed = 1;
 
     printf("%s     shlx   rax,rax,rax\n", __func__);fflush(stdout);
@@ -20616,7 +20372,7 @@ static int testcase775() {
     return passed;
 }
 
-static int testcase776() {
+static int testcase768() {
     int passed = 1;
 
     printf("%s     shlx   rax,rax,rcx\n", __func__);fflush(stdout);
@@ -20648,7 +20404,7 @@ static int testcase776() {
     return passed;
 }
 
-static int testcase777() {
+static int testcase769() {
     int passed = 1;
 
     printf("%s     shlx   rax,rcx,rcx\n", __func__);fflush(stdout);
@@ -20677,7 +20433,7 @@ static int testcase777() {
     return passed;
 }
 
-static int testcase778() {
+static int testcase770() {
     int passed = 1;
 
     printf("%s     shlx   rax,rcx,rdx\n", __func__);fflush(stdout);
@@ -20709,7 +20465,7 @@ static int testcase778() {
     return passed;
 }
 
-static int testcase779() {
+static int testcase771() {
     int passed = 1;
 
     printf("%s     shr    ah,0x0\n", __func__);fflush(stdout);
@@ -20731,7 +20487,7 @@ static int testcase779() {
     return passed;
 }
 
-static int testcase780() {
+static int testcase772() {
     int passed = 1;
 
     printf("%s     shr    ah,0x1\n", __func__);fflush(stdout);
@@ -20753,7 +20509,7 @@ static int testcase780() {
     return passed;
 }
 
-static int testcase781() {
+static int testcase773() {
     int passed = 1;
 
     printf("%s     shr    ah,0x2\n", __func__);fflush(stdout);
@@ -20775,7 +20531,7 @@ static int testcase781() {
     return passed;
 }
 
-static int testcase782() {
+static int testcase774() {
     int passed = 1;
 
     printf("%s     shr    ah,0x4\n", __func__);fflush(stdout);
@@ -20797,7 +20553,7 @@ static int testcase782() {
     return passed;
 }
 
-static int testcase783() {
+static int testcase775() {
     int passed = 1;
 
     printf("%s     shr    ah,0x5\n", __func__);fflush(stdout);
@@ -20819,7 +20575,7 @@ static int testcase783() {
     return passed;
 }
 
-static int testcase784() {
+static int testcase776() {
     int passed = 1;
 
     printf("%s     shr    ah,0x6\n", __func__);fflush(stdout);
@@ -20841,7 +20597,7 @@ static int testcase784() {
     return passed;
 }
 
-static int testcase785() {
+static int testcase777() {
     int passed = 1;
 
     printf("%s     shr    ah,0x8\n", __func__);fflush(stdout);
@@ -20863,7 +20619,7 @@ static int testcase785() {
     return passed;
 }
 
-static int testcase786() {
+static int testcase778() {
     int passed = 1;
 
     printf("%s     shr    ah,1\n", __func__);fflush(stdout);
@@ -20885,7 +20641,7 @@ static int testcase786() {
     return passed;
 }
 
-static int testcase787() {
+static int testcase779() {
     int passed = 1;
 
     printf("%s     shr    al,0x0\n", __func__);fflush(stdout);
@@ -20907,7 +20663,7 @@ static int testcase787() {
     return passed;
 }
 
-static int testcase788() {
+static int testcase780() {
     int passed = 1;
 
     printf("%s     shr    al,0x1\n", __func__);fflush(stdout);
@@ -20929,7 +20685,7 @@ static int testcase788() {
     return passed;
 }
 
-static int testcase789() {
+static int testcase781() {
     int passed = 1;
 
     printf("%s     shr    al,0x2\n", __func__);fflush(stdout);
@@ -20951,7 +20707,7 @@ static int testcase789() {
     return passed;
 }
 
-static int testcase790() {
+static int testcase782() {
     int passed = 1;
 
     printf("%s     shr    al,0x4\n", __func__);fflush(stdout);
@@ -20973,7 +20729,7 @@ static int testcase790() {
     return passed;
 }
 
-static int testcase791() {
+static int testcase783() {
     int passed = 1;
 
     printf("%s     shr    al,0x5\n", __func__);fflush(stdout);
@@ -20995,7 +20751,7 @@ static int testcase791() {
     return passed;
 }
 
-static int testcase792() {
+static int testcase784() {
     int passed = 1;
 
     printf("%s     shr    al,0x6\n", __func__);fflush(stdout);
@@ -21017,7 +20773,7 @@ static int testcase792() {
     return passed;
 }
 
-static int testcase793() {
+static int testcase785() {
     int passed = 1;
 
     printf("%s     shr    al,0x8\n", __func__);fflush(stdout);
@@ -21039,7 +20795,7 @@ static int testcase793() {
     return passed;
 }
 
-static int testcase794() {
+static int testcase786() {
     int passed = 1;
 
     printf("%s     shr    al,1\n", __func__);fflush(stdout);
@@ -21061,7 +20817,7 @@ static int testcase794() {
     return passed;
 }
 
-static int testcase795() {
+static int testcase787() {
     int passed = 1;
 
     printf("%s     shr    al,cl\n", __func__);fflush(stdout);
@@ -21086,7 +20842,7 @@ static int testcase795() {
     return passed;
 }
 
-static int testcase796() {
+static int testcase788() {
     int passed = 1;
 
     printf("%s     shr    ax,0x0\n", __func__);fflush(stdout);
@@ -21109,7 +20865,7 @@ static int testcase796() {
     return passed;
 }
 
-static int testcase797() {
+static int testcase789() {
     int passed = 1;
 
     printf("%s     shr    ax,0x1\n", __func__);fflush(stdout);
@@ -21132,7 +20888,7 @@ static int testcase797() {
     return passed;
 }
 
-static int testcase798() {
+static int testcase790() {
     int passed = 1;
 
     printf("%s     shr    ax,0x10\n", __func__);fflush(stdout);
@@ -21155,7 +20911,7 @@ static int testcase798() {
     return passed;
 }
 
-static int testcase799() {
+static int testcase791() {
     int passed = 1;
 
     printf("%s     shr    ax,0x2\n", __func__);fflush(stdout);
@@ -21178,7 +20934,7 @@ static int testcase799() {
     return passed;
 }
 
-static int testcase800() {
+static int testcase792() {
     int passed = 1;
 
     printf("%s     shr    ax,0x8\n", __func__);fflush(stdout);
@@ -21201,7 +20957,7 @@ static int testcase800() {
     return passed;
 }
 
-static int testcase801() {
+static int testcase793() {
     int passed = 1;
 
     printf("%s     shr    ax,0x9\n", __func__);fflush(stdout);
@@ -21224,7 +20980,7 @@ static int testcase801() {
     return passed;
 }
 
-static int testcase802() {
+static int testcase794() {
     int passed = 1;
 
     printf("%s     shr    ax,0xa\n", __func__);fflush(stdout);
@@ -21247,7 +21003,7 @@ static int testcase802() {
     return passed;
 }
 
-static int testcase803() {
+static int testcase795() {
     int passed = 1;
 
     printf("%s     shr    ax,1\n", __func__);fflush(stdout);
@@ -21270,7 +21026,7 @@ static int testcase803() {
     return passed;
 }
 
-static int testcase804() {
+static int testcase796() {
     int passed = 1;
 
     printf("%s     shr    ax,cl\n", __func__);fflush(stdout);
@@ -21296,7 +21052,7 @@ static int testcase804() {
     return passed;
 }
 
-static int testcase805() {
+static int testcase797() {
     int passed = 1;
 
     printf("%s     shr    eax,0x0\n", __func__);fflush(stdout);
@@ -21325,7 +21081,7 @@ static int testcase805() {
     return passed;
 }
 
-static int testcase806() {
+static int testcase798() {
     int passed = 1;
 
     printf("%s     shr    eax,0x1\n", __func__);fflush(stdout);
@@ -21354,7 +21110,7 @@ static int testcase806() {
     return passed;
 }
 
-static int testcase807() {
+static int testcase799() {
     int passed = 1;
 
     printf("%s     shr    eax,0x10\n", __func__);fflush(stdout);
@@ -21383,7 +21139,7 @@ static int testcase807() {
     return passed;
 }
 
-static int testcase808() {
+static int testcase800() {
     int passed = 1;
 
     printf("%s     shr    eax,0x11\n", __func__);fflush(stdout);
@@ -21412,7 +21168,7 @@ static int testcase808() {
     return passed;
 }
 
-static int testcase809() {
+static int testcase801() {
     int passed = 1;
 
     printf("%s     shr    eax,0x12\n", __func__);fflush(stdout);
@@ -21441,7 +21197,7 @@ static int testcase809() {
     return passed;
 }
 
-static int testcase810() {
+static int testcase802() {
     int passed = 1;
 
     printf("%s     shr    eax,0x2\n", __func__);fflush(stdout);
@@ -21470,7 +21226,7 @@ static int testcase810() {
     return passed;
 }
 
-static int testcase811() {
+static int testcase803() {
     int passed = 1;
 
     printf("%s     shr    eax,0x20\n", __func__);fflush(stdout);
@@ -21499,7 +21255,7 @@ static int testcase811() {
     return passed;
 }
 
-static int testcase812() {
+static int testcase804() {
     int passed = 1;
 
     printf("%s     shr    eax,1\n", __func__);fflush(stdout);
@@ -21528,7 +21284,7 @@ static int testcase812() {
     return passed;
 }
 
-static int testcase813() {
+static int testcase805() {
     int passed = 1;
 
     printf("%s     shr    eax,cl\n", __func__);fflush(stdout);
@@ -21560,7 +21316,7 @@ static int testcase813() {
     return passed;
 }
 
-static int testcase814() {
+static int testcase806() {
     int passed = 1;
 
     printf("%s     shr    rax,0x0\n", __func__);fflush(stdout);
@@ -21589,7 +21345,7 @@ static int testcase814() {
     return passed;
 }
 
-static int testcase815() {
+static int testcase807() {
     int passed = 1;
 
     printf("%s     shr    rax,0x1\n", __func__);fflush(stdout);
@@ -21618,7 +21374,7 @@ static int testcase815() {
     return passed;
 }
 
-static int testcase816() {
+static int testcase808() {
     int passed = 1;
 
     printf("%s     shr    rax,0x2\n", __func__);fflush(stdout);
@@ -21647,7 +21403,7 @@ static int testcase816() {
     return passed;
 }
 
-static int testcase817() {
+static int testcase809() {
     int passed = 1;
 
     printf("%s     shr    rax,0x20\n", __func__);fflush(stdout);
@@ -21676,7 +21432,7 @@ static int testcase817() {
     return passed;
 }
 
-static int testcase818() {
+static int testcase810() {
     int passed = 1;
 
     printf("%s     shr    rax,0x21\n", __func__);fflush(stdout);
@@ -21705,7 +21461,7 @@ static int testcase818() {
     return passed;
 }
 
-static int testcase819() {
+static int testcase811() {
     int passed = 1;
 
     printf("%s     shr    rax,0x22\n", __func__);fflush(stdout);
@@ -21734,7 +21490,7 @@ static int testcase819() {
     return passed;
 }
 
-static int testcase820() {
+static int testcase812() {
     int passed = 1;
 
     printf("%s     shr    rax,0x40\n", __func__);fflush(stdout);
@@ -21763,7 +21519,7 @@ static int testcase820() {
     return passed;
 }
 
-static int testcase821() {
+static int testcase813() {
     int passed = 1;
 
     printf("%s     shr    rax,1\n", __func__);fflush(stdout);
@@ -21792,7 +21548,7 @@ static int testcase821() {
     return passed;
 }
 
-static int testcase822() {
+static int testcase814() {
     int passed = 1;
 
     printf("%s     shr    rax,cl\n", __func__);fflush(stdout);
@@ -21824,7 +21580,7 @@ static int testcase822() {
     return passed;
 }
 
-static int testcase823() {
+static int testcase815() {
     int passed = 1;
 
     printf("%s     shrd   ax,ax,0x0\n", __func__);fflush(stdout);
@@ -21847,7 +21603,7 @@ static int testcase823() {
     return passed;
 }
 
-static int testcase824() {
+static int testcase816() {
     int passed = 1;
 
     printf("%s     shrd   ax,ax,0x10\n", __func__);fflush(stdout);
@@ -21870,7 +21626,7 @@ static int testcase824() {
     return passed;
 }
 
-static int testcase825() {
+static int testcase817() {
     int passed = 1;
 
     printf("%s     shrd   ax,ax,0x2\n", __func__);fflush(stdout);
@@ -21893,7 +21649,7 @@ static int testcase825() {
     return passed;
 }
 
-static int testcase826() {
+static int testcase818() {
     int passed = 1;
 
     printf("%s     shrd   ax,ax,0x8\n", __func__);fflush(stdout);
@@ -21916,7 +21672,7 @@ static int testcase826() {
     return passed;
 }
 
-static int testcase827() {
+static int testcase819() {
     int passed = 1;
 
     printf("%s     shrd   ax,ax,0x9\n", __func__);fflush(stdout);
@@ -21939,7 +21695,7 @@ static int testcase827() {
     return passed;
 }
 
-static int testcase828() {
+static int testcase820() {
     int passed = 1;
 
     printf("%s     shrd   ax,ax,0xa\n", __func__);fflush(stdout);
@@ -21962,7 +21718,7 @@ static int testcase828() {
     return passed;
 }
 
-static int testcase829() {
+static int testcase821() {
     int passed = 1;
 
     printf("%s     shrd   ax,ax,cl\n", __func__);fflush(stdout);
@@ -21988,7 +21744,7 @@ static int testcase829() {
     return passed;
 }
 
-static int testcase830() {
+static int testcase822() {
     int passed = 1;
 
     printf("%s     shrd   ax,cx,0x0\n", __func__);fflush(stdout);
@@ -22014,7 +21770,7 @@ static int testcase830() {
     return passed;
 }
 
-static int testcase831() {
+static int testcase823() {
     int passed = 1;
 
     printf("%s     shrd   ax,cx,0x10\n", __func__);fflush(stdout);
@@ -22040,7 +21796,7 @@ static int testcase831() {
     return passed;
 }
 
-static int testcase832() {
+static int testcase824() {
     int passed = 1;
 
     printf("%s     shrd   ax,cx,0x2\n", __func__);fflush(stdout);
@@ -22066,7 +21822,7 @@ static int testcase832() {
     return passed;
 }
 
-static int testcase833() {
+static int testcase825() {
     int passed = 1;
 
     printf("%s     shrd   ax,cx,0x8\n", __func__);fflush(stdout);
@@ -22092,7 +21848,7 @@ static int testcase833() {
     return passed;
 }
 
-static int testcase834() {
+static int testcase826() {
     int passed = 1;
 
     printf("%s     shrd   ax,cx,0x9\n", __func__);fflush(stdout);
@@ -22118,7 +21874,7 @@ static int testcase834() {
     return passed;
 }
 
-static int testcase835() {
+static int testcase827() {
     int passed = 1;
 
     printf("%s     shrd   ax,cx,0xa\n", __func__);fflush(stdout);
@@ -22144,7 +21900,7 @@ static int testcase835() {
     return passed;
 }
 
-static int testcase836() {
+static int testcase828() {
     int passed = 1;
 
     printf("%s     shrd   ax,cx,cl\n", __func__);fflush(stdout);
@@ -22170,7 +21926,7 @@ static int testcase836() {
     return passed;
 }
 
-static int testcase837() {
+static int testcase829() {
     int passed = 1;
 
     printf("%s     shrd   eax,eax,0x0\n", __func__);fflush(stdout);
@@ -22199,7 +21955,7 @@ static int testcase837() {
     return passed;
 }
 
-static int testcase838() {
+static int testcase830() {
     int passed = 1;
 
     printf("%s     shrd   eax,eax,0x10\n", __func__);fflush(stdout);
@@ -22228,7 +21984,7 @@ static int testcase838() {
     return passed;
 }
 
-static int testcase839() {
+static int testcase831() {
     int passed = 1;
 
     printf("%s     shrd   eax,eax,0x11\n", __func__);fflush(stdout);
@@ -22257,7 +22013,7 @@ static int testcase839() {
     return passed;
 }
 
-static int testcase840() {
+static int testcase832() {
     int passed = 1;
 
     printf("%s     shrd   eax,eax,0x12\n", __func__);fflush(stdout);
@@ -22286,7 +22042,7 @@ static int testcase840() {
     return passed;
 }
 
-static int testcase841() {
+static int testcase833() {
     int passed = 1;
 
     printf("%s     shrd   eax,eax,0x2\n", __func__);fflush(stdout);
@@ -22315,7 +22071,7 @@ static int testcase841() {
     return passed;
 }
 
-static int testcase842() {
+static int testcase834() {
     int passed = 1;
 
     printf("%s     shrd   eax,eax,0x20\n", __func__);fflush(stdout);
@@ -22344,7 +22100,7 @@ static int testcase842() {
     return passed;
 }
 
-static int testcase843() {
+static int testcase835() {
     int passed = 1;
 
     printf("%s     shrd   eax,eax,cl\n", __func__);fflush(stdout);
@@ -22376,7 +22132,7 @@ static int testcase843() {
     return passed;
 }
 
-static int testcase844() {
+static int testcase836() {
     int passed = 1;
 
     printf("%s     shrd   eax,ecx,0x0\n", __func__);fflush(stdout);
@@ -22408,7 +22164,7 @@ static int testcase844() {
     return passed;
 }
 
-static int testcase845() {
+static int testcase837() {
     int passed = 1;
 
     printf("%s     shrd   eax,ecx,0x10\n", __func__);fflush(stdout);
@@ -22440,7 +22196,7 @@ static int testcase845() {
     return passed;
 }
 
-static int testcase846() {
+static int testcase838() {
     int passed = 1;
 
     printf("%s     shrd   eax,ecx,0x11\n", __func__);fflush(stdout);
@@ -22472,7 +22228,7 @@ static int testcase846() {
     return passed;
 }
 
-static int testcase847() {
+static int testcase839() {
     int passed = 1;
 
     printf("%s     shrd   eax,ecx,0x12\n", __func__);fflush(stdout);
@@ -22504,7 +22260,7 @@ static int testcase847() {
     return passed;
 }
 
-static int testcase848() {
+static int testcase840() {
     int passed = 1;
 
     printf("%s     shrd   eax,ecx,0x2\n", __func__);fflush(stdout);
@@ -22536,7 +22292,7 @@ static int testcase848() {
     return passed;
 }
 
-static int testcase849() {
+static int testcase841() {
     int passed = 1;
 
     printf("%s     shrd   eax,ecx,0x20\n", __func__);fflush(stdout);
@@ -22568,7 +22324,7 @@ static int testcase849() {
     return passed;
 }
 
-static int testcase850() {
+static int testcase842() {
     int passed = 1;
 
     printf("%s     shrd   eax,ecx,cl\n", __func__);fflush(stdout);
@@ -22600,7 +22356,7 @@ static int testcase850() {
     return passed;
 }
 
-static int testcase851() {
+static int testcase843() {
     int passed = 1;
 
     printf("%s     shrd   rax,rax,0x0\n", __func__);fflush(stdout);
@@ -22629,7 +22385,7 @@ static int testcase851() {
     return passed;
 }
 
-static int testcase852() {
+static int testcase844() {
     int passed = 1;
 
     printf("%s     shrd   rax,rax,0x2\n", __func__);fflush(stdout);
@@ -22658,7 +22414,7 @@ static int testcase852() {
     return passed;
 }
 
-static int testcase853() {
+static int testcase845() {
     int passed = 1;
 
     printf("%s     shrd   rax,rax,0x20\n", __func__);fflush(stdout);
@@ -22687,7 +22443,7 @@ static int testcase853() {
     return passed;
 }
 
-static int testcase854() {
+static int testcase846() {
     int passed = 1;
 
     printf("%s     shrd   rax,rax,0x21\n", __func__);fflush(stdout);
@@ -22716,7 +22472,7 @@ static int testcase854() {
     return passed;
 }
 
-static int testcase855() {
+static int testcase847() {
     int passed = 1;
 
     printf("%s     shrd   rax,rax,0x22\n", __func__);fflush(stdout);
@@ -22745,7 +22501,7 @@ static int testcase855() {
     return passed;
 }
 
-static int testcase856() {
+static int testcase848() {
     int passed = 1;
 
     printf("%s     shrd   rax,rax,0x40\n", __func__);fflush(stdout);
@@ -22774,7 +22530,7 @@ static int testcase856() {
     return passed;
 }
 
-static int testcase857() {
+static int testcase849() {
     int passed = 1;
 
     printf("%s     shrd   rax,rax,cl\n", __func__);fflush(stdout);
@@ -22806,7 +22562,7 @@ static int testcase857() {
     return passed;
 }
 
-static int testcase858() {
+static int testcase850() {
     int passed = 1;
 
     printf("%s     shrd   rax,rcx,0x0\n", __func__);fflush(stdout);
@@ -22838,7 +22594,7 @@ static int testcase858() {
     return passed;
 }
 
-static int testcase859() {
+static int testcase851() {
     int passed = 1;
 
     printf("%s     shrd   rax,rcx,0x2\n", __func__);fflush(stdout);
@@ -22870,7 +22626,7 @@ static int testcase859() {
     return passed;
 }
 
-static int testcase860() {
+static int testcase852() {
     int passed = 1;
 
     printf("%s     shrd   rax,rcx,0x20\n", __func__);fflush(stdout);
@@ -22902,7 +22658,7 @@ static int testcase860() {
     return passed;
 }
 
-static int testcase861() {
+static int testcase853() {
     int passed = 1;
 
     printf("%s     shrd   rax,rcx,0x21\n", __func__);fflush(stdout);
@@ -22934,7 +22690,7 @@ static int testcase861() {
     return passed;
 }
 
-static int testcase862() {
+static int testcase854() {
     int passed = 1;
 
     printf("%s     shrd   rax,rcx,0x22\n", __func__);fflush(stdout);
@@ -22966,7 +22722,7 @@ static int testcase862() {
     return passed;
 }
 
-static int testcase863() {
+static int testcase855() {
     int passed = 1;
 
     printf("%s     shrd   rax,rcx,0x40\n", __func__);fflush(stdout);
@@ -22998,7 +22754,7 @@ static int testcase863() {
     return passed;
 }
 
-static int testcase864() {
+static int testcase856() {
     int passed = 1;
 
     printf("%s     shrd   rax,rcx,cl\n", __func__);fflush(stdout);
@@ -23030,7 +22786,7 @@ static int testcase864() {
     return passed;
 }
 
-static int testcase865() {
+static int testcase857() {
     int passed = 1;
 
     printf("%s     shrx   eax,eax,eax\n", __func__);fflush(stdout);
@@ -23059,7 +22815,7 @@ static int testcase865() {
     return passed;
 }
 
-static int testcase866() {
+static int testcase858() {
     int passed = 1;
 
     printf("%s     shrx   eax,eax,ecx\n", __func__);fflush(stdout);
@@ -23091,7 +22847,7 @@ static int testcase866() {
     return passed;
 }
 
-static int testcase867() {
+static int testcase859() {
     int passed = 1;
 
     printf("%s     shrx   eax,ecx,ecx\n", __func__);fflush(stdout);
@@ -23120,7 +22876,7 @@ static int testcase867() {
     return passed;
 }
 
-static int testcase868() {
+static int testcase860() {
     int passed = 1;
 
     printf("%s     shrx   eax,ecx,edx\n", __func__);fflush(stdout);
@@ -23152,7 +22908,7 @@ static int testcase868() {
     return passed;
 }
 
-static int testcase869() {
+static int testcase861() {
     int passed = 1;
 
     printf("%s     shrx   rax,rax,rax\n", __func__);fflush(stdout);
@@ -23181,7 +22937,7 @@ static int testcase869() {
     return passed;
 }
 
-static int testcase870() {
+static int testcase862() {
     int passed = 1;
 
     printf("%s     shrx   rax,rax,rcx\n", __func__);fflush(stdout);
@@ -23213,7 +22969,7 @@ static int testcase870() {
     return passed;
 }
 
-static int testcase871() {
+static int testcase863() {
     int passed = 1;
 
     printf("%s     shrx   rax,rcx,rcx\n", __func__);fflush(stdout);
@@ -23242,7 +22998,7 @@ static int testcase871() {
     return passed;
 }
 
-static int testcase872() {
+static int testcase864() {
     int passed = 1;
 
     printf("%s     shrx   rax,rcx,rdx\n", __func__);fflush(stdout);
@@ -23274,7 +23030,7 @@ static int testcase872() {
     return passed;
 }
 
-static int testcase873() {
+static int testcase865() {
     int passed = 1;
 
     printf("%s     sub    ah,0x0\n", __func__);fflush(stdout);
@@ -23296,7 +23052,7 @@ static int testcase873() {
     return passed;
 }
 
-static int testcase874() {
+static int testcase866() {
     int passed = 1;
 
     printf("%s     sub    ah,0xf\n", __func__);fflush(stdout);
@@ -23318,7 +23074,7 @@ static int testcase874() {
     return passed;
 }
 
-static int testcase875() {
+static int testcase867() {
     int passed = 1;
 
     printf("%s     sub    ah,ah\n", __func__);fflush(stdout);
@@ -23340,7 +23096,7 @@ static int testcase875() {
     return passed;
 }
 
-static int testcase876() {
+static int testcase868() {
     int passed = 1;
 
     printf("%s     sub    ah,al\n", __func__);fflush(stdout);
@@ -23362,7 +23118,7 @@ static int testcase876() {
     return passed;
 }
 
-static int testcase877() {
+static int testcase869() {
     int passed = 1;
 
     printf("%s     sub    ah,ch\n", __func__);fflush(stdout);
@@ -23387,7 +23143,7 @@ static int testcase877() {
     return passed;
 }
 
-static int testcase878() {
+static int testcase870() {
     int passed = 1;
 
     printf("%s     sub    al,0x0\n", __func__);fflush(stdout);
@@ -23409,7 +23165,7 @@ static int testcase878() {
     return passed;
 }
 
-static int testcase879() {
+static int testcase871() {
     int passed = 1;
 
     printf("%s     sub    al,0xf\n", __func__);fflush(stdout);
@@ -23431,7 +23187,7 @@ static int testcase879() {
     return passed;
 }
 
-static int testcase880() {
+static int testcase872() {
     int passed = 1;
 
     printf("%s     sub    al,al\n", __func__);fflush(stdout);
@@ -23453,7 +23209,7 @@ static int testcase880() {
     return passed;
 }
 
-static int testcase881() {
+static int testcase873() {
     int passed = 1;
 
     printf("%s     sub    al,cl\n", __func__);fflush(stdout);
@@ -23478,7 +23234,7 @@ static int testcase881() {
     return passed;
 }
 
-static int testcase882() {
+static int testcase874() {
     int passed = 1;
 
     printf("%s     sub    ax,0x0\n", __func__);fflush(stdout);
@@ -23501,7 +23257,7 @@ static int testcase882() {
     return passed;
 }
 
-static int testcase883() {
+static int testcase875() {
     int passed = 1;
 
     printf("%s     sub    ax,0x1\n", __func__);fflush(stdout);
@@ -23524,7 +23280,7 @@ static int testcase883() {
     return passed;
 }
 
-static int testcase884() {
+static int testcase876() {
     int passed = 1;
 
     printf("%s     sub    ax,0xff\n", __func__);fflush(stdout);
@@ -23547,7 +23303,7 @@ static int testcase884() {
     return passed;
 }
 
-static int testcase885() {
+static int testcase877() {
     int passed = 1;
 
     printf("%s     sub    ax,0xffff\n", __func__);fflush(stdout);
@@ -23570,7 +23326,7 @@ static int testcase885() {
     return passed;
 }
 
-static int testcase886() {
+static int testcase878() {
     int passed = 1;
 
     printf("%s     sub    ax,ax\n", __func__);fflush(stdout);
@@ -23593,7 +23349,7 @@ static int testcase886() {
     return passed;
 }
 
-static int testcase887() {
+static int testcase879() {
     int passed = 1;
 
     printf("%s     sub    ax,cx\n", __func__);fflush(stdout);
@@ -23619,7 +23375,7 @@ static int testcase887() {
     return passed;
 }
 
-static int testcase888() {
+static int testcase880() {
     int passed = 1;
 
     printf("%s     sub    ch,al\n", __func__);fflush(stdout);
@@ -23644,7 +23400,7 @@ static int testcase888() {
     return passed;
 }
 
-static int testcase889() {
+static int testcase881() {
     int passed = 1;
 
     printf("%s     sub    eax,0x0\n", __func__);fflush(stdout);
@@ -23673,7 +23429,7 @@ static int testcase889() {
     return passed;
 }
 
-static int testcase890() {
+static int testcase882() {
     int passed = 1;
 
     printf("%s     sub    eax,0x1\n", __func__);fflush(stdout);
@@ -23702,7 +23458,7 @@ static int testcase890() {
     return passed;
 }
 
-static int testcase891() {
+static int testcase883() {
     int passed = 1;
 
     printf("%s     sub    eax,0xffff\n", __func__);fflush(stdout);
@@ -23731,7 +23487,7 @@ static int testcase891() {
     return passed;
 }
 
-static int testcase892() {
+static int testcase884() {
     int passed = 1;
 
     printf("%s     sub    eax,0xffffffff\n", __func__);fflush(stdout);
@@ -23760,7 +23516,7 @@ static int testcase892() {
     return passed;
 }
 
-static int testcase893() {
+static int testcase885() {
     int passed = 1;
 
     printf("%s     sub    eax,eax\n", __func__);fflush(stdout);
@@ -23789,7 +23545,7 @@ static int testcase893() {
     return passed;
 }
 
-static int testcase894() {
+static int testcase886() {
     int passed = 1;
 
     printf("%s     sub    eax,ecx\n", __func__);fflush(stdout);
@@ -23821,7 +23577,7 @@ static int testcase894() {
     return passed;
 }
 
-static int testcase895() {
+static int testcase887() {
     int passed = 1;
 
     printf("%s     sub    rax,0x1\n", __func__);fflush(stdout);
@@ -23850,7 +23606,7 @@ static int testcase895() {
     return passed;
 }
 
-static int testcase896() {
+static int testcase888() {
     int passed = 1;
 
     printf("%s     sub    rax,0xffffffffffffffff\n", __func__);fflush(stdout);
@@ -23879,7 +23635,7 @@ static int testcase896() {
     return passed;
 }
 
-static int testcase897() {
+static int testcase889() {
     int passed = 1;
 
     printf("%s     sub    rax,rax\n", __func__);fflush(stdout);
@@ -23908,7 +23664,7 @@ static int testcase897() {
     return passed;
 }
 
-static int testcase898() {
+static int testcase890() {
     int passed = 1;
 
     printf("%s     sub    rax,rcx\n", __func__);fflush(stdout);
@@ -23940,7 +23696,7 @@ static int testcase898() {
     return passed;
 }
 
-static int testcase899() {
+static int testcase891() {
     int passed = 1;
 
     printf("%s     xadd   ah,ah\n", __func__);fflush(stdout);
@@ -23962,7 +23718,7 @@ static int testcase899() {
     return passed;
 }
 
-static int testcase900() {
+static int testcase892() {
     int passed = 1;
 
     printf("%s     xadd   ah,al\n", __func__);fflush(stdout);
@@ -23985,7 +23741,7 @@ static int testcase900() {
     return passed;
 }
 
-static int testcase901() {
+static int testcase893() {
     int passed = 1;
 
     printf("%s     xadd   ah,ch\n", __func__);fflush(stdout);
@@ -24013,7 +23769,7 @@ static int testcase901() {
     return passed;
 }
 
-static int testcase902() {
+static int testcase894() {
     int passed = 1;
 
     printf("%s     xadd   al,al\n", __func__);fflush(stdout);
@@ -24035,7 +23791,7 @@ static int testcase902() {
     return passed;
 }
 
-static int testcase903() {
+static int testcase895() {
     int passed = 1;
 
     printf("%s     xadd   al,cl\n", __func__);fflush(stdout);
@@ -24063,7 +23819,7 @@ static int testcase903() {
     return passed;
 }
 
-static int testcase904() {
+static int testcase896() {
     int passed = 1;
 
     printf("%s     xadd   ax,ax\n", __func__);fflush(stdout);
@@ -24086,7 +23842,7 @@ static int testcase904() {
     return passed;
 }
 
-static int testcase905() {
+static int testcase897() {
     int passed = 1;
 
     printf("%s     xadd   ax,cx\n", __func__);fflush(stdout);
@@ -24116,7 +23872,7 @@ static int testcase905() {
     return passed;
 }
 
-static int testcase906() {
+static int testcase898() {
     int passed = 1;
 
     printf("%s     xadd   ch,al\n", __func__);fflush(stdout);
@@ -24144,7 +23900,7 @@ static int testcase906() {
     return passed;
 }
 
-static int testcase907() {
+static int testcase899() {
     int passed = 1;
 
     printf("%s     xadd   eax,eax\n", __func__);fflush(stdout);
@@ -24173,7 +23929,7 @@ static int testcase907() {
     return passed;
 }
 
-static int testcase908() {
+static int testcase900() {
     int passed = 1;
 
     printf("%s     xadd   eax,ecx\n", __func__);fflush(stdout);
@@ -24215,7 +23971,7 @@ static int testcase908() {
     return passed;
 }
 
-static int testcase909() {
+static int testcase901() {
     int passed = 1;
 
     printf("%s     xadd   rax,rax\n", __func__);fflush(stdout);
@@ -24244,7 +24000,7 @@ static int testcase909() {
     return passed;
 }
 
-static int testcase910() {
+static int testcase902() {
     int passed = 1;
 
     printf("%s     xadd   rax,rcx\n", __func__);fflush(stdout);
@@ -24286,7 +24042,7 @@ static int testcase910() {
     return passed;
 }
 
-static int testcase911() {
+static int testcase903() {
     int passed = 1;
 
     printf("%s     xchg   ah,ah\n", __func__);fflush(stdout);
@@ -24308,7 +24064,7 @@ static int testcase911() {
     return passed;
 }
 
-static int testcase912() {
+static int testcase904() {
     int passed = 1;
 
     printf("%s     xchg   ah,al\n", __func__);fflush(stdout);
@@ -24331,7 +24087,7 @@ static int testcase912() {
     return passed;
 }
 
-static int testcase913() {
+static int testcase905() {
     int passed = 1;
 
     printf("%s     xchg   ah,ch\n", __func__);fflush(stdout);
@@ -24359,7 +24115,7 @@ static int testcase913() {
     return passed;
 }
 
-static int testcase914() {
+static int testcase906() {
     int passed = 1;
 
     printf("%s     xchg   al,al\n", __func__);fflush(stdout);
@@ -24381,7 +24137,7 @@ static int testcase914() {
     return passed;
 }
 
-static int testcase915() {
+static int testcase907() {
     int passed = 1;
 
     printf("%s     xchg   al,cl\n", __func__);fflush(stdout);
@@ -24409,7 +24165,7 @@ static int testcase915() {
     return passed;
 }
 
-static int testcase916() {
+static int testcase908() {
     int passed = 1;
 
     printf("%s     xchg   ax,ax\n", __func__);fflush(stdout);
@@ -24432,7 +24188,7 @@ static int testcase916() {
     return passed;
 }
 
-static int testcase917() {
+static int testcase909() {
     int passed = 1;
 
     printf("%s     xchg   ax,cx\n", __func__);fflush(stdout);
@@ -24462,7 +24218,7 @@ static int testcase917() {
     return passed;
 }
 
-static int testcase918() {
+static int testcase910() {
     int passed = 1;
 
     printf("%s     xchg   ch,al\n", __func__);fflush(stdout);
@@ -24490,7 +24246,7 @@ static int testcase918() {
     return passed;
 }
 
-static int testcase919() {
+static int testcase911() {
     int passed = 1;
 
     printf("%s     xchg   cx,ax\n", __func__);fflush(stdout);
@@ -24520,7 +24276,7 @@ static int testcase919() {
     return passed;
 }
 
-static int testcase920() {
+static int testcase912() {
     int passed = 1;
 
     printf("%s     xchg   eax,eax\n", __func__);fflush(stdout);
@@ -24549,7 +24305,7 @@ static int testcase920() {
     return passed;
 }
 
-static int testcase921() {
+static int testcase913() {
     int passed = 1;
 
     printf("%s     xchg   eax,ecx\n", __func__);fflush(stdout);
@@ -24591,7 +24347,7 @@ static int testcase921() {
     return passed;
 }
 
-static int testcase922() {
+static int testcase914() {
     int passed = 1;
 
     printf("%s     xchg   ecx,eax\n", __func__);fflush(stdout);
@@ -24633,7 +24389,7 @@ static int testcase922() {
     return passed;
 }
 
-static int testcase923() {
+static int testcase915() {
     int passed = 1;
 
     printf("%s     xchg   rax,rax\n", __func__);fflush(stdout);
@@ -24662,7 +24418,7 @@ static int testcase923() {
     return passed;
 }
 
-static int testcase924() {
+static int testcase916() {
     int passed = 1;
 
     printf("%s     xchg   rax,rcx\n", __func__);fflush(stdout);
@@ -24704,7 +24460,7 @@ static int testcase924() {
     return passed;
 }
 
-static int testcase925() {
+static int testcase917() {
     int passed = 1;
 
     printf("%s     xchg   rcx,rax\n", __func__);fflush(stdout);
@@ -24746,7 +24502,7 @@ static int testcase925() {
     return passed;
 }
 
-static int testcase926() {
+static int testcase918() {
     int passed = 1;
 
     printf("%s     xor    ah,0x0\n", __func__);fflush(stdout);
@@ -24768,7 +24524,7 @@ static int testcase926() {
     return passed;
 }
 
-static int testcase927() {
+static int testcase919() {
     int passed = 1;
 
     printf("%s     xor    ah,0xf\n", __func__);fflush(stdout);
@@ -24790,7 +24546,7 @@ static int testcase927() {
     return passed;
 }
 
-static int testcase928() {
+static int testcase920() {
     int passed = 1;
 
     printf("%s     xor    ah,ah\n", __func__);fflush(stdout);
@@ -24812,7 +24568,7 @@ static int testcase928() {
     return passed;
 }
 
-static int testcase929() {
+static int testcase921() {
     int passed = 1;
 
     printf("%s     xor    ah,al\n", __func__);fflush(stdout);
@@ -24834,7 +24590,7 @@ static int testcase929() {
     return passed;
 }
 
-static int testcase930() {
+static int testcase922() {
     int passed = 1;
 
     printf("%s     xor    ah,ch\n", __func__);fflush(stdout);
@@ -24859,7 +24615,7 @@ static int testcase930() {
     return passed;
 }
 
-static int testcase931() {
+static int testcase923() {
     int passed = 1;
 
     printf("%s     xor    al,0x0\n", __func__);fflush(stdout);
@@ -24881,7 +24637,7 @@ static int testcase931() {
     return passed;
 }
 
-static int testcase932() {
+static int testcase924() {
     int passed = 1;
 
     printf("%s     xor    al,0xf\n", __func__);fflush(stdout);
@@ -24903,7 +24659,7 @@ static int testcase932() {
     return passed;
 }
 
-static int testcase933() {
+static int testcase925() {
     int passed = 1;
 
     printf("%s     xor    al,al\n", __func__);fflush(stdout);
@@ -24925,7 +24681,7 @@ static int testcase933() {
     return passed;
 }
 
-static int testcase934() {
+static int testcase926() {
     int passed = 1;
 
     printf("%s     xor    al,cl\n", __func__);fflush(stdout);
@@ -24950,7 +24706,7 @@ static int testcase934() {
     return passed;
 }
 
-static int testcase935() {
+static int testcase927() {
     int passed = 1;
 
     printf("%s     xor    ax,0x0\n", __func__);fflush(stdout);
@@ -24973,7 +24729,7 @@ static int testcase935() {
     return passed;
 }
 
-static int testcase936() {
+static int testcase928() {
     int passed = 1;
 
     printf("%s     xor    ax,0xff\n", __func__);fflush(stdout);
@@ -24996,7 +24752,7 @@ static int testcase936() {
     return passed;
 }
 
-static int testcase937() {
+static int testcase929() {
     int passed = 1;
 
     printf("%s     xor    ax,ax\n", __func__);fflush(stdout);
@@ -25019,7 +24775,7 @@ static int testcase937() {
     return passed;
 }
 
-static int testcase938() {
+static int testcase930() {
     int passed = 1;
 
     printf("%s     xor    ax,cx\n", __func__);fflush(stdout);
@@ -25045,7 +24801,7 @@ static int testcase938() {
     return passed;
 }
 
-static int testcase939() {
+static int testcase931() {
     int passed = 1;
 
     printf("%s     xor    ch,al\n", __func__);fflush(stdout);
@@ -25070,7 +24826,7 @@ static int testcase939() {
     return passed;
 }
 
-static int testcase940() {
+static int testcase932() {
     int passed = 1;
 
     printf("%s     xor    eax,0x0\n", __func__);fflush(stdout);
@@ -25099,7 +24855,7 @@ static int testcase940() {
     return passed;
 }
 
-static int testcase941() {
+static int testcase933() {
     int passed = 1;
 
     printf("%s     xor    eax,0xffff\n", __func__);fflush(stdout);
@@ -25128,7 +24884,7 @@ static int testcase941() {
     return passed;
 }
 
-static int testcase942() {
+static int testcase934() {
     int passed = 1;
 
     printf("%s     xor    eax,eax\n", __func__);fflush(stdout);
@@ -25157,7 +24913,7 @@ static int testcase942() {
     return passed;
 }
 
-static int testcase943() {
+static int testcase935() {
     int passed = 1;
 
     printf("%s     xor    eax,ecx\n", __func__);fflush(stdout);
@@ -25189,7 +24945,7 @@ static int testcase943() {
     return passed;
 }
 
-static int testcase944() {
+static int testcase936() {
     int passed = 1;
 
     printf("%s     xor    rax,0x0\n", __func__);fflush(stdout);
@@ -25218,7 +24974,7 @@ static int testcase944() {
     return passed;
 }
 
-static int testcase945() {
+static int testcase937() {
     int passed = 1;
 
     printf("%s     xor    rax,0x1\n", __func__);fflush(stdout);
@@ -25247,7 +25003,7 @@ static int testcase945() {
     return passed;
 }
 
-static int testcase946() {
+static int testcase938() {
     int passed = 1;
 
     printf("%s     xor    rax,0xffffffffffffffff\n", __func__);fflush(stdout);
@@ -25276,7 +25032,7 @@ static int testcase946() {
     return passed;
 }
 
-static int testcase947() {
+static int testcase939() {
     int passed = 1;
 
     printf("%s     xor    rax,rax\n", __func__);fflush(stdout);
@@ -25305,7 +25061,7 @@ static int testcase947() {
     return passed;
 }
 
-static int testcase948() {
+static int testcase940() {
     int passed = 1;
 
     printf("%s     xor    rax,rcx\n", __func__);fflush(stdout);
@@ -26279,13 +26035,5 @@ static void __attribute__((noinline, constructor)) init() {
     add_testcase(testcase938);
     add_testcase(testcase939);
     add_testcase(testcase940);
-    add_testcase(testcase941);
-    add_testcase(testcase942);
-    add_testcase(testcase943);
-    add_testcase(testcase944);
-    add_testcase(testcase945);
-    add_testcase(testcase946);
-    add_testcase(testcase947);
-    add_testcase(testcase948);
 }
 

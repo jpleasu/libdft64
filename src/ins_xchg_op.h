@@ -4,6 +4,5 @@
 
 void ins_cmpxchg_op(INS ins);
 void ins_xchg_op(INS ins);
-void ins_xadd_op(INS ins);
 
 #endif
