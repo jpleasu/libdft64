@@ -25,13 +25,15 @@ namespace {
             Tagset<dcode> dst_tags(tid, dst);
             TagsetCopy<sz> src_tags(Tagset<scode>(tid, src));
             Tagset<shftcode> shft_tags(tid, shft);
-
             tag_t t = shft_tags.get(0);
-            for (size_t i = 0; i < sz; ++i)
-                t = tag_combine(t, src_tags.get(i));
             for (size_t i = 0; i < sz; ++i) {
                 t = tag_combine(t, dst_tags.get(i));
                 dst_tags.set(i, t);
+            }
+            t = tag_traits<tag_t>::cleared_val;
+            for (int i = sz - 1; i >= 0; --i) {
+                t = tag_combine(t, src_tags.get(i));
+                dst_tags.add(i, t);
             }
         }
     };
@@ -77,6 +79,8 @@ namespace {
                     dst_tags.add(i, dst_tags.get(i - 1));
                 dst_tags.add(0, src_tags.get(static_cast<int>(sz) - byte_shift - 1));
             }
+
+            dst_tags.template zext<sz>();
         }
 
         template <char dcode, char scode, size_t sz>
@@ -209,12 +213,17 @@ namespace {
             Tagset<shftcode> shft_tags(tid, shft);
 
             tag_t t = shft_tags.get(0);
-            for (size_t i = 0; i < sz; ++i)
-                t = tag_combine(t, src_tags.get(i));
-            for (size_t i = 0; i < sz; ++i) {
+            for (int i = sz - 1; i >= 0; --i) {
                 t = tag_combine(t, dst_tags.get(i));
                 dst_tags.set(i, t);
             }
+            t = tag_traits<tag_t>::cleared_val;
+            for (size_t i = 0; i < sz; ++i) {
+                t = tag_combine(t, src_tags.get(i));
+                dst_tags.add(i, t);
+            }
+
+            dst_tags.template zext<sz>();
         }
     };
 
@@ -240,6 +249,33 @@ namespace {
         template <char dcode, size_t sz>
         static typename enable_if<(byte_shift >= sz)>::type HOOK_DECL unary(THREADID tid,
                                                                             typename Tagset<dcode>::arg_type dst) {
+            // stub for switch
+        }
+
+        // shrd
+        template <char dcode, char scode, size_t sz>
+        static typename enable_if<(byte_shift < (sz < 32 ? sz * 2 : sz))>::type HOOK_DECL
+        binary(THREADID tid, typename Tagset<dcode>::arg_type dst, typename Tagset<scode>::arg_type src) {
+            Tagset<dcode> dst_tags(tid, dst);
+            TagsetCopy<sz> src_tags(Tagset<scode>(tid, src));
+
+            for (size_t i = 0; i + byte_shift < sz; ++i)
+                dst_tags.set(i, dst_tags.get(i + byte_shift));
+            for (size_t i = sz - byte_shift; i < sz; ++i)
+                dst_tags.set(i, src_tags.get(i - (sz - byte_shift)));
+
+            if (slop) {
+                for (size_t i = 0; i + 1 < sz; ++i)
+                    dst_tags.add(i, dst_tags.get(i + 1));
+                dst_tags.add(sz - 1, src_tags.get(byte_shift % sz));
+            }
+
+            dst_tags.template zext<sz>();
+        }
+
+        template <char dcode, char scode, size_t sz>
+        static typename enable_if<(byte_shift >= (sz < 32 ? sz * 2 : sz))>::type HOOK_DECL
+        binary(THREADID tid, typename Tagset<dcode>::arg_type dst, typename Tagset<scode>::arg_type src) {
             // stub for switch
         }
     };
@@ -322,16 +358,15 @@ namespace {
             dst_tags.template zext<sz>();
         }
 
-#if 0
         // shrd
         static void ins_ternary_imm(INS ins) {
             UINT64 val = INS_OperandImmediate(ins, OP_2);
             UINT32 w = INS_OperandWidth(ins, OP_0);
-            if ((val & 0x1f) >= w) {
-                ins_clear_op(ins);
-                return;
-            }
-            int shft = val % w;
+            if (w <= 32)
+                val &= 0x1f;
+            val &= 0x3f;
+
+            int shft = val;
             bool slop = shft % 8 != 0;
 
 #undef CASE
@@ -345,7 +380,7 @@ namespace {
 
             SWITCH8(shft / 8);
         }
-#endif
+
         // shrx only (shrd's OP_2 is implicit)
         template <char dcode, char scode, char shftcode, size_t sz>
         static void HOOK_DECL ternary(THREADID tid, typename Tagset<dcode>::arg_type dst,
